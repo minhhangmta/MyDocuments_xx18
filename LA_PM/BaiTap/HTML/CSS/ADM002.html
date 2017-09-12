@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="ADM002.css">
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<!-- <div class="left-header"> -->
+			<table id="left">
+				<tr>
+					<td><img src="logo.jpg"></td>
+					<td><label for id="company"> Luvina Software</label></td>
+				</tr>
+			</table>
+			<!-- 			</div> -->
+			<div class="right-header">
+				<table id="right">
+					<tr>
+						<td><a href=""> ログアウト</a></td>
+						<td><a href=""> トップ</a></td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+		<div class="content">
+			<div class="">
+				<label for id="title">職員名で職員を検索します。検索条件無しの場合は全て表示されます。 </label>
+
+				<form method="post">
+					<table id="top-table">
+						<tr>
+							<td><label for id="textname">氏名: </td>
+							<td><input type="text" name="username"></td>
+							<td><label for id="textname">職務年数:</td>
+							<td>From:<input type="text" name="from">To:<input
+								type="text" name="to"></td>
+						</tr>
+						<tr>
+							<td><label for id="textname">日本語能力:</td>
+							<td><select><option value="" selected disabled
+										hidden>全て</option>
+									<option>N1</option>
+									<option>N2</option>
+									<option>N3</option>
+									<option>N4</option>
+									<option>N5</option>
+							</select></td>
+							<td><label for id="textname">雇用形態: </td>
+							<td><input type="radio" name="type_contract" value="試用 ">試用
+								<input type="radio" name="type_contract" value="パートタイム">パートタイム
+								<input type="radio" name="type_contract" value="言葉 ">言葉
+								<input type="radio" name="type_contract" value="長期">長期</td>
+						</tr>
+						<tr>
+							<td><label for id="textname">グループ:</td>
+							<td><select><option value="" selected disabled
+										hidden>全て</option>
+									<option>group1</option>
+									<option>group2</option>
+									<option>group3</option>
+									<option>group4</option>
+							</select></td>
+							<td colspan="2"><input type="button" class="button"
+								name="edit" value="編集"> <input type="button"
+								class="button" name="add" value="新規追加"> <input
+								type="button" class="button" name="export_csv" value="輸出のcsv">
+								<input type="button" class="button" name="import_csv"
+								value="輸入のcsv"> <input type="button" class="button"
+								name="export_pdf" value="輸出のpdf"> <input type="button"
+								class="button" name="confirm" value="確認"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<table id="bottom-table">
+				<thead>
+					<th><input type="checkbox" disabled="disabled"></th>
+					<th>ID</th>
+					<th>氏名</th>
+					<th>職務年数</th>
+					<th>グループ</th>
+					<th>メールアドレス</th>
+					<th>電話番号</th>
+					<th>職務年数</th>
+					<th>雇用形態</th>
+					<th>日本語能力</th>
+					<th>失効日</th>
+					<th>点数</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" name="select" value=""></td>
+						<td><a href="">22</a></td>
+						<td>Nguyen Thi Mai Huong Test 10</td>
+						<td>1982/01/07</td>
+						<td>group2</td>
+						<td>testimport1611@luvina.net</td>
+						<td>000000000</td>
+						<td>1</td>
+						<td>試用</td>
+						<td></td>
+						<td>2015/01/15</td>
+						<td>101</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="select" value=""></td>
+						<td><a href="">24</a></td>
+						<td>Nguyen Thi Mai Huong Test 11</td>
+						<td>1982/01/07</td>
+						<td>group2</td>
+						<td>testimport16111@luvina.net</td>
+						<td>000000000</td>
+						<td>1</td>
+						<td>試用</td>
+						<td>Kyu4</td>
+						<td>2015/01/15</td>
+						<td>101</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="select" value=""></td>
+						<td><a href="">26</a></td>
+						<td>Nguyen Thi Mai Huong Test 12</td>
+						<td>1982/01/07</td>
+						<td>group2</td>
+						<td>testimport161111@luvina.net</td>
+						<td>000000000</td>
+						<td>1</td>
+						<td>試用</td>
+						<td>Kyu4</td>
+						<td>2015/01/15</td>
+						<td>101</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="select" value=""></td>
+						<td><a href="">28</a></td>
+						<td>Nguyen Thi Mai Huong Test 13</td>
+						<td>1982/01/07</td>
+						<td>group2</td>
+						<td>testimport20@luvina.net</td>
+						<td>000000000</td>
+						<td>1</td>
+						<td>試用</td>
+						<td>Kyu4</td>
+						<td>2015/01/15</td>
+						<td>101</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="select" value=""></td>
+						<td><a href="">30</a></td>
+						<td>Nguyen Thi Mai Huong Test 14</td>
+						<td>1982/01/07</td>
+						<td>group2</td>
+						<td>testimport22@luvina.net</td>
+						<td>000000000</td>
+						<td>1</td>
+						<td>試用</td>
+						<td>Kyu4</td>
+						<td>2015/01/15</td>
+						<td>101</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="page-number">
+				 1 | <a href="">2</a> | <a href="">3</a> <a href="">>></a>
+			</div>
+		</div>
+
+		<div class="footer">
+			<label id="copyright">Copyright © 2010 ルビナソフトウエア株式会社. All
+				rights reserved. </label>
+		</div>
+	</div>
+</body>
+</html>

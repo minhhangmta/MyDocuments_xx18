@@ -1,0 +1,86 @@
+.content {
+	margin: auto;
+	width: 80%;
+}
+
+#left {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+
+#left td {
+	border: 1px solid black;
+	width: 50%;
+}
+
+#right {
+	padding: 20px 10px 20px 10px;
+}
+
+#right td {
+	padding: 10px;
+}
+
+#company {
+	color: grey;
+	font-size: 35px;
+}
+
+.left-header {
+	width: 80%;
+}
+
+.right-header {
+	float: left;
+}
+
+.left-header {
+	float: left;
+}
+
+.center {
+	margin: auto;
+	width: 70%;
+	padding: 30px;
+}
+
+.bottom {
+	margin: auto;
+	width: 35%;
+}
+
+.button-div {
+	font-size: 12px;
+	margin: auto;
+	width: 50%;
+}
+
+.button{
+	width: 55px;
+	height: 25px;
+	margin: 10px;
+}
+
+
+#title {
+	font-weight: bold;
+}
+
+#copyright {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+#center-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#center-table tr {
+	border: 1px solid black;
+}
+
+#center-table td {
+	border: 1px solid black;
+}
