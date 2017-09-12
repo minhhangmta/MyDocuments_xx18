@@ -26,6 +26,7 @@
 #bottom-table th {
 	border: 1px solid black;
 	background: #CCCCCC;
+	text-align: left;
 }
 
 #bottom-table td {
@@ -89,7 +90,7 @@
 
 .button {
 	font-size: 9px;
-	width: 52px;
+	width: 65px;
 	height: 18px;
 	margin: 2px;
 }
@@ -122,6 +123,7 @@
 
 #textname {
 	font-weight: bold;
+	font-size: 13px;
 }
 
 .year {
@@ -145,10 +147,13 @@
 	border: 1px solid black;
 }
 
-
-#center_table{
+#center_table {
 	width: 50%;
 	margin-left: 100px;
 	margin-top: 20px;
 }
 
+#name {
+	font-weight: bold;
+	font-size: 12px;
+}

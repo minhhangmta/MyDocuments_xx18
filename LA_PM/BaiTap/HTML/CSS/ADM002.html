@@ -2,20 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="ADM002.css">
+<title>Display ADM002</title>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<div class="container">
 		<div class="header">
-			<!-- <div class="left-header"> -->
 			<table id="left">
 				<tr>
 					<td><img src="logo.jpg"></td>
 					<td><label for id="company"> Luvina Software</label></td>
 				</tr>
 			</table>
-			<!-- 			</div> -->
 			<div class="right-header">
 				<table id="right">
 					<tr>
@@ -28,16 +26,16 @@
 		</div>
 		<div class="content">
 			<div class="">
-				<label for id="title">職員名で職員を検索します。検索条件無しの場合は全て表示されます。 </label>
+				<label for id="titleADM002">職員名で職員を検索します。検索条件無しの場合は全て表示されます。 </label>
 
-				<form method="post">
+				<form action="ADM003.html" method="post">
 					<table id="top-table">
 						<tr>
-							<td><label for id="textname">氏名: </td>
+							<td width="15%"><label for id="textname">氏名: </td>
 							<td><input type="text" name="username"></td>
-							<td><label for id="textname">職務年数:</td>
-							<td>From:<input type="text" name="from">To:<input
-								type="text" name="to"></td>
+							<td width="15%"><label for id="textname">職務年数:</td>
+							<td>From:<input class="year" type="text" name="from">To:<input
+								class="year" type="text" name="to"></td>
 						</tr>
 						<tr>
 							<td><label for id="textname">日本語能力:</td>
@@ -50,8 +48,9 @@
 									<option>N5</option>
 							</select></td>
 							<td><label for id="textname">雇用形態: </td>
-							<td><input type="radio" name="type_contract" value="試用 ">試用
-								<input type="radio" name="type_contract" value="パートタイム">パートタイム
+							<td><input type="radio" name="type_contract" value="全て ">全て<input
+								type="radio" name="type_contract" value="試用 ">試用 <input
+								type="radio" name="type_contract" value="パートタイム">パートタイム
 								<input type="radio" name="type_contract" value="言葉 ">言葉
 								<input type="radio" name="type_contract" value="長期">長期</td>
 						</tr>
@@ -64,7 +63,7 @@
 									<option>group3</option>
 									<option>group4</option>
 							</select></td>
-							<td colspan="2"><input type="button" class="button"
+							<td colspan="2"><input type="submit" class="button"
 								name="edit" value="編集"> <input type="button"
 								class="button" name="add" value="新規追加"> <input
 								type="button" class="button" name="export_csv" value="輸出のcsv">
@@ -80,15 +79,16 @@
 				<thead>
 					<th><input type="checkbox" disabled="disabled"></th>
 					<th>ID</th>
-					<th>氏名</th>
+					<th>氏名 <a href="">▲∇</a>
+					</th>
 					<th>職務年数</th>
 					<th>グループ</th>
 					<th>メールアドレス</th>
 					<th>電話番号</th>
 					<th>職務年数</th>
 					<th>雇用形態</th>
-					<th>日本語能力</th>
-					<th>失効日</th>
+					<th>日本語能力 <a href="">▲∇</a></th>
+					<th>失効日 <a href=""> ▼</a></th>
 					<th>点数</th>
 				</thead>
 				<tbody>
@@ -103,8 +103,8 @@
 						<td>1</td>
 						<td>試用</td>
 						<td></td>
-						<td>2015/01/15</td>
-						<td>101</td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td><input type="checkbox" name="select" value=""></td>
@@ -165,7 +165,7 @@
 				</tbody>
 			</table>
 			<div class="page-number">
-				 1 | <a href="">2</a> | <a href="">3</a> <a href="">>></a>
+				1 | <a href="">2</a> | <a href="">3</a> <a href="">>></a>
 			</div>
 		</div>
 

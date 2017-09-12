@@ -2,21 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="ADM003.css">
+<title>Display ADM003</title>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="content">
+	<div class="container">
 		<div class="header">
-			<div class="left-header">
-				<table id="left">
-					<tr>
-						<td><img src="logo.jpg"></td>
-						<td><label for id="company"> Luvina Software</label></td>
-					</tr>
-				</table>
-				<!-- <img src="logo1.jpg"> border: 1px solid black;-->
-			</div>
+			<table id="left">
+				<tr>
+					<td><img src="logo.jpg"></td>
+					<td><label for id="company"> Luvina Software</label></td>
+				</tr>
+			</table>
 			<div class="right-header">
 				<table id="right">
 					<tr>
@@ -27,72 +24,47 @@
 			</div>
 
 		</div>
-		<div class="center">
-			<label for id="title">職員情報編集</label>
-			<table>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">アカウント名:</td>
-					<td><input type="text" name="username" class="name1"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">グループ: </td>
-					<td><label for id="name"><select class="name1"><option
-									value="" selected disabled hidden>選択してください</option>
-								<option>group 1</option>
-								<option>group 2</option>
-								<option>group 3</option>
-						</select></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">氏名:</td>
-					<td><input type="text" name="fullname"></td>
-				</tr>
-				<tr>
-					<td colspan="2">カタカナ氏名</td>
-					<td><input type="text" name="fullname_kana"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="dateOfBirth">生年月日: </td>
-					<td><select>
-							<option value="2017">2017
+		<div class="content">
+			<label for id="titleADM003">職員情報編集</label>
+			<form action="ADM004.html" method="post">
+				<table id="center_table">
+					<tr>
+						<td><label for class="char">*</td>
+						<td width="20%"><label for id="name">アカウント名:</td>
+						<td><input type="text" name="username" class="name1"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">グループ: </td>
+						<td><label for id="name"><select class="name1"><option
+										value="" selected disabled hidden>選択してください</option>
+									<option>group 1</option>
+									<option>group 2</option>
+									<option>group 3</option>
+							</select></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">氏名:</td>
+						<td><input type="text" name="fullname"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">カタカナ氏名</td>
+						<td><input type="text" name="fullname_kana"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">生年月日: </td>
+						<td><select>
+								<option value="2017">2017
 					</option>
-							<option value="2016">2016
+								<option value="2016">2016
 					</option>
-							<option value="2015">2015
+								<option value="2015">2015
 					</option>
-							<option value="2014">2014
+								<option value="2014">2014
 					</option>
-					</select><label for id="name">年 <select>
-								<option value="1">1
-					</option>
-								<option value="2">2
-					</option>
-								<option value="3">3
-					</option>
-								<option value="4">4
-					</option>
-								<option value="5">5
-					</option>
-								<option value="6">6
-					</option>
-								<option value="7">7
-					</option>
-								<option value="8">8
-					</option>
-								<option value="9">9
-					</option>
-								<option value="10">10
-					</option>
-								<option value="11">11
-					</option>
-								<option value="12">12
-					</option>
-
-						</select><label for id="name">月 <select>
+						</select><label for id="">年 <select>
 									<option value="1">1
 					</option>
 									<option value="2">2
@@ -117,129 +89,130 @@
 					</option>
 									<option value="12">12
 					</option>
-									<option value="13">13
+
+							</select><label for id="">月 <select>
+										<option value="1">1
 					</option>
-									<option value="14">14
+										<option value="2">2
 					</option>
-									<option value="15">15
+										<option value="3">3
 					</option>
-									<option value="16">16
+										<option value="4">4
 					</option>
-									<option value="17">17
+										<option value="5">5
 					</option>
-									<option value="18">18
+										<option value="6">6
 					</option>
-									<option value="19">19
+										<option value="7">7
 					</option>
-									<option value="20">20
+										<option value="8">8
 					</option>
-									<option value="21">21
+										<option value="9">9
 					</option>
-									<option value="22">22
+										<option value="10">10
 					</option>
-									<option value="23">23
+										<option value="11">11
 					</option>
-									<option value="24">24
+										<option value="12">12
 					</option>
-									<option value="25">25
+										<option value="13">13
 					</option>
-									<option value="26">26
+										<option value="14">14
 					</option>
-									<option value="27">27
+										<option value="15">15
 					</option>
-									<option value="28">28
+										<option value="16">16
 					</option>
-									<option value="29">29
+										<option value="17">17
 					</option>
-									<option value="30">30
+										<option value="18">18
 					</option>
-									<option value="31">31
+										<option value="19">19
+					</option>
+										<option value="20">20
+					</option>
+										<option value="21">21
+					</option>
+										<option value="22">22
+					</option>
+										<option value="23">23
+					</option>
+										<option value="24">24
+					</option>
+										<option value="25">25
+					</option>
+										<option value="26">26
+					</option>
+										<option value="27">27
+					</option>
+										<option value="28">28
+					</option>
+										<option value="29">29
+					</option>
+										<option value="30">30
+					</option>
+										<option value="31">31
 					</option>
 
-							</select><label for id="name">日</td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">メールアドレス:</td>
-					<td><input type="text" name="email"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">電話番号:</td>
-					<td><input type="text" name="email"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">パスワード:</td>
-					<td><input type="password" name="password"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">パスワード（確認): </td>
-					<td><input type="password" name="confirm_password"></td>
-				</tr>
-				<tr>
-					<td><label for class="char">*</td>
-					<td><label for id="name">雇用形態: </td>
-					<td><input type="radio" name="type_contract" value="試用 ">試用
-						<input type="radio" name="type_contract" value="パートタイム">パートタイム
-						<input type="radio" name="type_contract" value="言葉 ">言葉 <input
-						type="radio" name="type_contract" value="長期">長期</td>
-				</tr>
-				<tr>
-					<td colspan="2">職務年数</td>
-					<td><input type="text" name="work_year"></td>
-				</tr>
+								</select><label for id="">日</td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">メールアドレス:</td>
+						<td><input type="text" name="email"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">電話番号:</td>
+						<td><input type="text" name="email"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">パスワード:</td>
+						<td><input type="password" name="password"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">パスワード（確認): </td>
+						<td><input type="password" name="confirm_password"></td>
+					</tr>
+					<tr>
+						<td><label for class="char">*</td>
+						<td><label for id="name">雇用形態: </td>
+						<td><input type="radio" name="type_contract" value="試用 ">試用
+							<input type="radio" name="type_contract" value="パートタイム">パートタイム
+							<input type="radio" name="type_contract" value="言葉 ">言葉 <input
+							type="radio" name="type_contract" value="長期">長期</td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">職務年数</td>
+						<td><input type="text" name="work_year"></td>
+					</tr>
 
-				<tr>
-					<td colspan="2"><a href="">日本語能力</a></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td colspan="2">資格:</td>
-					<td><select><option value="" selected disabled hidden>選択してください</option>
-							<option>N1</option>
-							<option>N2</option>
-							<option>N3</option>
-							<option>N4</option>
-							<option>N5</option></select></td>
-				</tr>
-				<tr>
-					<td colspan="2">資格失効日:</td>
-					<td><select>
-							<option value="2018">2018
+					<tr>
+						<td colspan="2"><label for id="name"><a href="">日本語能力</a></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">資格:</td>
+						<td><select><option value="" selected disabled
+									hidden>選択してください</option>
+								<option>N1</option>
+								<option>N2</option>
+								<option>N3</option>
+								<option>N4</option>
+								<option>N5</option></select></td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">資格失効日:</td>
+						<td><select>
+								<option value="2018">2018
 					</option>
-							<option value="2017">2017
+								<option value="2017">2017
 					</option>
-							<option value="2016">2016
+								<option value="2016">2016
 					</option>
-					</select><label for id="name">年 <select>
-								<option value="1">1
-					</option>
-								<option value="2">2
-					</option>
-								<option value="3">3
-					</option>
-								<option value="4">4
-					</option>
-								<option value="5">5
-					</option>
-								<option value="6">6
-					</option>
-								<option value="7">7
-					</option>
-								<option value="8">8
-					</option>
-								<option value="9">9
-					</option>
-								<option value="10">10
-					</option>
-								<option value="11">11
-					</option>
-								<option value="12">12
-					</option>
-
-						</select><label for id="name">月 <select>
+						</select><label for id="">年 <select>
 									<option value="1">1
 					</option>
 									<option value="2">2
@@ -264,83 +237,83 @@
 					</option>
 									<option value="12">12
 					</option>
-									<option value="13">13
+
+							</select><label for id="">月 <select>
+										<option value="1">1
 					</option>
-									<option value="14">14
+										<option value="2">2
 					</option>
-									<option value="15">15
+										<option value="3">3
 					</option>
-									<option value="16">16
+										<option value="4">4
 					</option>
-									<option value="17">17
+										<option value="5">5
 					</option>
-									<option value="18">18
+										<option value="6">6
 					</option>
-									<option value="19">19
+										<option value="7">7
 					</option>
-									<option value="20">20
+										<option value="8">8
 					</option>
-									<option value="21">21
+										<option value="9">9
 					</option>
-									<option value="22">22
+										<option value="10">10
 					</option>
-									<option value="23">23
+										<option value="11">11
 					</option>
-									<option value="24">24
+										<option value="12">12
 					</option>
-									<option value="25">25
+										<option value="13">13
 					</option>
-									<option value="26">26
+										<option value="14">14
 					</option>
-									<option value="27">27
+										<option value="15">15
 					</option>
-									<option value="28">28
+										<option value="16">16
 					</option>
-									<option value="29">29
+										<option value="17">17
 					</option>
-									<option value="30">30
+										<option value="18">18
 					</option>
-									<option value="31">31
+										<option value="19">19
+					</option>
+										<option value="20">20
+					</option>
+										<option value="21">21
+					</option>
+										<option value="22">22
+					</option>
+										<option value="23">23
+					</option>
+										<option value="24">24
+					</option>
+										<option value="25">25
+					</option>
+										<option value="26">26
+					</option>
+										<option value="27">27
+					</option>
+										<option value="28">28
+					</option>
+										<option value="29">29
+					</option>
+										<option value="30">30
+					</option>
+										<option value="31">31
 					</option>
 
-							</select><label for id="name">日</td>
-				</tr>
-				<tr>
-					<td colspan="2">失効日:</td>
-					<td><select>
-							<option value="2018">2018
+								</select><label for id="">日</td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">失効日:</td>
+						<td><select>
+								<option value="2018">2018
 					</option>
-							<option value="2017">2017
+								<option value="2017">2017
 					</option>
-							<option value="2016">2016
+								<option value="2016">2016
 					</option>
-					</select><label for id="name">年 <select>
-								<option value="1">1
-					</option>
-								<option value="2">2
-					</option>
-								<option value="3">3
-					</option>
-								<option value="4">4
-					</option>
-								<option value="5">5
-					</option>
-								<option value="6">6
-					</option>
-								<option value="7">7
-					</option>
-								<option value="8">8
-					</option>
-								<option value="9">9
-					</option>
-								<option value="10">10
-					</option>
-								<option value="11">11
-					</option>
-								<option value="12">12
-					</option>
-
-						</select><label for id="name">月 <select>
+						</select><label for id="">年 <select>
 									<option value="1">1
 					</option>
 									<option value="2">2
@@ -365,63 +338,89 @@
 					</option>
 									<option value="12">12
 					</option>
-									<option value="13">13
+
+							</select><label for id="">月 <select>
+										<option value="1">1
 					</option>
-									<option value="14">14
+										<option value="2">2
 					</option>
-									<option value="15">15
+										<option value="3">3
 					</option>
-									<option value="16">16
+										<option value="4">4
 					</option>
-									<option value="17">17
+										<option value="5">5
 					</option>
-									<option value="18">18
+										<option value="6">6
 					</option>
-									<option value="19">19
+										<option value="7">7
 					</option>
-									<option value="20">20
+										<option value="8">8
 					</option>
-									<option value="21">21
+										<option value="9">9
 					</option>
-									<option value="22">22
+										<option value="10">10
 					</option>
-									<option value="23">23
+										<option value="11">11
 					</option>
-									<option value="24">24
+										<option value="12">12
 					</option>
-									<option value="25">25
+										<option value="13">13
 					</option>
-									<option value="26">26
+										<option value="14">14
 					</option>
-									<option value="27">27
+										<option value="15">15
 					</option>
-									<option value="28">28
+										<option value="16">16
 					</option>
-									<option value="29">29
+										<option value="17">17
 					</option>
-									<option value="30">30
+										<option value="18">18
 					</option>
-									<option value="31">31
+										<option value="19">19
+					</option>
+										<option value="20">20
+					</option>
+										<option value="21">21
+					</option>
+										<option value="22">22
+					</option>
+										<option value="23">23
+					</option>
+										<option value="24">24
+					</option>
+										<option value="25">25
+					</option>
+										<option value="26">26
+					</option>
+										<option value="27">27
+					</option>
+										<option value="28">28
+					</option>
+										<option value="29">29
+					</option>
+										<option value="30">30
+					</option>
+										<option value="31">31
 					</option>
 
-							</select><label for id="name">日</td>
-				</tr>
-				<tr>
-					<td colspan="2">点数</td>
-					<td><input type="text" name="score"></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td><input class="button" type="button" name="submit"
-						value="確認"><input class="button" type="button" name="back"
-						value="戻る"></td>
-				</tr>
+								</select><label for id="">日</td>
+					</tr>
+					<tr>
+						<td colspan="2"><label for id="name">点数</td>
+						<td><input type="text" name="score"></td>
+					</tr>
 
-			</table>
 
+				</table>
+
+				<p></p>
+				<div class="button-div">
+					<input class="button" type="submit" name="submit" value="確認"><input
+						class="button" type="button" name="back" value="戻る">
+				</div>
+			</form>
 		</div>
-		<div class="bottom">
+		<div class="footer">
 			<label for id="copyright">Copyright © 2010 ルビナソフトウエア株式会社. All
 				rights reserved. </label>
 		</div>
