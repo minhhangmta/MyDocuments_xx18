@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="script.js"></script>
+</head>
+<body onload="myFunction()">
+	<h1>Hello</h1>
+	<br>test for onclick event:
+	<p></p>
+	<input type="button" onclick="hello()" value="click here">
+	<br>test for onsubmit event:
+	<form action="" onsubmit="return hello()">
+		<input type="submit" value="submit">
+	</form>
+	test for onchange event:
+	<p></p>
+	enter your name:
+	<input type="text" onchange="changeText(this.value)">
+		
+	<p> for onmouseover and onmouseout: </p>
+	<p>Bring your mouse inside the division to see the result:</p>      
+      <div onmouseover="over()" onmouseout="out()">
+         <h2> This is inside the division </h2>
+	</div>
+</body> 
+</html>

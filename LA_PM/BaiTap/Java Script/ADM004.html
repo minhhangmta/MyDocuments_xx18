@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Display ADM004</title>
 <link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="jscript.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -11,7 +12,7 @@
 			<table id="left">
 				<tr>
 					<td><img src="logo.jpg"></td>
-					<td><label for id="company"> Luvina Software</label></td>
+					<td><label id="company"> Luvina Software</label></td>
 				</tr>
 			</table>
 			<div class="right-header">
@@ -25,49 +26,48 @@
 
 		</div>
 		<div class="content">
-			<label for id="titleADM004">情報確認 </label>
-			<form action="ADM001.html" method="post">
+			<label id="titleADM004">情報確認 </label>
+			<form action="" method="post">
 				<table id="center-table">
 					<tr>
-						<td width="15%"><label for id="name">アカウント名:</td>
+						<td width="15%"><label id="name">アカウント名:</label></td>
 						<td>testimport22</td>
 					</tr>
 					<tr>
 
-						<td><label for id="name">グループ: </td>
+						<td><label id="name">グループ:</label></td>
 						<td>group2</td>
 					</tr>
 					<tr>
-						<td><label for id="name">氏名:</td>
+						<td><label id="name">氏名:</label></td>
 						<td>Nguyen Thi Mai Huong Test 14</td>
 					</tr>
 					<tr>
-						<td><label for id="name">カタカナ氏名:</td>
+						<td><label id="name">カタカナ氏名:</label></td>
 						<td></td>
 					</tr>
 					<tr>
 
-						<td><label for id="name">生年月日: </td>
+						<td><label id="name">生年月日:</label></td>
 						<td>1982/01/08</td>
 					</tr>
 					<tr>
-
-						<td><label for id="name">メールアドレス:</td>
+						<td><label id="name">メールアドレス:</label></td>
 						<td>testimport22@luvina.net</td>
 					</tr>
 					<tr>
 
-						<td><label for id="name">電話番号:</td>
+						<td><label id="name">電話番号:</label></td>
 						<td>000000000</td>
 					</tr>
 					<tr>
 
-						<td><label for id="name">雇用形態: </td>
+						<td><label id="name">雇用形態:</label></td>
 						<td>試用</td>
 					</tr>
 					<tr>
 
-						<td><label for id="name">職務年数: </td>
+						<td><label id="name">職務年数:</label></td>
 						<td>1</td>
 					</tr>
 
@@ -76,19 +76,19 @@
 					</tr>
 
 					<tr>
-						<td><label for id="name">資格:</td>
+						<td><label id="name">資格:</label></td>
 						<td>Kyu4</td>
 					</tr>
 					<tr>
-						<td><label for id="name">資格失効日:</td>
+						<td><label id="name">資格失効日:</label></td>
 						<td>2014/01/16</td>
 					</tr>
 					<tr>
-						<td><label for id="name">失効日:</td>
+						<td><label id="name">失効日:</label></td>
 						<td>2015/01/16</td>
 					</tr>
 					<tr>
-						<td><label for id="name">点数: </td>
+						<td><label id="name">点数:</label></td>
 						<td>101</td>
 					</tr>
 
@@ -96,13 +96,14 @@
 				<p></p>
 				<div class="button-div">
 					<input class="button" type="submit" name="edit" value="編集"><input
-						class="button" type="button" name="delete" value="削除"><input
-						type="button" class="button" name="back" value="戻る">
+						class="button" type="button" name="delete" value="削除"
+						onclick="checkDelete()"><input type="button"
+						class="button" name="back" value="戻る">
 				</div>
 			</form>
 		</div>
 		<div class="footer">
-			<label for id="copyright">Copyright © 2010 ルビナソフトウエア株式会社. All
+			<label id="copyright">Copyright © 2010 ルビナソフトウエア株式会社. All
 				rights reserved. </label>
 		</div>
 	</div>

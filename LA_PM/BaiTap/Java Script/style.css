@@ -150,10 +150,20 @@
 #center_table {
 	width: 50%;
 	margin-left: 100px;
-	margin-top: 20px;
+	margin-top: 5px;
+}
+
+#bottom_table {
+	width: 50%;
+	margin-left: 100px;
+	margin-top: 5px;
 }
 
 #name {
 	font-weight: bold;
 	font-size: 12px;
+}
+
+.error {
+	color: red;
 }
