@@ -39,15 +39,14 @@
 						<td><label class="char">*</label></td>
 						<td width="20%"><label id="name">アカウント名:</label></td>
 						<!-- Tên đăng nhập  -->
-						<td><input type="text" id="username" name="アカウント名"
-							class="obligatory"></td>
+						<td><input type="text" id="username" name="アカウント名"></td>
 					</tr>
 					<tr>
 						<td><label class="char">*</label></td>
 						<td><label id="name">グループ:</label></td>
 						<!-- Nhóm -->
-						<td><select class="obligatory" id="group" name="選択してください"><option
-									value="" selected disabled hidden="">グループ</option>
+						<td><select id="group" name="グループ"><option value=""
+									selected disabled hidden="">選択してください</option>
 								<option value="group1">group 1</option>
 								<option value="group2">group 2</option>
 								<option value="group3">group 3</option>
@@ -57,8 +56,7 @@
 						<td><label class="char">*</label></td>
 						<td><label id="name">氏名:</label></td>
 						<!-- Họ tên -->
-						<td><input class="obligatory" id="fullname" type="text"
-							name="氏名"></td>
+						<td><input id="fullname" type="text" name="氏名"></td>
 					</tr>
 					<tr>
 						<td colspan="2"><label id="name">カタカナ氏名:</label></td>
@@ -175,8 +173,7 @@
 						<td><label class="char">*</label></td>
 						<td><label id="name">メールアドレス:</label></td>
 						<!-- email -->
-						<td><input class="obligatory" id="email" type="text"
-							name="メールアドレス"></td>
+						<td><input id="email" type="text" name="メールアドレス"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -187,33 +184,32 @@
 						<td><label class="char">*</label></td>
 						<td><label id="name">電話番号:</label></td>
 						<!-- số điện thoại -->
-						<td><input class="obligatory" id="phoneNumber" type="text"
-							name="電話番号"></td>
+						<td><input id="phoneNumber" type="text" name="電話番号"></td>
 					</tr>
 
 					<tr>
 						<td><label class="char">*</label></td>
 						<td><label id="name">パスワード:</label></td>
 						<!-- mật khẩu -->
-						<td><input class="obligatory" id="password" type="password"
-							name="パスワード"></td>
+						<td><input id="password" type="password" name="パスワード"></td>
 					</tr>
 
 					<tr>
 						<td><label class="char">*</label></td>
 						<td><label id="name">パスワード（確認):</label></td>
 						<!-- xác nhận mk -->
-						<td><input class="obligatory" name="パスワード（確認)"
-							type="password" id="confirm_password"></td>
+						<td><input name="パスワード（確認)" type="password"
+							id="confirm_password"></td>
 					</tr>
 
 					<tr>
 						<td><label class="char">*</label></td>
 						<td><label id="name">雇用形態:</label></td>
 						<!-- loại hợp đồng -->
-						<td><input type="radio" name="type_contract" value="試用 " checked="checked">試用
-							<input type="radio" name="type_contract" value="パートタイム">パートタイム
-							<input type="radio" name="type_contract" value="言葉 ">言葉 <input
+						<td><input type="radio" name="type_contract" value="試用 "
+							checked="checked">試用 <input type="radio"
+							name="type_contract" value="パートタイム">パートタイム <input
+							type="radio" name="type_contract" value="言葉 ">言葉 <input
 							type="radio" name="type_contract" value="長期">長期</td>
 					</tr>
 					<tr>
@@ -222,14 +218,15 @@
 						<td><input type="text" name="work_year"></td>
 					</tr>
 					<tr>
-						<td colspan="2"><label id="name"><a href="#" onClick="hiddenTable()">日本語能力:</a></label></td>
+						<td colspan="2"><label id="name"><a href="#"
+								onClick="hiddenTable()">日本語能力:</a></label></td>
 						<!-- Trình độ tiếng nhật -->
 						<td></td>
 					</tr>
 				</table>
 				<table id="bottom_table">
 					<tr>
-						<td colspan="2"><label id="name">資格:</label></td>
+						<td  width="23%" colspan="2"><label id="name">資格:</label></td>
 						<!-- trình độ -->
 						<td><select><option value="" selected disabled
 									hidden="">選択してください</option>

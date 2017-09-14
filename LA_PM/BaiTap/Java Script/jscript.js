@@ -9,6 +9,7 @@ function validateForm() {
 	var username = document.getElementById("username");
 	var group = document.getElementById("group");
 	var fullname = document.getElementById("fullname");
+	var email = document.getElementById("email");
 	var phoneNumber = document.getElementById("phoneNumber");
 	var password = document.getElementById("password");
 	var confirm_password = document.getElementById("confirm_password");
@@ -18,12 +19,16 @@ function validateForm() {
 				+ username.name + '</label><br>';
 	}
 	if (group.value.length < 1) {
-		notice.innerHTML += '<label class="error"> Hãy chọn mục' + group.name
+		notice.innerHTML += '<label class="error"> Hãy chọn mục ' + group.name
 				+ '</label><br>';
 	}
 	if (fullname.value.length < 1) {
 		notice.innerHTML += '<label class="error"> Hãy nhập vào '
 				+ fullname.name + '</label><br>';
+	}
+	if (email.value.length < 1) {
+		notice.innerHTML += '<label class="error"> Hãy nhập vào ' + email.name
+				+ '</label><br>';
 	}
 	if (phoneNumber.value.length < 1) {
 		notice.innerHTML += '<label class="error"> Hãy nhập vào '
@@ -35,17 +40,17 @@ function validateForm() {
 	}
 	if (confirm_password.value.length < 1) {
 		notice.innerHTML += '<label class="error"> Hãy nhập vào '
-				+ password.name + '</label><br>';
+				+ confirm_password.name + '</label><br>';
 	}
 
 	return false;
 }
 
 function hiddenTable() {
-	if (document.getElementById("bottom_table").style.display == "") {
+	if (document.getElementById("bottom_table").style.display == "block") {
 		document.getElementById("bottom_table").style.display = "none";
 	} else {
-		document.getElementById("bottom_table").style.display = "";
+		document.getElementById("bottom_table").style.display = "block";
 	}
 }
 
