@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 
  */
 
@@ -47,10 +47,10 @@ function validateForm() {
 }
 
 function hiddenTable() {
-	if (document.getElementById("bottom_table").style.display == "block") {
+	if (document.getElementById("bottom_table").style.display == "") {
 		document.getElementById("bottom_table").style.display = "none";
 	} else {
-		document.getElementById("bottom_table").style.display = "block";
+		document.getElementById("bottom_table").style.display = "";
 	}
 }
 
