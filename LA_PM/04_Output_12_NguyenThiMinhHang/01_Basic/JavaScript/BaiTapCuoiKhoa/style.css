@@ -1,0 +1,169 @@
+.container {
+	margin: auto;
+	width: 100%;
+	height: 1000px;
+}
+
+#left {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 50%;
+	float: left;
+}
+
+#bottom-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	text-align: left;
+	font-size: 13px;
+}
+
+#bottom-table tr {
+	border: 1px solid black;
+}
+
+#bottom-table th {
+	border: 1px solid black;
+	background: #CCCCCC;
+	text-align: left;
+}
+
+#bottom-table td {
+	border: 1px solid black;
+}
+
+.header {
+	height: 10%;
+}
+
+#left td {
+	border: 1px solid black;
+}
+
+#right {
+	float: left;
+	padding: 20px 10px 10px 10px;
+}
+
+#right td {
+	padding: 10px;
+}
+
+.right-header {
+	width: auto;
+}
+
+#company {
+	color: grey;
+	font-size: 35px;
+}
+
+.left-header {
+	width: 80%;
+}
+
+.right-header {
+	float: left;
+}
+
+.left-header {
+	float: left;
+}
+
+.content {
+	margin: auto;
+	width: 100%;
+	height: auto;
+	padding: 20px;
+}
+
+.footer {
+	margin: auto;
+	width: 35%;
+	height: 5%;
+}
+
+.char {
+	color: red;
+}
+
+.button {
+	font-size: 9px;
+	width: 65px;
+	height: 18px;
+	margin: 2px;
+}
+
+.button-div {
+	font-size: 12px;
+	margin: auto;
+	width: 50%;
+}
+
+}
+#titleADM002 {
+	font-weight: bold;
+}
+
+#titleADM003 {
+	font-weight: bold;
+	margin-left: 100px;
+}
+
+#titleADM004 {
+	font-weight: bold;
+	margin-left: 50px;
+}
+
+#copyright {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+#textname {
+	font-weight: bold;
+	font-size: 13px;
+}
+
+.year {
+	width: 50px;
+	margin: 5px;
+}
+
+#center-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 80%;
+	margin-left: 50px;
+	margin-top: 20px;
+}
+
+#center-table td {
+	border: 1px solid black;
+}
+
+#center-table tr {
+	border: 1px solid black;
+}
+
+#center_table {
+	width: 50%;
+	margin-left: 100px;
+	margin-top: 5px;
+}
+
+#bottom_table {
+	width: 50%;
+	margin-left: 100px;
+	margin-top: 5px;
+}
+
+#name {
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.error {
+	color: red;
+}
