@@ -19,8 +19,8 @@ public class DoTest {
 	 */
 	public static void main(String[] args) {
 		CDDatabase cdDatabase = new CDDatabase();
-		CD cd1 = new CD("Charlie", "See you again");
-		CD cd2 = new CD("Taylor", "Style");
+		CD cd1 = new CD("Min", "Y.E.U");
+		CD cd2 = new CD("Hương Tràm", "Em gái mưa");
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		while (true) {

@@ -4,6 +4,10 @@
 */
 package bai2;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Lớp quản lý dữ liệu CD, tác động tới DB
@@ -20,17 +25,31 @@ import java.util.List;
 public class CDDatabase {
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
-	private String URL = "jdbc:mysql://localhost:3306/cds?";
-	private String USER = "root";
-	private String PASS = "root";
+	private String URL;
+	private String USER;
+	private String PASS;
+	Properties properties = new Properties();
 
 	/**
 	 * Hàm mở connection
 	 */
 	public void getConnection() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(URL, USER, PASS);
+			try {
+				properties.load(new FileReader(new File("info.properties")));
+				// lấy danh sách property từ file vào
+				URL = properties.getProperty("url"); // lấy giá trị url trong file
+				USER = properties.getProperty("user"); // lấy giá trị user trong file
+				PASS = properties.getProperty("password");
+				Class.forName("com.mysql.jdbc.Driver");
+				connection = DriverManager.getConnection(URL, USER, PASS);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
