@@ -44,19 +44,19 @@ public class DivisionNumber {
 			errorNotice = "Hãy nhập giá trị cho [" + character + "] ";
 		} else {
 			// Kiểm tra giá trị nhập vào là số và >0
-			Pattern pattern = Pattern.compile("\\d");
+			Pattern pattern = Pattern.compile("\\d+");
 			Matcher matcher = pattern.matcher(number);
 			boolean check = matcher.matches();
 			if (!check) {
-				errorNotice = "Giá trị [" + character + "] phải là giá trị số và > 0. Hãy nhập lại.";
-			} else if (Integer.parseInt(number) <= 0) {
-				errorNotice = "Giá trị [" + character + "] phải là giá trị số và > 0. Hãy nhập lại.";
+				errorNotice = "Giá trị [" + character + "] phải là số nguyên dương. Hãy nhập lại.";
+			} else {
+				if (Integer.parseInt(number) <= 0) {
+					errorNotice = "Giá trị [" + character + "] phải là số nguyên dương. Hãy nhập lại.";
+				} else if (number.length() > 5) {
+					// Kiểm tra giá trị nhập vào ko được lớn hơn 5 số
+					errorNotice = "Giá trị [" + character + "] không được lớn hơn 5 số. Hãy nhập lại.";
+				}
 			}
-			// Kiểm tra giá trị nhập vào ko được lớn hơn 5 số
-			else if (number.length() > 5) {
-				errorNotice = "Giá trị [" + character + "] không được lớn hơn 5 số. Hãy nhập lại.";
-			}
-
 		}
 		return errorNotice;
 	}

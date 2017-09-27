@@ -19,8 +19,8 @@ public class DoTest {
 	 */
 	public static void main(String[] args) {
 		CDDatabase cdDatabase = new CDDatabase();
-		CD cd1 = new CD("Min", "Y.E.U");
-		CD cd2 = new CD("Hương Tràm", "Em gái mưa");
+		CD cd1 = new CD("ABC", "xxxssa 100%");
+		CD cd2 = new CD("Taylor", "Style");
 		Scanner sc = new Scanner(System.in);
 		int choice;
 		while (true) {
@@ -34,7 +34,7 @@ public class DoTest {
 				System.out.println(cdDatabase.removeCD(cd2));
 				return;
 			case 3:
-				System.out.println(cdDatabase.findByTitle("%").toString());
+				System.out.println(cdDatabase.findByTitle("0%").toString());
 				return;
 			case 4:
 				System.out.println(cdDatabase.findByArtist("ha").toString());

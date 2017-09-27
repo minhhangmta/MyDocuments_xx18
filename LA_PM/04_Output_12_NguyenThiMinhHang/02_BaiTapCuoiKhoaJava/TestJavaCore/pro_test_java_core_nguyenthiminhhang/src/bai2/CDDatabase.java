@@ -35,29 +35,18 @@ public class CDDatabase {
 	 */
 	public void getConnection() {
 		try {
-			try {
-				properties.load(new FileReader(new File("info.properties")));
-				// lấy danh sách property từ file vào
-				URL = properties.getProperty("url"); // lấy giá trị url trong file
-				USER = properties.getProperty("user"); // lấy giá trị user trong file
-				PASS = properties.getProperty("password");
-				Class.forName("com.mysql.jdbc.Driver");
-				connection = DriverManager.getConnection(URL, USER, PASS);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+			//Load file properties 
+			properties.load(new FileReader(new File("info.properties")));
+			// lấy danh sách property từ file vào
+			URL = properties.getProperty("url"); // lấy giá trị url trong file
+			USER = properties.getProperty("user"); // lấy giá trị user trong file
+			PASS = properties.getProperty("password"); // lấy giá trị password trong file
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection(URL, USER, PASS);
+		} catch (SQLException | ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
