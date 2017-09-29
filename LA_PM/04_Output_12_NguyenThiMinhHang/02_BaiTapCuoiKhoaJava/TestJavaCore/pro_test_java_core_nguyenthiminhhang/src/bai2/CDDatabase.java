@@ -51,15 +51,22 @@ public class CDDatabase {
 		}
 	}
 
-	public void inputCD(CD cd) {
-		String art, tit;
-		System.out.println("Nhập Artist: ");
-		art = sc.nextLine();
-		if(art=="")
-			System.out.println("");
-		System.out.println("Nhập Title: ");
-		tit = sc.nextLine();
-		
+	public void inputCD(CD cd, String type, String value) {
+		System.out.println("Nhập " + type + ": ");
+		value = sc.nextLine();
+		while ("".equals(value.trim()) || value.length() > 255) {
+			System.out.println("Hãy nhập giá trị ");
+			System.out.println("Nhập " + type + ": ");
+			value = sc.nextLine();
+		}
+		if (type == "Artist") {
+			cd.setArtist(value);
+		} else if (type == "Title") {
+			cd.setTitle(value);
+		} else {
+			System.out.println("Hệ thống đang có lỗi!");
+		}
+
 	}
 
 	public String inputKey() {
@@ -67,6 +74,11 @@ public class CDDatabase {
 		System.out.println("Nhập từ khóa cần tìm kiếm: ");
 		key = sc.nextLine();
 		return key;
+	}
+	
+	public boolean checkValueDB(CD cd) {
+		
+		return true;
 	}
 
 	/**
@@ -86,13 +98,12 @@ public class CDDatabase {
 			preparedStatement.setString(2, cd.getTitle());
 			int excute = preparedStatement.executeUpdate();
 			if (excute > 0) {
-				notice = "Đã thêm!";
-			} else {
-				notice = "Không thể thêm!";
+				notice = "Thêm mới thành công!";
 			}
+			else
+				notice = "Artist và Title đã tồn tại, hãy nhập lại.";
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Hệ thống đang có lỗi!");
 		} finally {
 			closeConnection();
 		}
@@ -116,13 +127,12 @@ public class CDDatabase {
 			preparedStatement.setString(2, cd.getTitle());
 			int excute = preparedStatement.executeUpdate();
 			if (excute > 0) {
-				notice = "Đã xóa!";
+				notice = "Xóa thành công!";
 			} else {
-				notice = "Không thể xóa!";
+				notice = "Xóa thành công!";
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Hệ thống đang có lỗi!");
 		} finally {
 			closeConnection();
 		}

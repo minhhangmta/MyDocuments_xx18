@@ -34,11 +34,13 @@ public class DoTest {
 				System.exit(1);
 				break;
 			case "1":
-				cdDatabase.inputCD(cd);
+				cdDatabase.inputCD(cd, "Artist", cd.getArtist());
+				cdDatabase.inputCD(cd, "Title", cd.getTitle());
 				System.out.println(cdDatabase.insertCD(cd));
 				break;
 			case "2":
-				cdDatabase.inputCD(cd);
+				cdDatabase.inputCD(cd, "Artist", cd.getArtist());
+				cdDatabase.inputCD(cd, "Title", cd.getTitle());
 				System.out.println(cdDatabase.removeCD(cd));
 				break;
 			case "3":
