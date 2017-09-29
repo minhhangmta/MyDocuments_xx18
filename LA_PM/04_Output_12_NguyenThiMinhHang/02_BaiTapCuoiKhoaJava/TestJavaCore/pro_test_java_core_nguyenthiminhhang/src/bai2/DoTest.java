@@ -13,32 +13,40 @@ import java.util.Scanner;
  * @author minhhang
  */
 public class DoTest {
+
 	/**
 	 * Hàm main
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		CDDatabase cdDatabase = new CDDatabase();
-		CD cd1 = new CD("ABC", "xxxssa 100%");
-		CD cd2 = new CD("Taylor", "Style");
+		CD cd = new CD();
 		Scanner sc = new Scanner(System.in);
-		int choice;
+		String choice;
 		while (true) {
-			System.out.println("Hay nhap vao so (1-4) de chon: ");
-			choice = sc.nextInt();
+			System.out.println("Hãy nhập tùy chọn: \r\n" + "Nhập 0: Thoát khỏi chương trình\r\n"
+					+ "Nhập 1: Thêm bài hát\r\n" + "Nhập 2: Xóa bài hát\r\n" + "Nhập 3: Tìm bài hát thêm tiêu đề\r\n"
+					+ "Nhập 4: Tìm bài hát theo tác giả ");
+			choice = sc.nextLine();
 			switch (choice) {
-			case 1:
-				System.out.println(cdDatabase.insertCD(cd1));
-				return;
-			case 2:
-				System.out.println(cdDatabase.removeCD(cd2));
-				return;
-			case 3:
-				System.out.println(cdDatabase.findByTitle("0%").toString());
-				return;
-			case 4:
-				System.out.println(cdDatabase.findByArtist("ha").toString());
-				return;
+			case "0":
+				System.exit(1);
+				break;
+			case "1":
+				cdDatabase.inputCD(cd);
+				System.out.println(cdDatabase.insertCD(cd));
+				break;
+			case "2":
+				cdDatabase.inputCD(cd);
+				System.out.println(cdDatabase.removeCD(cd));
+				break;
+			case "3":
+				System.out.println(cdDatabase.findByTitle(cdDatabase.inputKey()));
+				break;
+			case "4":
+				System.out.println(cdDatabase.findByArtist(cdDatabase.inputKey()));
+				break;
 			default:
 				System.out.println("Hãy nhập hàm cần test là từ 1 đến 4");
 				break;

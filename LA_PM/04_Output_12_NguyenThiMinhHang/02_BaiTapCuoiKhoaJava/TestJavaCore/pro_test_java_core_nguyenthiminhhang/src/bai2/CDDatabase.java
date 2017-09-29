@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 /**
  * Lớp quản lý dữ liệu CD, tác động tới DB
@@ -29,13 +30,14 @@ public class CDDatabase {
 	private String USER;
 	private String PASS;
 	Properties properties = new Properties();
+	Scanner sc = new Scanner(System.in);
 
 	/**
 	 * Hàm mở connection
 	 */
 	public void getConnection() {
 		try {
-			//Load file properties 
+			// Load file properties
 			properties.load(new FileReader(new File("info.properties")));
 			// lấy danh sách property từ file vào
 			URL = properties.getProperty("url"); // lấy giá trị url trong file
@@ -47,6 +49,24 @@ public class CDDatabase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void inputCD(CD cd) {
+		String art, tit;
+		System.out.println("Nhập Artist: ");
+		art = sc.nextLine();
+		if(art=="")
+			System.out.println("");
+		System.out.println("Nhập Title: ");
+		tit = sc.nextLine();
+		
+	}
+
+	public String inputKey() {
+		String key;
+		System.out.println("Nhập từ khóa cần tìm kiếm: ");
+		key = sc.nextLine();
+		return key;
 	}
 
 	/**
