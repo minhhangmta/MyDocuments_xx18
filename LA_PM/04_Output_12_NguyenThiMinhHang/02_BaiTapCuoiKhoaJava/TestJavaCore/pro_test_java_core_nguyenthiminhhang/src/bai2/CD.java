@@ -62,15 +62,4 @@ public class CD {
 		this.artist = artist;
 		this.title = title;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "CDDatabase [artist=" + artist + ", title=" + title + "]";
-	}
-
 }

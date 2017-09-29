@@ -51,11 +51,21 @@ public class CDDatabase {
 		}
 	}
 
+	/**
+	 * Hàm nhập vào 1 CD
+	 * 
+	 * @param cd
+	 *            đối tượng CD
+	 * @param type
+	 *            kí tự Artist/Title để in ra màn hình
+	 * @param value
+	 *            giá trị nhập từ bàn phím
+	 */
 	public void inputCD(CD cd, String type, String value) {
 		System.out.println("Nhập " + type + ": ");
 		value = sc.nextLine();
 		while ("".equals(value.trim()) || value.length() > 255) {
-			System.out.println("Hãy nhập giá trị ");
+			System.out.println("Hãy nhập giá trị khác rỗng và <255 kí tự");
 			System.out.println("Nhập " + type + ": ");
 			value = sc.nextLine();
 		}
@@ -69,15 +79,41 @@ public class CDDatabase {
 
 	}
 
+	/**
+	 * Hàm nhập từ khóa
+	 * 
+	 * @return từ khóa nhập vào từ bàn phím
+	 */
 	public String inputKey() {
 		String key;
 		System.out.println("Nhập từ khóa cần tìm kiếm: ");
 		key = sc.nextLine();
+		System.out.println("Artist\t\t\tTitle");
 		return key;
 	}
-	
-	public boolean checkValueDB(CD cd) {
-		
+
+	/**
+	 * Hàm kiểm tra CD nhập vào có tồn tại trong DB không
+	 * 
+	 * @param cd
+	 *            đối tượng CD
+	 * @return giá trị boolean
+	 */
+	public boolean isExistValue(CD cd) {
+		String query = "SELECT * FROM cds WHERE artist = ? and title = ? ; ";
+		try {
+			getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cd.getArtist());
+			preparedStatement.setString(2, cd.getTitle());
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 
@@ -89,23 +125,25 @@ public class CDDatabase {
 	 * @return chuỗi thông báo
 	 */
 	public String insertCD(CD cd) {
-		String query = "INSERT INTO cds values(?,?);";
 		String notice = "";
-		try {
-			getConnection();
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, cd.getArtist());
-			preparedStatement.setString(2, cd.getTitle());
-			int excute = preparedStatement.executeUpdate();
-			if (excute > 0) {
-				notice = "Thêm mới thành công!";
+		if (isExistValue(cd))
+			notice = "Artist và Title đã tồn tại, hãy nhập lại.";
+		else {
+			String query = "INSERT INTO cds values(?,?);";
+			try {
+				getConnection();
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, cd.getArtist());
+				preparedStatement.setString(2, cd.getTitle());
+				int excute = preparedStatement.executeUpdate();
+				if (excute > 0) {
+					notice = "Thêm mới thành công!";
+				}
+			} catch (SQLException e) {
+				System.out.println("Hệ thống đang có lỗi!");
+			} finally {
+				closeConnection();
 			}
-			else
-				notice = "Artist và Title đã tồn tại, hãy nhập lại.";
-		} catch (SQLException e) {
-			System.out.println("Hệ thống đang có lỗi!");
-		} finally {
-			closeConnection();
 		}
 		return notice;
 	}
@@ -205,6 +243,21 @@ public class CDDatabase {
 			}
 		}
 		return listCD;
+	}
+
+	/**
+	 * Hàm in ra danh sách CD
+	 * 
+	 * @param list
+	 *            danh sách CD
+	 * @return chuỗi danh sách CD
+	 */
+	public String printListCD(ArrayList<CD> list) {
+		String result = "";
+		for (CD cd : list) {
+			result = cd.getArtist() + "\t\t" + cd.getTitle() + "\n";
+		}
+		return result;
 	}
 
 	/**
