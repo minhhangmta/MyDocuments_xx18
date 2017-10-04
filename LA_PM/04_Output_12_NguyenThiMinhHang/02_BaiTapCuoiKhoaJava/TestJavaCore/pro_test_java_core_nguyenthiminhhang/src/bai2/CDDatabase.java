@@ -47,7 +47,9 @@ public class CDDatabase {
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException | ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Hệ thống đang có lỗi!");
+			// Start fix bug ID 37 – NguyenThiMinhHang 4/10/2017
+			System.out.println("Hệ thống đang có lỗi");
+			// End fix bug ID 37 – NguyenThiMinhHang 4/10/2017
 		}
 	}
 
@@ -85,6 +87,7 @@ public class CDDatabase {
 	 * @return từ khóa nhập vào từ bàn phím
 	 */
 	public String inputKey() {
+		// Start fix bug ID 38,39 – NguyenThiMinhHang 4/10/2017
 		String key = "";
 		while ("".equals(key.trim())) {
 			System.out.println("Nhập từ khóa cần tìm kiếm: ");
@@ -92,6 +95,7 @@ public class CDDatabase {
 		}
 		System.out.println("Artist\t\t\tTitle");
 		return key;
+		// End fix bug ID 38,39 – NguyenThiMinhHang 4/10/2017
 	}
 
 	/**
@@ -108,7 +112,7 @@ public class CDDatabase {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, cd.getArtist());
 			preparedStatement.setString(2, cd.getTitle());
-			ResultSet resultSet = preparedStatement.executeQuery();
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (!resultSet.first()) {
 				return false;
 			}
@@ -196,8 +200,8 @@ public class CDDatabase {
 				getConnection();
 				key = key.replace("%", "\\%");
 				preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, "'%" + key + "%'");
-				ResultSet resultSet = preparedStatement.executeQuery();
+				preparedStatement.setString(1, "%" + key + "%");
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					String ar = resultSet.getString("artist");
 					String ti = resultSet.getString("title");
@@ -231,7 +235,7 @@ public class CDDatabase {
 				key = key.replace("%", "\\%");
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, "%" + key + "%");
-				ResultSet resultSet = preparedStatement.executeQuery();
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					String ar = resultSet.getString("artist");
 					String ti = resultSet.getString("title");

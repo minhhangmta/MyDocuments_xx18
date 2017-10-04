@@ -43,14 +43,18 @@ public class DoTest {
 				cdDatabase.inputCD(cd, "Title", cd.getTitle());
 				System.out.println(cdDatabase.removeCD(cd));
 				break;
+				// Start fix bug ID 40 – NguyenThiMinhHang 4/10/2017
 			case "3":
 				System.out.println(cdDatabase.printListCD(cdDatabase.findByTitle(cdDatabase.inputKey())));
 				break;
 			case "4":
 				System.out.println(cdDatabase.printListCD(cdDatabase.findByArtist(cdDatabase.inputKey())));
 				break;
+				// End fix bug ID 40 – NguyenThiMinhHang 4/10/2017
 			default:
+				// Start fix bug ID 36 – NguyenThiMinhHang 4/10/2017
 				System.out.println("Hãy nhập hàm cần test là từ 0 đến 4");
+				// End fix bug ID 36 – NguyenThiMinhHang 4/10/2017
 				break;
 			}
 		}
