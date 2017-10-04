@@ -47,6 +47,7 @@ public class CDDatabase {
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException | ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
+//			System.out.println("Hệ thống đang có lỗi!");
 			e.printStackTrace();
 		}
 	}
