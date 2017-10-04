@@ -44,13 +44,13 @@ public class DoTest {
 				System.out.println(cdDatabase.removeCD(cd));
 				break;
 			case "3":
-				System.out.println(cdDatabase.printListCD(cdDatabase.findByArtist(cdDatabase.inputKey())));
-				break;
-			case "4":
 				System.out.println(cdDatabase.printListCD(cdDatabase.findByTitle(cdDatabase.inputKey())));
 				break;
+			case "4":
+				System.out.println(cdDatabase.printListCD(cdDatabase.findByArtist(cdDatabase.inputKey())));
+				break;
 			default:
-				System.out.println("Hãy nhập hàm cần test là từ 1 đến 4");
+				System.out.println("Hãy nhập hàm cần test là từ 0 đến 4");
 				break;
 			}
 		}

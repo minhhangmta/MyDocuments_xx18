@@ -47,8 +47,7 @@ public class CDDatabase {
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (SQLException | ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
-//			System.out.println("Hệ thống đang có lỗi!");
-			e.printStackTrace();
+			System.out.println("Hệ thống đang có lỗi!");
 		}
 	}
 
@@ -86,9 +85,11 @@ public class CDDatabase {
 	 * @return từ khóa nhập vào từ bàn phím
 	 */
 	public String inputKey() {
-		String key;
-		System.out.println("Nhập từ khóa cần tìm kiếm: ");
-		key = sc.nextLine();
+		String key = "";
+		while ("".equals(key.trim())) {
+			System.out.println("Nhập từ khóa cần tìm kiếm: ");
+			key = sc.nextLine();
+		}
 		System.out.println("Artist\t\t\tTitle");
 		return key;
 	}
@@ -107,7 +108,7 @@ public class CDDatabase {
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, cd.getArtist());
 			preparedStatement.setString(2, cd.getTitle());
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			ResultSet resultSet = preparedStatement.executeQuery();
 			if (!resultSet.first()) {
 				return false;
 			}
@@ -195,8 +196,8 @@ public class CDDatabase {
 				getConnection();
 				key = key.replace("%", "\\%");
 				preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setString(1, "%" + key + "%");
-				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				preparedStatement.setString(1, "'%" + key + "%'");
+				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					String ar = resultSet.getString("artist");
 					String ti = resultSet.getString("title");
@@ -230,7 +231,7 @@ public class CDDatabase {
 				key = key.replace("%", "\\%");
 				preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, "%" + key + "%");
-				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					String ar = resultSet.getString("artist");
 					String ti = resultSet.getString("title");
