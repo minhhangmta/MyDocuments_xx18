@@ -261,11 +261,13 @@ public class CDDatabase {
 	public String printListCD(ArrayList<CD> list) {
 		String result = "";
 		for (CD cd : list) {
-			result = cd.getArtist() + "\t\t" + cd.getTitle() + "\n";
+			// Start fix bug ID 40 – NguyenThiMinhHang 4/10/2017
+			result += cd.getArtist() + "\t\t" + cd.getTitle() + "\n";
+			// End fix bug ID 40 – NguyenThiMinhHang 4/10/2017
 		}
 		return result;
 	}
-
+	
 	/**
 	 * Hàm đóng connection
 	 */
