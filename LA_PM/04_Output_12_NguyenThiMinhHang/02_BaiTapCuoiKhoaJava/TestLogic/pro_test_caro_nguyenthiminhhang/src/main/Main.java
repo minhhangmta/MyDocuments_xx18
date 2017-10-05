@@ -4,6 +4,8 @@ package main;
  * Main.java Oct 4, 2017 minhhang
  */
 
+import controller.CaroController;
+import model.CaroModel;
 import view.CaroView;
 
 /**
@@ -14,10 +16,16 @@ import view.CaroView;
 public class Main {
 	/**
 	 * Hàm main
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Khởi tạo đối tượng caro View
-		CaroView caroView = new CaroView();
+		// Khởi tạo đối tượng caro Model để lấy và xử lý dữ liệu
+		CaroModel model = new CaroModel();
+		// Khởi tạo đối tượng caro View để show giao diện
+		CaroView view = new CaroView();
+		
+		CaroController controller = new CaroController(model, view);
+		controller.showView();
 	}
 }

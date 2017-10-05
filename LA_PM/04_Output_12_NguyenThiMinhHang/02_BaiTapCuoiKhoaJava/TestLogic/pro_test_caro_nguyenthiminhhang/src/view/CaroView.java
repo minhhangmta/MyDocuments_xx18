@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import controller.CaroController;
+import model.CaroModel;
 
 /**
  * Giao diện chương trình
@@ -53,20 +54,19 @@ public class CaroView extends JPanel {
 	private int WIDTH_FRAME = 700;
 	private int HEIGHT_FRAME = 700;
 	private JFrame mainFrame;
-	private JButton[][] lstBtn = new JButton[ROW][COL];
-	private CaroController controller;
+	private JButton[][] lstOCo = new JButton[ROW][COL];
+	private CaroModel model = new CaroModel();
 
 	/**
 	 * @throws HeadlessException
 	 */
 	public CaroView() throws HeadlessException {
-		showGUI();
 	}
 
 	/**
 	 * 
 	 */
-	public void showGUI() {
+	public void showView() {
 		mainFrame = new JFrame("Game cờ caro");
 		createCaroBoard();
 		mainFrame.setSize(WIDTH_FRAME, HEIGHT_FRAME);
@@ -77,7 +77,6 @@ public class CaroView extends JPanel {
 	}
 
 	public void createCaroBoard() {
-		
 		JPanel jPanel = new JPanel();
 		jPanel.setBackground(Color.WHITE);
 		mainFrame.add(jPanel);
@@ -85,21 +84,21 @@ public class CaroView extends JPanel {
 
 		for (int i = 0; i < ROW; i++) {
 			for (int j = 0; j < COL; j++) {
-				lstBtn[i][j] = new JButton();
-				lstBtn[i][j].setBackground(Color.white);
-				lstBtn[i][j].addActionListener(new Action() {
+				lstOCo[i][j] = new JButton();
+				lstOCo[i][j].setBackground(Color.white);
+				lstOCo[i][j].addActionListener(new Action() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						for (int i = 0; i < ROW; i++) {
 							for (int j = 0; j < ROW; j++) {
-								if (e.getSource() == lstBtn[i][j] && lstBtn[i][j].getText() != "X"
-										&& lstBtn[i][j].getText() != "O") {
-									lstBtn[i][j].setText("X");
-									lstBtn[i][j].setFont(new Font("Arial", Font.BOLD, 30));
-									lstBtn[i][j].setMargin(new Insets(1, 1, 1, 1));
-									if (controller.checkWin(i, j, lstBtn[i][j].getText(), lstBtn) == true) {
-										JOptionPane.showMessageDialog(null, lstBtn[i][j].getText() + " thắng!",
+								if (e.getSource() == lstOCo[i][j] && lstOCo[i][j].getText() != "X"
+										&& lstOCo[i][j].getText() != "O") {
+									lstOCo[i][j].setText("X");
+									lstOCo[i][j].setFont(new Font("Arial", Font.BOLD, 30));
+									lstOCo[i][j].setMargin(new Insets(1, 1, 1, 1));
+									if (model.checkWin(i, j, lstOCo[i][j].getText(), lstOCo) == true) {
+										JOptionPane.showMessageDialog(null, lstOCo[i][j].getText() + " thắng!",
 												"Finish", JOptionPane.INFORMATION_MESSAGE);
 										for (Component com : jPanel.getComponents()) {
 											com.setEnabled(false);
@@ -147,7 +146,7 @@ public class CaroView extends JPanel {
 					}
 				});
 
-				jPanel.add(lstBtn[i][j]);
+				jPanel.add(lstOCo[i][j]);
 			}
 		}
 		mainFrame.setLayout(new GridLayout());

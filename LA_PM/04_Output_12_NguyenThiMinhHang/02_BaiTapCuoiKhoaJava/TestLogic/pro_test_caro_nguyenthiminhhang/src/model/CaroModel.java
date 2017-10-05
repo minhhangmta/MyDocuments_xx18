@@ -21,23 +21,23 @@ public class CaroModel {
 	 *            vị trí cột
 	 * @param namePlayer
 	 *            tên nhân vật chơi: người/máy
-	 * @param lstBtn
+	 * @param lstOCo
 	 *            danh sách các ô cờ
 	 * @return true nếu thắng, false nếu ko thắng
 	 */
-	public boolean checkWin(int xRow, int yCol, String namePlayer, JButton[][] lstBtn) {
+	public boolean checkWin(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
 		// biến đếm ô cờ để kiểm tra
 		int count = 0;
 
 		for (int i = -4; i <= 4; i++) {
 			// Check hàng dọc
-			if (lstBtn[xRow + i][yCol].getText() == namePlayer) {
+			if (lstOCo[xRow + i][yCol].getText() == namePlayer) {
 				count++;
 				// Check hàng ngang
-			} else if (lstBtn[xRow][yCol + i].getText() == namePlayer) {
+			} else if (lstOCo[xRow][yCol + i].getText() == namePlayer) {
 				count++;
 				// Check đường chéo
-			} else if (lstBtn[xRow + i][yCol + i].getText() == namePlayer) {
+			} else if (lstOCo[xRow + i][yCol + i].getText() == namePlayer) {
 				count++;
 				//Kiểm tra điều kiện chơi chưa thắng
 			} else if (count < 5) {
