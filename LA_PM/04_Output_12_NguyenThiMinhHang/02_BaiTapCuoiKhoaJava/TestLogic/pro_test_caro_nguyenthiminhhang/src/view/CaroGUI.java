@@ -9,14 +9,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Label;
+import java.awt.List;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -36,10 +40,12 @@ public class CaroGUI extends Frame implements ActionListener {
 	private int WIDTH_FRAME = 1000;
 	private int HEIGHT_FRAME = 600;
 	private int WIDTH_LEFT_PANEL = 1000;
-	private int HEIGHT_LEFT_PANEL = 600;
+	private int HEIGHT_LEFT_PANEL = 400;
 	private JFrame mainFrame;
 	private JRadioButton rdHuman;
 	private JRadioButton rdPC;
+//	private ArrayList<JButton> lstBtn ;
+	private JButton[][] lstBtn = new JButton[X0][Y0];
 
 	/**
 	 * @throws HeadlessException
@@ -48,6 +54,9 @@ public class CaroGUI extends Frame implements ActionListener {
 		showGUI();
 	}
 
+	/**
+	 * 
+	 */
 	public void showGUI() {
 		mainFrame = new JFrame("Game cờ caro");
 		createLayout();
@@ -55,6 +64,7 @@ public class CaroGUI extends Frame implements ActionListener {
 
 		mainFrame.setSize(WIDTH_FRAME, HEIGHT_FRAME);
 		mainFrame.setVisible(true);
+		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setResizable(false);
 	}
@@ -65,14 +75,16 @@ public class CaroGUI extends Frame implements ActionListener {
 
 		jPanelLeft.setBackground(Color.WHITE);
 		mainFrame.add(jPanelLeft);
-		mainFrame.setLayout(new FlowLayout());
+		mainFrame.setLayout(new GridLayout(400,200));
 		jPanelLeft.setPreferredSize(new Dimension(WIDTH_LEFT_PANEL, HEIGHT_LEFT_PANEL));
-
+		jPanelLeft.setLayout(new GridLayout(X0, Y0));
+		
 		for (int i = 0; i < X0; i++) {
 			for (int j = 0; j < Y0; j++) {
-				JButton button = new JButton();
-				button.setBackground(Color.white);
-				button.addActionListener(new Action() {
+				lstBtn[i][j] = new JButton();
+				lstBtn[i][j].setBackground(Color.white);
+				lstBtn[i][j].setEnabled(false);
+				lstBtn[i][j].addActionListener(new Action() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -116,10 +128,10 @@ public class CaroGUI extends Frame implements ActionListener {
 
 					}
 				});
-				jPanelLeft.add(button);
+				jPanelLeft.add(lstBtn[i][j]);
 			}
 		}
-		jPanelLeft.setLayout(new GridLayout(X0, Y0));
+		
 
 		jPanelRight.setBackground(Color.LIGHT_GRAY);
 		JButton btnStart = new JButton("Bắt đầu");
@@ -130,8 +142,11 @@ public class CaroGUI extends Frame implements ActionListener {
 			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
-				
+				for (int i = 0; i < X0; i++) {
+					for (int j = 0; j < Y0; j++) {
+						lstBtn[i][j].setEnabled(true);
+					}
+				}
 			}
 		});
 		
