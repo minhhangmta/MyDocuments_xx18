@@ -28,15 +28,10 @@ public class CaroController {
 	}
 
 	/**
-	 * Gọi hàm check win từ model
-	 * @param xRow
-	 * @param yCol
-	 * @param namePlayer
-	 * @param lstOCo
-	 * @return boolean value 
+	 * Điều hướng đến view ShowView		
 	 */
-		
 	public void showView() {
 		view.showView();
 	}
+	
 }

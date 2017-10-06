@@ -5,12 +5,11 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import view.Constants;
 
 /**
  * Lớp lấy dữ liệu thế cờ từ file
@@ -23,16 +22,29 @@ public class DataPlayCaro {
 	 * 
 	 * @return mảng thế cờ 2 chiều
 	 */
-	public ArrayList<String> readFile() {
-		ArrayList<String> lstTheCo = new ArrayList<>();
-		FileReader fileReader;
+	public ArrayList<TheCo> readFile() {
+		ArrayList<TheCo> lstTheCo = new ArrayList<>();
+		String[][] matrix = null;
 		BufferedReader bufferedReader;
-
+		FileInputStream fileInputStream;
+		String line = "";
 		try {
-			fileReader = new FileReader(Constants.PATH_THE_CO);
-			bufferedReader = new BufferedReader(fileReader);
-			String line = bufferedReader.readLine();
-			
+			fileInputStream = new FileInputStream(new File(Constants.PATH_THE_CO));
+			bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+			line = bufferedReader.readLine();
+			int row = 0;
+			while (line != null) {
+				if (line.isEmpty() && matrix != null) {
+					TheCo theCo = new TheCo();
+					theCo.setMatrix(matrix);
+					lstTheCo.add(theCo);
+				} else {
+					for (int i = 0; i < line.length(); i++) {
+						matrix[i][row] = line.charAt(i) + "";
+					}
+				}
+				row++;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,5 +52,8 @@ public class DataPlayCaro {
 
 		return lstTheCo;
 	}
+	
+	
+
 
 }

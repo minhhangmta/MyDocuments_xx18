@@ -27,5 +27,6 @@ public class Main {
 		
 		CaroController controller = new CaroController(model, view);
 		controller.showView();
+		
 	}
 }

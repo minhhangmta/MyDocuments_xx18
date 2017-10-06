@@ -5,21 +5,15 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
+import model.CaroListener;
 import model.CaroModel;
+import model.Constants;
 
 /**
  * Lớp làm việc với giao diện chương trình
@@ -37,7 +31,7 @@ public class CaroView {
 	/**
 	 * @throws HeadlessException
 	 */
-	public CaroView() throws HeadlessException {
+	public CaroView() {
 	}
 
 	/**
@@ -64,92 +58,21 @@ public class CaroView {
 	 * Hàm tạo bàn cờ caro
 	 */
 	public void createCaroBoard() {
-		// Khởi tạo 1 JPanel
-		JPanel jPanel = new JPanel();
-		// Thêm panel vào frame
-		mainFrame.add(jPanel);
-		// Chia layout cho Panel thành 20 hàng 20 cột
-		jPanel.setLayout(new GridLayout(Constants.ROW, Constants.COL));
+		// Chia layout cho frame thành 20 hàng 20 cột
+		mainFrame.setLayout(new GridLayout(Constants.ROW, Constants.COL));
 		// Duyệt hàng của bàn cờ
 		for (int i = 0; i < Constants.ROW; i++) {
 			// Duyệt cột của bàn cờ
 			for (int j = 0; j < Constants.COL; j++) {
+				JButton oCo = new JButton();
 				// Khởi tạo mảng ô cờ dạng button
-				lstOCo[i][j] = new JButton();
+				lstOCo[i][j] = oCo;
 				// Set nền trắng cho các ô cờ
 				lstOCo[i][j].setBackground(Color.white);
 				// Tạo sự kiện cho từng ô
-				lstOCo[i][j].addActionListener(new Action() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						// Duyệt hàng của ô cờ
-						for (int i = 0; i < Constants.ROW; i++) {
-							// Duyệt cột của ô cờ
-							for (int j = 0; j < Constants.ROW; j++) {
-								// Kiểm tra điều kiện ô cờ vừa click chưa được đánh
-								if (e.getSource() == lstOCo[i][j] && lstOCo[i][j].getText() != "X"
-										&& lstOCo[i][j].getText() != "O") {
-									// Đánh X cho ô cờ đó
-									lstOCo[i][j].setText("X");
-									// Chỉnh font cho text trong ô cờ
-									lstOCo[i][j].setFont(new Font("Arial", Font.BOLD, 30));
-									// Chỉnh margin cho text trong ô cờ
-									lstOCo[i][j].setMargin(new Insets(1, 1, 1, 1));
-									// Kiểm tra nếu ô cờ vừa đánh thì thắng
-									if (model.checkWin(i, j, lstOCo[i][j].getText(), lstOCo) == true) {
-										// Hiển thị message thông báo thắng
-										JOptionPane.showMessageDialog(null, lstOCo[i][j].getText() + " thắng!",
-												"Finish", JOptionPane.INFORMATION_MESSAGE);
-										// Duyệt từng button trong panel
-										for (Component com : jPanel.getComponents()) {
-											// Vô hiệu hóa cho các button đó
-											com.setEnabled(false);
-										}
-									}
-								}
-							}
-						}
-					}
-
-					@Override
-					public void setEnabled(boolean b) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void removePropertyChangeListener(PropertyChangeListener listener) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void putValue(String key, Object value) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public boolean isEnabled() {
-						// TODO Auto-generated method stub
-						return false;
-					}
-
-					@Override
-					public Object getValue(String key) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					@Override
-					public void addPropertyChangeListener(PropertyChangeListener listener) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-				// Thêm button vào panel
-				jPanel.add(lstOCo[i][j]);
+				lstOCo[i][j].addActionListener(new CaroListener(oCo, lstOCo));
+				// Thêm button vào frame
+				mainFrame.add(lstOCo[i][j]);
 			}
 		}
 	}
