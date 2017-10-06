@@ -4,57 +4,34 @@
  */
 package view;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Label;
-import java.awt.List;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.Action;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
-import controller.CaroController;
 import model.CaroModel;
 
 /**
- * Giao diện chương trình
+ * Lớp làm việc với giao diện chương trình
  * 
  * @author minhhang
  */
-public class CaroView extends JPanel {
-	private int ROW = 20;
-	private int COL = 20;
-	private int SIZE = 40;
-	private int WIDTH_FRAME = 700;
-	private int HEIGHT_FRAME = 700;
+public class CaroView {
+	// Khai báo JFrame
 	private JFrame mainFrame;
-	private JButton[][] lstOCo = new JButton[ROW][COL];
+	// Khai báo mảng ô cờ dạng JButton, mảng có tối đa 20 Row, 20 Column
+	private JButton[][] lstOCo = new JButton[Constants.ROW][Constants.COL];
+	// Khai báo và khởi tạo lớp model
 	private CaroModel model = new CaroModel();
 
 	/**
@@ -64,43 +41,69 @@ public class CaroView extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Hàm show Giao diện
 	 */
 	public void showView() {
+		// Khởi tạo Frame
 		mainFrame = new JFrame("Game cờ caro");
+		// Gọi hàm tạo bàn cờ
 		createCaroBoard();
-		mainFrame.setSize(WIDTH_FRAME, HEIGHT_FRAME);
+		// Set kích thước cho frame
+		mainFrame.setSize(Constants.WIDTH_FRAME, Constants.HEIGHT_FRAME);
+		// Cho phép hiển thị frame
 		mainFrame.setVisible(true);
+		// Cho phép frame hiển thị chính giữa màn hình
 		mainFrame.setLocationRelativeTo(null);
+		// Mặc định thoát chương trình khi chọn close
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Không cho phép thay đổi kích cỡ frame
 		mainFrame.setResizable(false);
 	}
 
+	/**
+	 * Hàm tạo bàn cờ caro
+	 */
 	public void createCaroBoard() {
+		// Khởi tạo 1 JPanel
 		JPanel jPanel = new JPanel();
-		jPanel.setBackground(Color.WHITE);
+		// Thêm panel vào frame
 		mainFrame.add(jPanel);
-		jPanel.setLayout(new GridLayout(ROW, COL));
-
-		for (int i = 0; i < ROW; i++) {
-			for (int j = 0; j < COL; j++) {
+		// Chia layout cho Panel thành 20 hàng 20 cột
+		jPanel.setLayout(new GridLayout(Constants.ROW, Constants.COL));
+		// Duyệt hàng của bàn cờ
+		for (int i = 0; i < Constants.ROW; i++) {
+			// Duyệt cột của bàn cờ
+			for (int j = 0; j < Constants.COL; j++) {
+				// Khởi tạo mảng ô cờ dạng button
 				lstOCo[i][j] = new JButton();
+				// Set nền trắng cho các ô cờ
 				lstOCo[i][j].setBackground(Color.white);
+				// Tạo sự kiện cho từng ô
 				lstOCo[i][j].addActionListener(new Action() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
-						for (int i = 0; i < ROW; i++) {
-							for (int j = 0; j < ROW; j++) {
+						// Duyệt hàng của ô cờ
+						for (int i = 0; i < Constants.ROW; i++) {
+							// Duyệt cột của ô cờ
+							for (int j = 0; j < Constants.ROW; j++) {
+								// Kiểm tra điều kiện ô cờ vừa click chưa được đánh
 								if (e.getSource() == lstOCo[i][j] && lstOCo[i][j].getText() != "X"
 										&& lstOCo[i][j].getText() != "O") {
+									// Đánh X cho ô cờ đó
 									lstOCo[i][j].setText("X");
+									// Chỉnh font cho text trong ô cờ
 									lstOCo[i][j].setFont(new Font("Arial", Font.BOLD, 30));
+									// Chỉnh margin cho text trong ô cờ
 									lstOCo[i][j].setMargin(new Insets(1, 1, 1, 1));
+									// Kiểm tra nếu ô cờ vừa đánh thì thắng
 									if (model.checkWin(i, j, lstOCo[i][j].getText(), lstOCo) == true) {
+										// Hiển thị message thông báo thắng
 										JOptionPane.showMessageDialog(null, lstOCo[i][j].getText() + " thắng!",
 												"Finish", JOptionPane.INFORMATION_MESSAGE);
+										// Duyệt từng button trong panel
 										for (Component com : jPanel.getComponents()) {
+											// Vô hiệu hóa cho các button đó
 											com.setEnabled(false);
 										}
 									}
@@ -145,11 +148,9 @@ public class CaroView extends JPanel {
 
 					}
 				});
-
+				// Thêm button vào panel
 				jPanel.add(lstOCo[i][j]);
 			}
 		}
-		mainFrame.setLayout(new GridLayout());
 	}
-
 }

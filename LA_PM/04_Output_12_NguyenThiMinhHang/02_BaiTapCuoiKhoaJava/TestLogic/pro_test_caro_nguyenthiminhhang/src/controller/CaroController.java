@@ -4,8 +4,6 @@
  */
 package controller;
 
-import javax.swing.JButton;
-
 import model.CaroModel;
 import view.CaroView;
 
@@ -15,8 +13,9 @@ import view.CaroView;
  * @author minhhang
  */
 public class CaroController {
-	//Khai báo đối tượng model Caro
+	//Khai báo model Caro
 	private CaroModel model;
+	//Khai báo view Caro
 	private CaroView view;
 	
 	/**
@@ -36,10 +35,7 @@ public class CaroController {
 	 * @param lstOCo
 	 * @return boolean value 
 	 */
-	public boolean checkWin(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
-		return model.checkWin(xRow, yCol, namePlayer, lstOCo);
-	}
-	
+		
 	public void showView() {
 		view.showView();
 	}

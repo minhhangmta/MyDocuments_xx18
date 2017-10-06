@@ -20,9 +20,9 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Khởi tạo đối tượng caro Model để lấy và xử lý dữ liệu
+		// Khởi tạo caro Model để lấy và xử lý dữ liệu
 		CaroModel model = new CaroModel();
-		// Khởi tạo đối tượng caro View để show giao diện
+		// Khởi tạo caro View để show giao diện
 		CaroView view = new CaroView();
 		
 		CaroController controller = new CaroController(model, view);
