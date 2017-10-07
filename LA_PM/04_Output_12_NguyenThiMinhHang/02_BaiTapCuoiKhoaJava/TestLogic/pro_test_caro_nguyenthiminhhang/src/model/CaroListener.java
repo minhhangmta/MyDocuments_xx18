@@ -22,14 +22,13 @@ import javax.swing.JPanel;
 public class CaroListener implements ActionListener {
 	private CaroModel model = new CaroModel();
 	private JButton[][] lstOCo;
-	private JButton oCo;
+	private QuanCo quanCo;
 
 	/**
 	 * @param lstOCo
-	 * @param oCo
+	 * @param quanCo
 	 */
-	public CaroListener(JButton oCo, JButton[][] lstOCo) {
-		this.oCo = oCo;
+	public CaroListener(JButton[][] lstOCo) {
 		this.lstOCo = lstOCo;
 	}
 
@@ -42,20 +41,20 @@ public class CaroListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource().equals(oCo) && oCo.getText().isEmpty()) {
-			// Lấy vị trí hàng cho ô cờ
-			int xRow = oCo.getY() / 30;
-			// Lấy vị trí cột cho ô cờ
-			int yCol = oCo.getX() / 30;
-			// Đánh X cho ô cờ đó
-			oCo.setText("X");
+		JButton btn = (JButton) e.getSource();
+		int x = btn.getY() / Constants.SIZE_O_CO;
+		int y = btn.getX() / Constants.SIZE_O_CO;
+		quanCo = new QuanCo(x,y);
+		// if (btn.getText().equals(oCo.getText()) && oCo.getText().isEmpty()) {
+		if (btn.getText().equals(lstOCo[x][y].getText()) && lstOCo[x][y].getText().isEmpty()) {
+			lstOCo[x][y].setText("X");
 			// Chỉnh font cho text trong ô cờ
-			oCo.setFont(new Font("Arial", Font.BOLD, 30));
+			lstOCo[x][y].setFont(new Font("Arial", Font.BOLD, 30));
 			// Chỉnh margin cho text trong ô cờ
-			oCo.setMargin(new Insets(1, 1, 1, 1));
-			if (model.checkWin(xRow, yCol, oCo.getText(), lstOCo) == true) {
+			lstOCo[x][y].setMargin(new Insets(1, 1, 1, 1));
+			if (model.checkWin(lstOCo[x][y].getText(), quanCo)) {
 				// Hiển thị message thông báo thắng
-				JOptionPane.showMessageDialog(null, oCo.getText() + " thắng!", "Finish",
+				JOptionPane.showMessageDialog(null, lstOCo[x][y].getText() + " thắng!", "Finish",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}

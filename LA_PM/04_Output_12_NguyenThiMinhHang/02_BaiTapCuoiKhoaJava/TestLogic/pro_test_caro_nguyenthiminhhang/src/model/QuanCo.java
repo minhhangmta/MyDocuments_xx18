@@ -10,52 +10,54 @@ package model;
  * @author minhhang
  */
 public class QuanCo {
-	private int xRow;
-	private int yCol;
+	private int posRow;
+	private int posCol;
 
 	/**
-	 * @return the xRow
+	 * @return the posRow
 	 */
-	public int getxRow() {
-		return xRow;
+	public int getPosRow() {
+		return posRow;
 	}
 
 	/**
-	 * @param xRow
-	 *            the xRow to set
+	 * @param posRow
+	 *            the posRow to set
 	 */
-	public void setxRow(int xRow) {
-		this.xRow = xRow;
+	public void setPosRow(int posRow) {
+		this.posRow = posRow;
 	}
 
 	/**
-	 * @return the yCol
+	 * @return the posCol
 	 */
-	public int getyCol() {
-		return yCol;
+	public int getPosCol() {
+		return posCol;
 	}
 
 	/**
-	 * @param yCol
-	 *            the yCol to set
+	 * @param posCol
+	 *            the posCol to set
 	 */
-	public void setyCol(int yCol) {
-		this.yCol = yCol;
+	public void setPosCol(int posCol) {
+		this.posCol = posCol;
 	}
 
 	/**
 	 * 
 	 */
 	public QuanCo() {
+		super();
 	}
 
 	/**
-	 * @param xRow
-	 * @param yCol
+	 * @param posRow
+	 * @param posCol
 	 */
-	public QuanCo(int xRow, int yCol) {
-		this.xRow = xRow;
-		this.yCol = yCol;
+	public QuanCo(int posRow, int posCol) {
+		super();
+		this.posRow = posRow;
+		this.posCol = posCol;
 	}
 
 }

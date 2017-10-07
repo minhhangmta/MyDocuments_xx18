@@ -14,85 +14,89 @@ import view.CaroView;
  * @author minhhang
  */
 public class CaroModel {
+	private JButton[][] lstOCo;
 
 	/**
 	 * 
 	 */
 	public CaroModel() {
-
+		this.lstOCo = CaroView.lstOCo;
 	}
 
-	public boolean checkCheoPhai(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
+	public boolean checkCheoPhai(String namePlayer, QuanCo quanCo) {
+		int x = quanCo.getPosRow();
+		int y = quanCo.getPosCol();
 		int count = 0;
 		for (int i = -4, j = 4; i <= 4 && j >= -4; i++, j--) {
-			if ((xRow + i) >= 0 && (xRow + i) < Constants.ROW && (yCol + i) >= 0 && (yCol + i) < Constants.COL) {
-				if (lstOCo[xRow + i][yCol + i].getText() == namePlayer) {
+			if ((x + i) >= 0 && (x + i) < Constants.ROW && (y + j) >= 0 && (y + j) < Constants.COL) {
+				if (lstOCo[x + i][y + j].getText() == namePlayer) {
 					count++;
-					if (count < 5) {
-						count = 0;
+					if (count >= 5) {
+						return true;
 					}
+				} else {
+					count = 0;
 				}
 			}
-		}
-		if (count >= 5) {
-			return true;
 		}
 		return false;
 
 	}
 
-	public boolean checkCheoTrai(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
+	public boolean checkCheoTrai(String namePlayer, QuanCo quanCo) {
+		int x = quanCo.getPosRow();
+		int y = quanCo.getPosCol();
 		int count = 0;
 		for (int i = -4; i <= 4; i++) {
-			if ((xRow + i) >= 0 && (xRow + i) < Constants.ROW && (yCol + i) >= 0 && (yCol + i) < Constants.COL) {
-				if (lstOCo[xRow + i][yCol + i].getText() == namePlayer) {
+			if ((x + i) >= 0 && (x + i) < Constants.ROW && (y + i) >= 0 && (y + i) < Constants.COL) {
+				if (lstOCo[x + i][y + i].getText() == namePlayer) {
 					count++;
-					if (count < 5) {
-						count = 0;
+					if (count >= 5) {
+						return true;
 					}
+				} else {
+					count = 0;
 				}
 			}
-		}
-		if (count >= 5) {
-			return true;
 		}
 		return false;
 	}
 
-	public boolean checkHangNgang(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
+	public boolean checkHangNgang(String namePlayer, QuanCo quanCo) {
+		int x = quanCo.getPosRow();
+		int y = quanCo.getPosCol();
 		int count = 0;
 		for (int i = -4; i <= 4; i++) {
-			if ((yCol + i) >= 0 && (yCol + i) < Constants.COL) {
-				if (lstOCo[xRow][yCol + i].getText() == namePlayer) {
+			if ((y + i) >= 0 && (y + i) < Constants.COL) {
+				if (lstOCo[x][y + i].getText() == namePlayer) {
 					count++;
-					if (count < 5) {
-						count = 0;
+					if (count >= 5) {
+						return true;
 					}
+				} else {
+					count = 0;
 				}
 			}
-		}
-		if (count >= 5) {
-			return true;
 		}
 		return false;
 	}
 
-	public boolean checkHangDoc(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
+	public boolean checkHangDoc(String namePlayer, QuanCo quanCo) {
+		int x = quanCo.getPosRow();
+		int y = quanCo.getPosCol();
 		int count = 0;
 		for (int i = -4; i <= 4; i++) {
-			if ((xRow + i) >= 0 && (xRow + i) < Constants.ROW) {
-				if (lstOCo[xRow + i][yCol].getText() == namePlayer) {
+			if ((x + i) >= 0 && (x + i) < Constants.ROW) {
+				if (lstOCo[x + i][y].getText().equals(namePlayer)) {
 					count++;
-					if (count < 5) {
-						count = 0;
+					if (count >= 5) {
+						return true;
 					}
+				} else {
+					count = 0;
 				}
 			}
 		}
-		if (count >= 5) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -109,10 +113,11 @@ public class CaroModel {
 	 *            danh sách các ô cờ
 	 * @return true nếu thắng, false nếu ko thắng
 	 */
-	public boolean checkWin(int xRow, int yCol, String namePlayer, JButton[][] lstOCo) {
+	public boolean checkWin(String namePlayer, QuanCo quanCo) {
+
 		// Kiểm tra điều kiện chơi thắng
-		if (checkHangDoc(xRow, yCol, namePlayer, lstOCo) || checkHangNgang(xRow, yCol, namePlayer, lstOCo)
-				|| checkCheoTrai(xRow, yCol, namePlayer, lstOCo) || checkCheoPhai(xRow, yCol, namePlayer, lstOCo)) {
+		if (checkHangDoc(namePlayer, quanCo) || checkHangNgang(namePlayer, quanCo) || checkCheoTrai(namePlayer, quanCo)
+				|| checkCheoPhai(namePlayer, quanCo)) {
 			return true;
 		}
 		return false;

@@ -11,15 +11,17 @@ package model;
  */
 public class Constants {
 	// Tên hiển thị trên thanh tiêu đề của chương trình
-	public static String TITLE = "Game cờ caro";
+	public static final String TITLE = "Game cờ caro";
 	// Số hàng của bàn cờ
-	public static int ROW = 20;
+	public static final int ROW = 20;
 	// Số cột của bàn cờ
-	public static int COL = 20;
+	public static final int COL = 20;
+	// Độ rộng ô cờ
+	public static final int SIZE_O_CO = 33;
 	// Chiều rộng của Frame
-	public static int WIDTH_FRAME = 700;
+	public static final int WIDTH_FRAME = 700;
 	// Chiều dài của Frame
-	public static int HEIGHT_FRAME = 700;
+	public static final int HEIGHT_FRAME = 700;
 	// Đường dẫn tới file thế cờ
-	public static String PATH_THE_CO = "/resources/theco.txt";
+	public static final String PATH_THE_CO = "/resources/theco.txt";
 }
