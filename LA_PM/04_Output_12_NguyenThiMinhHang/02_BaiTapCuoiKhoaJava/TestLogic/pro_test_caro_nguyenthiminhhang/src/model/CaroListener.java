@@ -29,8 +29,8 @@ public class CaroListener implements ActionListener {
 	 * @param oCo
 	 */
 	public CaroListener(JButton oCo, JButton[][] lstOCo) {
-		this.lstOCo = lstOCo;
 		this.oCo = oCo;
+		this.lstOCo = lstOCo;
 	}
 
 	/*
@@ -41,22 +41,28 @@ public class CaroListener implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int i = oCo.getX();
-		int j = oCo.getY();
 		// TODO Auto-generated method stub
-		if (e.getSource() == lstOCo[i][j] && lstOCo[i][j].getText() != "X" && lstOCo[i][j].getText() != "O") {
+		if (e.getSource().equals(oCo) && oCo.getText().isEmpty()) {
+			// Lấy vị trí hàng cho ô cờ
+			int xRow = oCo.getY() / 30;
+			// Lấy vị trí cột cho ô cờ
+			int yCol = oCo.getX() / 30;
 			// Đánh X cho ô cờ đó
-			lstOCo[i][j].setText("X");
+			oCo.setText("X");
 			// Chỉnh font cho text trong ô cờ
-			lstOCo[i][j].setFont(new Font("Arial", Font.BOLD, 30));
+			oCo.setFont(new Font("Arial", Font.BOLD, 30));
 			// Chỉnh margin cho text trong ô cờ
-			lstOCo[i][j].setMargin(new Insets(1, 1, 1, 1));
-			if (model.checkWin(i, j, lstOCo[i][j].getText(), lstOCo) == true) {
+			oCo.setMargin(new Insets(1, 1, 1, 1));
+			if (model.checkWin(xRow, yCol, oCo.getText(), lstOCo) == true) {
 				// Hiển thị message thông báo thắng
-				JOptionPane.showMessageDialog(null, lstOCo[i][j].getText() + " thắng!", "Finish",
+				JOptionPane.showMessageDialog(null, oCo.getText() + " thắng!", "Finish",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
+	}
+
+	public void computerPlay() {
+
 	}
 
 }

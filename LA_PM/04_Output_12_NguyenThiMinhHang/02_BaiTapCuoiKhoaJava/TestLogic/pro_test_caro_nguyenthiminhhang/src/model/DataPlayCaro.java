@@ -45,15 +45,12 @@ public class DataPlayCaro {
 				}
 				row++;
 			}
+			fileInputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return lstTheCo;
 	}
-	
-	
-
 
 }

@@ -25,23 +25,29 @@ public class CaroView {
 	private JFrame mainFrame;
 	// Khai báo mảng ô cờ dạng JButton, mảng có tối đa 20 Row, 20 Column
 	private JButton[][] lstOCo = new JButton[Constants.ROW][Constants.COL];
-	// Khai báo và khởi tạo lớp model
-	private CaroModel model = new CaroModel();
 
 	/**
 	 * @throws HeadlessException
 	 */
 	public CaroView() {
+		// Khởi tạo Frame
+		mainFrame = new JFrame(Constants.TITLE);
 	}
 
 	/**
 	 * Hàm show Giao diện
 	 */
 	public void showView() {
-		// Khởi tạo Frame
-		mainFrame = new JFrame("Game cờ caro");
 		// Gọi hàm tạo bàn cờ
 		createCaroBoard();
+		// Gọi hàm thiết lập Frame
+		designFrame();
+	}
+
+	/**
+	 * Hàm thiết lập giao diện cho Frame
+	 */
+	public void designFrame() {
 		// Set kích thước cho frame
 		mainFrame.setSize(Constants.WIDTH_FRAME, Constants.HEIGHT_FRAME);
 		// Cho phép hiển thị frame

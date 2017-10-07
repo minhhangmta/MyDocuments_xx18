@@ -10,6 +10,8 @@ package model;
  * @author minhhang
  */
 public class Constants {
+	// Tên hiển thị trên thanh tiêu đề của chương trình
+	public static String TITLE = "Game cờ caro";
 	// Số hàng của bàn cờ
 	public static int ROW = 20;
 	// Số cột của bàn cờ

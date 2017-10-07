@@ -1,59 +1,61 @@
 /**
 * Copyright(C) 2017 Luvina
-* QuanCo.java, Oct 6, 2017 minhhang
+* QuanCo.java, Oct 7, 2017 minhhang
 */
 package model;
 
 /**
- * Đối tượng quân cờ
+ * Description here
+ * 
  * @author minhhang
  */
 public class QuanCo {
-	private int x, y;
+	private int xRow;
+	private int yCol;
 
 	/**
-	 * @return the x
+	 * @return the xRow
 	 */
-	public int getX() {
-		return x;
+	public int getxRow() {
+		return xRow;
 	}
 
 	/**
-	 * @param x the x to set
+	 * @param xRow
+	 *            the xRow to set
 	 */
-	public void setX(int x) {
-		this.x = x;
+	public void setxRow(int xRow) {
+		this.xRow = xRow;
 	}
 
 	/**
-	 * @return the y
+	 * @return the yCol
 	 */
-	public int getY() {
-		return y;
+	public int getyCol() {
+		return yCol;
 	}
 
 	/**
-	 * @param y the y to set
+	 * @param yCol
+	 *            the yCol to set
 	 */
-	public void setY(int y) {
-		this.y = y;
+	public void setyCol(int yCol) {
+		this.yCol = yCol;
 	}
-	
+
 	/**
 	 * 
 	 */
 	public QuanCo() {
-		super();
 	}
 
 	/**
-	 * @param x
-	 * @param y
+	 * @param xRow
+	 * @param yCol
 	 */
-	public QuanCo(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
+	public QuanCo(int xRow, int yCol) {
+		this.xRow = xRow;
+		this.yCol = yCol;
 	}
-	
+
 }
