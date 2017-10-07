@@ -16,6 +16,10 @@ public class Constants {
 	public static final int ROW = 20;
 	// Số cột của bàn cờ
 	public static final int COL = 20;
+	// Số cột của ma trận thế cờ
+	public static final int MATRIX_COL = 5;
+	// Số hàng của ma trận thế cờ
+	public static final int MATRIX_ROW = 5;
 	// Độ rộng ô cờ
 	public static final int SIZE_O_CO = 33;
 	// Chiều rộng của Frame
@@ -23,5 +27,8 @@ public class Constants {
 	// Chiều dài của Frame
 	public static final int HEIGHT_FRAME = 700;
 	// Đường dẫn tới file thế cờ
-	public static final String PATH_THE_CO = "/resources/theco.txt";
+	public static final String PATH_THE_CO = "theco.txt";
+	// Nhân vật chơi trước
+	public static final String NAME_PLAYER = "human";
+
 }

@@ -44,24 +44,48 @@ public class CaroListener implements ActionListener {
 		JButton btn = (JButton) e.getSource();
 		int x = btn.getY() / Constants.SIZE_O_CO;
 		int y = btn.getX() / Constants.SIZE_O_CO;
-		quanCo = new QuanCo(x,y);
-		// if (btn.getText().equals(oCo.getText()) && oCo.getText().isEmpty()) {
+		quanCo = new QuanCo(x, y);
+		if ("human".equals(Constants.NAME_PLAYER)) {
+			humanPlay(x, y, btn);
+		} else {
+			computerPlay(x,y,btn);
+		}
+	}
+
+	public void humanPlay(int x, int y, JButton btn) {
 		if (btn.getText().equals(lstOCo[x][y].getText()) && lstOCo[x][y].getText().isEmpty()) {
 			lstOCo[x][y].setText("X");
 			// Chỉnh font cho text trong ô cờ
 			lstOCo[x][y].setFont(new Font("Arial", Font.BOLD, 30));
 			// Chỉnh margin cho text trong ô cờ
 			lstOCo[x][y].setMargin(new Insets(1, 1, 1, 1));
-			if (model.checkWin(lstOCo[x][y].getText(), quanCo)) {
+			if (model.checkWin(quanCo, lstOCo)) {
 				// Hiển thị message thông báo thắng
-				JOptionPane.showMessageDialog(null, lstOCo[x][y].getText() + " thắng!", "Finish",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Người thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				computerPlay(x,y,btn);
 			}
 		}
 	}
 
-	public void computerPlay() {
-
+	public void computerPlay(int x, int y, JButton btn) {
+		// Lay vi tri may danh
+		quanCo = model.posComputerPlay(lstOCo);
+		int row = quanCo.getPosRow();
+		int col = quanCo.getPosCol();
+		// check win
+		if (btn.getText().equals(lstOCo[row][col].getText()) && lstOCo[row][col].getText().isEmpty()) {
+			lstOCo[row][col].setText("O");
+			// Chỉnh font cho text trong ô cờ
+			lstOCo[row][col].setFont(new Font("Arial", Font.BOLD, 30));
+			// Chỉnh margin cho text trong ô cờ
+			lstOCo[row][col].setMargin(new Insets(1, 1, 1, 1));
+			if (model.checkWin(quanCo, lstOCo)) {
+				// Hiển thị message thông báo thắng
+				JOptionPane.showMessageDialog(null, "Máy thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				humanPlay(x, y, btn);
+			}
+		}
 	}
-
 }

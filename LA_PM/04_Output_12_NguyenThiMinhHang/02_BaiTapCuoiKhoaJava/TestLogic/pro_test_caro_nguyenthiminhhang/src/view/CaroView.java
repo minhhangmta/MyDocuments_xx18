@@ -6,6 +6,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 
@@ -67,13 +69,14 @@ public class CaroView {
 	 */
 	public void createCaroBoard() {
 		// Chia layout cho frame thành 20 hàng 20 cột
-		mainFrame.setLayout(new GridLayout(Constants.ROW, Constants.COL));
+		mainFrame.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		// Duyệt hàng của bàn cờ
 		for (int i = 0; i < Constants.ROW; i++) {
 			// Duyệt cột của bàn cờ
 			for (int j = 0; j < Constants.COL; j++) {
 				JButton btn = new JButton();
-				btn.setPreferredSize(new Dimension(30, 30));
+				btn.setPreferredSize(new Dimension(Constants.SIZE_O_CO, Constants.SIZE_O_CO));
 				// Khởi tạo mảng ô cờ dạng button
 				lstOCo[i][j] = btn;
 				// Set nền trắng cho các ô cờ
@@ -81,7 +84,9 @@ public class CaroView {
 				// Tạo sự kiện cho từng ô
 				lstOCo[i][j].addActionListener(new CaroListener(lstOCo));
 				// Thêm button vào frame
-				mainFrame.add(lstOCo[i][j]);
+				c.gridx = j;
+				c.gridy = i;
+				mainFrame.add(lstOCo[i][j], c);
 			}
 		}
 	}
