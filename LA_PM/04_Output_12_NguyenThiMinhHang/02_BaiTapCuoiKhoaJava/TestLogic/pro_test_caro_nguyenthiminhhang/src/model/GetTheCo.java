@@ -38,53 +38,53 @@ public class GetTheCo {
 			line = bufferedReader.readLine();
 			int row = 0;
 			while (line != null) {
-				if (!line.isEmpty()) {
-					for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-						int j = 0;
-						for (int index = 0; index < line.length(); index++) {
-							matrix[i][j] = line.charAt(index) + "";
-							j++;
-						}
-						line = bufferedReader.readLine();
+				if (!line.isEmpty()) { // Nếu đọc dòng không rỗng
+					for (int index = 0; index < line.length(); index++) {
+						matrix[row][index] = line.charAt(index) + "";
 					}
+					row++;
 				} else if (matrix != null) {
 					theCo.setMatrix(matrix);
 					lstTheCo.add(theCo);
-					// theCo = new TheCo();
-					// matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+					theCo = new TheCo();
+					matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+					row = 0;
 				}
-				row++;
+				line = bufferedReader.readLine();
 			}
 			fileInputStream.close();
-		} catch (
-		IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return lstTheCo;
 	}
 
-	// public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
-	// ArrayList<TheCo> lstTheCo = new ArrayList<>();
-	// TheCo theCo = new TheCo();
-	// String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
-	// for (int i = 0; i < Constants.ROW - Constants.MATRIX_ROW + 1; i++) {
-	// for (int j = 0; j < Constants.COL - Constants.MATRIX_COL + 1; j++) {
-	// for (int l = i; l < i + Constants.MATRIX_ROW; l++) {
-	// for (int m = j; m < j + Constants.MATRIX_COL; m++) {
-	// if ("O".equals(lstOCo[l][m].getText())) {
-	// matrix[l - i][m - j] = "O";
-	// } else if ("X".equals(lstOCo[j + l][j + m].getText())) {
-	// matrix[l - i][m - j] = "X";
-	// } else {
-	// matrix[l - i][m - j] = "T";
-	// }
-	// theCo.setMatrix(matrix);
-	// }
-	// }
-	// lstTheCo.add(theCo);
-	// }
-	// }
-	// return lstTheCo;
-	// }
+	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
+		ArrayList<TheCo> lstTheCoView = new ArrayList<>();
+		TheCo theCoView = new TheCo();
+		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+		// Duyệt từng mảng 5x5 trong bàn cờ
+		//
+		for (int i = 0; i < Constants.ROW - Constants.MATRIX_ROW + 1; i++) {
+			for (int j = 0; j < Constants.COL - Constants.MATRIX_COL + 1; j++) {
+				for (int l = i; l < i + Constants.MATRIX_ROW; l++) {
+					for (int m = j; m < j + Constants.MATRIX_COL; m++) {
+						if ("O".equals(lstOCo[l][m].getText())) {
+							matrix[l - i][m - j] = "O";
+						} else if ("X".equals(lstOCo[l][m].getText())) {
+							matrix[l - i][m - j] = "X";
+						} else {
+							matrix[l - i][m - j] = "T";
+						}
+						theCoView.setMatrix(matrix);
+					}
+				}
+				lstTheCoView.add(theCoView);
+				theCoView = new TheCo();
+				matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+			}
+		}
+		return lstTheCoView;
+	}
 }

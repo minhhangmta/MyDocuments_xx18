@@ -31,7 +31,7 @@ public class TheCo {
 	 * 
 	 */
 	public TheCo() {
-		matrix = new String[5][5];
+//		matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
 	}
 
 	/**

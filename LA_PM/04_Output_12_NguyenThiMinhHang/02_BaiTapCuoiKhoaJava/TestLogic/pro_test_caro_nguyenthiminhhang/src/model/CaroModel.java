@@ -16,11 +16,14 @@ import view.CaroView;
  * @author minhhang
  */
 public class CaroModel {
+	private ArrayList<TheCo> lstTheCoFile;
+	private GetTheCo getTheCo = new GetTheCo();
 
 	/**
 	 * 
 	 */
 	public CaroModel() {
+		lstTheCoFile = getTheCo.getTheCoFile();
 	}
 
 	public boolean checkCheoPhai(QuanCo quanCo, JButton[][] lstOCo) {
@@ -121,37 +124,26 @@ public class CaroModel {
 		return false;
 	}
 
-	public QuanCo posComputerPlay(JButton[][] lstOCo) {
-		QuanCo quanCo = new QuanCo();
-		TheCo theCoView = new TheCo();
-		GetTheCo getTheCo = new GetTheCo();
-		ArrayList<TheCo> lstTheCoFile = getTheCo.getTheCoFile();
-		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
-		// Duyệt từng mảng 5x5 trong bàn cờ
-		//
-		for (int i = 0; i < Constants.ROW - Constants.MATRIX_ROW + 1; i++) {
-			for (int j = 0; j < Constants.COL - Constants.MATRIX_COL + 1; j++) {
-				for (int l = i; l < i + Constants.MATRIX_ROW; l++) {
-					for (int m = j; m < j + Constants.MATRIX_COL; m++) {
-						if ("O".equals(lstOCo[l][m].getText())) {
-							matrix[l - i][m - j] = "O";
-						} else if ("X".equals(lstOCo[j + l][j + m].getText())) {
-							matrix[l - i][m - j] = "X";
-						} else {
-							matrix[l - i][m - j] = "T";
-						}
-						theCoView.setMatrix(matrix);
-					}
-				}
-				for (TheCo theCoFile : lstTheCoFile) {
-					if (compareTheCo(theCoFile, theCoView)) {
-						quanCo.setPosRow(i);
-						quanCo.setPosCol(j);
-					}
+	public JButton posComputerPlay(JButton[][] lstOCo) {
+		JButton oCo = new JButton();
+		boolean checked = false;
+		ArrayList<TheCo> lstTheCoView = getTheCo.getTheCoView(lstOCo);
+		for (TheCo theCoFile : lstTheCoFile) {
+			for (int i = 0; i < lstTheCoView.size(); i++) {
+				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
+					oCo = getPos(theCoFile, lstTheCoView.get(i));
+					int x = i / 16 + oCo.getX();
+					int y = i % 16 + oCo.getY();
+					oCo.setLocation(x, y);
+					checked = true;
+					break;
 				}
 			}
+			if (checked) {
+				break;
+			}
 		}
-		return quanCo;
+		return oCo;
 	}
 
 	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
@@ -166,5 +158,17 @@ public class CaroModel {
 			}
 		}
 		return true;
+	}
+
+	public JButton getPos(TheCo theCoFile, TheCo theCoView) {
+		JButton oCo = new JButton();
+		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
+			for (int j = 0; j < Constants.MATRIX_COL; j++) {
+				if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
+					oCo.setLocation(i, j);
+				}
+			}
+		}
+		return oCo;
 	}
 }
