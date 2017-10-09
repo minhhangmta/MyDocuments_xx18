@@ -34,8 +34,10 @@ public class CaroLogic {
 	/**
 	 * Hàm check win hàng chéo phải
 	 * 
-	 * @param quanCo quân cờ vừa đánh
-	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @param quanCo
+	 *            quân cờ vừa đánh
+	 * @param lstOCo
+	 *            danh sách bàn cờ trên giao diện
 	 * @return true nếu thắng, false nếu không thắng
 	 */
 	public boolean checkCheoPhai(QuanCo quanCo, JButton[][] lstOCo) {
@@ -72,8 +74,10 @@ public class CaroLogic {
 	/**
 	 * Hàm check win hàng chéo trái
 	 * 
-	 * @param quanCo quân cờ vừa đánh
-	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @param quanCo
+	 *            quân cờ vừa đánh
+	 * @param lstOCo
+	 *            danh sách bàn cờ trên giao diện
 	 * @return true nếu thắng, false nếu không thắng
 	 */
 	public boolean checkCheoTrai(QuanCo quanCo, JButton[][] lstOCo) {
@@ -106,72 +110,89 @@ public class CaroLogic {
 		return false;
 	}
 
-
 	/**
 	 * Hàm check win hàng ngang
 	 * 
-	 * @param quanCo quân cờ vừa đánh
-	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @param quanCo
+	 *            quân cờ vừa đánh
+	 * @param lstOCo
+	 *            danh sách bàn cờ trên giao diện
 	 * @return true nếu thắng, false nếu không thắng
 	 */
 	public boolean checkHangNgang(QuanCo quanCo, JButton[][] lstOCo) {
-		//Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
+		// Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
 		int x = quanCo.getPosRow();
-		//Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
+		// Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
 		int y = quanCo.getPosCol();
-		//khởi tạo biến đếm số quân cờ để check thắng
+		// khởi tạo biến đếm số quân cờ để check thắng
 		int count = 0;
-		//Duyệt 4 vị trí xung quanh quân cờ vừa đánh
+		// Duyệt 4 vị trí xung quanh quân cờ vừa đánh
 		for (int i = -4; i <= 4; i++) {
-			//Xét điều kiện bao gồm cả vị trí biên
+			// Xét điều kiện bao gồm cả vị trí biên
 			if ((y + i) >= 0 && (y + i) < Constants.COL) {
-				//Xét điều kiện quân cờ xung quanh ở hàng ngang giống ô cờ vừa đánh
+				// Xét điều kiện quân cờ xung quanh ở hàng ngang giống ô cờ vừa đánh
 				if (lstOCo[x][y + i].getText() == lstOCo[x][y].getText()) {
-					//Tăng biến đếm lên 1
+					// Tăng biến đếm lên 1
 					count++;
-					//Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
+					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
 					if (count >= 5) {
-						//Trả về giá trị true - thắng
+						// Trả về giá trị true - thắng
 						return true;
 					}
 				} else {
-					//Không thì reset lại biến đếm
+					// Không thì reset lại biến đếm
 					count = 0;
 				}
 			}
 		}
+		// Chưa thắng trả về false
 		return false;
 	}
-	
-	
+
+	/**
+	 * Hàm check win hàng dọc
+	 * 
+	 * @param quanCo
+	 *            quân cờ vừa đánh
+	 * @param lstOCo
+	 *            danh sách bàn cờ trên giao diện
+	 * @return true nếu thắng, false nếu không thắng
+	 */
 	public boolean checkHangDoc(QuanCo quanCo, JButton[][] lstOCo) {
+		// Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
 		int x = quanCo.getPosRow();
+		// Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
 		int y = quanCo.getPosCol();
+		// khởi tạo biến đếm số quân cờ để check thắng
 		int count = 0;
+		// Duyệt 4 vị trí xung quanh quân cờ vừa đánh
 		for (int i = -4; i <= 4; i++) {
+			// Xét điều kiện bao gồm cả vị trí biên
 			if ((x + i) >= 0 && (x + i) < Constants.ROW) {
+				// Xét điều kiện quân cờ xung quanh ở hàng dọc giống ô cờ vừa đánh
 				if (lstOCo[x + i][y].getText().equals(lstOCo[x][y].getText())) {
+					// Tăng biến đếm lên 1
 					count++;
+					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
 					if (count >= 5) {
+						// Trả về giá trị true - thắng
 						return true;
 					}
 				} else {
+					// Không thì reset lại biến đếm
 					count = 0;
 				}
 			}
 		}
+		// Chưa thắng trả về false
 		return false;
 	}
 
 	/**
 	 * Hàm kiểm tra thắng thua cho người/máy chơi
 	 * 
-	 * @param xRow
-	 *            vị trí hàng
-	 * @param yCol
-	 *            vị trí cột
-	 * @param namePlayer
-	 *            tên nhân vật chơi: người/máy
+	 * @param quanCo
+	 *            quân cờ cần kiểm tra
 	 * @param lstOCo
 	 *            danh sách các ô cờ
 	 * @return true nếu thắng, false nếu ko thắng
@@ -180,11 +201,19 @@ public class CaroLogic {
 		// Kiểm tra điều kiện chơi thắng
 		if (checkHangDoc(quanCo, lstOCo) || checkHangNgang(quanCo, lstOCo) || checkCheoTrai(quanCo, lstOCo)
 				|| checkCheoPhai(quanCo, lstOCo)) {
+			//Đúng trả về true
 			return true;
 		}
+		//Sai trả về false
 		return false;
 	}
 
+	/**
+	 * Hàm lấy vị trí máy đánh
+	 * 
+	 * @param lstOCo
+	 * @return jButton ô cờ cần đánh
+	 */
 	public JButton posComputerPlay(JButton[][] lstOCo) {
 		JButton oCo = new JButton();
 		boolean checked = false;
@@ -207,6 +236,13 @@ public class CaroLogic {
 		return oCo;
 	}
 
+	/**
+	 * Hàm so sánh thế cờ
+	 * 
+	 * @param theCoFile
+	 * @param theCoView
+	 * @return true nếu so sánh khớp, false nếu so sánh chưa khớp
+	 */
 	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
@@ -221,6 +257,13 @@ public class CaroLogic {
 		return true;
 	}
 
+	/**
+	 * Hàm lấy vị trí máy đánh
+	 * 
+	 * @param theCoFile
+	 * @param theCoView
+	 * @return ô cờ cần đánh dạng button
+	 */
 	public JButton getPos(TheCo theCoFile, TheCo theCoView) {
 		JButton oCo = new JButton();
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {

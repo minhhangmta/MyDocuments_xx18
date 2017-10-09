@@ -63,6 +63,11 @@ public class GetTheCo {
 		return lstTheCo;
 	}
 
+	/**
+	 * Hàm lấy danh sách thế cờ từ giao diện
+	 * @param lstOCo
+	 * @return lstTheCoView danh sách thế cờ từ giao diện
+	 */
 	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
 		ArrayList<TheCo> lstTheCoView = new ArrayList<>();
 		TheCo theCoView = new TheCo();
