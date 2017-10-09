@@ -19,6 +19,7 @@ import model.TheCo;
  * @author minhhang
  */
 public class CaroLogic {
+	//Khởi tạo CaroController
 	private CaroController controller = new CaroController();
 
 	/**
@@ -212,25 +213,54 @@ public class CaroLogic {
 	 * @return jButton ô cờ cần đánh
 	 */
 	public JButton posComputerPlay(JButton[][] lstOCo) {
+		//Khởi tạo ô cờ dạng button
 		JButton oCo = new JButton();
+		//Khởi tạo biến kiểm tra máy đánh hay chưa. true-đã đánh, false-chưa
 		boolean checked = false;
+		//Tạo danh sách lấy thế cờ từ View
 		ArrayList<TheCo> lstTheCoView = controller.getTheCoView(lstOCo);
+		//Tạo danh sách lấy thế cờ từ File
 		ArrayList<TheCo> lstTheCoFile = controller.getTheCoFile();
+		//Duyệt từng thế cờ trong list thế cờ từ file
 		for (TheCo theCoFile : lstTheCoFile) {
+			//Duyệt từng thế cờ trong list thế cờ từ view 
 			for (int i = 0; i < lstTheCoView.size(); i++) {
+				//Xét điều kiện so sánh thế cờ từ file và từ view khớp nhau
 				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
-					oCo = getPos(theCoFile, lstTheCoView.get(i));
-					int x = i / (Constants.ROW - 4) + oCo.getX();
-					int y = i % (Constants.COL - 4) + oCo.getY();
+					
+					/* Lấy vị trí T khớp nhau*/
+					
+					//Duyệt từng hàng của ma trận 5x5
+					for (int l = 0; l < Constants.MATRIX_ROW; l++) {
+						//Duyệt từng cột của ma trận 5x5
+						for (int m = 0; m < Constants.MATRIX_COL; m++) {
+							//Xét điều kiện thế cờ file và thế cờ view có vị trí T trùng nhau
+							if ("T".equals(theCoFile.getMatrix()[l][m])
+									&& "T".equals(lstTheCoView.get(i).getMatrix()[l][m])) {
+								//Lấy vị trí đó 
+								oCo.setLocation(l, m);
+							}
+						}
+					}/* Lấy vị trí T khớp nhau */
+					
+					//Lấy vị trí hàng cần đánh trên bàn cờ từ view
+					//Vì bàn có có 20x20 ô. duyệt thế cờ 5x5 hàng ngang là 20-5+1=16 nên muốn lấy x,y phải / lấy hàng, % lấy cột
+					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + oCo.getX();
+					//Lấy vị trí cột cần đánh trên  bàn cờ từ view
+					int y = i % (Constants.COL - Constants.MATRIX_COL + 1) + oCo.getY();
+					//Lưu vị trí đánh cho ô cờ
 					oCo.setLocation(x, y);
+					//Máy đã đánh
 					checked = true;
 					break;
 				}
 			}
+			//Nếu máy đã đánh thì dừng lấy vị trí
 			if (checked) {
 				break;
 			}
 		}
+		//Trả về ô cờ cần đánh
 		return oCo;
 	}
 
@@ -242,35 +272,22 @@ public class CaroLogic {
 	 * @return true nếu so sánh khớp, false nếu so sánh chưa khớp
 	 */
 	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
+		//Duyệt theo hàng thế cờ 5x5
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
+			//Duyệt theo cột thế cờ 5x5
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
+				//Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view  
 				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
 						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
 						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
 						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
+					//thì trả về false
 					return false;
 				}
 			}
 		}
+		//Khớp thì trả về true
 		return true;
 	}
 
-	/**
-	 * Hàm lấy vị trí máy đánh
-	 * 
-	 * @param theCoFile
-	 * @param theCoView
-	 * @return ô cờ cần đánh dạng button
-	 */
-	public JButton getPos(TheCo theCoFile, TheCo theCoView) {
-		JButton oCo = new JButton();
-		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
-					oCo.setLocation(i, j);
-				}
-			}
-		}
-		return oCo;
-	}
 }

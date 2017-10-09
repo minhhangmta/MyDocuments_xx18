@@ -29,28 +29,48 @@ public class GetTheCo {
 	 * @return mảng thế cờ 2 chiều
 	 */
 	public ArrayList<TheCo> getTheCoFile() {
+		// Khởi tạo danh sách thế cờ
 		ArrayList<TheCo> lstTheCo = new ArrayList<>();
+		// Khởi tạo ma trận 5x5
 		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+		// Khởi tạo biến BufferedReader
 		BufferedReader bufferedReader;
+		// Khởi tạo biến FileInputStream
 		FileInputStream fileInputStream;
+		// Khởi tạo 1 thế cờ
 		TheCo theCo = new TheCo();
+		// Khởi tạo biến lấy từng dòng được đọc trong file
 		String line = "";
 		try {
+			// khởi tạo file cần đọc
 			fileInputStream = new FileInputStream(new File(Constants.PATH_THE_CO));
+			// Đọc file
 			bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+			// Đọc dòng đầu tiên trong file
 			line = bufferedReader.readLine();
+			// Khởi tạo biến đếm hàng cho ma trận con
 			int row = 0;
+			// Duyệt từng dòng trong file đến hết
 			while (line != null) {
-				if (!line.isEmpty()) { // Nếu đọc dòng không rỗng
+				// Nếu dòng được đọc không bị rỗng
+				if (!line.isEmpty()) {
+					// Duyệt từng phần tử trong line vừa đọc
 					for (int index = 0; index < line.length(); index++) {
+						// Gán từng phần tử trong line vào ma trận
 						matrix[row][index] = line.charAt(index) + "";
 					}
+					// Tăng hàng đọc
 					row++;
-				} else if (matrix != null) {
+				} else {
+					//lưu ma trận con vào thế cờ
 					theCo.setMatrix(matrix);
+					//Lưu thế cờ đó vào danh sách thế cờ
 					lstTheCo.add(theCo);
+					//Reset thế cờ mới
 					theCo = new TheCo();
+					//Reset ma trận mới
 					matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+					//Reset biến đếm hàng 
 					row = 0;
 				}
 				line = bufferedReader.readLine();
@@ -65,6 +85,7 @@ public class GetTheCo {
 
 	/**
 	 * Hàm lấy danh sách thế cờ từ giao diện
+	 * 
 	 * @param lstOCo
 	 * @return lstTheCoView danh sách thế cờ từ giao diện
 	 */

@@ -22,6 +22,8 @@ import view.CaroView;
 public class CaroController {
 	// Khai báo Caro view
 	private CaroView view;
+	// Khai báo Caro Logic
+	private CaroLogic logic;
 	// Khởi tạo lớp GetTheCo
 	private GetTheCo getTheCo = new GetTheCo();
 
@@ -34,8 +36,9 @@ public class CaroController {
 	/**
 	 * @param view
 	 */
-	public CaroController(CaroView view) {
+	public CaroController(CaroLogic logic, CaroView view) {
 		this.view = view;
+		this.logic = logic;
 	}
 
 	/**
@@ -45,10 +48,19 @@ public class CaroController {
 		view.showView();
 	}
 
+	/**
+	 * Điều hướng đến GetTheCo để lấy thế cờ từ file
+	 * @return danh sách thế cờ từ file
+	 */
 	public ArrayList<TheCo> getTheCoFile() {
 		return getTheCo.getTheCoFile();
 	}
 
+	/**
+	 * Điều hướng đến GetTheCo để lấy thê cờ từ View
+	 * @param lstOCo
+	 * @return danh sách thế cờ từ View
+	 */
 	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
 		return getTheCo.getTheCoView(lstOCo);
 	}

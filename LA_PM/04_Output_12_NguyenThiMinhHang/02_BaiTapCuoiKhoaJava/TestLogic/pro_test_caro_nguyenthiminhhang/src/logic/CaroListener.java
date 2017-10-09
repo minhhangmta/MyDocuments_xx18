@@ -29,7 +29,9 @@ public class CaroListener implements ActionListener {
 	private JButton[][] lstOCo;
 	// Khai báo đối tượng quân cờ
 	private QuanCo quanCo;
+	//Khởi tạo CaroController
 	private CaroController controller = new CaroController();
+	//Khởi tạo CaroLogic
 	private CaroLogic logic = new CaroLogic();
 
 	/**
@@ -48,7 +50,7 @@ public class CaroListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Cho người chơi
-		// lấy button vừa thao tác
+		// lấy button vừa click
 		JButton btn = (JButton) e.getSource();
 		// lấy vị trí hàng của button đó
 		int x = btn.getY() / Constants.SIZE_O_CO;
@@ -62,7 +64,7 @@ public class CaroListener implements ActionListener {
 			lstOCo[x][y].setText("X");
 			// Chỉnh font cho text trong ô cờ
 			lstOCo[x][y].setFont(new Font("Arial", Font.BOLD, 30));
-			// Chỉnh màu xanh cho text X
+			// Chỉnh màu cho text X
 			lstOCo[x][y].setForeground(Color.BLUE);
 			// Chỉnh margin cho text trong ô cờ
 			lstOCo[x][y].setMargin(new Insets(1, 1, 1, 1));
