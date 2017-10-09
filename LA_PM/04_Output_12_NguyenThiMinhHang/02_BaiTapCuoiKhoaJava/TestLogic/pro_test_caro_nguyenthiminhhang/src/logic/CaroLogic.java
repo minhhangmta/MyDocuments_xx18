@@ -2,87 +2,148 @@
  * Copyright(C) 2017 Luvina
  * CaroModel.java Oct 5, 2017 minhhang
  */
-package model;
+package logic;
 
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import view.CaroView;
+import model.Constants;
+import model.QuanCo;
+import model.TheCo;
 
 /**
  * Lớp xử lý logic
  * 
  * @author minhhang
  */
-public class CaroModel {
+public class CaroLogic {
+	// Khai báo danh sách thế cờ từ file
 	private ArrayList<TheCo> lstTheCoFile;
+	// Khởi tạo lớp GetTheCo
 	private GetTheCo getTheCo = new GetTheCo();
 
 	/**
-	 * 
+	 * Hàm khởi tạo hàm CaroLogic
 	 */
-	public CaroModel() {
+	public CaroLogic() {
+		// Gọi hàm lấy thế cờ từ file trong class GetTheCo
 		lstTheCoFile = getTheCo.getTheCoFile();
 	}
 
+	/**
+	 * Hàm check win hàng chéo phải
+	 * 
+	 * @param quanCo quân cờ vừa đánh
+	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @return true nếu thắng, false nếu không thắng
+	 */
 	public boolean checkCheoPhai(QuanCo quanCo, JButton[][] lstOCo) {
+		// Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
 		int x = quanCo.getPosRow();
+		// Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
 		int y = quanCo.getPosCol();
+		// khởi tạo biến đếm số quân cờ để check thắng
 		int count = 0;
+		// Duyệt 4 vị trí xung quanh quân cờ vừa đánh. Vì chéo phải hàng và cột không
+		// cùng tăng hoặc cùng giảm nên xét cả i,j
 		for (int i = -4, j = 4; i <= 4 && j >= -4; i++, j--) {
+			// Xét điều kiện bao gồm cả vị trí biên
 			if ((x + i) >= 0 && (x + i) < Constants.ROW && (y + j) >= 0 && (y + j) < Constants.COL) {
+				// Xét điều kiện quân cờ xung quanh ở hàng chéo phải giống ô cờ vừa đánh
 				if (lstOCo[x + i][y + j].getText() == lstOCo[x][y].getText()) {
+					// Tăng biến đếm lên 1
 					count++;
+					// Nếu có ít nhất 5 quân cờ liên tiếp nhau
 					if (count >= 5) {
+						// Trả về giá trị true - thắng
 						return true;
 					}
 				} else {
+					// Không thì reset lại biến đếm
 					count = 0;
 				}
 			}
 		}
+		// Chưa thắng trả về false
 		return false;
 	}
 
+	/**
+	 * Hàm check win hàng chéo trái
+	 * 
+	 * @param quanCo quân cờ vừa đánh
+	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @return true nếu thắng, false nếu không thắng
+	 */
 	public boolean checkCheoTrai(QuanCo quanCo, JButton[][] lstOCo) {
+		// Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
 		int x = quanCo.getPosRow();
+		// Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
 		int y = quanCo.getPosCol();
+		// khởi tạo biến đếm số quân cờ để check thắng
 		int count = 0;
+		// Duyệt 4 vị trí xung quanh quân cờ vừa đánh
 		for (int i = -4; i <= 4; i++) {
+			// Xét điều kiện bao gồm cả vị trí biên
 			if ((x + i) >= 0 && (x + i) < Constants.ROW && (y + i) >= 0 && (y + i) < Constants.COL) {
+				// Xét điều kiện quân cờ xung quanh ở hàng chéo trái giống ô cờ vừa đánh
 				if (lstOCo[x + i][y + i].getText() == lstOCo[x][y].getText()) {
+					// Tăng biến đếm lên 1
 					count++;
+					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
 					if (count >= 5) {
+						// Trả về giá trị true - thắng
 						return true;
 					}
 				} else {
+					// Không thì reset lại biến đếm
 					count = 0;
 				}
 			}
 		}
+		// Chưa thắng trả về false
 		return false;
 	}
 
+
+	/**
+	 * Hàm check win hàng ngang
+	 * 
+	 * @param quanCo quân cờ vừa đánh
+	 * @param lstOCo danh sách bàn cờ trên giao diện
+	 * @return true nếu thắng, false nếu không thắng
+	 */
 	public boolean checkHangNgang(QuanCo quanCo, JButton[][] lstOCo) {
+		//Lấy vị trí hàng của quân cờ vừa đánh trong bàn cờ
 		int x = quanCo.getPosRow();
+		//Lấy vị trí cột của quân cờ vừa đánh trong bàn cờ
 		int y = quanCo.getPosCol();
+		//khởi tạo biến đếm số quân cờ để check thắng
 		int count = 0;
+		//Duyệt 4 vị trí xung quanh quân cờ vừa đánh
 		for (int i = -4; i <= 4; i++) {
+			//Xét điều kiện bao gồm cả vị trí biên
 			if ((y + i) >= 0 && (y + i) < Constants.COL) {
+				//Xét điều kiện quân cờ xung quanh ở hàng ngang giống ô cờ vừa đánh
 				if (lstOCo[x][y + i].getText() == lstOCo[x][y].getText()) {
+					//Tăng biến đếm lên 1
 					count++;
+					//Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
 					if (count >= 5) {
+						//Trả về giá trị true - thắng
 						return true;
 					}
 				} else {
+					//Không thì reset lại biến đếm
 					count = 0;
 				}
 			}
 		}
 		return false;
 	}
-
+	
+	
 	public boolean checkHangDoc(QuanCo quanCo, JButton[][] lstOCo) {
 		int x = quanCo.getPosRow();
 		int y = quanCo.getPosCol();

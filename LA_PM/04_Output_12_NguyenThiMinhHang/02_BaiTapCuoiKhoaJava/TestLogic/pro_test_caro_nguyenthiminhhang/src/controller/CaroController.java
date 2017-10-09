@@ -4,7 +4,7 @@
  */
 package controller;
 
-import model.CaroModel;
+import logic.CaroLogic;
 import view.CaroView;
 
 /**
@@ -13,17 +13,17 @@ import view.CaroView;
  * @author minhhang
  */
 public class CaroController {
-	//Khai báo model Caro
-	private CaroModel model;
-	//Khai báo view Caro
+	//Khai báo Caro logic
+	private CaroLogic logic;
+	//Khai báo Caro view
 	private CaroView view;
 	
 	/**
-	 * @param model
+	 * @param logic 
 	 * @param view
 	 */
-	public CaroController(CaroModel model, CaroView view) {
-		this.model = model;
+	public CaroController(CaroLogic logic, CaroView view) {
+		this.logic = logic;
 		this.view = view;
 	}
 
@@ -33,5 +33,7 @@ public class CaroController {
 	public void showView() {
 		view.showView();
 	}
+	
+	
 	
 }

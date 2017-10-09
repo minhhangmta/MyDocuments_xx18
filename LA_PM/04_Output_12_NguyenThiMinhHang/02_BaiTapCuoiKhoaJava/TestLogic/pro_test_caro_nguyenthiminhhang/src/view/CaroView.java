@@ -13,7 +13,7 @@ import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import model.CaroListener;
+import logic.CaroListener;
 import model.Constants;
 
 /**
@@ -24,8 +24,8 @@ import model.Constants;
 public class CaroView {
 	// Khai báo JFrame
 	private JFrame mainFrame;
-	// Khai báo mảng ô cờ dạng JButton, mảng có tối đa 20 Row, 20 Column
-	public static JButton[][] lstOCo = new JButton[Constants.ROW][Constants.COL];
+	// Khai báo mảng ô cờ dạng JButton
+	private JButton[][] lstOCo;
 
 	/**
 	 * @throws HeadlessException
@@ -33,6 +33,8 @@ public class CaroView {
 	public CaroView() {
 		// Khởi tạo Frame với tên Frame là giá trị TITLE trong class Constants
 		mainFrame = new JFrame(Constants.TITLE);
+		//Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants (ROW,COL)
+		lstOCo = new JButton[Constants.ROW][Constants.COL];
 	}
 
 	/**
@@ -65,19 +67,19 @@ public class CaroView {
 	 * Hàm tạo bàn cờ caro
 	 */
 	public void createCaroBoard() {
-		
+		//set Layout kiểu gridbag cho frame
 		mainFrame.setLayout(new GridBagLayout());
-		
+		//
 		GridBagConstraints c = new GridBagConstraints();
 		// Duyệt hàng của bàn cờ
 		for (int i = 0; i < Constants.ROW; i++) {
 			// Duyệt cột của bàn cờ
 			for (int j = 0; j < Constants.COL; j++) {
-				//Khởi tạo 1 button mới - tương ứng với mỗi ô cờ
+				//Khởi tạo 1 button mới - mỗi button là 1 ô cờ
 				JButton btn = new JButton();
 				//Set size cho button ô cờ rộng SIZE_O_CO, cao SIZE_O_CO
 				btn.setPreferredSize(new Dimension(Constants.SIZE_O_CO, Constants.SIZE_O_CO));
-				// Khởi tạo mảng ô cờ dạng button
+				// Khởi tạo mảng  ô cờ dạng button
 				lstOCo[i][j] = btn;
 				// Set nền trắng cho các ô cờ
 				lstOCo[i][j].setBackground(Color.white);
@@ -85,7 +87,9 @@ public class CaroView {
 				lstOCo[i][j].addActionListener(new CaroListener(lstOCo));
 				//
 				c.gridx = j;
+				//
 				c.gridy = i;
+				//add button vừa tạo vào frame
 				mainFrame.add(lstOCo[i][j], c);
 			}
 		}

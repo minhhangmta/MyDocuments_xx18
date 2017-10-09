@@ -2,7 +2,7 @@
 * Copyright(C) 2017 Luvina
 * dataPlayCaro.java, Oct 6, 2017 minhhang
 */
-package model;
+package logic;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +12,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+
+import model.Constants;
+import model.TheCo;
 
 /**
  * Lớp lấy dữ liệu các thế cờ

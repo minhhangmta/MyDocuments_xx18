@@ -5,7 +5,7 @@ package main;
  */
 
 import controller.CaroController;
-import model.CaroModel;
+import logic.CaroLogic;
 import view.CaroView;
 
 /**
@@ -21,11 +21,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// Khởi tạo caro Model để lấy và xử lý dữ liệu
-		CaroModel model = new CaroModel();
+		CaroLogic logic = new CaroLogic();
 		// Khởi tạo caro View để show giao diện
 		CaroView view = new CaroView();
-		
-		CaroController controller = new CaroController(model, view);
+		//Khởi tạo controller
+		CaroController controller = new CaroController(logic, view);
+		//Gọi hàm showView từ controller
 		controller.showView();
 		
 	}
