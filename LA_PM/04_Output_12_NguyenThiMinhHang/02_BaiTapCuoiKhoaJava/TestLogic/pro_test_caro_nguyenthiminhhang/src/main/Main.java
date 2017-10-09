@@ -20,14 +20,11 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Khởi tạo caro Model để lấy và xử lý dữ liệu
+//		CaroView caroView = new CaroView();
+//		caroView.showView();
 		CaroLogic logic = new CaroLogic();
-		// Khởi tạo caro View để show giao diện
 		CaroView view = new CaroView();
-		//Khởi tạo controller
-		CaroController controller = new CaroController(logic, view);
-		//Gọi hàm showView từ controller
+		CaroController controller= new CaroController(logic, view);
 		controller.showView();
-		
 	}
 }

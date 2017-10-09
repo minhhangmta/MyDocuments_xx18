@@ -69,7 +69,7 @@ public class CaroView {
 	public void createCaroBoard() {
 		//set Layout kiểu gridbag cho frame
 		mainFrame.setLayout(new GridBagLayout());
-		//
+		//Khởi tạo vùng hạn chế gridbag
 		GridBagConstraints c = new GridBagConstraints();
 		// Duyệt hàng của bàn cờ
 		for (int i = 0; i < Constants.ROW; i++) {
@@ -85,9 +85,9 @@ public class CaroView {
 				lstOCo[i][j].setBackground(Color.white);
 				// Tạo sự kiện cho từng ô cờ
 				lstOCo[i][j].addActionListener(new CaroListener(lstOCo));
-				//
+				//set grid tọa độ hàng
 				c.gridx = j;
-				//
+				//set grid tọa độ cột
 				c.gridy = i;
 				//add button vừa tạo vào frame
 				mainFrame.add(lstOCo[i][j], c);

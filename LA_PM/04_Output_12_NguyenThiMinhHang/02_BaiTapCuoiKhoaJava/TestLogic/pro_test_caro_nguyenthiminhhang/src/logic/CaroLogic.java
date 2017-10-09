@@ -201,10 +201,10 @@ public class CaroLogic {
 		// Kiểm tra điều kiện chơi thắng
 		if (checkHangDoc(quanCo, lstOCo) || checkHangNgang(quanCo, lstOCo) || checkCheoTrai(quanCo, lstOCo)
 				|| checkCheoPhai(quanCo, lstOCo)) {
-			//Đúng trả về true
+			// Đúng trả về true
 			return true;
 		}
-		//Sai trả về false
+		// Sai trả về false
 		return false;
 	}
 
@@ -222,8 +222,8 @@ public class CaroLogic {
 			for (int i = 0; i < lstTheCoView.size(); i++) {
 				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
 					oCo = getPos(theCoFile, lstTheCoView.get(i));
-					int x = i / 16 + oCo.getX();
-					int y = i % 16 + oCo.getY();
+					int x = i / (Constants.ROW - 4) + oCo.getX();
+					int y = i % (Constants.COL - 4) + oCo.getY();
 					oCo.setLocation(x, y);
 					checked = true;
 					break;
