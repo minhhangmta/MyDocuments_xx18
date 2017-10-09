@@ -9,12 +9,15 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import controller.CaroController;
 import model.Constants;
 import model.QuanCo;
+import model.TheCo;
 
 /**
  * Lớp thực hiện action cho các components
@@ -22,12 +25,12 @@ import model.QuanCo;
  * @author minhhang
  */
 public class CaroListener implements ActionListener {
-	// Khai báo và khởi tạo lớp CaroLogic
-	private CaroLogic logic = new CaroLogic();
 	// Khai báo mảng 2D button - danh sách ô cờ trên bàn cờ
 	private JButton[][] lstOCo;
 	// Khai báo đối tượng quân cờ
 	private QuanCo quanCo;
+	private CaroController controller = new CaroController();
+	private CaroLogic logic = new CaroLogic();
 
 	/**
 	 * @param lstOCo
@@ -74,7 +77,6 @@ public class CaroListener implements ActionListener {
 				computerPlay();
 			}
 		}
-
 	}
 
 	/**

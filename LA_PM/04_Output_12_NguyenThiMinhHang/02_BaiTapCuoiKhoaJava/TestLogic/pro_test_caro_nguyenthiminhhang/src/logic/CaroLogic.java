@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
+import controller.CaroController;
 import model.Constants;
 import model.QuanCo;
 import model.TheCo;
@@ -18,17 +19,13 @@ import model.TheCo;
  * @author minhhang
  */
 public class CaroLogic {
-	// Khai báo danh sách thế cờ từ file
-	private ArrayList<TheCo> lstTheCoFile;
-	// Khởi tạo lớp GetTheCo
-	private GetTheCo getTheCo = new GetTheCo();
+	private CaroController controller = new CaroController();
 
 	/**
 	 * Hàm khởi tạo hàm CaroLogic
 	 */
 	public CaroLogic() {
-		// Gọi hàm lấy thế cờ từ file trong class GetTheCo
-		lstTheCoFile = getTheCo.getTheCoFile();
+
 	}
 
 	/**
@@ -217,7 +214,8 @@ public class CaroLogic {
 	public JButton posComputerPlay(JButton[][] lstOCo) {
 		JButton oCo = new JButton();
 		boolean checked = false;
-		ArrayList<TheCo> lstTheCoView = getTheCo.getTheCoView(lstOCo);
+		ArrayList<TheCo> lstTheCoView = controller.getTheCoView(lstOCo);
+		ArrayList<TheCo> lstTheCoFile = controller.getTheCoFile();
 		for (TheCo theCoFile : lstTheCoFile) {
 			for (int i = 0; i < lstTheCoView.size(); i++) {
 				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {

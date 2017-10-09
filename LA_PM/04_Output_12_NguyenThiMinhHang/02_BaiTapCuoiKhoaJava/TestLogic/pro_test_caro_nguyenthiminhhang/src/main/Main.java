@@ -20,11 +20,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		CaroView caroView = new CaroView();
-//		caroView.showView();
-		CaroLogic logic = new CaroLogic();
 		CaroView view = new CaroView();
-		CaroController controller= new CaroController(logic, view);
+		CaroController controller = new CaroController(view);
 		controller.showView();
 	}
 }

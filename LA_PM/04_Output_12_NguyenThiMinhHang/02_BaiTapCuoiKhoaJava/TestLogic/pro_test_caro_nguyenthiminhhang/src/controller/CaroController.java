@@ -4,7 +4,14 @@
  */
 package controller;
 
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+
 import logic.CaroLogic;
+import logic.GetTheCo;
+import model.QuanCo;
+import model.TheCo;
 import view.CaroView;
 
 /**
@@ -13,27 +20,37 @@ import view.CaroView;
  * @author minhhang
  */
 public class CaroController {
-	//Khai báo Caro logic
-	private CaroLogic logic;
-	//Khai báo Caro view
+	// Khai báo Caro view
 	private CaroView view;
-	
+	// Khởi tạo lớp GetTheCo
+	private GetTheCo getTheCo = new GetTheCo();
+
 	/**
-	 * @param logic 
+	 * 
+	 */
+	public CaroController() {
+	}
+
+	/**
 	 * @param view
 	 */
-	public CaroController(CaroLogic logic, CaroView view) {
-		this.logic = logic;
+	public CaroController(CaroView view) {
 		this.view = view;
 	}
 
 	/**
-	 * Điều hướng đến view ShowView		
+	 * Điều hướng đến view ShowView
 	 */
 	public void showView() {
 		view.showView();
 	}
-	
-//	public void 
-	
+
+	public ArrayList<TheCo> getTheCoFile() {
+		return getTheCo.getTheCoFile();
+	}
+
+	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
+		return getTheCo.getTheCoView(lstOCo);
+	}
+
 }

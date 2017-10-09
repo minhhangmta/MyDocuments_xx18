@@ -33,7 +33,8 @@ public class CaroView {
 	public CaroView() {
 		// Khởi tạo Frame với tên Frame là giá trị TITLE trong class Constants
 		mainFrame = new JFrame(Constants.TITLE);
-		//Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants (ROW,COL)
+		// Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants
+		// (ROW,COL)
 		lstOCo = new JButton[Constants.ROW][Constants.COL];
 	}
 
@@ -67,29 +68,27 @@ public class CaroView {
 	 * Hàm tạo bàn cờ caro
 	 */
 	public void createCaroBoard() {
-		//set Layout kiểu gridbag cho frame
+		// set Layout kiểu gridbag cho frame
 		mainFrame.setLayout(new GridBagLayout());
-		//Khởi tạo vùng hạn chế gridbag
+		// Khởi tạo vùng hạn chế gridbag
 		GridBagConstraints c = new GridBagConstraints();
 		// Duyệt hàng của bàn cờ
 		for (int i = 0; i < Constants.ROW; i++) {
 			// Duyệt cột của bàn cờ
 			for (int j = 0; j < Constants.COL; j++) {
-				//Khởi tạo 1 button mới - mỗi button là 1 ô cờ
+				// Khởi tạo 1 button mới - mỗi button là 1 ô cờ
 				JButton btn = new JButton();
-				//Set size cho button ô cờ rộng SIZE_O_CO, cao SIZE_O_CO
+				// Set size cho button ô cờ rộng SIZE_O_CO, cao SIZE_O_CO
 				btn.setPreferredSize(new Dimension(Constants.SIZE_O_CO, Constants.SIZE_O_CO));
-				// Khởi tạo mảng  ô cờ dạng button
+				// Khởi tạo mảng ô cờ dạng button
 				lstOCo[i][j] = btn;
 				// Set nền trắng cho các ô cờ
 				lstOCo[i][j].setBackground(Color.white);
 				// Tạo sự kiện cho từng ô cờ
 				lstOCo[i][j].addActionListener(new CaroListener(lstOCo));
-				//set grid tọa độ hàng
 				c.gridx = j;
-				//set grid tọa độ cột
 				c.gridy = i;
-				//add button vừa tạo vào frame
+				// add button vừa tạo vào frame
 				mainFrame.add(lstOCo[i][j], c);
 			}
 		}
