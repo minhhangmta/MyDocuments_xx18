@@ -19,21 +19,14 @@ import model.TheCo;
  */
 public class CaroLogic {
 	private DataTheCoFile data;
+	private ArrayList<TheCo> lstTheCoFile;
 
 	/**
-	 * Hàm khởi tạo hàm CaroLogic
+	 * Hàm khởi tạo có tham số 
+	 * @param lstTheCoFile
 	 */
-	public CaroLogic() {
-		data = new DataTheCoFile();
-	}
-
-	/**
-	 * Gọi hàm lấy thế cờ từ File
-	 * 
-	 * @return danh sách thế cờ từ file
-	 */
-	public ArrayList<TheCo> getTheCoFile() {
-		return data.getTheCoFile();
+	public CaroLogic(ArrayList<TheCo> lstTheCoFile) {
+		this.lstTheCoFile = lstTheCoFile;
 	}
 
 	/**
@@ -275,8 +268,6 @@ public class CaroLogic {
 		boolean checked = false;
 		// Tạo danh sách lấy thế cờ từ View
 		ArrayList<TheCo> lstTheCoView = getTheCoView(lstOCo);
-		// Tạo danh sách lấy thế cờ từ File
-		ArrayList<TheCo> lstTheCoFile = data.getTheCoFile();
 		// Duyệt từng thế cờ trong list thế cờ từ file
 		for (TheCo theCoFile : lstTheCoFile) {
 			// Duyệt từng thế cờ trong list thế cờ từ view

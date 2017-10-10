@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import constants.Constants;
 import logic.CaroLogic;
 import model.QuanCo;
+import model.TheCo;
 
 /**
  * Lớp thực hiện action cho các components
@@ -28,13 +30,14 @@ public class CaroListener implements ActionListener {
 	// Khai báo đối tượng quân cờ
 	private QuanCo quanCo;
 	// Khởi tạo CaroLogic
-	private CaroLogic logic = new CaroLogic();
+	private CaroLogic logic;
 
 	/**
 	 * @param lstOCo
 	 */
-	public CaroListener(JButton[][] lstOCo) {
+	public CaroListener(JButton[][] lstOCo, ArrayList<TheCo> lstTheCoFile) {
 		this.lstOCo = lstOCo;
+		logic = new CaroLogic(lstTheCoFile);
 	}
 
 	/*
@@ -83,7 +86,7 @@ public class CaroListener implements ActionListener {
 	public void computerPlay() {
 		// Lay vi tri may danh
 		JButton oCo = logic.posComputerPlay(lstOCo);
-		//Tạo biến đếm quân cờ máy chơi
+		// Tạo biến đếm quân cờ máy chơi
 		int countCo = 0;
 		// lấy vị trí hàng từ ô cờ vừa lấy được
 		int row = oCo.getX();
@@ -93,7 +96,7 @@ public class CaroListener implements ActionListener {
 		QuanCo co = new QuanCo(row, col);
 		// set text cho ô cờ mà máy đánh là O
 		lstOCo[row][col].setText("O");
-		//Tăng biến đếm quân cờ máy chơi
+		// Tăng biến đếm quân cờ máy chơi
 		countCo++;
 		// Đặt font cho text trong ô cờ
 		lstOCo[row][col].setFont(new Font("Arial", Font.BOLD, 30));
@@ -108,7 +111,7 @@ public class CaroListener implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Máy thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			// reset lại chương trình
 			resetGame();
-		}  else if (logic.checkEqualPlay(countCo)) {
+		} else if (logic.checkEqualPlay(countCo)) {
 			// Hiển thị message thông báo hòa
 			JOptionPane.showMessageDialog(null, "Hòa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			// reset chương trình

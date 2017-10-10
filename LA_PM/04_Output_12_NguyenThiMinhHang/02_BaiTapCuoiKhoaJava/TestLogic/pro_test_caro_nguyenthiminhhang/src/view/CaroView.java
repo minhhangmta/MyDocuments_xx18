@@ -9,12 +9,14 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import constants.Constants;
 import controller.CaroListener;
+import model.TheCo;
 
 /**
  * Lớp làm việc với giao diện chương trình
@@ -30,11 +32,11 @@ public class CaroView {
 	/**
 	 * @throws HeadlessException
 	 */
-	public CaroView() {
-		//Gọi hàm khởi tạo Frame
+	public CaroView(ArrayList<TheCo> lstTheCoFile) {
+		// Gọi hàm khởi tạo Frame
 		initFrame();
 		// Gọi hàm tạo bàn cờ
-		createCaroBoard();
+		createCaroBoard(lstTheCoFile);
 		// Gọi hàm thiết lập Frame
 		designFrame();
 	}
@@ -66,7 +68,7 @@ public class CaroView {
 	/**
 	 * Hàm tạo bàn cờ caro
 	 */
-	public void createCaroBoard() {
+	public void createCaroBoard(ArrayList<TheCo> lstTheCoFile) {
 		// Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants
 		lstOCo = new JButton[Constants.ROW][Constants.COL];
 		// set Layout kiểu gridbag cho frame
@@ -86,7 +88,7 @@ public class CaroView {
 				// Set nền trắng cho các ô cờ
 				lstOCo[i][j].setBackground(Color.white);
 				// Tạo sự kiện cho từng ô cờ
-				lstOCo[i][j].addActionListener(new CaroListener(lstOCo));
+				lstOCo[i][j].addActionListener(new CaroListener(lstOCo, lstTheCoFile));
 				c.gridx = j;
 				c.gridy = i;
 				// add button vừa tạo vào frame
