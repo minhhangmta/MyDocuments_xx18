@@ -5,8 +5,6 @@ package main;
  */
 
 import controller.CaroController;
-import logic.CaroLogic;
-import view.CaroView;
 
 /**
  * Description class here
@@ -20,13 +18,9 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Khởi tạo CaroView
-		CaroView view = new CaroView();
-		//Khởi tạo CaroLogic
-		CaroLogic logic = new CaroLogic();
-		//Khởi tạo CaroController
-		CaroController controller = new CaroController(logic, view);
-		//Gọi hàm showView trong controller
-		controller.showView();
+		// Khởi tạo CaroController
+		CaroController controller = new CaroController();
+		// Gọi hàm showView trong controller
+		controller.startApplication();
 	}
 }

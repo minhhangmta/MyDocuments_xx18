@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import controller.CaroController;
-import model.Constants;
+import constants.Constants;
 import model.QuanCo;
 import model.TheCo;
 
@@ -19,14 +18,71 @@ import model.TheCo;
  * @author minhhang
  */
 public class CaroLogic {
-	//Khởi tạo CaroController
-	private CaroController controller = new CaroController();
+	private DataTheCoFile data;
 
 	/**
 	 * Hàm khởi tạo hàm CaroLogic
 	 */
 	public CaroLogic() {
+		data = new DataTheCoFile();
+	}
 
+	/**
+	 * Gọi hàm lấy thế cờ từ File
+	 * 
+	 * @return danh sách thế cờ từ file
+	 */
+	public ArrayList<TheCo> getTheCoFile() {
+		return data.getTheCoFile();
+	}
+
+	/**
+	 * Hàm lấy danh sách thế cờ từ giao diện
+	 * 
+	 * @param lstOCo
+	 * @return lstTheCoView danh sách thế cờ từ giao diện
+	 */
+	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
+		//Khởi tạo danh sách thế cờ lấy từ View
+		ArrayList<TheCo> lstTheCoView = new ArrayList<>();
+		//Khởi tạo thế cờ View
+		TheCo theCoView = null;
+		//Khởi tạo mảng 2D ma trận 5x5
+		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+		// Duyệt từng ma trận con 5x5 trong bàn cờ - là thế cờ trên giao diện
+		//Duyệt từng ma trận con 5x5 theo hàng (có 16x16 thế cờ)
+		for (int i = 0; i < Constants.ROW - Constants.MATRIX_ROW + 1; i++) {
+			//duyệt từng ma trận con 5x5 theo cột 
+			for (int j = 0; j < Constants.COL - Constants.MATRIX_COL + 1; j++) {
+				//Duyệt từng hàng của thế cờ/ma trận con trên View
+				for (int l = i; l < i + Constants.MATRIX_ROW; l++) {
+					//Duyệt từng cột của thế cờ/ma trận con trên view
+					for (int m = j; m < j + Constants.MATRIX_COL; m++) {
+						//Xét điều kiện text của ô cờ trên bàn cờ là O
+						if ("O".equals(lstOCo[l][m].getText())) {
+							//Gán giá trị O cho phần tử tương ứng của thế cờ
+							matrix[l - i][m - j] = "O";
+							//Xét điều kiện text của ô cờ trên bàn cờ là X
+						} else if ("X".equals(lstOCo[l][m].getText())) {
+							//Gán giá trị X cho phần tử tương ứng của thế cờ
+							matrix[l - i][m - j] = "X";
+						} else {
+							//Ngược lại còn trường hợp ô cờ có text rỗng
+							//Gán giá trị T cho phần tử tương ứng của thế cờ
+							matrix[l - i][m - j] = "T";
+						}
+						//Gán ma trận vào thế cờ 
+						theCoView = new TheCo(matrix);
+					}
+				}
+				//thêm thế cờ vừa đọc được vào danh sách
+				lstTheCoView.add(theCoView);
+				//Khởi tạo lại ma trận
+				matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
+			}
+		}
+		//Trả về danh sách thế cờ từ view
+		return lstTheCoView;
 	}
 
 	/**
@@ -55,7 +111,7 @@ public class CaroLogic {
 					// Tăng biến đếm lên 1
 					count++;
 					// Nếu có ít nhất 5 quân cờ liên tiếp nhau
-					if (count >= 5) {
+					if (count == 5) {
 						// Trả về giá trị true - thắng
 						return true;
 					}
@@ -94,7 +150,7 @@ public class CaroLogic {
 					// Tăng biến đếm lên 1
 					count++;
 					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
-					if (count >= 5) {
+					if (count == 5) {
 						// Trả về giá trị true - thắng
 						return true;
 					}
@@ -133,7 +189,7 @@ public class CaroLogic {
 					// Tăng biến đếm lên 1
 					count++;
 					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
-					if (count >= 5) {
+					if (count == 5) {
 						// Trả về giá trị true - thắng
 						return true;
 					}
@@ -172,7 +228,7 @@ public class CaroLogic {
 					// Tăng biến đếm lên 1
 					count++;
 					// Xét điều kiện có ít nhất 5 quân cờ liên tiếp nhau
-					if (count >= 5) {
+					if (count == 5) {
 						// Trả về giá trị true - thắng
 						return true;
 					}
@@ -206,6 +262,7 @@ public class CaroLogic {
 		return false;
 	}
 
+
 	/**
 	 * Hàm lấy vị trí máy đánh
 	 * 
@@ -213,81 +270,90 @@ public class CaroLogic {
 	 * @return jButton ô cờ cần đánh
 	 */
 	public JButton posComputerPlay(JButton[][] lstOCo) {
-		//Khởi tạo ô cờ dạng button
+		// Khởi tạo ô cờ dạng button
 		JButton oCo = new JButton();
-		//Khởi tạo biến kiểm tra máy đánh hay chưa. true-đã đánh, false-chưa
+		// Khởi tạo biến kiểm tra máy đánh hay chưa. true-đã đánh, false-chưa
 		boolean checked = false;
-		//Tạo danh sách lấy thế cờ từ View
-		ArrayList<TheCo> lstTheCoView = controller.getTheCoView(lstOCo);
-		//Tạo danh sách lấy thế cờ từ File
-		ArrayList<TheCo> lstTheCoFile = controller.getTheCoFile();
-		//Duyệt từng thế cờ trong list thế cờ từ file
+		// Tạo danh sách lấy thế cờ từ View
+		ArrayList<TheCo> lstTheCoView = getTheCoView(lstOCo);
+		// Tạo danh sách lấy thế cờ từ File
+		ArrayList<TheCo> lstTheCoFile = data.getTheCoFile();
+		// Duyệt từng thế cờ trong list thế cờ từ file
 		for (TheCo theCoFile : lstTheCoFile) {
-			//Duyệt từng thế cờ trong list thế cờ từ view 
+			// Duyệt từng thế cờ trong list thế cờ từ view
 			for (int i = 0; i < lstTheCoView.size(); i++) {
-				//Xét điều kiện so sánh thế cờ từ file và từ view khớp nhau
+				//Xét điều kiện 2 thế cờ khớp nhau
 				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
-					
-					/* Lấy vị trí T khớp nhau*/
-					
-					//Duyệt từng hàng của ma trận 5x5
-					for (int l = 0; l < Constants.MATRIX_ROW; l++) {
-						//Duyệt từng cột của ma trận 5x5
-						for (int m = 0; m < Constants.MATRIX_COL; m++) {
-							//Xét điều kiện thế cờ file và thế cờ view có vị trí T trùng nhau
-							if ("T".equals(theCoFile.getMatrix()[l][m])
-									&& "T".equals(lstTheCoView.get(i).getMatrix()[l][m])) {
-								//Lấy vị trí đó 
-								oCo.setLocation(l, m);
-							}
-						}
-					}/* Lấy vị trí T khớp nhau */
-					
-					//Lấy vị trí hàng cần đánh trên bàn cờ từ view
-					//Vì bàn có có 20x20 ô. duyệt thế cờ 5x5 hàng ngang là 20-5+1=16 nên muốn lấy x,y phải / lấy hàng, % lấy cột
+					//Lấy vị trí T 
+					oCo = getPos(theCoFile, lstTheCoView.get(i));
+					//Lấy vị trí hàng của ô cờ cần đánh
 					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + oCo.getX();
-					//Lấy vị trí cột cần đánh trên  bàn cờ từ view
+					//Lấy vị trí cột của ô cờ cần đánh
 					int y = i % (Constants.COL - Constants.MATRIX_COL + 1) + oCo.getY();
-					//Lưu vị trí đánh cho ô cờ
+					//Set location cho ô button
 					oCo.setLocation(x, y);
 					//Máy đã đánh
 					checked = true;
 					break;
 				}
 			}
-			//Nếu máy đã đánh thì dừng lấy vị trí
+			//Nếu máy đã đánh
 			if (checked) {
 				break;
 			}
 		}
-		//Trả về ô cờ cần đánh
 		return oCo;
 	}
 
 	/**
-	 * Hàm so sánh thế cờ
+	 * Hàm so sánh 2 thế cờ từ file và view
 	 * 
 	 * @param theCoFile
 	 * @param theCoView
 	 * @return true nếu so sánh khớp, false nếu so sánh chưa khớp
 	 */
 	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
-		//Duyệt theo hàng thế cờ 5x5
+		// Duyệt theo hàng thế cờ 5x5
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-			//Duyệt theo cột thế cờ 5x5
+			// Duyệt theo cột thế cờ 5x5
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				//Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view  
+				// Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view
 				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
 						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
 						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
 						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
-					//thì trả về false
+					// thì trả về false
 					return false;
 				}
 			}
 		}
-		//Khớp thì trả về true
+		// Khớp thì trả về true
 		return true;
+	}
+
+	/**
+	 * Hàm lấy vị trí máy cần đánh từ 2 thế cờ file và view
+	 * 
+	 * @param theCoFile
+	 * @param theCoView
+	 * @return ô cờ cần đánh dạng button
+	 */
+	public JButton getPos(TheCo theCoFile, TheCo theCoView) {
+		//Khởi tạo button
+		JButton oCo = new JButton();
+		//Duyệt theo hàng thế cờ/ma trận con 5x5
+		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
+			//Duyệt theo cột thế cờ/ma trận con 5x5
+			for (int j = 0; j < Constants.MATRIX_COL; j++) {
+				//Xét điều kiện 2 thế cờ có vị trí T khớp nhau
+				if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
+					//setLocation cho ô cờ button đó
+					oCo.setLocation(i, j);
+				}
+			}
+		}
+		//Trả về ô cờ
+		return oCo;
 	}
 
 }

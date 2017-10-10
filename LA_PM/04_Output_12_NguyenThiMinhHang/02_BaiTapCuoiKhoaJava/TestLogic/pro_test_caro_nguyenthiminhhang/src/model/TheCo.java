@@ -21,21 +21,6 @@ public class TheCo {
 
 	/**
 	 * @param matrix
-	 *            the matrix to set
-	 */
-	public void setMatrix(String[][] matrix) {
-		this.matrix = matrix;
-	}
-
-	/**
-	 * 
-	 */
-	public TheCo() {
-//		matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
-	}
-
-	/**
-	 * @param matrix
 	 */
 	public TheCo(String[][] matrix) {
 		this.matrix = matrix;

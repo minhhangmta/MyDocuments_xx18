@@ -21,14 +21,6 @@ public class QuanCo {
 	}
 
 	/**
-	 * @param posRow
-	 *            the posRow to set
-	 */
-	public void setPosRow(int posRow) {
-		this.posRow = posRow;
-	}
-
-	/**
 	 * @return the posCol
 	 */
 	public int getPosCol() {
@@ -36,26 +28,10 @@ public class QuanCo {
 	}
 
 	/**
-	 * @param posCol
-	 *            the posCol to set
-	 */
-	public void setPosCol(int posCol) {
-		this.posCol = posCol;
-	}
-
-	/**
-	 * 
-	 */
-	public QuanCo() {
-		super();
-	}
-
-	/**
 	 * @param posRow
 	 * @param posCol
 	 */
 	public QuanCo(int posRow, int posCol) {
-		super();
 		this.posRow = posRow;
 		this.posCol = posCol;
 	}

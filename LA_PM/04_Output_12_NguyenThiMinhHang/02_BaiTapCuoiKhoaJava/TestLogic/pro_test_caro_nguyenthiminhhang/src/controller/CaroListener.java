@@ -2,22 +2,20 @@
  * Copyright(C) 2017 Luvina
  * CaroListener.java Oct 6, 2017 minhhang
  */
-package logic;
+package controller;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import controller.CaroController;
-import model.Constants;
+import constants.Constants;
+import logic.CaroLogic;
 import model.QuanCo;
-import model.TheCo;
 
 /**
  * Lớp thực hiện action cho các components
@@ -29,9 +27,7 @@ public class CaroListener implements ActionListener {
 	private JButton[][] lstOCo;
 	// Khai báo đối tượng quân cờ
 	private QuanCo quanCo;
-	//Khởi tạo CaroController
-	private CaroController controller = new CaroController();
-	//Khởi tạo CaroLogic
+	// Khởi tạo CaroLogic
 	private CaroLogic logic = new CaroLogic();
 
 	/**
@@ -59,7 +55,7 @@ public class CaroListener implements ActionListener {
 		// Tạo 1 quân cờ mới với tọa độ hàng x, cột y
 		quanCo = new QuanCo(x, y);
 		// Kiểm tra điều kiện khi ô cờ cần đánh chưa có text
-		if (btn.getText().equals(lstOCo[x][y].getText()) && "".equals(lstOCo[x][y].getText())) {
+		if ("".equals(lstOCo[x][y].getText())) {
 			// Cho X đánh
 			lstOCo[x][y].setText("X");
 			// Chỉnh font cho text trong ô cờ
@@ -87,16 +83,12 @@ public class CaroListener implements ActionListener {
 	public void computerPlay() {
 		// Lay vi tri may danh
 		JButton oCo = logic.posComputerPlay(lstOCo);
-		// Khởi tạo quân cờ mới
-		QuanCo co = new QuanCo();
 		// lấy vị trí hàng từ ô cờ vừa lấy được
 		int row = oCo.getX();
 		// lấy vị trí cột từ ô cờ vừa lấy được
 		int col = oCo.getY();
-		// set vị trí hàng cho quân cờ
-		co.setPosRow(row);
-		// set vị trí cột cho quân cờ
-		co.setPosCol(col);
+		//Tạo quân cờ lưu vị trí 
+		QuanCo co = new QuanCo(row, col);
 		// set text cho ô cờ mà máy đánh là O
 		lstOCo[row][col].setText("O");
 		// Đặt font cho text trong ô cờ

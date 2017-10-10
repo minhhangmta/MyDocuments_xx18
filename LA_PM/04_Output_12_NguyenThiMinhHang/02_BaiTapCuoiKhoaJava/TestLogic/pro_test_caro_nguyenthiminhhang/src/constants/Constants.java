@@ -2,7 +2,7 @@
 * Copyright(C) 2017 Luvina
 * Constants.java, Oct 6, 2017 minhhang
 */
-package model;
+package constants;
 
 /**
  * Lớp lưu các hằng số của chương trình

@@ -13,8 +13,8 @@ import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import logic.CaroListener;
-import model.Constants;
+import constants.Constants;
+import controller.CaroListener;
 
 /**
  * Lớp làm việc với giao diện chương trình
@@ -31,21 +31,20 @@ public class CaroView {
 	 * @throws HeadlessException
 	 */
 	public CaroView() {
-		// Khởi tạo Frame với tên Frame là giá trị TITLE trong class Constants
-		mainFrame = new JFrame(Constants.TITLE);
-		// Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants
-		// (ROW,COL)
-		lstOCo = new JButton[Constants.ROW][Constants.COL];
-	}
-
-	/**
-	 * Hàm show Giao diện
-	 */
-	public void showView() {
+		//Gọi hàm khởi tạo Frame
+		initFrame();
 		// Gọi hàm tạo bàn cờ
 		createCaroBoard();
 		// Gọi hàm thiết lập Frame
 		designFrame();
+	}
+
+	/**
+	 * Hàm khởi tạo Frame
+	 */
+	public void initFrame() {
+		// Khởi tạo Frame với tên Frame là giá trị TITLE trong class Constants
+		mainFrame = new JFrame(Constants.TITLE);
 	}
 
 	/**
@@ -54,20 +53,22 @@ public class CaroView {
 	public void designFrame() {
 		// Set kích thước cho frame
 		mainFrame.setSize(Constants.WIDTH_FRAME, Constants.HEIGHT_FRAME);
-		// Cho phép hiển thị frame
-		mainFrame.setVisible(true);
 		// Cho phép frame hiển thị chính giữa màn hình
 		mainFrame.setLocationRelativeTo(null);
 		// Mặc định thoát chương trình khi chọn close
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Không cho phép thay đổi kích cỡ frame
 		mainFrame.setResizable(false);
+		// Cho phép hiển thị frame
+		mainFrame.setVisible(true);
 	}
 
 	/**
 	 * Hàm tạo bàn cờ caro
 	 */
 	public void createCaroBoard() {
+		// Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants
+		lstOCo = new JButton[Constants.ROW][Constants.COL];
 		// set Layout kiểu gridbag cho frame
 		mainFrame.setLayout(new GridBagLayout());
 		// Khởi tạo vùng hạn chế gridbag
