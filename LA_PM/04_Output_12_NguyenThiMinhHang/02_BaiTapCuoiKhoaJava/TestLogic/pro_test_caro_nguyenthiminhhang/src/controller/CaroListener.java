@@ -83,14 +83,18 @@ public class CaroListener implements ActionListener {
 	public void computerPlay() {
 		// Lay vi tri may danh
 		JButton oCo = logic.posComputerPlay(lstOCo);
+		//Tạo biến đếm quân cờ máy chơi
+		int countCo = 0;
 		// lấy vị trí hàng từ ô cờ vừa lấy được
 		int row = oCo.getX();
 		// lấy vị trí cột từ ô cờ vừa lấy được
 		int col = oCo.getY();
-		//Tạo quân cờ lưu vị trí 
+		// Tạo quân cờ lưu vị trí
 		QuanCo co = new QuanCo(row, col);
 		// set text cho ô cờ mà máy đánh là O
 		lstOCo[row][col].setText("O");
+		//Tăng biến đếm quân cờ máy chơi
+		countCo++;
 		// Đặt font cho text trong ô cờ
 		lstOCo[row][col].setFont(new Font("Arial", Font.BOLD, 30));
 		// Đặt màu cho text trong ô cờ
@@ -103,6 +107,11 @@ public class CaroListener implements ActionListener {
 			// Hiển thị message thông báo máy thắng
 			JOptionPane.showMessageDialog(null, "Máy thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			// reset lại chương trình
+			resetGame();
+		}  else if (logic.checkEqualPlay(countCo)) {
+			// Hiển thị message thông báo hòa
+			JOptionPane.showMessageDialog(null, "Hòa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			// reset chương trình
 			resetGame();
 		}
 	}

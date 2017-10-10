@@ -43,45 +43,45 @@ public class CaroLogic {
 	 * @return lstTheCoView danh sách thế cờ từ giao diện
 	 */
 	public ArrayList<TheCo> getTheCoView(JButton[][] lstOCo) {
-		//Khởi tạo danh sách thế cờ lấy từ View
+		// Khởi tạo danh sách thế cờ lấy từ View
 		ArrayList<TheCo> lstTheCoView = new ArrayList<>();
-		//Khởi tạo thế cờ View
+		// Khởi tạo thế cờ View
 		TheCo theCoView = null;
-		//Khởi tạo mảng 2D ma trận 5x5
+		// Khởi tạo mảng 2D ma trận 5x5
 		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
 		// Duyệt từng ma trận con 5x5 trong bàn cờ - là thế cờ trên giao diện
-		//Duyệt từng ma trận con 5x5 theo hàng (có 16x16 thế cờ)
+		// Duyệt từng ma trận con 5x5 theo hàng (có 16x16 thế cờ)
 		for (int i = 0; i < Constants.ROW - Constants.MATRIX_ROW + 1; i++) {
-			//duyệt từng ma trận con 5x5 theo cột 
+			// duyệt từng ma trận con 5x5 theo cột
 			for (int j = 0; j < Constants.COL - Constants.MATRIX_COL + 1; j++) {
-				//Duyệt từng hàng của thế cờ/ma trận con trên View
+				// Duyệt từng hàng của thế cờ/ma trận con trên View
 				for (int l = i; l < i + Constants.MATRIX_ROW; l++) {
-					//Duyệt từng cột của thế cờ/ma trận con trên view
+					// Duyệt từng cột của thế cờ/ma trận con trên view
 					for (int m = j; m < j + Constants.MATRIX_COL; m++) {
-						//Xét điều kiện text của ô cờ trên bàn cờ là O
+						// Xét điều kiện text của ô cờ trên bàn cờ là O
 						if ("O".equals(lstOCo[l][m].getText())) {
-							//Gán giá trị O cho phần tử tương ứng của thế cờ
+							// Gán giá trị O cho phần tử tương ứng của thế cờ
 							matrix[l - i][m - j] = "O";
-							//Xét điều kiện text của ô cờ trên bàn cờ là X
+							// Xét điều kiện text của ô cờ trên bàn cờ là X
 						} else if ("X".equals(lstOCo[l][m].getText())) {
-							//Gán giá trị X cho phần tử tương ứng của thế cờ
+							// Gán giá trị X cho phần tử tương ứng của thế cờ
 							matrix[l - i][m - j] = "X";
 						} else {
-							//Ngược lại còn trường hợp ô cờ có text rỗng
-							//Gán giá trị T cho phần tử tương ứng của thế cờ
+							// Ngược lại còn trường hợp ô cờ có text rỗng
+							// Gán giá trị T cho phần tử tương ứng của thế cờ
 							matrix[l - i][m - j] = "T";
 						}
-						//Gán ma trận vào thế cờ 
+						// Gán ma trận vào thế cờ
 						theCoView = new TheCo(matrix);
 					}
 				}
-				//thêm thế cờ vừa đọc được vào danh sách
+				// thêm thế cờ vừa đọc được vào danh sách
 				lstTheCoView.add(theCoView);
-				//Khởi tạo lại ma trận
+				// Khởi tạo lại ma trận
 				matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
 			}
 		}
-		//Trả về danh sách thế cờ từ view
+		// Trả về danh sách thế cờ từ view
 		return lstTheCoView;
 	}
 
@@ -262,7 +262,6 @@ public class CaroLogic {
 		return false;
 	}
 
-
 	/**
 	 * Hàm lấy vị trí máy đánh
 	 * 
@@ -282,22 +281,22 @@ public class CaroLogic {
 		for (TheCo theCoFile : lstTheCoFile) {
 			// Duyệt từng thế cờ trong list thế cờ từ view
 			for (int i = 0; i < lstTheCoView.size(); i++) {
-				//Xét điều kiện 2 thế cờ khớp nhau
+				// Xét điều kiện 2 thế cờ khớp nhau
 				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
-					//Lấy vị trí T 
+					// Lấy vị trí T
 					oCo = getPos(theCoFile, lstTheCoView.get(i));
-					//Lấy vị trí hàng của ô cờ cần đánh
+					// Lấy vị trí hàng của ô cờ cần đánh
 					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + oCo.getX();
-					//Lấy vị trí cột của ô cờ cần đánh
+					// Lấy vị trí cột của ô cờ cần đánh
 					int y = i % (Constants.COL - Constants.MATRIX_COL + 1) + oCo.getY();
-					//Set location cho ô button
+					// Set location cho ô button
 					oCo.setLocation(x, y);
-					//Máy đã đánh
+					// Máy đã đánh
 					checked = true;
 					break;
 				}
 			}
-			//Nếu máy đã đánh
+			// Nếu máy đã đánh
 			if (checked) {
 				break;
 			}
@@ -339,21 +338,31 @@ public class CaroLogic {
 	 * @return ô cờ cần đánh dạng button
 	 */
 	public JButton getPos(TheCo theCoFile, TheCo theCoView) {
-		//Khởi tạo button
+		// Khởi tạo button
 		JButton oCo = new JButton();
-		//Duyệt theo hàng thế cờ/ma trận con 5x5
+		// Duyệt theo hàng thế cờ/ma trận con 5x5
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-			//Duyệt theo cột thế cờ/ma trận con 5x5
+			// Duyệt theo cột thế cờ/ma trận con 5x5
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				//Xét điều kiện 2 thế cờ có vị trí T khớp nhau
+				// Xét điều kiện 2 thế cờ có vị trí T khớp nhau
 				if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
-					//setLocation cho ô cờ button đó
+					// setLocation cho ô cờ button đó
 					oCo.setLocation(i, j);
 				}
 			}
 		}
-		//Trả về ô cờ
+		// Trả về ô cờ
 		return oCo;
+	}
+
+	/**
+	 * Hàm kiểm tra đánh hòa
+	 */
+	public boolean checkEqualPlay(int countCo) {
+		if (countCo == (Constants.COL * Constants.ROW) / 2) {
+			return true;
+		}
+		return false;
 	}
 
 }
