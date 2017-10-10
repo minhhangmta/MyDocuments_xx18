@@ -27,56 +27,71 @@ public class DataTheCoFile {
 	 * @return mảng thế cờ 2 chiều
 	 */
 	public ArrayList<TheCo> getTheCoFile() {
-		//Khởi tạo danh sách thế cờ
+		// Khởi tạo danh sách thế cờ
 		ArrayList<TheCo> lstTheCo = new ArrayList<>();
-		//Khởi tạo ma trận con 5x5
+		// Khởi tạo ma trận con 5x5
 		String[][] matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
-		//Khai báo biến BufferedReader
+		// Khai báo biến BufferedReader
 		BufferedReader bufferedReader;
-		//Khai báo biến FileInputStream
-		FileInputStream fileInputStream;
-		//Khởi tạo giá trị cho thế cờ
+		// Khai báo biến FileInputStream
+		FileInputStream fileInputStream = null;
+		// Khởi tạo giá trị cho thế cờ
 		TheCo theCo = null;
-		//Khởi tạo biến đọc từng dòng
+		// Khởi tạo biến đọc từng dòng
 		String line = "";
 		try {
-			//Tạo đối tượng luồng và liên kết nguồn dữ liệu
+			// Tạo đối tượng luồng và liên kết nguồn dữ liệu
 			fileInputStream = new FileInputStream(new File(Constants.PATH_THE_CO));
 			bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-			//Đọc dòng đầu tiên
+			// Đọc dòng đầu tiên
 			line = bufferedReader.readLine();
-			//Khởi tạo biến đếm hàng được đọc
+			// Khởi tạo biến đếm hàng được đọc
 			int row = 0;
-			//Duyệt từ đầu đến hết file
+			// Duyệt từ đầu đến hết file
 			while (line != null) {
 				// Nếu dòng được đọc không rỗng
-				if (!line.isEmpty()) { 
-					//duyệt từ phần tử đầu tiên đến phần tử cuối cùng của line
+				if (!line.isEmpty()) {
+					// duyệt từ phần tử đầu tiên đến phần tử cuối cùng của line
 					for (int index = 0; index < line.length(); index++) {
-						//Gán từng phần tử vào ma trận con
+						// Gán từng phần tử vào ma trận con
 						matrix[row][index] = line.charAt(index) + "";
 					}
-					//Tăng biến đếm hàng +1
+					// Tăng biến đếm hàng +1
 					row++;
 				} else {
-					//Gán ma trận vừa đọc được vào thế cờ
+					// Gán ma trận vừa đọc được vào thế cờ
 					theCo = new TheCo(matrix);
-					//Lưu thế cờ vào danh sách thế cờ
+					// Lưu thế cờ vào danh sách thế cờ
 					lstTheCo.add(theCo);
-					//reset lại ma trận
+					// reset lại ma trận
 					matrix = new String[Constants.MATRIX_ROW][Constants.MATRIX_COL];
-					//reset biến đếm hàng 
+					// reset biến đếm hàng
 					row = 0;
 				}
-				//Đọc dòng tiếp theo
+				// Đọc dòng tiếp theo
 				line = bufferedReader.readLine();
 			}
-			//Đóng file
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			//Gọi hàm đóng luồng file
+			closeConnection(fileInputStream);
+		}
+		return lstTheCo;
+	}
+
+	/**
+	 * Hàm đóng luồng kết nối tới file
+	 */
+	private void closeConnection(FileInputStream fileInputStream) {
+		// Đóng file
+		try {
 			fileInputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return lstTheCo;
 	}
+
 }
