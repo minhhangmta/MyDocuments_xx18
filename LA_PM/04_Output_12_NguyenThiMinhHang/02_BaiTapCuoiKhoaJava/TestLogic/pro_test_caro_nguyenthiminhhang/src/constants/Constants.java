@@ -28,7 +28,5 @@ public class Constants {
 	public static final int HEIGHT_FRAME = 700;
 	// Đường dẫn tới file thế cờ
 	public static final String PATH_THE_CO = "resources/theco.txt";
-	// Nhân vật chơi trước
-	public static final String START_PLAYER = "Human";
 
 }

@@ -6,7 +6,6 @@ package controller;
 
 import java.util.ArrayList;
 
-import logic.CaroLogic;
 import logic.DataTheCoFile;
 import model.TheCo;
 import view.CaroView;
@@ -23,16 +22,17 @@ public class CaroController {
 	private DataTheCoFile data;
 
 	/**
-	 * 
+	 * Hàm khởi tạo không tham số
 	 */
 	public CaroController() {
+		//Khởi tạo lớp DataTheCoFile
 		data = new DataTheCoFile();
 	}
 
 	/**
 	 * Hàm lấy thế cờ từ file. Điều hướng đến DataTheCoFile
 	 * 
-	 * @return
+	 * @return danh sách thế cờ từ file 
 	 */
 	public ArrayList<TheCo> getTheCoFile() {
 		return data.getTheCoFile();

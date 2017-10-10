@@ -5,7 +5,7 @@
 package model;
 
 /**
- * Description here
+ * Đối tượng quân cờ
  * 
  * @author minhhang
  */

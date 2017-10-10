@@ -33,10 +33,13 @@ public class CaroListener implements ActionListener {
 	private CaroLogic logic;
 
 	/**
+	 * Hàm khởi tạo có tham số
 	 * @param lstOCo
+	 * @param lstTheCoFile
 	 */
 	public CaroListener(JButton[][] lstOCo, ArrayList<TheCo> lstTheCoFile) {
 		this.lstOCo = lstOCo;
+		//Khởi tạo lớp CaroLogic
 		logic = new CaroLogic(lstTheCoFile);
 	}
 
@@ -84,16 +87,16 @@ public class CaroListener implements ActionListener {
 	 * Hàm máy chơi game
 	 */
 	public void computerPlay() {
+		//Khởi tạo quân cờ
+		QuanCo quanCo = null;
 		// Lay vi tri may danh
-		JButton oCo = logic.posComputerPlay(lstOCo);
+		quanCo = logic.posComputerPlay(lstOCo);
 		// Tạo biến đếm quân cờ máy chơi
 		int countCo = 0;
 		// lấy vị trí hàng từ ô cờ vừa lấy được
-		int row = oCo.getX();
+		int row = quanCo.getPosRow();
 		// lấy vị trí cột từ ô cờ vừa lấy được
-		int col = oCo.getY();
-		// Tạo quân cờ lưu vị trí
-		QuanCo co = new QuanCo(row, col);
+		int col = quanCo.getPosCol();
 		// set text cho ô cờ mà máy đánh là O
 		lstOCo[row][col].setText("O");
 		// Tăng biến đếm quân cờ máy chơi
@@ -106,7 +109,7 @@ public class CaroListener implements ActionListener {
 		lstOCo[row][col].setMargin(new Insets(1, 1, 1, 1));
 		// Kiểm tra điều kiện máy chơi thắng với quân cờ vừa lấy được và ds ô cờ trên
 		// bàn cờ hiện tại
-		if (logic.checkWin(co, lstOCo)) {
+		if (logic.checkWin(quanCo, lstOCo)) {
 			// Hiển thị message thông báo máy thắng
 			JOptionPane.showMessageDialog(null, "Máy thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 			// reset lại chương trình

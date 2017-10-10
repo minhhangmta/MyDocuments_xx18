@@ -7,7 +7,7 @@ package main;
 import controller.CaroController;
 
 /**
- * Description class here
+ * Lớp thực hiện thi chương trình
  * 
  * @author minhhang
  */

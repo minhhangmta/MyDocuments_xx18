@@ -66,7 +66,10 @@ public class CaroView {
 	}
 
 	/**
+	 * 
 	 * Hàm tạo bàn cờ caro
+	 *
+	 * @param lstTheCoFile
 	 */
 	public void createCaroBoard(ArrayList<TheCo> lstTheCoFile) {
 		// Khởi tạo mảng ô cờ có tối đa số hàng và số cột lấy từ class Constants

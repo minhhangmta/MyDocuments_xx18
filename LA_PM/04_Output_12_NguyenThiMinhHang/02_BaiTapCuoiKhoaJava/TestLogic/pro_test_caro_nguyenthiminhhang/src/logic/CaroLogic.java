@@ -18,11 +18,12 @@ import model.TheCo;
  * @author minhhang
  */
 public class CaroLogic {
-	private DataTheCoFile data;
+	//Khai báo biến danh sách thế cờ file
 	private ArrayList<TheCo> lstTheCoFile;
 
 	/**
-	 * Hàm khởi tạo có tham số 
+	 * Hàm khởi tạo có tham số
+	 * 
 	 * @param lstTheCoFile
 	 */
 	public CaroLogic(ArrayList<TheCo> lstTheCoFile) {
@@ -259,11 +260,13 @@ public class CaroLogic {
 	 * Hàm lấy vị trí máy đánh
 	 * 
 	 * @param lstOCo
-	 * @return jButton ô cờ cần đánh
+	 * @return QuanCo quân cờ cần đánh
 	 */
-	public JButton posComputerPlay(JButton[][] lstOCo) {
+	public QuanCo posComputerPlay(JButton[][] lstOCo) {
 		// Khởi tạo ô cờ dạng button
 		JButton oCo = new JButton();
+		// Khởi tạo quân cờ
+		QuanCo quanCo = null;
 		// Khởi tạo biến kiểm tra máy đánh hay chưa. true-đã đánh, false-chưa
 		boolean checked = false;
 		// Tạo danh sách lấy thế cờ từ View
@@ -280,8 +283,8 @@ public class CaroLogic {
 					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + oCo.getX();
 					// Lấy vị trí cột của ô cờ cần đánh
 					int y = i % (Constants.COL - Constants.MATRIX_COL + 1) + oCo.getY();
-					// Set location cho ô button
-					oCo.setLocation(x, y);
+					//Khởi tạo giá trị x,y cho quanCo
+					quanCo = new QuanCo(x, y);
 					// Máy đã đánh
 					checked = true;
 					break;
@@ -292,7 +295,7 @@ public class CaroLogic {
 				break;
 			}
 		}
-		return oCo;
+		return quanCo;
 	}
 
 	/**
@@ -348,6 +351,10 @@ public class CaroLogic {
 
 	/**
 	 * Hàm kiểm tra đánh hòa
+	 * 
+	 * @param countCo
+	 *            biến đếm số quân cờ máy đánh
+	 * @return true nếu hòa, false nếu không
 	 */
 	public boolean checkEqualPlay(int countCo) {
 		if (countCo == (Constants.COL * Constants.ROW) / 2) {
