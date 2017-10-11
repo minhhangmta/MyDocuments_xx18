@@ -332,16 +332,30 @@ public class CaroLogic {
 	public QuanCo getPos(TheCo theCoFile, TheCo theCoView) {
 		// Khởi tạo quân cờ
 		QuanCo quanCo = null;
+		// Tạo biến check máy đánh
+		boolean checked = true;
 		// Duyệt theo hàng thế cờ/ma trận con 5x5
 		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
 			// Duyệt theo cột thế cờ/ma trận con 5x5
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				// Xét điều kiện 2 thế cờ có vị trí T khớp nhau
-				if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
+				// Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view
+				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
+						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
+						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
+						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
+					//2 matrix chưa khớp
+					checked = false;
+					// Xét điều kiện 2 thế cờ có vị trí T khớp nhau
+				} else if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
 					// Lấy vị trí cho quân cờ đó
 					quanCo = new QuanCo(i, j);
+					//2 matrix khớp và lấy được vị trí 
+					break;
 				}
 			}
+		}
+		if (checked) {
+			return quanCo;
 		}
 		// Trả về ô cờ
 		return quanCo;
@@ -355,7 +369,7 @@ public class CaroLogic {
 	 * @return true nếu hòa, false nếu không
 	 */
 	public boolean checkEqualPlay(int countCo) {
-		//Nếu số quân cờ máy đánh = nửa số quân cờ trên bàn cờ.
+		// Nếu số quân cờ máy đánh = nửa số quân cờ trên bàn cờ.
 		if (countCo == (Constants.COL * Constants.ROW) / 2) {
 			return true;
 		}
