@@ -92,6 +92,7 @@ public class CaroView {
 				lstOCo[i][j].setBackground(Color.white);
 				// Tạo sự kiện cho từng ô cờ
 				lstOCo[i][j].addActionListener(new CaroListener(lstOCo, lstTheCoFile));
+				//Set grid x,y cho Constraints
 				c.gridx = j;
 				c.gridy = i;
 				// add button vừa tạo vào frame

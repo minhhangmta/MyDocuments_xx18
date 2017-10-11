@@ -35,6 +35,7 @@ public class CaroController {
 	 * @return danh sách thế cờ từ file 
 	 */
 	public ArrayList<TheCo> getTheCoFile() {
+		//Trả về danh sách thế cờ từ file
 		return data.getTheCoFile();
 	}
 
@@ -42,6 +43,7 @@ public class CaroController {
 	 * Điều hướng đến View
 	 */
 	public void startApplication() {
+		//Khởi tạo CaroView
 		view = new CaroView(getTheCoFile());
 	}
 

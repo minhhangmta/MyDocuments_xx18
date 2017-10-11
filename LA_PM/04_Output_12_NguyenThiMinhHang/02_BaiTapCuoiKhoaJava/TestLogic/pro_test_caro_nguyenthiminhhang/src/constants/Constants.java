@@ -28,5 +28,22 @@ public class Constants {
 	public static final int HEIGHT_FRAME = 700;
 	// Đường dẫn tới file thế cờ
 	public static final String PATH_THE_CO = "resources/theco.txt";
+	// Kí hiệu cho các quân cờ trong danh sách thế cờ
+	// Vị trí máy cần đánh
+	public static final String POS_CAN_DANH = "T";
+	// Vị trí máy đã đánh
+	public static final String POS_MAY_DANH = "O";
+	// Vị trí người đã đánh
+	public static final String POS_NGUOI_DANH = "X";
+	// Vị trí trống chưa đánh
+	public static final String POS_TRONG = "D";
+	// Title cho form thông báo
+	public static final String TITLE_MASSAGE = "Thông báo";
+	// Thông báo máy thắng
+	public static final String NOTICE_MAY_WIN = "Máy thắng!";
+	// Thông báo người thắng
+	public static final String NOTICE_NGUOI_WIN = "Người thắng!";
+	// Thông báo chơi hòa
+	public static final String NOTICE_HOA = "Hòa!";
 
 }

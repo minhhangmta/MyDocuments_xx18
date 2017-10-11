@@ -27,6 +27,7 @@ public class CaroLogic {
 	 * @param lstTheCoFile
 	 */
 	public CaroLogic(ArrayList<TheCo> lstTheCoFile) {
+		//Gán giá trị cho danh sách thế cờ từ file
 		this.lstTheCoFile = lstTheCoFile;
 	}
 
@@ -53,17 +54,17 @@ public class CaroLogic {
 					// Duyệt từng cột của thế cờ/ma trận con trên view
 					for (int m = j; m < j + Constants.MATRIX_COL; m++) {
 						// Xét điều kiện text của ô cờ trên bàn cờ là O
-						if ("O".equals(lstOCo[l][m].getText())) {
+						if (Constants.POS_MAY_DANH.equals(lstOCo[l][m].getText())) {
 							// Gán giá trị O cho phần tử tương ứng của thế cờ
-							matrix[l - i][m - j] = "O";
+							matrix[l - i][m - j] = Constants.POS_MAY_DANH;
 							// Xét điều kiện text của ô cờ trên bàn cờ là X
-						} else if ("X".equals(lstOCo[l][m].getText())) {
+						} else if (Constants.POS_NGUOI_DANH.equals(lstOCo[l][m].getText())) {
 							// Gán giá trị X cho phần tử tương ứng của thế cờ
-							matrix[l - i][m - j] = "X";
+							matrix[l - i][m - j] = Constants.POS_NGUOI_DANH;
 						} else {
 							// Ngược lại còn trường hợp ô cờ có text rỗng
 							// Gán giá trị T cho phần tử tương ứng của thế cờ
-							matrix[l - i][m - j] = "T";
+							matrix[l - i][m - j] = Constants.POS_CAN_DANH;
 						}
 						// Gán ma trận vào thế cờ
 						theCoView = new TheCo(matrix);
@@ -149,7 +150,7 @@ public class CaroLogic {
 						return true;
 					}
 				} else {
-					// Không thì reset lại biến đếm
+					// Không thắng thì reset lại biến đếm
 					count = 0;
 				}
 			}
@@ -188,7 +189,7 @@ public class CaroLogic {
 						return true;
 					}
 				} else {
-					// Không thì reset lại biến đếm
+					// Không thắng thì reset lại biến đếm
 					count = 0;
 				}
 			}
@@ -227,7 +228,7 @@ public class CaroLogic {
 						return true;
 					}
 				} else {
-					// Không thì reset lại biến đếm
+					// Không thắng thì reset lại biến đếm
 					count = 0;
 				}
 			}
@@ -257,7 +258,7 @@ public class CaroLogic {
 	}
 
 	/**
-	 * Hàm lấy vị trí máy đánh
+	 * Hàm lấy vị trí máy đánh trên bàn cờ chính
 	 * 
 	 * @param lstOCo
 	 * @return QuanCo quân cờ cần đánh
@@ -273,10 +274,10 @@ public class CaroLogic {
 		for (TheCo theCoFile : lstTheCoFile) {
 			// Duyệt từng thế cờ trong list thế cờ từ view
 			for (int i = 0; i < lstTheCoView.size(); i++) {
-				// Xét điều kiện 2 thế cờ khớp nhau
-				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
-					// Lấy vị trí T
-					quanCo = getPos(theCoFile, lstTheCoView.get(i));
+				// Lấy vị trí tìm được từ ma trận con
+				quanCo = getPos(theCoFile, lstTheCoView.get(i));
+				// Nếu vị trí tìm được có giá trị
+				if (quanCo != null) {
 					// Lấy vị trí hàng của ô cờ cần đánh
 					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + quanCo.getPosRow();
 					// Lấy vị trí cột của ô cờ cần đánh
@@ -290,40 +291,16 @@ public class CaroLogic {
 			}
 			// Nếu máy đã đánh
 			if (checked) {
+				//Dừng duyệt tiếp
 				break;
 			}
 		}
+		//Trả về quân cờ tìm được
 		return quanCo;
 	}
 
 	/**
-	 * Hàm so sánh 2 thế cờ từ file và view
-	 * 
-	 * @param theCoFile
-	 * @param theCoView
-	 * @return true nếu so sánh khớp, false nếu so sánh chưa khớp
-	 */
-	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
-		// Duyệt theo hàng thế cờ 5x5
-		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-			// Duyệt theo cột thế cờ 5x5
-			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				// Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view
-				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
-						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
-						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
-						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
-					// thì trả về false
-					return false;
-				}
-			}
-		}
-		// Khớp thì trả về true
-		return true;
-	}
-
-	/**
-	 * Hàm lấy vị trí máy cần đánh từ 2 thế cờ file và view
+	 * Hàm lấy vị trí máy cần đánh trong ma trận con từ 2 thế cờ file và view
 	 * 
 	 * @param theCoFile
 	 * @param theCoView
@@ -339,26 +316,28 @@ public class CaroLogic {
 			// Duyệt theo cột thế cờ/ma trận con 5x5
 			for (int j = 0; j < Constants.MATRIX_COL; j++) {
 				// Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view
-				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
-						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
-						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
-						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
-					//2 matrix chưa khớp
+				if (Constants.POS_MAY_DANH.equals(theCoFile.getMatrix()[i][j]) && !Constants.POS_MAY_DANH.equals(theCoView.getMatrix()[i][j])
+						|| Constants.POS_NGUOI_DANH.equals(theCoFile.getMatrix()[i][j]) && !Constants.POS_NGUOI_DANH.equals(theCoView.getMatrix()[i][j])
+						|| Constants.POS_CAN_DANH.equals(theCoFile.getMatrix()[i][j]) && !Constants.POS_CAN_DANH.equals(theCoView.getMatrix()[i][j])
+						|| Constants.POS_TRONG.equals(theCoFile.getMatrix()[i][j]) && !Constants.POS_TRONG.equals(theCoView.getMatrix()[i][j])) {
+					// 2 matrix chưa khớp
 					checked = false;
+					// Trả về quân cờ null
+					return null;
 					// Xét điều kiện 2 thế cờ có vị trí T khớp nhau
-				} else if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
+				} else if (Constants.POS_CAN_DANH.equals(theCoFile.getMatrix()[i][j]) && Constants.POS_CAN_DANH.equals(theCoView.getMatrix()[i][j])) {
 					// Lấy vị trí cho quân cờ đó
 					quanCo = new QuanCo(i, j);
-					//2 matrix khớp và lấy được vị trí 
-					break;
 				}
 			}
 		}
+		// Nếu so sánh khớp và lấy được vị trí
 		if (checked) {
+			// Trả về quân cờ được lấy
 			return quanCo;
 		}
-		// Trả về ô cờ
-		return quanCo;
+		// Trả về ô cờ null
+		return null;
 	}
 
 	/**
@@ -371,9 +350,10 @@ public class CaroLogic {
 	public boolean checkEqualPlay(int countCo) {
 		// Nếu số quân cờ máy đánh = nửa số quân cờ trên bàn cờ.
 		if (countCo == (Constants.COL * Constants.ROW) / 2) {
+			//Trả về đúng nếu hòa
 			return true;
 		}
+		//Trả về false nếu không
 		return false;
 	}
-
 }

@@ -39,6 +39,7 @@ public class CaroListener implements ActionListener {
 	 * @param lstTheCoFile
 	 */
 	public CaroListener(JButton[][] lstOCo, ArrayList<TheCo> lstTheCoFile) {
+		// Gán giá trị cho danh sách ô cờ
 		this.lstOCo = lstOCo;
 		// Khởi tạo lớp CaroLogic
 		logic = new CaroLogic(lstTheCoFile);
@@ -64,7 +65,7 @@ public class CaroListener implements ActionListener {
 		// Kiểm tra điều kiện khi ô cờ cần đánh chưa có text
 		if ("".equals(lstOCo[x][y].getText())) {
 			// Cho X đánh
-			lstOCo[x][y].setText("X");
+			lstOCo[x][y].setText(Constants.POS_NGUOI_DANH);
 			// Chỉnh font cho text trong ô cờ
 			lstOCo[x][y].setFont(new Font("Arial", Font.BOLD, 30));
 			// Chỉnh màu cho text X
@@ -74,7 +75,8 @@ public class CaroListener implements ActionListener {
 			// Kiểm tra điều kiện người chơi thắng
 			if (logic.checkWin(quanCo, lstOCo)) {
 				// Hiển thị message thông báo thắng
-				JOptionPane.showMessageDialog(null, "Người thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, Constants.NOTICE_NGUOI_WIN, Constants.TITLE_MASSAGE,
+						JOptionPane.INFORMATION_MESSAGE);
 				// reset chương trình
 				resetGame();
 			} else {
@@ -97,7 +99,7 @@ public class CaroListener implements ActionListener {
 		// lấy vị trí cột từ ô cờ vừa lấy được
 		int col = quanCo.getPosCol();
 		// set text cho ô cờ mà máy đánh là O
-		lstOCo[row][col].setText("O");
+		lstOCo[row][col].setText(Constants.POS_MAY_DANH);
 		// Tăng biến đếm quân cờ máy chơi
 		countCo++;
 		// Đặt font cho text trong ô cờ
@@ -110,12 +112,14 @@ public class CaroListener implements ActionListener {
 		// bàn cờ hiện tại
 		if (logic.checkWin(quanCo, lstOCo)) {
 			// Hiển thị message thông báo máy thắng
-			JOptionPane.showMessageDialog(null, "Máy thắng!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Constants.NOTICE_MAY_WIN, Constants.TITLE_MASSAGE,
+					JOptionPane.INFORMATION_MESSAGE);
 			// reset lại chương trình
 			resetGame();
 		} else if (logic.checkEqualPlay(countCo)) {
 			// Hiển thị message thông báo hòa
-			JOptionPane.showMessageDialog(null, "Hòa!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Constants.NOTICE_HOA, Constants.TITLE_MASSAGE,
+					JOptionPane.INFORMATION_MESSAGE);
 			// reset chương trình
 			resetGame();
 		}
