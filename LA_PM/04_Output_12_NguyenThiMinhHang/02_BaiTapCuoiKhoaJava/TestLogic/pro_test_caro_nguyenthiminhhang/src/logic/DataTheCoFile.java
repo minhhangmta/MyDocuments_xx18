@@ -72,10 +72,10 @@ public class DataTheCoFile {
 				// Đọc dòng tiếp theo
 				line = bufferedReader.readLine();
 			}
-			//Bắt ngoại lệ không tìm thấy file
+			// Bắt ngoại lệ không tìm thấy file
 		} catch (FileNotFoundException e) {
 			System.out.println("Không tìm thấy file!");
-			//Bắt ngoại lệ IO
+			// Bắt ngoại lệ IO
 		} catch (IOException e) {
 			System.out.println("Hệ thống lỗi!");
 		} finally {
@@ -91,10 +91,12 @@ public class DataTheCoFile {
 	 */
 	private void closeConnection(FileInputStream fileInputStream) {
 		try {
-			// Đóng kết nối file
-			fileInputStream.close();
-		} catch (NullPointerException e) {
-			System.out.println("Hệ thống lỗi!");
+			if (fileInputStream != null) {
+				// Đóng kết nối file
+				fileInputStream.close();
+			} else {
+				System.out.println("File không tồn tại!");
+			}
 		} catch (IOException e) {
 			System.out.println("Hệ thống lỗi!");
 		}
