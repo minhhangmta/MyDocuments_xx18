@@ -34,12 +34,13 @@ public class CaroListener implements ActionListener {
 
 	/**
 	 * Hàm khởi tạo có tham số
+	 * 
 	 * @param lstOCo
 	 * @param lstTheCoFile
 	 */
 	public CaroListener(JButton[][] lstOCo, ArrayList<TheCo> lstTheCoFile) {
 		this.lstOCo = lstOCo;
-		//Khởi tạo lớp CaroLogic
+		// Khởi tạo lớp CaroLogic
 		logic = new CaroLogic(lstTheCoFile);
 	}
 
@@ -87,10 +88,8 @@ public class CaroListener implements ActionListener {
 	 * Hàm máy chơi game
 	 */
 	public void computerPlay() {
-		//Khởi tạo quân cờ
-		QuanCo quanCo = null;
-		// Lay vi tri may danh
-		quanCo = logic.posComputerPlay(lstOCo);
+		// Lấy vị trí quân cờ cần đánh
+		QuanCo quanCo = logic.posComputerPlay(lstOCo);
 		// Tạo biến đếm quân cờ máy chơi
 		int countCo = 0;
 		// lấy vị trí hàng từ ô cờ vừa lấy được
