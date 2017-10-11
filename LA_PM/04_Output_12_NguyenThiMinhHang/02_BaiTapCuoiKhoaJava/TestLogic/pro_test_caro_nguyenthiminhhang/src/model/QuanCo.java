@@ -10,7 +10,9 @@ package model;
  * @author minhhang
  */
 public class QuanCo {
+	//Khai báo vị trí hàng cho quân cờ
 	private int posRow;
+	//Khai báo vị trí cột cho quân cờ
 	private int posCol;
 
 	/**

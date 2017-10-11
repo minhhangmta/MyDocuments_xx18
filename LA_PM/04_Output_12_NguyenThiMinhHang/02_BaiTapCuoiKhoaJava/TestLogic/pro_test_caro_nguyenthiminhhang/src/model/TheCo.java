@@ -10,6 +10,7 @@ package model;
  * @author minhhang
  */
 public class TheCo {
+	//Khai báo biến mảng 2D ma trận con
 	private String[][] matrix;
 
 	/**

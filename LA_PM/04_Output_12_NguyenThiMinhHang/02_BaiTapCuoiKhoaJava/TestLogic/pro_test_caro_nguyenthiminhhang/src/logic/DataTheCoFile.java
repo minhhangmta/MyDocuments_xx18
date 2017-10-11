@@ -7,6 +7,7 @@ package logic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -71,13 +72,17 @@ public class DataTheCoFile {
 				// Đọc dòng tiếp theo
 				line = bufferedReader.readLine();
 			}
+			// Bắt ngoại lệ không tìm thấy file
+		} catch (FileNotFoundException e) {
+			System.out.println("Không tìm thấy file!");
+			// Bắt ngoại lệ IO
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Hệ thống lỗi!");
 		} finally {
-			//Gọi hàm đóng luồng file
+			// Gọi hàm đóng luồng file
 			closeConnection(fileInputStream);
 		}
+		// Trả về danh sách thế cờ file
 		return lstTheCo;
 	}
 
@@ -85,13 +90,15 @@ public class DataTheCoFile {
 	 * Hàm đóng luồng kết nối tới file
 	 */
 	private void closeConnection(FileInputStream fileInputStream) {
-		// Đóng file
 		try {
-			fileInputStream.close();
+			if (fileInputStream != null) {
+				// Đóng kết nối file
+				fileInputStream.close();
+			} else {
+				System.out.println("File không tồn tại!");
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Hệ thống lỗi!");
 		}
 	}
-
 }
