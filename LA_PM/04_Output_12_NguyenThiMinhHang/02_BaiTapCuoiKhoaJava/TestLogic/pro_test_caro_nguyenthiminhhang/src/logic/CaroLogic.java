@@ -257,7 +257,7 @@ public class CaroLogic {
 	}
 
 	/**
-	 * Hàm lấy vị trí máy đánh
+	 * Hàm lấy vị trí máy đánh trên bàn cờ chính
 	 * 
 	 * @param lstOCo
 	 * @return QuanCo quân cờ cần đánh
@@ -273,10 +273,10 @@ public class CaroLogic {
 		for (TheCo theCoFile : lstTheCoFile) {
 			// Duyệt từng thế cờ trong list thế cờ từ view
 			for (int i = 0; i < lstTheCoView.size(); i++) {
-				// Xét điều kiện 2 thế cờ khớp nhau
-				if (compareTheCo(theCoFile, lstTheCoView.get(i))) {
-					// Lấy vị trí T
-					quanCo = getPos(theCoFile, lstTheCoView.get(i));
+				// Lấy vị trí tìm được từ ma trận con
+				quanCo = getPos(theCoFile, lstTheCoView.get(i));
+				//Nếu vị trí tìm được có giá trị
+				if (quanCo != null) {
 					// Lấy vị trí hàng của ô cờ cần đánh
 					int x = i / (Constants.ROW - Constants.MATRIX_ROW + 1) + quanCo.getPosRow();
 					// Lấy vị trí cột của ô cờ cần đánh
@@ -297,33 +297,7 @@ public class CaroLogic {
 	}
 
 	/**
-	 * Hàm so sánh 2 thế cờ từ file và view
-	 * 
-	 * @param theCoFile
-	 * @param theCoView
-	 * @return true nếu so sánh khớp, false nếu so sánh chưa khớp
-	 */
-	public boolean compareTheCo(TheCo theCoFile, TheCo theCoView) {
-		// Duyệt theo hàng thế cờ 5x5
-		for (int i = 0; i < Constants.MATRIX_ROW; i++) {
-			// Duyệt theo cột thế cờ 5x5
-			for (int j = 0; j < Constants.MATRIX_COL; j++) {
-				// Nếu vị trí từ file O,X,T,D không khớp vị trí O,X,T,T từ view
-				if ("O".equals(theCoFile.getMatrix()[i][j]) && !"O".equals(theCoView.getMatrix()[i][j])
-						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
-						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
-						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
-					// thì trả về false
-					return false;
-				}
-			}
-		}
-		// Khớp thì trả về true
-		return true;
-	}
-
-	/**
-	 * Hàm lấy vị trí máy cần đánh từ 2 thế cờ file và view
+	 * Hàm lấy vị trí máy cần đánh trong ma trận con từ 2 thế cờ file và view
 	 * 
 	 * @param theCoFile
 	 * @param theCoView
@@ -343,22 +317,24 @@ public class CaroLogic {
 						|| "X".equals(theCoFile.getMatrix()[i][j]) && !"X".equals(theCoView.getMatrix()[i][j])
 						|| "T".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])
 						|| "D".equals(theCoFile.getMatrix()[i][j]) && !"T".equals(theCoView.getMatrix()[i][j])) {
-					//2 matrix chưa khớp
+					// 2 matrix chưa khớp
 					checked = false;
+					//Trả về quân cờ null
+					return null;
 					// Xét điều kiện 2 thế cờ có vị trí T khớp nhau
 				} else if ("T".equals(theCoFile.getMatrix()[i][j]) && "T".equals(theCoView.getMatrix()[i][j])) {
 					// Lấy vị trí cho quân cờ đó
 					quanCo = new QuanCo(i, j);
-					//2 matrix khớp và lấy được vị trí 
-					break;
 				}
 			}
 		}
+		//Nếu so sánh khớp và lấy được vị trí
 		if (checked) {
+			//Trả về quân cờ được lấy
 			return quanCo;
 		}
-		// Trả về ô cờ
-		return quanCo;
+		// Trả về ô cờ null
+		return null;
 	}
 
 	/**
@@ -375,5 +351,4 @@ public class CaroLogic {
 		}
 		return false;
 	}
-
 }
