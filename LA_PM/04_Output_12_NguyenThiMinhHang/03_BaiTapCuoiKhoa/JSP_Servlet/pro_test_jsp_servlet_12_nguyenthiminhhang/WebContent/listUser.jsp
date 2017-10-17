@@ -1,7 +1,8 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.User"%>
+<%@page import="beans.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,6 +33,23 @@
 			<%
 				}
 			%>
+		</table>
+		<h2 align="center">List User</h2>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Birthday</th>
+				<th>Birthplace</th>
+			</tr>
+			<c:forEach items="${listUser}" var="user">
+				<tr>
+					<td>${user.id}</td>
+					<td>${user.name}</td>
+					<td>${user.birthday}</td>
+					<td>${user.birthplace}</td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 </body>

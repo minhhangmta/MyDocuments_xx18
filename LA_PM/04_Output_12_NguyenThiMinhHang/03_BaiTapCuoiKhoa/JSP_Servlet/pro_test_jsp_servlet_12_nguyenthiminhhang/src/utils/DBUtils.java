@@ -1,0 +1,52 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * UserDatabase.java Oct 16, 2017 minhhang
+ */
+package utils;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import beans.User;
+
+/**
+ * Lớp utils database
+ * 
+ * @author minhhang
+ */
+public class DBUtils {
+	private DBConnection dbConnection;
+
+	/**
+	 * Hàm lấy danh sách user
+	 * 
+	 * @return listUser
+	 */
+	public ArrayList<User> getListUser() {
+		ArrayList<User> listUser = new ArrayList<>();
+		String query = "SELECT * FROM USER;";
+		try {
+			dbConnection = new DBConnection();
+			Connection connection = dbConnection.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				User user = new User();
+				user.setId(resultSet.getInt("id"));
+				user.setName(resultSet.getString("name"));
+				user.setBirthday(resultSet.getDate("birthday").toString());
+				user.setBirthplace(resultSet.getString("birthplace"));
+				listUser.add(user);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dbConnection.closeConnection();
+		}
+		return listUser;
+	}
+}

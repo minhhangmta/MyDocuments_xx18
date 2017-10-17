@@ -1,27 +1,19 @@
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.UserDatabase;
-import model.User;
+import beans.User;
+import utils.DBUtils;
 
 /**
  * Servlet implementation class ListUserServlet
  */
-@WebServlet("/listUser")
 public class ListUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,7 +31,7 @@ public class ListUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserDatabase database = new UserDatabase();
+		DBUtils database = new DBUtils();
 		ArrayList<User> listUser = database.getListUser();
 		request.setAttribute("listUser", listUser);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("listUser.jsp");
