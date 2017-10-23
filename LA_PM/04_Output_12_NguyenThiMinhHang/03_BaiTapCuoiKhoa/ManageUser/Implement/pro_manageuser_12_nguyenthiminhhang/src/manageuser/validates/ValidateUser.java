@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.MessageErrorProperties;
-import manageuser.properties.MessageProperties;
 
 /**
  * Xử lý validate thông tin nhập vào từ màn hình

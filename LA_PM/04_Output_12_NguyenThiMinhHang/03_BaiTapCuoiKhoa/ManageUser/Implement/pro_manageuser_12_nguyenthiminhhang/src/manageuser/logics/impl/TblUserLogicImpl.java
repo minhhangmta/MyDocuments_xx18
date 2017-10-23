@@ -18,7 +18,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();
 		Common common = new Common();
 		String salt = userDaoImpl.getSalt(username);
-		password = common.encode(password, salt);
+		password = common.encodeSHA1(password, salt);
 		if (userDaoImpl.existLogin(username, password)) {
 			return true;
 		}

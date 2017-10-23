@@ -33,15 +33,23 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Lấy username và password từ jsp
 		String username = request.getParameter("loginId");
 		String password = request.getParameter("password");
+		// Khởi tạo lớp ValidateUser
 		ValidateUser validateUser = new ValidateUser();
+		// nếu validateLogin trả về null/không có lỗi
 		if (validateUser.validateLogin(username, password) == null) {
+			// điều hướng đến ADM002
 			response.sendRedirect("view/jsp/ADM002.jsp");
 		} else {
+			//Lấy list thông báo lỗi từ validateLogin
 			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
+			//lưu list đó vào request
 			request.setAttribute("errMassages", errMassages);
+			//getRequestDispatcher tới view 
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/jsp/ADM001.jsp");
+			//foward tới requestDispatcher đó
 			requestDispatcher.forward(request, response);
 		}
 	}
