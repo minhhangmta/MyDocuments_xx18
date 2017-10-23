@@ -10,5 +10,8 @@ package manageuser.utils;
  * @author minhhang
  */
 public class Constant {
-
+	
+	public static final String ADM001_Label="アカウント名およびパスワードを入力してください";
+	
+	
 }

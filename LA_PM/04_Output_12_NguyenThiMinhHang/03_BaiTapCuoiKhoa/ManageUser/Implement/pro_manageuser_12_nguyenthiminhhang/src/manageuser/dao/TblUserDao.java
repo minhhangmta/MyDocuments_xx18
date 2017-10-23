@@ -4,11 +4,20 @@
  */
 package manageuser.dao;
 
+import java.util.ArrayList;
+
+import manageuser.entities.TblUser;
+
 /**
- * Description class here
+ * Implement TblUserDao để Thao tác với DB của các chức năng của TblUser
  * 
  * @author minhhang
  */
 public interface TblUserDao {
+	public ArrayList<TblUser> getListUser();
+
+	public String getSalt(String username);
+
+	public boolean existLogin(String username, String password);
 
 }

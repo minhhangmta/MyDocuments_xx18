@@ -10,5 +10,5 @@ package manageuser.logics;
  * @author minhhang
  */
 public interface TblUserLogic {
-
+	public boolean existLogin(String username, String password);
 }
