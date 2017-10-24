@@ -12,7 +12,14 @@ import java.sql.Connection;
  * @author minhhang
  */
 public interface BaseDao {
+	/**
+	 * Hàm mở kết nối với DB
+	 * @return Connection
+	 */
 	public Connection getConnection();
 	
+	/**
+	 * Hàm đóng kết nối với DB
+	 */
 	public void closeConnection();
 }

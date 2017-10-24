@@ -14,7 +14,7 @@ import manageuser.dao.TblUserDao;
 import manageuser.entities.TblUser;
 
 /**
- * Interface Thao tác với DB của các chức năng của TblUser
+ * Implement TblUserDao để Thao tác với DB của các chức năng của TblUser
  * 
  * @author minhhang
  */
@@ -25,7 +25,7 @@ public class TblUserDaoImpl implements TblUserDao {
 	/**
 	 * Hàm lấy danh sách user
 	 * 
-	 * @return listUser
+	 * @return ArrayList<TblUser>
 	 */
 	public ArrayList<TblUser> getListUser() {
 		listAdmin = new ArrayList<>();
@@ -52,7 +52,10 @@ public class TblUserDaoImpl implements TblUserDao {
 		}
 		return listAdmin;
 	}
-
+	/**
+	 * Hàm lấy list user là admin
+	 * @return ArrayList<TblUser>
+	 */
 	public ArrayList<TblUser> getListAdmin() {
 		listAdmin = new ArrayList<>();
 		String query = "SELECT * FROM tbl_user WHERE rule = 0;";
@@ -105,10 +108,11 @@ public class TblUserDaoImpl implements TblUserDao {
 	}
 
 	/**
+	 * Hàm kiểm tra user login vào có tồn tại trong DB không
 	 * 
 	 * @param username
 	 * @param password
-	 * @return
+	 * @return true nếu tồn tại, false nếu không tồn tại
 	 */
 	public boolean existLogin(String username, String password) {
 		listAdmin = getListAdmin();

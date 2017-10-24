@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import manageuser.validates.ValidateUser;
 
@@ -39,17 +40,22 @@ public class LoginController extends HttpServlet {
 		// Khởi tạo lớp ValidateUser
 		ValidateUser validateUser = new ValidateUser();
 		// nếu validateLogin trả về null/không có lỗi
-		if (validateUser.validateLogin(username, password) == null) {
+		if (validateUser.validateLogin(username, password).isEmpty()) {
+			// Lưu session
+			HttpSession session = request.getSession();
+			session.setAttribute("username", username);
 			// điều hướng đến ADM002
 			response.sendRedirect("view/jsp/ADM002.jsp");
+//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/jsp/ADM002.jsp");
+//			requestDispatcher.forward(request, response);
 		} else {
-			//Lấy list thông báo lỗi từ validateLogin
+			// Lấy list thông báo lỗi từ validateLogin
 			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
-			//lưu list đó vào request
+			// lưu list đó vào request
 			request.setAttribute("errMassages", errMassages);
-			//getRequestDispatcher tới view 
+			// getRequestDispatcher tới view
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/jsp/ADM001.jsp");
-			//foward tới requestDispatcher đó
+			// foward tới requestDispatcher đó
 			requestDispatcher.forward(request, response);
 		}
 	}

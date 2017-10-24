@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import manageuser.entities.TblUser;
 
 /**
- * Implement TblUserDao để Thao tác với DB của các chức năng của TblUser
+ * Interface Thao tác với DB của các chức năng của TblUser
  * 
  * @author minhhang
  */

@@ -19,12 +19,12 @@ public class MessageErrorProperties {
 	private static Map<String, String> map = new HashMap<String, String>();
 
 	/**
-	 * read file MessageError.properties
+	 * read file message_error_ja.properties
 	 */
 	static {
 		Properties properties = new Properties();
 		try {
-			properties.load(DatabaseProperties.class.getResourceAsStream("/MessageError.properties"));
+			properties.load(MessageErrorProperties.class.getResourceAsStream("/message_error_ja.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -35,7 +35,7 @@
 .btn {
 	font-size: 11px;
 	font-weight: normal;
-	background-image: url(view/img/btn_bg.gif);
+	background-image: url(../img/btn_bg.gif);
 	background-repeat:no-repeat;
 	width: 50px;
 	height: 18px;
@@ -44,7 +44,7 @@
 	padding-top: 2px;
 }
 .btn.btn_wider {
-	background-image: url(view/img/btn_wider_bg.gif);
+	background-image: url(../img/btn_wider_bg.gif);
 	width: 75px;
 }
 
@@ -86,5 +86,3 @@
 	text-align: center;
 	width: 850px;
 }
-
-

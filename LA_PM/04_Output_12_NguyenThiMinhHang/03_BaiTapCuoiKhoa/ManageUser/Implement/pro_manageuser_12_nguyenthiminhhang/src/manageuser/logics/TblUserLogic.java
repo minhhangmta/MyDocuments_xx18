@@ -5,10 +5,17 @@
 package manageuser.logics;
 
 /**
- * Description class here
+ * Interface xử lý logic lấy từ TblUserDao
  * 
  * @author minhhang
  */
 public interface TblUserLogic {
+	/**
+	 * Hàm kiểm tra user login vào có tồn tại trong DB không
+	 * 
+	 * @param username
+	 * @param password
+	 * @return true nếu tồn tại, false nếu không tồn tại
+	 */
 	public boolean existLogin(String username, String password);
 }

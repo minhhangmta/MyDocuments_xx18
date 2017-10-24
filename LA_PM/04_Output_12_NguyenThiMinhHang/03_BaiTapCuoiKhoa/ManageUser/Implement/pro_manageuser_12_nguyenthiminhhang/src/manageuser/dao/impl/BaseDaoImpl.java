@@ -23,9 +23,8 @@ public class BaseDaoImpl implements BaseDao {
 	private String PASS;
 
 	/**
-	 * hàm mở connection
-	 * 
-	 * @return connection
+	 * Hàm mở kết nối với DB
+	 * @return Connection
 	 */
 	public Connection getConnection() {
 		try {

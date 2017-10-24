@@ -19,12 +19,12 @@ public class DatabaseProperties {
 	private static Map<String, String> map = new HashMap<String, String>();
 
 	/**
-	 * read file DatabaseProperties.properties
+	 * read file database.properties
 	 */
 	static {
 		Properties properties = new Properties();
 		try {
-			properties.load(DatabaseProperties.class.getResourceAsStream("/Database.properties"));
+			properties.load(DatabaseProperties.class.getResourceAsStream("/database.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
