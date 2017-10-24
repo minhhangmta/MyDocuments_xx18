@@ -4,20 +4,28 @@
  */
 package manageuser.dao;
 
-import java.util.ArrayList;
-
-import manageuser.entities.TblUser;
-
 /**
  * Interface Thao tác với DB của các chức năng của TblUser
  * 
  * @author minhhang
  */
 public interface TblUserDao {
-	public ArrayList<TblUser> getListUser();
 
+	/**
+	 * Hàm lấy salt của admin từ DB
+	 * 
+	 * @param username
+	 * @return chuỗi salt
+	 */
 	public String getSalt(String username);
 
+	/**
+	 * Hàm kiểm tra user tồn tại trong DB không
+	 * 
+	 * @param username
+	 * @param password
+	 * @return true nếu tồn tại, false nếu không tồn tại
+	 */
 	public boolean existLogin(String username, String password);
 
 }

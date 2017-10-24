@@ -41,13 +41,11 @@ public class LoginController extends HttpServlet {
 		ValidateUser validateUser = new ValidateUser();
 		// nếu validateLogin trả về null/không có lỗi
 		if (validateUser.validateLogin(username, password).isEmpty()) {
-			// Lưu session
+			// Lưu username vào session
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			// điều hướng đến ADM002
 			response.sendRedirect("view/jsp/ADM002.jsp");
-//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/jsp/ADM002.jsp");
-//			requestDispatcher.forward(request, response);
 		} else {
 			// Lấy list thông báo lỗi từ validateLogin
 			ArrayList<String> errMassages = validateUser.validateLogin(username, password);

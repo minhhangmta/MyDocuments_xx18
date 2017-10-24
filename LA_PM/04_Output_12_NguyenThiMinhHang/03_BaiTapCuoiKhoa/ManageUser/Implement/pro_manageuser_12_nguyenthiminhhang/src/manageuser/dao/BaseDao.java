@@ -7,7 +7,7 @@ package manageuser.dao;
 import java.sql.Connection;
 
 /**
- * Description class here
+ * Lớp interface thao tác kết nối tới DB
  * 
  * @author minhhang
  */

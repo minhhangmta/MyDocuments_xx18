@@ -37,9 +37,4 @@ public class Common {
 		}
 		return sha1;
 	}
-
-	// public static void main(String[] args) {
-	// Common common = new Common();
-	// System.out.println(common.encodeSHA1("123456", "aifjsodifojk"));
-	// }
 }

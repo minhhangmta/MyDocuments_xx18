@@ -24,7 +24,8 @@ public class DatabaseProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-			properties.load(DatabaseProperties.class.getResourceAsStream("/database.properties"));
+			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+			properties.load(classLoader.getResourceAsStream("database.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,5 +49,4 @@ public class DatabaseProperties {
 		}
 		return data;
 	}
-	
 }

@@ -15,6 +15,13 @@ import manageuser.properties.MessageErrorProperties;
  * @author minhhang
  */
 public class ValidateUser {
+	/**
+	 * Lớp validate tài khoản vừa đăng nhập
+	 * 
+	 * @param username
+	 * @param password
+	 * @return  ArrayList<String> chuỗi thông báo lỗi
+	 */
 	public ArrayList<String> validateLogin(String username, String password) {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		MessageErrorProperties errorProperties = new MessageErrorProperties();
@@ -29,7 +36,7 @@ public class ValidateUser {
 		} else {
 			if (!logicImpl.existLogin(username, password)) {
 				errMassages.add(errorProperties.getData("ER016"));
-			} 
+			}
 		}
 		return errMassages;
 	}

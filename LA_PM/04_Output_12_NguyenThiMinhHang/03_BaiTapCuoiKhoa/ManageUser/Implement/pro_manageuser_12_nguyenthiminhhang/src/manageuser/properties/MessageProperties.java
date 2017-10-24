@@ -4,10 +4,11 @@
  */
 package manageuser.properties;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 /**
@@ -16,35 +17,44 @@ import java.util.Properties;
  * @author minhhang
  */
 public class MessageProperties {
-	private static Map<String, String> map = new HashMap<String, String>();
-
 	/**
-	 * read file message_ja.properties
+	 * Hàm đọc thông báo lỗi từ file message_ja.properties
+	 * @return Properties
+	 * @throws UnsupportedEncodingException
 	 */
-	static {
-		Properties properties = new Properties();
-		try {
-			properties.load(MessageProperties.class.getResourceAsStream("/message_ja.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static Properties readProperties() throws UnsupportedEncodingException {
+		Properties prop = new Properties();
+		String filename = "message_ja.properties";
 
-		@SuppressWarnings("unchecked")
-		Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();
-		while (enumeration.hasMoreElements()) {
-			String key = (String) enumeration.nextElement();
-			map.put(key, properties.getProperty(key));
+		InputStream input = MessageErrorProperties.class.getClassLoader().getResourceAsStream(filename);
+		BufferedReader in = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+		if (input == null) {
+			System.out.println("Unable to find " + filename);
+			return null;
 		}
+		try {
+			prop.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return prop;
 	}
+
 	/**
 	 * Hàm lấy data từ file properties
+	 * 
 	 * @param key
-	 * @return data 
+	 * @return data
 	 */
 	public static String getData(String key) {
 		String data = "";
-		if (map.containsKey(key)) {
-			data = map.get(key);
+		try {
+			data = MessageErrorProperties.readProperties().getProperty(key);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return data;
 	}

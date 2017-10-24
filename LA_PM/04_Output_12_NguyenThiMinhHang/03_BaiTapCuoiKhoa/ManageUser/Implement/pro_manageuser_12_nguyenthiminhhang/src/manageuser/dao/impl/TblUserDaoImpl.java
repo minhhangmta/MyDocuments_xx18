@@ -22,73 +22,15 @@ public class TblUserDaoImpl implements TblUserDao {
 	private BaseDaoImpl baseDaoImpl;
 	private ArrayList<TblUser> listAdmin;
 
-	/**
-	 * Hàm lấy danh sách user
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return ArrayList<TblUser>
-	 */
-	public ArrayList<TblUser> getListUser() {
-		listAdmin = new ArrayList<>();
-		String query = "SELECT * FROM tbl_user;";
-		try {
-			baseDaoImpl = new BaseDaoImpl();
-			Connection connection = baseDaoImpl.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				TblUser user = new TblUser();
-				user.setUserID(resultSet.getInt("user_id"));
-				user.setGroupID(resultSet.getInt("group_id"));
-				user.setLoginName(resultSet.getString("login_name"));
-				user.setPasswords(resultSet.getString("passwords"));
-				// ... continue
-				listAdmin.add(user);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			baseDaoImpl.closeConnection();
-		}
-		return listAdmin;
-	}
-	/**
-	 * Hàm lấy list user là admin
-	 * @return ArrayList<TblUser>
-	 */
-	public ArrayList<TblUser> getListAdmin() {
-		listAdmin = new ArrayList<>();
-		String query = "SELECT * FROM tbl_user WHERE rule = 0;";
-		try {
-			baseDaoImpl = new BaseDaoImpl();
-			Connection connection = baseDaoImpl.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				TblUser user = new TblUser();
-				user.setLoginName(resultSet.getString("login_name"));
-				user.setPasswords(resultSet.getString("passwords"));
-				listAdmin.add(user);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			baseDaoImpl.closeConnection();
-		}
-		return listAdmin;
-	}
-
-	/**
-	 * Hàm lấy salt từ database
-	 * 
-	 * @param username
-	 * @return
+	 * @see manageuser.dao.TblUserDao#getSalt(java.lang.String)
 	 */
 	public String getSalt(String username) {
 		String salt = "";
 		listAdmin = new ArrayList<>();
-		String query = "SELECT * FROM tbl_user WHERE login_name = ? and rule = 0 ;";
+		String query = "SELECT salt FROM tbl_user WHERE login_name = ? and rule = 1 ;";
 		try {
 			baseDaoImpl = new BaseDaoImpl();
 			Connection connection = baseDaoImpl.getConnection();
@@ -107,20 +49,29 @@ public class TblUserDaoImpl implements TblUserDao {
 		return salt;
 	}
 
-	/**
-	 * Hàm kiểm tra user login vào có tồn tại trong DB không
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param username
-	 * @param password
-	 * @return true nếu tồn tại, false nếu không tồn tại
+	 * @see manageuser.dao.TblUserDao#existLogin(java.lang.String, java.lang.String)
 	 */
 	public boolean existLogin(String username, String password) {
-		listAdmin = getListAdmin();
-		for (TblUser admin : listAdmin) {
-			if (username.equals(admin.getLoginName()) && password.equals(admin.getPasswords())) {
-				return true;
+		String query = "SELECT * FROM tbl_user WHERE login_name = ? and passwords = ? and rule = 1;";
+		try {
+			baseDaoImpl = new BaseDaoImpl();
+			Connection connection = baseDaoImpl.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, username);
+			preparedStatement.setString(2, password);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			baseDaoImpl.closeConnection();
 		}
-		return false;
+		return true;
 	}
 }

@@ -22,7 +22,6 @@
 				</tr>
 				<c:forEach items="${errMassages}" var="errMassage">
 					<tr>
-						<td></td>
 						<td class="errMsg" colspan="2">&nbsp;${errMassage}</td>
 					</tr>
 				</c:forEach>

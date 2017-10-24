@@ -12,7 +12,7 @@ import manageuser.dao.BaseDao;
 import manageuser.properties.DatabaseProperties;
 
 /**
- * Description class here
+ * Implement tới interface BaseDao
  * 
  * @author minhhang
  */
@@ -22,9 +22,10 @@ public class BaseDaoImpl implements BaseDao {
 	private String USER;
 	private String PASS;
 
-	/**
-	 * Hàm mở kết nối với DB
-	 * @return Connection
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.BaseDao#getConnection()
 	 */
 	public Connection getConnection() {
 		try {
@@ -41,8 +42,10 @@ public class BaseDaoImpl implements BaseDao {
 		return connection;
 	}
 
-	/**
-	 * Hàm đóng connection
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.BaseDao#closeConnection()
 	 */
 	public void closeConnection() {
 		try {

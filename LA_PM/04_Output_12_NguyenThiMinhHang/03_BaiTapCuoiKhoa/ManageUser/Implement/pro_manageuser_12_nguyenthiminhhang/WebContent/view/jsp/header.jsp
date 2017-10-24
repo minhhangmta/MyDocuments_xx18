@@ -18,7 +18,7 @@
 					<td width="80%"><img src="../img/logo-manager-user.gif"
 						alt="Luvina" /></td>
 					<td></td>
-					<td align="left"><a href="#">ログアウト</a> &nbsp; <a
+					<td align="left"><a href="${pageContext.request.contextPath}/logout">ログアウト</a> &nbsp; <a
 						href="#">トップ</a></td>
 					<td></td>
 				</tr>

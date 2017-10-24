@@ -15,12 +15,8 @@ import manageuser.utils.Common;
  */
 public class TblUserLogicImpl implements TblUserLogic {
 	
-	/**
-	 * Hàm kiểm tra user login vào có tồn tại trong DB không
-	 * 
-	 * @param username
-	 * @param password
-	 * @return true nếu tồn tại, false nếu không tồn tại
+	/* (non-Javadoc)
+	 * @see manageuser.logics.TblUserLogic#existLogin(java.lang.String, java.lang.String)
 	 */
 	public boolean existLogin(String username, String password) {
 		//Khởi tạo lớp TblUserDaoImpl 
