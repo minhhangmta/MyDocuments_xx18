@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
@@ -35,7 +36,7 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Lấy username và password từ jsp
-		String username = request.getParameter("loginId");
+		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		// Khởi tạo lớp ValidateUser
 		ValidateUser validateUser = new ValidateUser();
@@ -45,14 +46,16 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			// điều hướng đến ADM002
-			response.sendRedirect("view/jsp/ADM002.jsp");
+			response.sendRedirect(Constant.ADM002);
 		} else {
 			// Lấy list thông báo lỗi từ validateLogin
 			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
 			// lưu list đó vào request
 			request.setAttribute("errMassages", errMassages);
+			//lưu username vừa nhập vào request
+			request.setAttribute("username", username);
 			// getRequestDispatcher tới view
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("view/jsp/ADM001.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
 			// foward tới requestDispatcher đó
 			requestDispatcher.forward(request, response);
 		}

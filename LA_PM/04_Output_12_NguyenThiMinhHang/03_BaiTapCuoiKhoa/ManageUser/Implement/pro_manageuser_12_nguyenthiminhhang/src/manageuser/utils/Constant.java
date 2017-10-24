@@ -10,8 +10,6 @@ package manageuser.utils;
  * @author minhhang
  */
 public class Constant {
-	
-	public static final String ADM001_Label="アカウント名およびパスワードを入力してください";
-	
-	
+	public static final String ADM001 = "view/jsp/ADM001.jsp";
+	public static final String ADM002 = "view/jsp/ADM002.jsp";
 }

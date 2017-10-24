@@ -5,7 +5,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="${pageContext.request.contextPath}/view/css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/view/css/style.css"
+	rel="stylesheet" type="text/css" />
 <title>ユーザ管理</title>
 </head>
 <body align="center">
@@ -29,7 +30,7 @@
 				<tr align="left">
 					<td class="lbl_left">アカウント名:</td>
 					<td align="left"><input class="txBox" type="text"
-						name="loginId" value="" size="20"
+						name="username" value="<c:out value="${username}"/>" size="20"
 						onfocus="this.style.borderColor='#0066ff';"
 						onblur="this.style.borderColor='#aaaaaa';" /></td>
 				</tr>
