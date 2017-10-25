@@ -8,6 +8,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Lớp chứa các hàm common của dự án
  * 
@@ -36,5 +38,19 @@ public class Common {
 			e.printStackTrace();
 		}
 		return sha1;
+	}
+
+	/**
+	 * Hàm kiểm tra user đã đăng nhập chưa
+	 * 
+	 * @param session
+	 *            đối tượng HttpSession
+	 * @return true nếu đã đăng nhập, false nếu chưa đăng nhập
+	 */
+	public boolean checkLogin(HttpSession session) {
+		if (session.getAttribute("username") != null) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -12,8 +12,8 @@ import java.util.Date;
  * @author minhhang
  */
 public class TblUser {
-	private int userID;
-	private int groupID;
+	private int userId;
+	private int groupId;
 	private String loginName;
 	private String passwords;
 	private String fullName;
@@ -22,37 +22,7 @@ public class TblUser {
 	private String tel;
 	private Date birthday;
 	private String salt;
-	private boolean rule;
-
-	/**
-	 * @return the userID
-	 */
-	public int getUserID() {
-		return userID;
-	}
-
-	/**
-	 * @param userID
-	 *            the userID to set
-	 */
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
-	/**
-	 * @return the groupID
-	 */
-	public int getGroupID() {
-		return groupID;
-	}
-
-	/**
-	 * @param groupID
-	 *            the groupID to set
-	 */
-	public void setGroupID(int groupID) {
-		this.groupID = groupID;
-	}
+	private int role;
 
 	/**
 	 * @return the loginName
@@ -175,18 +145,45 @@ public class TblUser {
 	}
 
 	/**
-	 * @return the rule
+	 * @return the userId
 	 */
-	public boolean isRule() {
-		return rule;
+	public int getUserId() {
+		return userId;
 	}
 
 	/**
-	 * @param rule
-	 *            the rule to set
+	 * @param userId the userId to set
 	 */
-	public void setRule(boolean rule) {
-		this.rule = rule;
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @return the groupId
+	 */
+	public int getGroupId() {
+		return groupId;
+	}
+
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public int getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(int role) {
+		this.role = role;
 	}
 
 	/**

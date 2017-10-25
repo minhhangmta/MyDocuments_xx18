@@ -114,7 +114,7 @@ CREATE TABLE `tbl_user` (
   `tel` varchar(15) NOT NULL,
   `birthday` date NOT NULL,
   `salt` varchar(255) NOT NULL,
-  `rule` tinyint(1) NOT NULL,
+  `role` tinyint(1) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `tbl_user_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `mst_group` (`group_id`)
@@ -125,7 +125,7 @@ CREATE TABLE `tbl_user` (
 --
 
 /*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
-INSERT INTO `tbl_user` (`user_id`,`group_id`,`login_name`,`passwords`,`full_name`,`full_name_kana`,`email`,`tel`,`birthday`,`salt`,`rule`) VALUES 
+INSERT INTO `tbl_user` (`user_id`,`group_id`,`login_name`,`passwords`,`full_name`,`full_name_kana`,`email`,`tel`,`birthday`,`salt`,`role`) VALUES 
  (1,1,'admin','fa05f63370a9c8698fbfa5c0f1055474dda84e5','admin',NULL,'aaaa@gmail.com','0123456789','1990-01-01','aifjsodifojk',1),
  (2,2,'hang','fa05f63370a9c8698fbfa5c0f1055474dda84e5','hang',NULL,'bbbb@gmail.com','0123456789','1990-01-01','woriudskfnkaisdo',0);
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;

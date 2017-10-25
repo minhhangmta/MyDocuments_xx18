@@ -27,6 +27,7 @@ public class BaseDaoImpl implements BaseDao {
 	 * 
 	 * @see manageuser.dao.BaseDao#getConnection()
 	 */
+	@Override
 	public Connection getConnection() {
 		try {
 			DatabaseProperties properties = new DatabaseProperties();
@@ -47,6 +48,7 @@ public class BaseDaoImpl implements BaseDao {
 	 * 
 	 * @see manageuser.dao.BaseDao#closeConnection()
 	 */
+	@Override
 	public void closeConnection() {
 		try {
 			connection.close();

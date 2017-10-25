@@ -46,8 +46,8 @@ public class MessageProperties {
 	/**
 	 * Hàm lấy data từ file properties
 	 * 
-	 * @param key
-	 * @return data
+	 * @param key tên key trong properties
+	 * @return data của key
 	 */
 	public static String getData(String key) {
 		String data = "";

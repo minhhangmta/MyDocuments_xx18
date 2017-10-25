@@ -4,6 +4,10 @@
  */
 package manageuser.dao;
 
+import java.util.List;
+
+import manageuser.entities.UserInfor;
+
 /**
  * Interface Thao tác với DB của các chức năng của TblUser
  * 
@@ -15,6 +19,7 @@ public interface TblUserDao {
 	 * Hàm lấy salt của admin từ DB
 	 * 
 	 * @param username
+	 *            tên đăng nhập
 	 * @return chuỗi salt
 	 */
 	public String getSalt(String username);
@@ -23,9 +28,25 @@ public interface TblUserDao {
 	 * Hàm kiểm tra user tồn tại trong DB không
 	 * 
 	 * @param username
+	 *            tên đăng nhập
 	 * @param password
+	 *            mật khẩu
 	 * @return true nếu tồn tại, false nếu không tồn tại
 	 */
 	public boolean existLogin(String username, String password);
 
+	/**
+	 * Hàm lấy danh sách user
+	 * @param offset vị trí data cần lấy
+	 * @param limit số lượng lấy
+	 * @param groupId mã nhóm
+	 * @param fullName tên tìm kiếm
+	 * @param sortType nhận biết xem cột nào được ưu tiên
+	 * @param sortByFullName giá trị sắp xếp của cột Tên (ASC or DESC)
+	 * @param sortByCodeLevel giá trị sắp xếp của cột Trình độ tiếng nhật(ASC or DESC)
+	 * @param sortByEndDate giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
+	 * @return
+	 */
+	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 }

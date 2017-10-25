@@ -7,7 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/view/css/style.css" rel="stylesheet" type="text/css" />
 <title></title>
 </head>
 <body>
@@ -15,7 +15,7 @@
 		<div>
 			<table>
 				<tr>
-					<td width="80%"><img src="../img/logo-manager-user.gif"
+					<td width="80%"><img src="${pageContext.request.contextPath}/view/img/logo-manager-user.gif"
 						alt="Luvina" /></td>
 					<td></td>
 					<td align="left"><a href="${pageContext.request.contextPath}/logout">ログアウト</a> &nbsp; <a

@@ -5,11 +5,13 @@
 package manageuser.utils;
 
 /**
- * Description class here
+ * Lớp constant hóa các alias
  * 
  * @author minhhang
  */
 public class Constant {
 	public static final String ADM001 = "view/jsp/ADM001.jsp";
 	public static final String ADM002 = "view/jsp/ADM002.jsp";
+	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
+	public static final String SERVLET_ADM002 = "/listUser";
 }

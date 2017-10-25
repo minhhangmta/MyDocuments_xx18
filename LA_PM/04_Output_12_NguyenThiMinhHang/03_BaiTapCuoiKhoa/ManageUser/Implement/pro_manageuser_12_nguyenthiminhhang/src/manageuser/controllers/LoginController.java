@@ -33,31 +33,40 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Lấy username và password từ jsp
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		// Khởi tạo lớp ValidateUser
-		ValidateUser validateUser = new ValidateUser();
-		// nếu validateLogin trả về null/không có lỗi
-		if (validateUser.validateLogin(username, password).isEmpty()) {
-			// Lưu username vào session
-			HttpSession session = request.getSession();
-			session.setAttribute("username", username);
-			// điều hướng đến ADM002
-			response.sendRedirect(Constant.ADM002);
-		} else {
-			// Lấy list thông báo lỗi từ validateLogin
-			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
-			// lưu list đó vào request
-			request.setAttribute("errMassages", errMassages);
-			//lưu username vừa nhập vào request
-			request.setAttribute("username", username);
-			// getRequestDispatcher tới view
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
-			// foward tới requestDispatcher đó
-			requestDispatcher.forward(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			// Lấy username và password từ jsp
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			// Khởi tạo lớp ValidateUser
+			ValidateUser validateUser = new ValidateUser();
+			// nếu validateLogin trả về null/không có lỗi
+			if (validateUser.validateLogin(username, password).isEmpty()) {
+				// Lưu username vào session
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
+				// điều hướng đến ADM002
+				response.sendRedirect(request.getContextPath() + Constant.SERVLET_ADM002);
+			} else {
+				// Lấy list thông báo lỗi từ validateLogin
+				ArrayList<String> errMassages = validateUser.validateLogin(username, password);
+				// lưu list đó vào request
+				request.setAttribute("errMassages", errMassages);
+				// lưu username vừa nhập vào request
+				request.setAttribute("username", username);
+				// getRequestDispatcher tới view
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
+				// foward tới requestDispatcher đó
+				requestDispatcher.forward(request, response);
+			}
+		} catch (Exception e) {
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+			try {
+				requestDispatcher.forward(request, response);
+			} catch (ServletException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 }

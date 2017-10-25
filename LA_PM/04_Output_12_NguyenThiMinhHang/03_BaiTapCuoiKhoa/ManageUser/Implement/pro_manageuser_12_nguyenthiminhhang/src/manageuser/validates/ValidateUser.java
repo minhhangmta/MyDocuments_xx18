@@ -19,8 +19,10 @@ public class ValidateUser {
 	 * Lớp validate tài khoản vừa đăng nhập
 	 * 
 	 * @param username
+	 *            tên đăng nhập
 	 * @param password
-	 * @return  ArrayList<String> chuỗi thông báo lỗi
+	 *            mật khẩu
+	 * @return ArrayList<String> chuỗi thông báo lỗi
 	 */
 	public ArrayList<String> validateLogin(String username, String password) {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();

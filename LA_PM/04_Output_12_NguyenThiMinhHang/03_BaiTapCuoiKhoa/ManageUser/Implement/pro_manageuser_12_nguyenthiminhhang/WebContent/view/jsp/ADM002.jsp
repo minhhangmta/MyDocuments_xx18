@@ -4,8 +4,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="${pageContext.request.contextPath}/view/css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../js/user.js"></script>
+<link href="${pageContext.request.contextPath}/view/css/style.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/view/js/user.js"></script>
 <title>ユーザ管理</title>
 </head>
 <body>
@@ -69,61 +71,19 @@
 			<th align="left">点数</th>
 		</tr>
 
-		<tr>
-			<td align="right"><a href="ADM005.html">1</a></td>
-			<td>Nguyễn Thị Mai Hương</td>
-			<td align="center">1983/07/08</td>
-			<td>Phòng QAT</td>
-			<td>ntmhuong@luvina.net</td>
-			<td>0914326386</td>
-			<td>Trình độ tiếng nhật cấp 4</td>
-			<td align="center">2011/07/08</td>
-			<td align="right">290</td>
-		</tr>
-		<tr>
-			<td align="right"><a href="ADM005.html">2</a></td>
-			<td>Lê Thị Xoa</td>
-			<td align="center">1983/07/08</td>
-			<td>Phòng DEV1</td>
-			<td>xoalt@luvina.net</td>
-			<td>1234567894</td>
-			<td>Trình độ tiếng nhật cấp 4</td>
-			<td align="center">2011/07/08</td>
-			<td align="right">290</td>
-		</tr>
-		<tr>
-			<td align="right"><a href="ADM005.html">3</a></td>
-			<td>Đặng Thị Hân</td>
-			<td align="center">1983/07/08</td>
-			<td>Phòng DEV1</td>
-			<td>handt@luvina.net</td>
-			<td>1234567894</td>
-			<td>Trình độ tiếng nhật cấp 4</td>
-			<td align="center">2011/07/08</td>
-			<td align="right">290</td>
-		</tr>
-		<tr>
-			<td align="right"><a href="ADM005.html">4</a></td>
-			<td>Lê Nghiêm Thủy</td>
-			<td align="center">1983/07/08</td>
-			<td>Phòng DEV1</td>
-			<td>thuyln@luvina.net</td>
-			<td>1234567894</td>
-			<td>Trình độ tiếng nhật cấp 4</td>
-			<td align="center">2011/07/08</td>
-			<td align="right">290</td>
-		</tr>
-		<tr>
-			<td align="right"><a href="ADM005.html">5</a></td>
-			<td>Lê Phương Anh</td>
-			<td align="center">1983/07/08</td>
-			<td>Phòng QAT</td>
-			<td>anhlp@luvina.net</td>
-			<td>1234567894</td>
-			<td>Trình độ tiếng nhật cấp 4</td>
-			<td align="center">2011/07/08</td>
-			<td align="right">290</td>
-		</tr>
+		<c:forEach items="${listUserInfor}" var="user">
+			<tr>
+				<td align="right"><a href="ADM005.html">${user.userId}</a></td>
+				<td>${user.fullName}</td>
+				<td align="center">${user.birthday}</td>
+				<td>${user.groupName}</td>
+				<td>${user.email}</td>
+				<td>${user.tel}</td>
+				<td>${user.nameLevel}</td>
+				<td align="center">${user.endDate}</td>
+				<td align="right">${user.total}</td>
+			</tr>
+		</c:forEach>
 
 	</table>
 	<!-- End vung hien thi danh sach user -->
@@ -140,6 +100,6 @@
 	<!-- Begin vung footer -->
 	<c:import url="footer.jsp"></c:import>
 	<!-- End vung footer -->
-	
+
 </body>
 </html>

@@ -4,6 +4,11 @@
  */
 package manageuser.logics;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import manageuser.entities.UserInfor;
+
 /**
  * Interface xử lý logic lấy từ TblUserDao
  * 
@@ -13,9 +18,25 @@ public interface TblUserLogic {
 	/**
 	 * Hàm kiểm tra user login vào có tồn tại trong DB không
 	 * 
-	 * @param username
-	 * @param password
+	 * @param username tên đăng nhập
+	 * @param password mật khẩu
 	 * @return true nếu tồn tại, false nếu không tồn tại
 	 */
 	public boolean existLogin(String username, String password);
+	
+	/**
+	 * Hàm lấy danh sách user
+	 * @param offset vị trí data cần lấy
+	 * @param limit số lượng lấy
+	 * @param groupId mã nhóm
+	 * @param fullName tên tìm kiếm
+	 * @param sortType nhận biết xem cột nào được ưu tiên
+	 * @param sortByFullName giá trị sắp xếp của cột Tên (ASC or DESC)
+	 * @param sortByCodeLevel giá trị sắp xếp của cột Trình độ tiếng nhật(ASC or DESC)
+	 * @param sortByEndDate giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
+	 * @return
+	 */
+	public ArrayList<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+	
 }

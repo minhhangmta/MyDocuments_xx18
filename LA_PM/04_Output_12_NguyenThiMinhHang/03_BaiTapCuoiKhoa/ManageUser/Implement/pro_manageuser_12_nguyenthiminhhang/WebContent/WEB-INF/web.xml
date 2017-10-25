@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app>
+<web-app xmlns:web="http://xmlns.jcp.org/xml/ns/javaee">
   <display-name>pro_manageuser_12_nguyenthiminhhang</display-name>
   <welcome-file-list>
     <welcome-file>/view/jsp/ADM001.jsp</welcome-file>
