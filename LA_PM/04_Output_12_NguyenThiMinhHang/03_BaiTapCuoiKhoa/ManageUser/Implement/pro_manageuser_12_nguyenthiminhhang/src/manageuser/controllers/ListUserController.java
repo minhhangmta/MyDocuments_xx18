@@ -2,6 +2,7 @@ package manageuser.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manageuser.entities.MstGroup;
 import manageuser.entities.UserInfor;
+import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -58,9 +61,26 @@ public class ListUserController extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
 				requestDispatcher.forward(request, response);
 			} else {
+				request.setCharacterEncoding("UTF-8");
+				// Khởi tạo
 				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-				ArrayList<UserInfor> listUserInfor = tblUserLogicImpl.getListUser(1, 1, 1, "", "", "", "", "");
-				request.setAttribute("listUserInfor", listUserInfor);
+				MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
+				List<UserInfor> listUser = new ArrayList<>();
+				String type = request.getParameter("type");
+				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
+				String name = ""; 
+				int group_id = 0;
+				//Tìm kiếm
+				if ("search".equals(type)) {
+					name = request.getParameter("name");
+					group_id = Integer.parseInt(request.getParameter("group_id"));
+					request.setAttribute("group_id", group_id);
+					request.setAttribute("name", name);
+				}
+				listUser = tblUserLogicImpl.getListUser(-1, -1, group_id, name, "", "", "", "");
+				request.setAttribute("listUser", listUser);
+				request.setAttribute("listGroup", listGroup);
+				// Forward đến ADM002
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM002);
 				requestDispatcher.forward(request, response);
 			}

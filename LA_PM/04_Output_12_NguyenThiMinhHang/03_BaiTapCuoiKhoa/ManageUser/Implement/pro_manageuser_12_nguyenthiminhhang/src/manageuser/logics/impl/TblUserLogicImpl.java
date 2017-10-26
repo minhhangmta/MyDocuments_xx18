@@ -4,7 +4,6 @@
  */
 package manageuser.logics.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import manageuser.dao.impl.TblUserDaoImpl;
@@ -51,15 +50,19 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * java.lang.String)
 	 */
 	@Override
-	public ArrayList<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		ArrayList<UserInfor> listUserInfor = new ArrayList<>();
-		userDaoImpl = new TblUserDaoImpl();
-		listUserInfor = userDaoImpl.getListUser(offset, limit, groupId, fullName, sortType, sortByFullName,
-				sortByCodeLevel, sortByEndDate);
-		for (UserInfor user : listUserInfor) {
-			System.out.println(user.getEmail());
-		}
-		return listUserInfor;
+		return (new TblUserDaoImpl().getListUser(offset, limit, groupId, fullName, sortType, sortByFullName,
+				sortByCodeLevel, sortByEndDate));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#getTotalUsers(int, java.lang.String)
+	 */
+	@Override
+	public int getTotalUsers(int groupId, String fullname) {
+		return new TblUserDaoImpl().getTotalUsers(groupId, fullname);
 	}
 }

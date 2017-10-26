@@ -30,7 +30,7 @@
 				<tr align="left">
 					<td class="lbl_left">アカウント名:</td>
 					<td align="left"><input class="txBox" type="text"
-						name="username" value="<c:out value="${username}"/>" size="20"
+						name="username" value="${username}" size="20"
 						onfocus="this.style.borderColor='#0066ff';"
 						onblur="this.style.borderColor='#aaaaaa';" /></td>
 				</tr>

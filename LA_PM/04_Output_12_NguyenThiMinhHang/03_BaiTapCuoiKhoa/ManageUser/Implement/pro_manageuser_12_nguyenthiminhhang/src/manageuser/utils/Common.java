@@ -7,6 +7,8 @@ package manageuser.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -52,5 +54,47 @@ public class Common {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Tạo chuỗi paging
+	 * 
+	 * @param totalRecord
+	 *            tổng sô user
+	 * @param limit
+	 *            số lượng cần hiển thị trên 1 trang
+	 * @param currentPage
+	 *            trang hiện tại
+	 * @return List<Integer> danh sách số trang hiển thị lên
+	 */
+	public List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
+		List<Integer> listPage = new ArrayList<>();
+		int totalPage = 0;
+		if (totalRecord % limit == 0) {
+			totalPage = totalRecord / limit;
+		} else {
+			totalPage = totalRecord / limit + 1;
+		}
+		int t = currentPage / 3;
+		int k = currentPage % 3;
+		if (k == 0)
+			t--;
+		for (int i = 0; i < 3; i++) {
+			listPage.add(3 * t + 1 + i);
+		}
+		return listPage;
+	}
+
+	/**
+	 * Hàm chuẩn hóa chuỗi có kí tự đặc biệt "%" "_" để đưa vào query
+	 * 
+	 * @param key
+	 *            tên cần chuẩn hóa
+	 * @return String chuỗi đã được chuẩn hóa
+	 */
+	public static String standardString(String key) {
+		key = key.replace("%", "\\%");
+		key = key.replace("_", "\\_");
+		return key.trim();
 	}
 }

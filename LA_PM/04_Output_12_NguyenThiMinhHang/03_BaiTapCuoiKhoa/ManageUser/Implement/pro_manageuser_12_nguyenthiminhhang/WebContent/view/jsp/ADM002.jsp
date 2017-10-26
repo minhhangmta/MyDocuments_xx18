@@ -16,7 +16,8 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung dieu kien tim kiem -->
-	<form action="" method="post" name="mainform">
+	<form action="${pageContext.request.contextPath}/listUser?type=search"
+		method="post" name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -31,7 +32,7 @@
 						<tr>
 							<td class="lbl_left">氏名:</td>
 							<td align="left"><input class="txBox" type="text"
-								name="name" value="" size="20"
+								name="name" value="${name}" size="20"
 								onfocus="this.style.borderColor='#0066ff';"
 								onblur="this.style.borderColor='#aaaaaa';" /></td>
 							<td></td>
@@ -40,8 +41,10 @@
 							<td class="lbl_left">グループ:</td>
 							<td align="left" width="80px"><select name="group_id">
 									<option value="0">全て</option>
-									<option value="0">Nhóm 1</option>
-									<option value="0">Nhóm 2</option>
+									<c:forEach items="${listGroup}" var="group">
+										<option value="${group.groupId}"
+											${group.groupId == group_id ? 'selected' : ''}>${group.groupName}</option>
+									</c:forEach>
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加" /></td>
@@ -71,9 +74,9 @@
 			<th align="left">点数</th>
 		</tr>
 
-		<c:forEach items="${listUserInfor}" var="user">
+		<c:forEach items="${listUser}" var="user">
 			<tr>
-				<td align="right"><a href="ADM005.html">${user.userId}</a></td>
+				<td align="right"><a href="#">${user.userId}</a></td>
 				<td>${user.fullName}</td>
 				<td align="center">${user.birthday}</td>
 				<td>${user.groupName}</td>

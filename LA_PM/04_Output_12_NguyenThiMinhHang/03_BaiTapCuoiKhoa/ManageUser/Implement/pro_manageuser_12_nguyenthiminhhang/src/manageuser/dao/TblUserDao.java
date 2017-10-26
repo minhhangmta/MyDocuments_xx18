@@ -20,7 +20,7 @@ public interface TblUserDao {
 	 * 
 	 * @param username
 	 *            tên đăng nhập
-	 * @return chuỗi salt
+	 * @return salt chuỗi salt
 	 */
 	public String getSalt(String username);
 
@@ -37,16 +37,36 @@ public interface TblUserDao {
 
 	/**
 	 * Hàm lấy danh sách user
-	 * @param offset vị trí data cần lấy
-	 * @param limit số lượng lấy
-	 * @param groupId mã nhóm
-	 * @param fullName tên tìm kiếm
-	 * @param sortType nhận biết xem cột nào được ưu tiên
-	 * @param sortByFullName giá trị sắp xếp của cột Tên (ASC or DESC)
-	 * @param sortByCodeLevel giá trị sắp xếp của cột Trình độ tiếng nhật(ASC or DESC)
-	 * @param sortByEndDate giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
+	 * 
+	 * @param offset
+	 *            vị trí data cần lấy
+	 * @param limit
+	 *            số lượng lấy
+	 * @param groupId
+	 *            mã nhóm
+	 * @param fullName
+	 *            tên tìm kiếm
+	 * @param sortType
+	 *            nhận biết xem cột nào được ưu tiên
+	 * @param sortByFullName
+	 *            giá trị sắp xếp của cột Tên (ASC or DESC)
+	 * @param sortByCodeLevel
+	 *            giá trị sắp xếp của cột Trình độ tiếng nhật(ASC or DESC)
+	 * @param sortByEndDate
+	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
 	 * @return
 	 */
 	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+
+	/**
+	 * Hàm lấy tổng số user
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @param fullname
+	 *            tên user
+	 * @return total tổng user
+	 */
+	public int getTotalUsers(int groupId, String fullname);
 }

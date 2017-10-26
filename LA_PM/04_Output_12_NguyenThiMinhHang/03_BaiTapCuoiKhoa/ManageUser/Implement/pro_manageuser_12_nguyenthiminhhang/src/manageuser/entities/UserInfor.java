@@ -158,47 +158,10 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param userId
-	 * @param fullName
-	 * @param email
-	 * @param tel
-	 * @param birthday
-	 * @param groupName
-	 * @param nameLevel
-	 * @param endDate
-	 * @param total
-	 */
-	public UserInfor(int userId, String fullName, String email, String tel, Date birthday, String groupName,
-			String nameLevel, Date endDate, int total) {
-		super();
-		this.userId = userId;
-		this.fullName = fullName;
-		this.email = email;
-		this.tel = tel;
-		this.birthday = birthday;
-		this.groupName = groupName;
-		this.nameLevel = nameLevel;
-		this.endDate = endDate;
-		this.total = total;
-	}
-
-	/**
 	 * 
 	 */
 	public UserInfor() {
 		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "UserInfor [userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", tel=" + tel
-				+ ", birthday=" + birthday + ", groupName=" + groupName + ", nameLevel=" + nameLevel + ", endDate="
-				+ endDate + ", total=" + total + "]";
-	}
-	
-	
 
 }
