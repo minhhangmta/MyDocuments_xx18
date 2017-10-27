@@ -164,4 +164,16 @@ public class UserInfor {
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UserInfor [userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", tel=" + tel
+				+ ", birthday=" + birthday + ", groupName=" + groupName + ", nameLevel=" + nameLevel + ", endDate="
+				+ endDate + ", total=" + total + "]";
+	}
+	
+	
+
 }

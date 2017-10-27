@@ -72,6 +72,11 @@ public class ListUserController extends HttpServlet {
 				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
 				String name = "";
 				int group_id = 0;
+				String sortType = "";
+				int offset = 0;
+				String sortByFullName = Constant.ASCENDING;
+				String sortByCodeLevel = Constant.ASCENDING;
+				String sortByEndDate = Constant.DECREASE;
 				// Tìm kiếm
 				if ("search".equals(type)) {
 					name = request.getParameter("name");
@@ -79,7 +84,24 @@ public class ListUserController extends HttpServlet {
 					request.setAttribute("group_id", group_id);
 					request.setAttribute("name", name);
 				}
-				listUser = tblUserLogicImpl.getListUsers(-1, -1, group_id, name, "", "", "", "");
+				if ("sort".equals(type)) {
+					sortType = request.getParameter("typeSort");
+					switch (sortType) {
+					case Constant.FULL_NAME:
+						sortByFullName = Common.convertSort(Constant.ASCENDING);
+						break;
+					case Constant.CODE_LEVEL:
+						sortByCodeLevel = Common.convertSort(Constant.ASCENDING);
+						break;
+					case Constant.END_DATE:
+						sortByEndDate = Common.convertSort(Constant.DECREASE);
+						break;
+					default:
+						break;
+					}
+				}
+				listUser = tblUserLogicImpl.getListUsers(offset, Constant.LIMIT_PAGE, group_id, name, sortType,
+						sortByFullName, sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);
 				// Forward đến ADM002

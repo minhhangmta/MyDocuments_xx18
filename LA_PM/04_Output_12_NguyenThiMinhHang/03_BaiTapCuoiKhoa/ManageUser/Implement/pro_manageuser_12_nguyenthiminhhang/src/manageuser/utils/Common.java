@@ -149,4 +149,20 @@ public class Common {
 			return null;
 		}
 	}
+
+	/**
+	 * Hàm chuyển kiểu sort
+	 * 
+	 * @param keySort
+	 *            kiểu sort hiện tại
+	 * @return String kiểu sort 
+	 */
+	public static String convertSort(String keySort) {
+		if (Constant.ASCENDING.equals(keySort)) {// Đang là tăng
+			keySort = Constant.DECREASE;// chuyển thành giảm
+		} else {// Đang là giảm
+			keySort = Constant.ASCENDING; // chuyển thành tăng
+		}
+		return keySort;
+	}
 }
