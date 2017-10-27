@@ -9,7 +9,7 @@ import java.util.List;
 import manageuser.entities.UserInfor;
 
 /**
- * Interface Thao tác với DB của các chức năng của TblUser
+ * Interface Thao tác với database 
  * 
  * @author minhhang
  */
@@ -66,7 +66,7 @@ public interface TblUserDao {
 	 *            mã nhóm
 	 * @param fullname
 	 *            tên user
-	 * @return total tổng user
+	 * @return total tổng số records
 	 */
 	public int getTotalUsers(int groupId, String fullname);
 }

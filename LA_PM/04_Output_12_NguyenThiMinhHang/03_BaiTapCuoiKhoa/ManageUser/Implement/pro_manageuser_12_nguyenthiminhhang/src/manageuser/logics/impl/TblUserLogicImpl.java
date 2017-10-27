@@ -12,7 +12,7 @@ import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
 
 /**
- * Implement TblUserLogic để xử lý logic lấy từ TblUserDao
+ * Xử lý logic liên quan đến thông tin của user
  * 
  * @author minhhang
  */
@@ -29,12 +29,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 	public boolean existLogin(String username, String password) {
 		// Khởi tạo lớp TblUserDaoImpl
 		userDaoImpl = new TblUserDaoImpl();
-		// Khởi tạo lớp Common
-		Common common = new Common();
 		// Lấy salt từ DB
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
-		password = common.encodeSHA1(password, salt);
+		password = Common.encodeSHA1(password, salt);
 		// Nếu user tồn tại trong DB
 		if (userDaoImpl.existLogin(username, password)) {
 			return true;

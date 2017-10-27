@@ -56,7 +56,7 @@ public interface TblUserLogic {
 	 *            mã nhóm
 	 * @param fullname
 	 *            tên user
-	 * @return total tổng user
+	 * @return total tổng số records
 	 */
 	public int getTotalUsers(int groupId, String fullname);
 }

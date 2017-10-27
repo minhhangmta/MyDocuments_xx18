@@ -4,8 +4,6 @@
  */
 package manageuser.dao.impl;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +17,7 @@ import manageuser.entities.UserInfor;
 import manageuser.utils.Common;
 
 /**
- * Implement TblUserDao để Thao tác với DB của các chức năng của TblUser
+ * Thao tác với database 
  * 
  * @author minhhang
  */

@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * BaseDaoImpl.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -15,7 +19,7 @@ import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
- * Servlet implementation class LoginController
+ * Controller xử lý cho màn hình login
  */
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -30,6 +34,7 @@ public class LoginController extends HttpServlet {
 	}
 
 	/**
+	 * Hàm xử lý khi submit form 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

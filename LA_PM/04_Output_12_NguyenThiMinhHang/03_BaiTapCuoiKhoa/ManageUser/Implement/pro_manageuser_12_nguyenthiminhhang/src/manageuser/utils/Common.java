@@ -27,7 +27,7 @@ public class Common {
 	 *            mã salt từ DB
 	 * @return mật khẩu đã mã hóa
 	 */
-	public String encodeSHA1(String password, String salt) {
+	public static String encodeSHA1(String password, String salt) {
 		String input = password + salt;
 		String sha1 = null;
 		MessageDigest digest;
@@ -49,7 +49,7 @@ public class Common {
 	 *            đối tượng HttpSession
 	 * @return true nếu đã đăng nhập, false nếu chưa đăng nhập
 	 */
-	public boolean checkLogin(HttpSession session) {
+	public static boolean checkLogin(HttpSession session) {
 		if (session.getAttribute("username") != null) {
 			return true;
 		}
@@ -65,9 +65,10 @@ public class Common {
 	 *            số lượng cần hiển thị trên 1 trang
 	 * @param currentPage
 	 *            trang hiện tại
-	 * @return List<Integer> danh sách số trang hiển thị lên
+	 * @return List<Integer> Danh sách các trang cần hiển thị ở chuỗi paging theo
+	 *         trang hiện tại
 	 */
-	public List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
+	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
 		List<Integer> listPage = new ArrayList<>();
 		int totalPage = 0;
 		if (totalRecord % limit == 0) {
@@ -96,5 +97,57 @@ public class Common {
 		key = key.replace("%", "\\%");
 		key = key.replace("_", "\\_");
 		return key.trim();
+	}
+
+	/**
+	 * Lấy vị trí data cần lấy
+	 * 
+	 * @param currentPage
+	 *            Trang hiện tại
+	 * @param limit
+	 *            Số lượng cần hiển thị trên 1 trang
+	 * @return
+	 */
+	public static int getOffset(int currentPage, int limit) {
+		return 0;
+	}
+
+	/**
+	 * Lấy số lượng hiển thị bản ghi trên 1 trang
+	 * 
+	 * @return int số lượng records cần lấy
+	 */
+	public static int getLimit() {
+		// Lấy data từ file config.properties
+		return 0;
+	}
+
+	/**
+	 * Tính tổng số trang
+	 * 
+	 * @param totalUser
+	 *            tổng số User
+	 * @param limit
+	 *            số lượng cần hiển thị trên 1 trang
+	 * @return int tổng số trang
+	 */
+	public static int getTotalPage(int totalUser, int limit) {
+
+		return 0;
+	}
+
+	/**
+	 * Hàm ép kiểu kiểu String to int
+	 * 
+	 * @param text
+	 *            chuỗi cần convert
+	 * @return Integer số được convert
+	 */
+	public static Integer tryParse(String text) {
+		try {
+			return Integer.parseInt(text);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 }

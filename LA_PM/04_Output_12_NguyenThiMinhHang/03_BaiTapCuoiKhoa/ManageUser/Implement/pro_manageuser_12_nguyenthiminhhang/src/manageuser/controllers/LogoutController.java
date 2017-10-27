@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * BaseDaoImpl.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -13,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class LogOutController
+ * Controller xử lý cho chức năng logout
  */
 @WebServlet("/logout")
 public class LogoutController extends HttpServlet {
@@ -28,6 +32,7 @@ public class LogoutController extends HttpServlet {
 	}
 
 	/**
+	 * Hàm xử lý khi click link logout
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

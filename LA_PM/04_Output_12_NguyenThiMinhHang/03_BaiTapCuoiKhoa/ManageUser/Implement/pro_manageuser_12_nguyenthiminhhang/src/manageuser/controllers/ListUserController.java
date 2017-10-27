@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * BaseDaoImpl.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -20,8 +24,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class ListUserController Controller xử lý cho màn hình
- * danh sách user ADM002
+ * Controller xử lý cho màn hình danh sách user ADM002
  */
 @WebServlet("/listUser")
 public class ListUserController extends HttpServlet {
@@ -53,10 +56,9 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Common common = new Common();
 			HttpSession session = request.getSession();
 			// Nếu chưa đăng nhập
-			if (!common.checkLogin(session)) {
+			if (!Common.checkLogin(session)) {
 				// Quay về màn hình ADM001
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
 				requestDispatcher.forward(request, response);
@@ -68,12 +70,13 @@ public class ListUserController extends HttpServlet {
 				List<UserInfor> listUser = new ArrayList<>();
 				String type = request.getParameter("type");
 				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
-				String name = ""; 
+				String name = "";
 				int group_id = 0;
-				//Tìm kiếm
+				// Tìm kiếm
 				if ("search".equals(type)) {
 					name = request.getParameter("name");
-					group_id = Integer.parseInt(request.getParameter("group_id"));
+					// group_id = Integer.parseInt(request.getParameter("group_id"));
+					group_id = Common.tryParse(request.getParameter("group_id"));
 					request.setAttribute("group_id", group_id);
 					request.setAttribute("name", name);
 				}

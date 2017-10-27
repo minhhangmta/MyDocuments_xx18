@@ -13,8 +13,6 @@ import java.util.List;
 
 import manageuser.dao.MstGroupDao;
 import manageuser.entities.MstGroup;
-import manageuser.entities.UserInfor;
-import manageuser.logics.impl.TblUserLogicImpl;
 
 /**
  * Implement MstGroupDao để Thao tác với DB bảng mst_group
