@@ -46,7 +46,7 @@ public interface TblUserLogic {
 	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
 	 * @return
 	 */
-	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 
 	/**

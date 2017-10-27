@@ -61,15 +61,15 @@
 
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
-			<th align="left">氏名 <a href="">▲▽</a>
+			<th align="left">氏名 <a href="#">▲▽</a>
 			</th>
 			<th align="left">生年月日</th>
 			<th align="left">グループ</th>
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
-			<th align="left">日本語能力 <a href="">▲▽</a>
+			<th align="left">日本語能力 <a href="#">▲▽</a>
 			</th>
-			<th align="left">失効日 <a href="">△▼</a>
+			<th align="left">失効日 <a href="#">△▼</a>
 			</th>
 			<th align="left">点数</th>
 		</tr>

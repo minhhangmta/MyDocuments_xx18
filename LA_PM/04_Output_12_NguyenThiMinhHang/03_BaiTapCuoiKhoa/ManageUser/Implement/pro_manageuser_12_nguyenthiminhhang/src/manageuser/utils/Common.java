@@ -25,7 +25,7 @@ public class Common {
 	 *            mật khẩu user nhập vào
 	 * @param salt
 	 *            mã salt từ DB
-	 * @return mật khẩu đã mã hóa
+	 * @return String mật khẩu đã mã hóa
 	 */
 	public static String encodeSHA1(String password, String salt) {
 		String input = password + salt;
@@ -70,18 +70,12 @@ public class Common {
 	 */
 	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
 		List<Integer> listPage = new ArrayList<>();
-		int totalPage = 0;
-		if (totalRecord % limit == 0) {
-			totalPage = totalRecord / limit;
-		} else {
-			totalPage = totalRecord / limit + 1;
-		}
-		int t = currentPage / 3;
-		int k = currentPage % 3;
-		if (k == 0)
-			t--;
+		int thuong = currentPage / 3;
+		int du = currentPage % 3;
+		if (du == 0)
+			thuong--;
 		for (int i = 0; i < 3; i++) {
-			listPage.add(3 * t + 1 + i);
+			listPage.add(3 * thuong + 1 + i);
 		}
 		return listPage;
 	}
@@ -132,8 +126,13 @@ public class Common {
 	 * @return int tổng số trang
 	 */
 	public static int getTotalPage(int totalUser, int limit) {
-
-		return 0;
+		int totalPage = 0;
+		if (totalUser % limit == 0) {
+			totalPage = totalUser / limit;
+		} else {
+			totalPage = totalUser / limit + 1;
+		}
+		return totalPage;
 	}
 
 	/**
@@ -143,7 +142,7 @@ public class Common {
 	 *            chuỗi cần convert
 	 * @return Integer số được convert
 	 */
-	public static Integer tryParse(String text) {
+	public static Integer tryParseInt(String text) {
 		try {
 			return Integer.parseInt(text);
 		} catch (NumberFormatException e) {

@@ -9,7 +9,7 @@ import java.util.List;
 import manageuser.entities.UserInfor;
 
 /**
- * Interface Thao tác với database 
+ * Thao tác với bảng TblUser trong DB
  * 
  * @author minhhang
  */
@@ -54,9 +54,9 @@ public interface TblUserDao {
 	 *            giá trị sắp xếp của cột Trình độ tiếng nhật(ASC or DESC)
 	 * @param sortByEndDate
 	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
-	 * @return
+	 * @return List<UserInfor> danh sách user
 	 */
-	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 
 	/**

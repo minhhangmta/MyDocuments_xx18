@@ -17,7 +17,7 @@ import manageuser.entities.UserInfor;
 import manageuser.utils.Common;
 
 /**
- * Thao tác với database 
+ * Implement Thao tác với bảng TblUser trong DB
  * 
  * @author minhhang
  */
@@ -34,7 +34,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public String getSalt(String username) {
 		String salt = "";
 		listUser = new ArrayList<>();
-		String query = "SELECT salt FROM tbl_user WHERE login_name = ? and role = 1 ;";
+		String query = "SELECT salt FROM tbl_user WHERE login_name = ? AND role = 1 ;";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -59,12 +59,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 */
 	@Override
 	public boolean existLogin(String username, String password) {
-		String query = "SELECT * FROM tbl_user WHERE login_name = ? and passwords = ? and role = 1;";
+		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, username);
-			preparedStatement.setString(2, password);
+			int index = 0;
+			preparedStatement.setString(index++, username);
+			preparedStatement.setString(index++, password);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (!resultSet.first()) {
 				return false;
@@ -81,22 +82,22 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see manageuser.dao.TblUserDao#getListUser(int, int, int, java.lang.String,
+	 * @see manageuser.dao.TblUserDao#getListUsers(int, int, int, java.lang.String,
 	 * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
 		StringBuilder fullnameQuery;
 		StringBuilder groupQuery;
 
 		if (groupId > 0) {
-			groupQuery = new StringBuilder(" and gr.group_id = ").append("?");
+			groupQuery = new StringBuilder(" AND gr.group_id = ").append("?");
 		} else {
 			groupQuery = new StringBuilder("");
 		}
 		if (!"".equals(fullName)) {
-			fullnameQuery = new StringBuilder(" and us.full_name LIKE ").append("?");
+			fullnameQuery = new StringBuilder(" AND us.full_name LIKE ").append("?");
 		} else {
 			fullnameQuery = new StringBuilder("");
 		}
@@ -104,23 +105,23 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		listUserInfor = new ArrayList<>();
 		StringBuilder query = new StringBuilder("");
 		query.append(
-				"SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday, gr.group_name, jp.name_level ,dt.end_date,dt.total")
-				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id= gr.group_id )")
-				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp ON dt.code_level= jp.code_level)")
-				.append(" ON us.user_id = dt.user_id WHERE us.role=0").append(groupQuery).append(fullnameQuery)
+				"SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday, gr.group_name, jp.name_level, dt.end_date, dt.total")
+				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
+				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp ON dt.code_level = jp.code_level)")
+				.append(" ON us.user_id = dt.user_id WHERE us.role = 0").append(groupQuery).append(fullnameQuery)
 				.append(";");
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-			int index = 1;
+			int index = 0;
 			if (groupId > 0) {
-				preparedStatement.setInt(index, groupId);
 				index++;
+				preparedStatement.setInt(index, groupId);
 			}
 			if (!"".equals(fullName)) {
+				index++;
 				fullName = Common.standardString(fullName);
 				preparedStatement.setString(index, "%" + fullName + "%");
-				index++;
 			}
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			while (resultSet.next()) {

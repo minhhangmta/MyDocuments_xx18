@@ -15,7 +15,7 @@ import manageuser.dao.MstGroupDao;
 import manageuser.entities.MstGroup;
 
 /**
- * Implement MstGroupDao để Thao tác với DB bảng mst_group
+ * Implement Thao tác với bảng MstGroup trong DB
  * 
  * @author minhhang
  */

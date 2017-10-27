@@ -14,10 +14,11 @@ import java.sql.Connection;
 public interface BaseDao {
 	/**
 	 * Hàm mở kết nối với DB
-	 * @return Connection
+	 * 
+	 * @return Connection kết nối
 	 */
 	public Connection getConnection();
-	
+
 	/**
 	 * Hàm đóng kết nối với DB
 	 */

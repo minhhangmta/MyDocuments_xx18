@@ -12,7 +12,7 @@ import manageuser.dao.BaseDao;
 import manageuser.properties.DatabaseProperties;
 
 /**
- * Implement tới interface BaseDao
+ * Implement tới interface BaseDao thao tác kết nối tới DB
  * 
  * @author minhhang
  */

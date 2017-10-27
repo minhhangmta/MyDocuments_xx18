@@ -75,12 +75,11 @@ public class ListUserController extends HttpServlet {
 				// Tìm kiếm
 				if ("search".equals(type)) {
 					name = request.getParameter("name");
-					// group_id = Integer.parseInt(request.getParameter("group_id"));
-					group_id = Common.tryParse(request.getParameter("group_id"));
+					group_id = Common.tryParseInt(request.getParameter("group_id"));
 					request.setAttribute("group_id", group_id);
 					request.setAttribute("name", name);
 				}
-				listUser = tblUserLogicImpl.getListUser(-1, -1, group_id, name, "", "", "", "");
+				listUser = tblUserLogicImpl.getListUsers(-1, -1, group_id, name, "", "", "", "");
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);
 				// Forward đến ADM002

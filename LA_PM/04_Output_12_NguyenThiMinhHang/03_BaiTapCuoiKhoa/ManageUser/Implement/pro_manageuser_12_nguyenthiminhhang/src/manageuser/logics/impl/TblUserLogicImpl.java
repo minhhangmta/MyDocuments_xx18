@@ -43,14 +43,14 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see manageuser.logics.TblUserLogic#getListUser(int, int, int,
+	 * @see manageuser.logics.TblUserLogic#getListUsers(int, int, int,
 	 * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
 	 * java.lang.String)
 	 */
 	@Override
-	public List<UserInfor> getListUser(int offset, int limit, int groupId, String fullName, String sortType,
+	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		return (new TblUserDaoImpl().getListUser(offset, limit, groupId, fullName, sortType, sortByFullName,
+		return (new TblUserDaoImpl().getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
 				sortByCodeLevel, sortByEndDate));
 	}
 

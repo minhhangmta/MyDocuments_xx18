@@ -37,10 +37,13 @@ public class DatabaseProperties {
 			map.put(key, properties.getProperty(key));
 		}
 	}
+
 	/**
 	 * Hàm lấy data từ file properties
-	 * @param key tên key trong properties
-	 * @return data của key
+	 * 
+	 * @param key
+	 *            tên key trong properties
+	 * @return String data của key
 	 */
 	public static String getData(String key) {
 		String data = "";
