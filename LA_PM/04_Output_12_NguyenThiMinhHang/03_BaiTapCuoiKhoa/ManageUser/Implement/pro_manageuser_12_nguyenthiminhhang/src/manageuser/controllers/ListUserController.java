@@ -68,15 +68,23 @@ public class ListUserController extends HttpServlet {
 				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 				MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 				List<UserInfor> listUser = new ArrayList<>();
-				String type = request.getParameter("type");
-				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
+				List<Integer> listPaging = new ArrayList<>();
 				String name = "";
 				int group_id = 0;
 				String sortType = "";
-				int offset = 0;
+				int currentPage = 1;
+				int limit = Common.getLimit();
+				int offset = Common.getOffset(currentPage, limit);
 				String sortByFullName = "";
 				String sortByCodeLevel = "";
 				String sortByEndDate = "";
+
+				// get type from jsp
+				String type = request.getParameter("type");
+				// get listGroup
+				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
+				// get totalRecord
+				int totalRecord = tblUserLogicImpl.getTotalUsers();
 
 				// Lần đầu hiển thị
 				if (request.getParameter("sortByFullName") == null || request.getParameter("sortByCodeLevel") == null
@@ -128,8 +136,21 @@ public class ListUserController extends HttpServlet {
 						break;
 					}
 				}
-				listUser = tblUserLogicImpl.getListUsers(offset, Constant.LIMIT_PAGE, group_id, name, sortType,
-						sortByFullName, sortByCodeLevel, sortByEndDate);
+				if ("paging".equals(type)) {
+					currentPage = Common.tryParseInt(request.getParameter("currentPage"));
+				}
+				
+				System.out.println(currentPage);
+				// get listPaging
+				listPaging = Common.getListPaging(totalRecord, limit, currentPage);
+				request.setAttribute("listPaging", listPaging);
+
+				
+				// System.out.println("test" + offset + " " + limit + group_id + name + sortType
+				// + sortByFullName
+				// + sortByCodeLevel + sortByEndDate);
+				listUser = tblUserLogicImpl.getListUsers(offset, limit, group_id, name, sortType, sortByFullName,
+						sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);
 				// Forward đến ADM002

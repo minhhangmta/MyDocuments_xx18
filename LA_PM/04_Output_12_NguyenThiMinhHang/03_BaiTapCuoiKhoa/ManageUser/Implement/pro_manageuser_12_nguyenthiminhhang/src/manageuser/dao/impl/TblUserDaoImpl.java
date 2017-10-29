@@ -123,7 +123,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(", dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
 			query.append(", dt.").append(Constant.END_DATE).append(" ").append(sortByEndDate);
 		}
+		query.append(" LIMIT ").append(offset).append(",").append(limit);
 		query.append(";");
+//		System.out.println(query);
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -164,12 +166,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getTotalUsers(int, java.lang.String)
 	 */
 	@Override
-	public int getTotalUsers(int groupId, String fullname) {
+	public int getTotalUsers() {
 		int total = 0;
-		String query = "SELECT COUNT(user_id) AS total FROM tbl_user WHERE role = 0;";
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT COUNT(user_id) AS total FROM tbl_user WHERE role = 0;");
 		try {
 			Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (resultSet.first()) {
 				total = resultSet.getInt("total");

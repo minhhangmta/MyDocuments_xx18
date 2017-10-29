@@ -57,10 +57,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see manageuser.logics.TblUserLogic#getTotalUsers(int, java.lang.String)
+	 * @see manageuser.logics.TblUserLogic#getTotalUsers()
 	 */
 	@Override
-	public int getTotalUsers(int groupId, String fullname) {
-		return new TblUserDaoImpl().getTotalUsers(groupId, fullname);
+	public int getTotalUsers() {
+		return new TblUserDaoImpl().getTotalUsers();
 	}
 }

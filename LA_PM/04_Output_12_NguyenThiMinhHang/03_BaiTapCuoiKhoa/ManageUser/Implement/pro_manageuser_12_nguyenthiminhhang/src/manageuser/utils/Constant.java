@@ -15,7 +15,6 @@ public class Constant {
 	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
 	public static final String SERVLET_ADM002 = "/listUser?type=first";
 
-	public static final int LIMIT_PAGE = 5;
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
 	public static final String END_DATE = "end_date";

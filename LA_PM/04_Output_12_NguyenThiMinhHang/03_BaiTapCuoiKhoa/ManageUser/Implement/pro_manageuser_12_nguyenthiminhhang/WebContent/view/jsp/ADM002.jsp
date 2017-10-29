@@ -97,8 +97,11 @@
 	<!-- Begin vung paging -->
 	<table>
 		<tr>
-			<td class="lbl_paging"><a href="#">1</a> &nbsp;<a href="#">2</a>
-				&nbsp;<a href="#">3</a>&nbsp;<a href="#">>></a></td>
+			<td class="lbl_paging"><c:forEach items="${listPaging}"
+					var="currentPage">
+					<a
+						href="${pageContext.request.contextPath}/listUser?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
+				</c:forEach> <a href="#">>></a></td>
 		</tr>
 	</table>
 	<!-- End vung paging -->

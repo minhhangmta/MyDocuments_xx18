@@ -62,11 +62,7 @@ public interface TblUserDao {
 	/**
 	 * Hàm lấy tổng số user
 	 * 
-	 * @param groupId
-	 *            mã nhóm
-	 * @param fullname
-	 *            tên user
-	 * @return total tổng số records
+	 * @return int tổng số records
 	 */
-	public int getTotalUsers(int groupId, String fullname);
+	public int getTotalUsers();
 }
