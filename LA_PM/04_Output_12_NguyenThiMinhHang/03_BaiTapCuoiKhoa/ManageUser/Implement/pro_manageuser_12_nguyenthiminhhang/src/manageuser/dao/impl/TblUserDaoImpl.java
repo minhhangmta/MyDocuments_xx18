@@ -90,12 +90,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
 		listUserInfor = new ArrayList<>();
-		StringBuilder fullnameQuery, groupQuery, orderByQuery;
-		StringBuilder query = new StringBuilder(
-				"SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday, gr.group_name, jp.name_level, dt.end_date, dt.total")
-						.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
-						.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp ON dt.code_level = jp.code_level)")
-						.append(" ON us.user_id = dt.user_id WHERE us.role = 0");
+		StringBuilder fullnameQuery, groupQuery;
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday,")
+				.append(" gr.group_name, jp.name_level, dt.end_date, dt.total")
+				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
+				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
+				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0");
 		// Nếu groupId có giá trị
 		if (groupId > 0) {
 			groupQuery = new StringBuilder(" AND gr.group_id = ").append("?");
@@ -106,8 +107,22 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			fullnameQuery = new StringBuilder(" AND us.full_name LIKE ").append("?");
 			query.append(fullnameQuery);
 		}
-		orderByQuery = new StringBuilder(" ORDER BY ? ?, ? ?, ? ? ");
-		query.append(orderByQuery);
+		if (Constant.CODE_LEVEL.equals(sortType)) {
+			query.append(" ORDER BY ");
+			query.append("dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
+			query.append(", us.").append(Constant.FULL_NAME).append(" ").append(sortByFullName);
+			query.append(", dt.").append(Constant.END_DATE).append(" ").append(sortByEndDate);
+		} else if (Constant.END_DATE.equals(sortType)) {
+			query.append(" ORDER BY ");
+			query.append("dt.").append(Constant.END_DATE).append(" ").append(sortByEndDate);
+			query.append(", us.").append(Constant.FULL_NAME).append(" ").append(sortByFullName);
+			query.append(", dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
+		} else {
+			query.append(" ORDER BY ");
+			query.append("us.").append(Constant.FULL_NAME).append(" ").append(sortByFullName);
+			query.append(", dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
+			query.append(", dt.").append(Constant.END_DATE).append(" ").append(sortByEndDate);
+		}
 		query.append(";");
 		try {
 			Connection connection = getConnection();
@@ -120,16 +135,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				fullName = Common.standardString(fullName);
 				preparedStatement.setString(index++, "%" + fullName + "%");
 			}
-			System.out.println(sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);
-			preparedStatement.setString(index++, "us." + Constant.FULL_NAME);
-			preparedStatement.setString(index++, sortByFullName);
-			preparedStatement.setString(index++, "dt." + Constant.CODE_LEVEL);
-			preparedStatement.setString(index++, sortByCodeLevel);
-			preparedStatement.setString(index++, "dt." + Constant.END_DATE);
-			preparedStatement.setString(index++, sortByEndDate);
-
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			System.out.println(query);
 			while (resultSet.next()) {
 				UserInfor userInfor = new UserInfor();
 				userInfor.setUserId(resultSet.getInt("user_id"));
@@ -142,7 +148,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				userInfor.setEndDate(resultSet.getDate("end_date"));
 				userInfor.setTotal(resultSet.getInt("total"));
 				listUserInfor.add(userInfor);
-				System.out.println(userInfor.toString());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -13,7 +13,7 @@ public class Constant {
 	public static final String ADM001 = "view/jsp/ADM001.jsp";
 	public static final String ADM002 = "view/jsp/ADM002.jsp";
 	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
-	public static final String SERVLET_ADM002 = "/listUser";
+	public static final String SERVLET_ADM002 = "/listUser?type=first";
 
 	public static final int LIMIT_PAGE = 5;
 	public static final String FULL_NAME = "full_name";

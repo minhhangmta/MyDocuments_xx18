@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -150,19 +151,26 @@ public class Common {
 		}
 	}
 
-	/**
-	 * Hàm chuyển kiểu sort
-	 * 
-	 * @param keySort
-	 *            kiểu sort hiện tại
-	 * @return String kiểu sort 
-	 */
-	public static String convertSort(String keySort) {
-		if (Constant.ASCENDING.equals(keySort)) {// Đang là tăng
-			keySort = Constant.DECREASE;// chuyển thành giảm
-		} else {// Đang là giảm
-			keySort = Constant.ASCENDING; // chuyển thành tăng
-		}
-		return keySort;
-	}
+//	/**
+//	 * Hàm chuyển kiểu sort
+//	 * 
+//	 * @param keySort
+//	 *            kiểu sort hiện tại
+//	 * @return String kiểu sort
+//	 */
+//	public static StringBuilder convertSort(String keySort, String valueSort,HttpServletRequest request) {
+//		StringBuilder strSetAttribute = new StringBuilder();
+//		if (Constant.ASCENDING.equals(valueSort)) {// Đang là tăng
+//			// chuyển thành giảm
+////			 request.setAttribute("sortBy...", Constant.DECREASE);
+//			strSetAttribute.append("request.setAttribute(\"").append(keySort).append("\",")
+//					.append(" Constant.DECREASE)");
+//		} else {// Đang là giảm
+//			// chuyển thành tăng
+//			request.setAttribute("sortByCodeLevel", Constant.ASCENDING);
+//			strSetAttribute.append("request.setAttribute(\"").append(keySort).append("\",")
+//					.append(" Constant.ASCENDING)");
+//		}
+//		return strSetAttribute;
+//	}
 }

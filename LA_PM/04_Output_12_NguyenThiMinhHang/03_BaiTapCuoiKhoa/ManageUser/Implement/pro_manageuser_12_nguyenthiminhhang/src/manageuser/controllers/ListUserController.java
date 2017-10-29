@@ -74,27 +74,55 @@ public class ListUserController extends HttpServlet {
 				int group_id = 0;
 				String sortType = "";
 				int offset = 0;
-				String sortByFullName = Constant.ASCENDING;
-				String sortByCodeLevel = Constant.ASCENDING;
-				String sortByEndDate = Constant.DECREASE;
-				// Tìm kiếm
+				String sortByFullName = "";
+				String sortByCodeLevel = "";
+				String sortByEndDate = "";
+
+				// Lần đầu hiển thị
+				if (request.getParameter("sortByFullName") == null || request.getParameter("sortByCodeLevel") == null
+						|| request.getParameter("sortByEndDate") == null) {
+					sortByFullName = Constant.ASCENDING;
+					sortByCodeLevel = Constant.ASCENDING;
+					sortByEndDate = Constant.DECREASE;
+					request.setAttribute("sortByFullname", Constant.DECREASE);
+					request.setAttribute("sortByCodeLevel", Constant.DECREASE);
+					request.setAttribute("sortByEndDate", Constant.ASCENDING);
+				}
+
+				// Chọn tìm kiếm
 				if ("search".equals(type)) {
 					name = request.getParameter("name");
 					group_id = Common.tryParseInt(request.getParameter("group_id"));
 					request.setAttribute("group_id", group_id);
 					request.setAttribute("name", name);
 				}
+				// Chọn sắp xếp
 				if ("sort".equals(type)) {
 					sortType = request.getParameter("typeSort");
 					switch (sortType) {
 					case Constant.FULL_NAME:
-						sortByFullName = Common.convertSort(Constant.ASCENDING);
+						sortByFullName = request.getParameter("sortByFullName");
+						if (sortByFullName.equals(Constant.DECREASE)) {
+							request.setAttribute("sortByFullname", Constant.ASCENDING);
+						} else if (sortByFullName.equals(Constant.ASCENDING)) {
+							request.setAttribute("sortByFullname", Constant.DECREASE);
+						}
 						break;
 					case Constant.CODE_LEVEL:
-						sortByCodeLevel = Common.convertSort(Constant.ASCENDING);
+						sortByCodeLevel = request.getParameter("sortByCodeLevel");
+						if (sortByCodeLevel.equals(Constant.DECREASE)) {
+							request.setAttribute("sortByCodeLevel", Constant.ASCENDING);
+						} else if (sortByFullName.equals(Constant.ASCENDING)) {
+							request.setAttribute("sortByCodeLevel", Constant.DECREASE);
+						}
 						break;
 					case Constant.END_DATE:
-						sortByEndDate = Common.convertSort(Constant.DECREASE);
+						sortByEndDate = request.getParameter("sortByEndDate");
+						if (sortByEndDate.equals(Constant.DECREASE)) {
+							request.setAttribute("sortByEndDate", Constant.ASCENDING);
+						} else if (sortByEndDate.equals(Constant.ASCENDING)) {
+							request.setAttribute("sortByEndDate", Constant.DECREASE);
+						}
 						break;
 					default:
 						break;
