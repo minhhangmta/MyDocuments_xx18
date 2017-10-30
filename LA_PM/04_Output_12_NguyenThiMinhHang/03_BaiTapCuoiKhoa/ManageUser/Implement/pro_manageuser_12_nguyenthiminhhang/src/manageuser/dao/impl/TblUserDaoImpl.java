@@ -90,7 +90,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
 		listUserInfor = new ArrayList<>();
-		StringBuilder fullnameQuery, groupQuery;
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday,")
 				.append(" gr.group_name, jp.name_level, dt.end_date, dt.total")
@@ -99,13 +98,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0");
 		// Nếu groupId có giá trị
 		if (groupId > 0) {
-			groupQuery = new StringBuilder(" AND gr.group_id = ").append("?");
-			query.append(groupQuery);
+			query.append(" AND gr.group_id = ?");
 		}
 		// Nếu fullName có giá trị
 		if (!"".equals(fullName)) {
-			fullnameQuery = new StringBuilder(" AND us.full_name LIKE ").append("?");
-			query.append(fullnameQuery);
+			query.append(" AND us.full_name LIKE ?");
 		}
 		if (Constant.CODE_LEVEL.equals(sortType)) {
 			query.append(" ORDER BY ");
@@ -125,7 +122,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(" LIMIT ").append(offset).append(",").append(limit);
 		query.append(";");
-//		System.out.println(query);
+		// System.out.println(query);
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -166,13 +163,29 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getTotalUsers(int, java.lang.String)
 	 */
 	@Override
-	public int getTotalUsers() {
+	public int getTotalUsers(int groupId, String fullName) {
 		int total = 0;
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT COUNT(user_id) AS total FROM tbl_user WHERE role = 0;");
+		query.append("SELECT COUNT(user_id) AS total FROM tbl_user us")
+				.append(" INNER JOIN mst_group gr ON us.group_id = gr.group_id").append(" WHERE role = 0");
+		if (groupId > 0) {
+			query.append(" AND us.group_id = ?");
+		}
+		if (!fullName.isEmpty()) {
+			query.append(" AND us.full_name LIKE ?");
+		}
+		query.append(";");
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			if (groupId > 0) {
+				preparedStatement.setInt(index++, groupId);
+			}
+			if (!fullName.isEmpty()) {
+				fullName = Common.standardString(fullName);
+				preparedStatement.setString(index++, "%" + fullName + "%");
+			}
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (resultSet.first()) {
 				total = resultSet.getInt("total");
@@ -185,4 +198,5 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		return total;
 	}
+
 }

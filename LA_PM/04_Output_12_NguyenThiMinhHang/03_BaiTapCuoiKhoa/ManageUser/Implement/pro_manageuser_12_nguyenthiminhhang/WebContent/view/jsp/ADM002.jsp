@@ -97,11 +97,18 @@
 	<!-- Begin vung paging -->
 	<table>
 		<tr>
-			<td class="lbl_paging"><c:forEach items="${listPaging}"
-					var="currentPage">
+			<td class="lbl_paging"><c:if
+					test="${currentPage > listPaging.size()}">
+					<a
+						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}">
+						&lt;&lt; </a>
+				</c:if> <c:forEach items="${listPaging}" var="currentPage">
 					<a
 						href="${pageContext.request.contextPath}/listUser?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
-				</c:forEach> <a href="#">>></a></td>
+				</c:forEach> <c:if test="${listPaging.size() < totalPage}">
+					<a
+						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}"> &gt;&gt; </a>
+				</c:if></td>
 		</tr>
 	</table>
 	<!-- End vung paging -->

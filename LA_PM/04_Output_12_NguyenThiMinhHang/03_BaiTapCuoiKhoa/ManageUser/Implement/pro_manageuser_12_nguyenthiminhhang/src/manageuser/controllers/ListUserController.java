@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.COMM_FAILURE;
+
 import manageuser.entities.MstGroup;
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
@@ -78,24 +80,24 @@ public class ListUserController extends HttpServlet {
 				String sortByFullName = "";
 				String sortByCodeLevel = "";
 				String sortByEndDate = "";
-
+				int totalPage = 0;
+				int nextPage = 0;
 				// get type from jsp
 				String type = request.getParameter("type");
 				// get listGroup
 				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
 				// get totalRecord
-				int totalRecord = tblUserLogicImpl.getTotalUsers();
+				int totalRecord = tblUserLogicImpl.getTotalUsers(group_id, name);
+				// get totalPage
+				totalPage = Common.getTotalPage(totalRecord, limit);
 
 				// Lần đầu hiển thị
-				if (request.getParameter("sortByFullName") == null || request.getParameter("sortByCodeLevel") == null
-						|| request.getParameter("sortByEndDate") == null) {
-					sortByFullName = Constant.ASCENDING;
-					sortByCodeLevel = Constant.ASCENDING;
-					sortByEndDate = Constant.DECREASE;
-					request.setAttribute("sortByFullname", Constant.DECREASE);
-					request.setAttribute("sortByCodeLevel", Constant.DECREASE);
-					request.setAttribute("sortByEndDate", Constant.ASCENDING);
-				}
+				sortByFullName = Constant.ASCENDING;
+				sortByCodeLevel = Constant.ASCENDING;
+				sortByEndDate = Constant.DECREASE;
+				request.setAttribute("sortByFullname", Constant.DECREASE);
+				request.setAttribute("sortByCodeLevel", Constant.DECREASE);
+				request.setAttribute("sortByEndDate", Constant.ASCENDING);
 
 				// Chọn tìm kiếm
 				if ("search".equals(type)) {
@@ -137,18 +139,23 @@ public class ListUserController extends HttpServlet {
 					}
 				}
 				if ("paging".equals(type)) {
-					currentPage = Common.tryParseInt(request.getParameter("currentPage"));
+					currentPage = Common.tryParseInt(request.getParameter("page"));
+					offset = Common.getOffset(currentPage, limit);
+					// currentPage = nextPage;
+
 				}
-				
-				System.out.println(currentPage);
+
 				// get listPaging
 				listPaging = Common.getListPaging(totalRecord, limit, currentPage);
 				request.setAttribute("listPaging", listPaging);
-
-				
-				// System.out.println("test" + offset + " " + limit + group_id + name + sortType
-				// + sortByFullName
-				// + sortByCodeLevel + sortByEndDate);
+				request.setAttribute("totalPage", totalPage);
+				// Tinh nextPage
+				nextPage = Common.getNextPage(listPaging, currentPage);
+				request.setAttribute("nextPage", nextPage);
+				System.out.println(currentPage);
+				// System.out.println("test" + offset + " " + limit + " " + group_id + " " +
+				// name + " " + sortType + " "
+				// + sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);
 				listUser = tblUserLogicImpl.getListUsers(offset, limit, group_id, name, sortType, sortByFullName,
 						sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);

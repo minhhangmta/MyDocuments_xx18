@@ -74,15 +74,15 @@ public class Common {
 	 */
 	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
 		List<Integer> listPage = new ArrayList<>();
-		totalRecord = new TblUserDaoImpl().getTotalUsers();
+		totalRecord = new TblUserDaoImpl().getTotalUsers(0, "");
 		int totalPage = getTotalPage(totalRecord, limit);
 		if (currentPage <= totalPage) {
-			int thuong = currentPage / 3;
-			int du = currentPage % 3;
+			int thuong = currentPage / Common.getLimitPage();
+			int du = currentPage % Common.getLimitPage();
 			if (du == 0)
 				thuong--;
-			for (int i = 0; i < 3; i++) {
-				listPage.add(3 * thuong + 1 + i);
+			for (int i = 0; i < Common.getLimitPage(); i++) {
+				listPage.add(Common.getLimitPage() * thuong + 1 + i);
 			}
 		}
 		return listPage;
@@ -121,8 +121,17 @@ public class Common {
 	 */
 	public static int getLimit() {
 		// Lấy limit từ file config.properties
-		ConfigProperties configProperties = new ConfigProperties();
-		return tryParseInt(configProperties.getData("limit"));
+		return tryParseInt(ConfigProperties.getData("limit"));
+	}
+
+	/**
+	 * Lấy số trang hiển thị trên một màn hình
+	 * 
+	 * @return int số trang
+	 */
+	public static int getLimitPage() {
+		// Lấy limit từ file config.properties
+		return tryParseInt(ConfigProperties.getData("limitPage"));
 	}
 
 	/**
@@ -159,27 +168,14 @@ public class Common {
 		}
 	}
 
-	// /**
-	// * Hàm chuyển kiểu sort
-	// *
-	// * @param keySort
-	// * kiểu sort hiện tại
-	// * @return String kiểu sort
-	// */
-	// public static StringBuilder convertSort(String keySort, String
-	// valueSort,HttpServletRequest request) {
-	// StringBuilder strSetAttribute = new StringBuilder();
-	// if (Constant.ASCENDING.equals(valueSort)) {// Đang là tăng
-	// // chuyển thành giảm
-	//// request.setAttribute("sortBy...", Constant.DECREASE);
-	// strSetAttribute.append("request.setAttribute(\"").append(keySort).append("\",")
-	// .append(" Constant.DECREASE)");
-	// } else {// Đang là giảm
-	// // chuyển thành tăng
-	// request.setAttribute("sortByCodeLevel", Constant.ASCENDING);
-	// strSetAttribute.append("request.setAttribute(\"").append(keySort).append("\",")
-	// .append(" Constant.ASCENDING)");
-	// }
-	// return strSetAttribute;
-	// }
+	/**
+	 * Lấy vị trí trang hiện tại ở phân đoạn tiếp theo
+	 * 
+	 * @param list
+	 * @param currentPage
+	 * @return int vị trí trang hiện tại tiếp theo
+	 */
+	public static int getNextPage(List<Integer> list, int currentPage) {
+		return (currentPage - list.indexOf(currentPage) + Common.getLimitPage());
+	}
 }

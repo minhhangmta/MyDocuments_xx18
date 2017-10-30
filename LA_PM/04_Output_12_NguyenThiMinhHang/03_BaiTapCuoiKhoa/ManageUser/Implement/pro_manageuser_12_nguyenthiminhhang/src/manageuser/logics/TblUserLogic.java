@@ -50,9 +50,13 @@ public interface TblUserLogic {
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 
 	/**
-	 * Hàm lấy tổng số user
+	 * Hàm lấy tổng số user 
 	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @param fullName
+	 *            tên user
 	 * @return total tổng số records
 	 */
-	public int getTotalUsers();
+	public int getTotalUsers(int groupId, String fullName);
 }
