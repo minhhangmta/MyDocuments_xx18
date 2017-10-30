@@ -100,14 +100,18 @@
 			<td class="lbl_paging"><c:if
 					test="${currentPage > listPaging.size()}">
 					<a
-						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}">
-						&lt;&lt; </a>
+						href="${pageContext.request.contextPath}/listUser?type=paging&page=${previousPage}">
+						&lt;&lt; </a>&nbsp;
 				</c:if> <c:forEach items="${listPaging}" var="currentPage">
+					<c:if test="${currentPage <= totalPage}">
+						<a
+							href="${pageContext.request.contextPath}/listUser?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
+						</c:if>
+				</c:forEach> <c:if
+					test="${listPaging.size() < totalPage && currentPage < totalPage }">
 					<a
-						href="${pageContext.request.contextPath}/listUser?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
-				</c:forEach> <c:if test="${listPaging.size() < totalPage}">
-					<a
-						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}"> &gt;&gt; </a>
+						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}">
+						&gt;&gt; </a>
 				</c:if></td>
 		</tr>
 	</table>

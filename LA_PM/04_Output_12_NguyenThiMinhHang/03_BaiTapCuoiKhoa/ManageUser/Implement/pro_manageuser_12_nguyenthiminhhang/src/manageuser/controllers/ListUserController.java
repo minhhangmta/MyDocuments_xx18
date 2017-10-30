@@ -82,6 +82,7 @@ public class ListUserController extends HttpServlet {
 				String sortByEndDate = "";
 				int totalPage = 0;
 				int nextPage = 0;
+				int previousPage = 0;
 				// get type from jsp
 				String type = request.getParameter("type");
 				// get listGroup
@@ -141,8 +142,6 @@ public class ListUserController extends HttpServlet {
 				if ("paging".equals(type)) {
 					currentPage = Common.tryParseInt(request.getParameter("page"));
 					offset = Common.getOffset(currentPage, limit);
-					// currentPage = nextPage;
-
 				}
 
 				// get listPaging
@@ -152,7 +151,12 @@ public class ListUserController extends HttpServlet {
 				// Tinh nextPage
 				nextPage = Common.getNextPage(listPaging, currentPage);
 				request.setAttribute("nextPage", nextPage);
-				System.out.println(currentPage);
+				// Tinh previousPage
+				previousPage = Common.getPrePage(listPaging, currentPage);
+				request.setAttribute("previousPage", previousPage);
+				// set currentPage cho request
+				request.setAttribute("currentPage", currentPage);
+
 				// System.out.println("test" + offset + " " + limit + " " + group_id + " " +
 				// name + " " + sortType + " "
 				// + sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);

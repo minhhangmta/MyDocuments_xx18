@@ -178,4 +178,14 @@ public class Common {
 	public static int getNextPage(List<Integer> list, int currentPage) {
 		return (currentPage - list.indexOf(currentPage) + Common.getLimitPage());
 	}
+
+	/**
+	 * Lấy vị trí trang hiện tại ở phân đoạn trước
+	 * @param list
+	 * @param currentPage
+	 * @return int vị trí trang hiện tại trước đó
+	 */
+	public static int getPrePage(List<Integer> list, int currentPage) {
+		return (currentPage - list.indexOf(currentPage) - Common.getLimitPage());
+	}
 }
