@@ -82,7 +82,7 @@ CREATE TABLE `tbl_detail_user_japan` (
   KEY `code_level` (`code_level`),
   CONSTRAINT `tbl_detail_user_japan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`user_id`),
   CONSTRAINT `tbl_detail_user_japan_ibfk_2` FOREIGN KEY (`code_level`) REFERENCES `mst_japan` (`code_level`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `tbl_user` (
   PRIMARY KEY (`user_id`),
   KEY `group_id` (`group_id`),
   CONSTRAINT `tbl_user_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `mst_group` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `tbl_user` (
 
 LOCK TABLES `tbl_user` WRITE;
 /*!40000 ALTER TABLE `tbl_user` DISABLE KEYS */;
-INSERT INTO `tbl_user` VALUES (1,1,'admin','fa05f63370a9c8698fbfa5c0f1055474dda84e5','admin',NULL,'aaaa@gmail.com','01234567891','1990-01-01','aifjsodifojk',1),(2,2,'ntmhang','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Thị Minh Hằng',NULL,'minhhang.mta@gmail.com','01234567895','1990-01-01','woriudskfnkaisdo',0),(3,1,'nguyenvana','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Văn A',NULL,'nguyenvana@gmail.com','0967245698','1992-01-04','woriudskfnkaisdo',0),(4,2,'nguyenthib','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Thị B',NULL,'nguyenthib@gmail.com','01235698400','1991-02-10','woriudskfnkaisdo',0),(5,1,'lethixoa','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Thị Xoa',NULL,'xoalt@luvina.net','01235698400','1991-02-10','woriudskfnkaisdo',0),(6,1,'dangthihan','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Đặng Thị Hân',NULL,'handt@luvina.net','01235698400','1990-01-01','woriudskfnkaisdo',0),(7,1,'lenghiemthuy','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Nghiêm Thủy',NULL,'thuyln@luvina.net','0967245698','1991-02-10','woriudskfnkaisdo',0),(8,2,'lephuonganh','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Phương Anh',NULL,'anhlp@luvina.net','01235698400','1992-01-04','woriudskfnkaisdo',0);
+INSERT INTO `tbl_user` VALUES (1,1,'admin','fa05f63370a9c8698fbfa5c0f1055474dda84e5','admin',NULL,'aaaa@gmail.com','01234567891','1990-01-01','aifjsodifojk',1),(2,2,'ntmhang','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Thị Minh Hằng',NULL,'minhhang.mta@gmail.com','01234567895','1990-01-01','woriudskfnkaisdo',0),(3,1,'nguyenvana','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Văn A',NULL,'nguyenvana@gmail.com','0967245698','1992-01-04','woriudskfnkaisdo',0),(4,2,'nguyenthib','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Thị Xoa',NULL,'nguyenthib@gmail.com','01235698400','1991-02-10','woriudskfnkaisdo',0),(5,1,'lethixoa','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Thị Xoa',NULL,'xoalt@luvina.net','01235698400','1991-02-10','woriudskfnkaisdo',0),(6,1,'dangthihan','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Đặng Thị Hân',NULL,'handt@luvina.net','01235698400','1990-01-01','woriudskfnkaisdo',0),(7,1,'lenghiemthuy','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Nghiêm Thủy',NULL,'thuyln@luvina.net','0967245698','1991-02-10','woriudskfnkaisdo',0),(8,2,'lephuonganh','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Lê Phương Anh',NULL,'anhlp@luvina.net','01235698400','1992-01-04','woriudskfnkaisdo',0),(9,3,'tranthanhthuy','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Trần Thanh Thủy',NULL,'tranthuy.nute@gmail.com','0982527982','1991-02-10','woriudskfnkaisdo',0),(10,3,'ngomanhha','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Ngô Mạnh Hà',NULL,'manhhachkt08@gmail.com','0973776072','1980-04-01','woriudskfnkaisdo',0),(17,4,'vutienlap','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Vũ Tiến Lập',NULL,'tienlapspktnd@gmail.com','0917749254','1982-01-05','woriudskfnkaisdo',0),(18,4,'nguyenvantham','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Văn Thẩm',NULL,'nvt.isst.nute@gmail.com','0904770053','1980-04-01','woriudskfnkaisdo',0),(19,3,'nguyendanghoan','fa05f63370a9c8698fbfa5c0f1055474dda84e5','Nguyễn Đăng Hoàn',NULL,'danghoang87hl@gmail.com','0974880788','1980-04-01','woriudskfnkaisdo',0),(21,4,'trantrungkien','fa05f63370a9c8698fbfa5c0f1055474dda84e5','John\'s Anh',NULL,'trungkienspktnd@gamail.com','0983888611','1982-01-05','woriudskfnkaisdo',0),(25,2,'trantrungkien','fa05f63370a9c8698fbfa5c0f1055474dda84e5','John\'s Anh',NULL,'trungkienspktnd@gamail.com','0983888611','1982-01-05','woriudskfnkaisdo',0),(26,4,'trantrungkien','fa05f63370a9c8698fbfa5c0f1055474dda84e5','John\'s Anh',NULL,'trungkienspktnd@gamail.com','0983888611','1982-01-05','woriudskfnkaisdo',0),(27,4,'trantrungkien','fa05f63370a9c8698fbfa5c0f1055474dda84e5','John\'s Anh',NULL,'trungkienspktnd@gamail.com','0983888611','1982-01-05','woriudskfnkaisdo',0),(28,3,'trantrungkien','fa05f63370a9c8698fbfa5c0f1055474dda84e5','John\'s Anh',NULL,'trungkienspktnd@gamail.com','0983888611','1982-01-05','woriudskfnkaisdo',0);
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -139,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-26  9:56:49
+-- Dump completed on 2017-10-30  9:28:39
