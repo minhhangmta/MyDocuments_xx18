@@ -1,3 +1,4 @@
+<%@page import="manageuser.utils.Constant"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -10,7 +11,9 @@
 <title>ユーザ管理</title>
 </head>
 <body align="center">
-	<form action="${pageContext.request.contextPath}/login" method="post">
+	<form
+		action="${pageContext.request.contextPath}<%=Constant.LOGIN_SERVLET%>"
+		method="post">
 		<center>
 			<table class="tbl_input" cellpadding="4" cellspacing="0"
 				width="400px">

@@ -181,11 +181,32 @@ public class Common {
 
 	/**
 	 * Lấy vị trí trang hiện tại ở phân đoạn trước
+	 * 
 	 * @param list
 	 * @param currentPage
 	 * @return int vị trí trang hiện tại trước đó
 	 */
 	public static int getPrePage(List<Integer> list, int currentPage) {
 		return (currentPage - list.indexOf(currentPage) - Common.getLimitPage());
+	}
+
+	/**
+	 * Hàm lấy giá trị từ session
+	 * 
+	 * @param session
+	 *            đối tượng HttpSession
+	 * @param key
+	 *            từ khóa cần lấy giá trị từ session
+	 * @param defaultValue
+	 *            giá trị mặc định của key
+	 * @return String giá trị của key
+	 */
+	public static String getSessionValue(HttpSession session, String key, String defaultValue) {
+		Object value = session.getAttribute(key);
+		if (value == null) {
+			return defaultValue;
+		} else {
+			return value.toString();
+		}
 	}
 }

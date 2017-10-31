@@ -19,7 +19,7 @@ import manageuser.utils.Constant;
 /**
  * Controller xử lý cho chức năng logout
  */
-@WebServlet("/logout")
+@WebServlet("/logout.do")
 public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

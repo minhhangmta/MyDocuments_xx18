@@ -21,7 +21,7 @@ import manageuser.validates.ValidateUser;
 /**
  * Controller xử lý cho màn hình login
  */
-@WebServlet("/login")
+@WebServlet("/login.do")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
 				// điều hướng đến ADM002
-				response.sendRedirect(request.getContextPath() + Constant.SERVLET_ADM002);
+				response.sendRedirect(request.getContextPath() + Constant.LISTUSER_SERVLET);
 			} else {
 				// Lấy list thông báo lỗi từ validateLogin
 				ArrayList<String> errMassages = validateUser.validateLogin(username, password);

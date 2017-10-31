@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.COMM_FAILURE;
-
 import manageuser.entities.MstGroup;
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
@@ -28,7 +26,7 @@ import manageuser.utils.Constant;
 /**
  * Controller xử lý cho màn hình danh sách user ADM002
  */
-@WebServlet("/listUser")
+@WebServlet("/listUser.do")
 public class ListUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -71,7 +69,7 @@ public class ListUserController extends HttpServlet {
 				MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 				List<UserInfor> listUser = new ArrayList<>();
 				List<Integer> listPaging = new ArrayList<>();
-				String name = "";
+				String fullName = "";
 				int group_id = 0;
 				String sortType = "";
 				int currentPage = 1;
@@ -83,67 +81,99 @@ public class ListUserController extends HttpServlet {
 				int totalPage = 0;
 				int nextPage = 0;
 				int previousPage = 0;
+				int totalRecord = 0;
+
 				// get type from jsp
 				String type = request.getParameter("type");
 				// get listGroup
 				List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
-				// get totalRecord
-				int totalRecord = tblUserLogicImpl.getTotalUsers(group_id, name);
-				// get totalPage
-				totalPage = Common.getTotalPage(totalRecord, limit);
-
-				// Lần đầu hiển thị
-				sortByFullName = Constant.ASCENDING;
-				sortByCodeLevel = Constant.ASCENDING;
-				sortByEndDate = Constant.DECREASE;
-				request.setAttribute("sortByFullname", Constant.DECREASE);
-				request.setAttribute("sortByCodeLevel", Constant.DECREASE);
-				request.setAttribute("sortByEndDate", Constant.ASCENDING);
-
-				// Chọn tìm kiếm
-				if ("search".equals(type)) {
-					name = request.getParameter("name");
-					group_id = Common.tryParseInt(request.getParameter("group_id"));
-					request.setAttribute("group_id", group_id);
-					request.setAttribute("name", name);
+				// set default cho cac gia tri sort
+				sortByFullName = Constant.DEFAULT_FULL_NAME_SORT;
+				sortByCodeLevel = Constant.DEFAULT_CODE_LEVEL_SORT;
+				sortByEndDate = Constant.DEFAULT_END_DATE_SORT;
+				if (sortType.isEmpty()) {
+					request.setAttribute("sortByFullname", Constant.DECREASE);
+					request.setAttribute("sortByCodeLevel", Constant.DECREASE);
+					request.setAttribute("sortByEndDate", Constant.ASCENDING);
 				}
-				// Chọn sắp xếp
+				session.setAttribute("sortByFullname", sortByFullName);
+				session.setAttribute("sortByCodeLevel", sortByCodeLevel);
+				session.setAttribute("sortByEndDate", sortByEndDate);
+
+				// truong hop tim kiem
+				if ("search".equals(type)) {
+					fullName = request.getParameter("fullName");
+					session.setAttribute("fullName", fullName);
+
+					group_id = Common.tryParseInt(request.getParameter("group_id"));
+					session.setAttribute("group_id", group_id);
+				}
 				if ("sort".equals(type)) {
 					sortType = request.getParameter("typeSort");
+					session.setAttribute("sortType", sortType);
+
+					fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
+					group_id = Common.tryParseInt(Common.getSessionValue(session, "group_id", Constant.DEFAULT_INT));
+
 					switch (sortType) {
 					case Constant.FULL_NAME:
-						sortByFullName = request.getParameter("sortByFullName");
+						sortByFullName = Common.getSessionValue(session, "sortByFullName",
+								Constant.DEFAULT_FULL_NAME_SORT);
+						request.setAttribute("sortByFullname", sortByFullName);
 						if (sortByFullName.equals(Constant.DECREASE)) {
-							request.setAttribute("sortByFullname", Constant.ASCENDING);
+							sortByFullName = Constant.ASCENDING;
 						} else if (sortByFullName.equals(Constant.ASCENDING)) {
-							request.setAttribute("sortByFullname", Constant.DECREASE);
+							sortByFullName = Constant.DECREASE;
 						}
+						session.setAttribute("sortByFullName", sortByFullName);
 						break;
 					case Constant.CODE_LEVEL:
-						sortByCodeLevel = request.getParameter("sortByCodeLevel");
+						sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel",
+								Constant.DEFAULT_CODE_LEVEL_SORT);
+						request.setAttribute("sortByCodeLevel", sortByCodeLevel);
 						if (sortByCodeLevel.equals(Constant.DECREASE)) {
-							request.setAttribute("sortByCodeLevel", Constant.ASCENDING);
-						} else if (sortByFullName.equals(Constant.ASCENDING)) {
-							request.setAttribute("sortByCodeLevel", Constant.DECREASE);
+							sortByCodeLevel = Constant.ASCENDING;
+						} else if (sortByCodeLevel.equals(Constant.ASCENDING)) {
+							sortByCodeLevel = Constant.DECREASE;
 						}
+						session.setAttribute("sortByCodeLevel", sortByCodeLevel);
 						break;
 					case Constant.END_DATE:
-						sortByEndDate = request.getParameter("sortByEndDate");
+						sortByEndDate = Common.getSessionValue(session, "sortByEndDate",
+								Constant.DEFAULT_CODE_LEVEL_SORT);
+						request.setAttribute("sortByEndDate", sortByEndDate);
 						if (sortByEndDate.equals(Constant.DECREASE)) {
-							request.setAttribute("sortByEndDate", Constant.ASCENDING);
+							sortByEndDate = Constant.ASCENDING;
 						} else if (sortByEndDate.equals(Constant.ASCENDING)) {
-							request.setAttribute("sortByEndDate", Constant.DECREASE);
+							sortByEndDate = Constant.DECREASE;
 						}
+						session.setAttribute("sortByEndDate", sortByEndDate);
 						break;
 					default:
 						break;
 					}
 				}
+
 				if ("paging".equals(type)) {
 					currentPage = Common.tryParseInt(request.getParameter("page"));
 					offset = Common.getOffset(currentPage, limit);
-				}
 
+				}
+				session.setAttribute("currentPage", currentPage);
+				fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
+				group_id = Common.tryParseInt(Common.getSessionValue(session, "group_id", Constant.DEFAULT_INT));
+
+				sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
+				sortByFullName = Common.getSessionValue(session, "sortByFullName", Constant.DEFAULT_FULL_NAME_SORT);
+				sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel", Constant.DEFAULT_CODE_LEVEL_SORT);
+				sortByEndDate = Common.getSessionValue(session, "sortByEndDate", Constant.DEFAULT_CODE_LEVEL_SORT);
+				currentPage = Common
+						.tryParseInt(Common.getSessionValue(session, "currentPage", Constant.DEFAULT_CURRENT_PAGE));
+
+				// get totalRecord
+				totalRecord = tblUserLogicImpl.getTotalUsers(group_id, fullName);
+				// get totalPage
+				totalPage = Common.getTotalPage(totalRecord, limit);
 				// get listPaging
 				listPaging = Common.getListPaging(totalRecord, limit, currentPage);
 				request.setAttribute("listPaging", listPaging);
@@ -158,9 +188,9 @@ public class ListUserController extends HttpServlet {
 				request.setAttribute("currentPage", currentPage);
 
 				// System.out.println("test" + offset + " " + limit + " " + group_id + " " +
-				// name + " " + sortType + " "
-				// + sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);
-				listUser = tblUserLogicImpl.getListUsers(offset, limit, group_id, name, sortType, sortByFullName,
+				// fullName + " " + sortType
+				// + " " + sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);
+				listUser = tblUserLogicImpl.getListUsers(offset, limit, group_id, fullName, sortType, sortByFullName,
 						sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);

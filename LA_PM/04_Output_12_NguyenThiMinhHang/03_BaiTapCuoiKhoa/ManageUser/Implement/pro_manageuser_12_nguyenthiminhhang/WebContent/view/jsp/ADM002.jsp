@@ -1,3 +1,4 @@
+<%@page import="manageuser.utils.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -16,7 +17,8 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung dieu kien tim kiem -->
-	<form action="${pageContext.request.contextPath}/listUser?type=search"
+	<form
+		action="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=search"
 		method="post" name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
@@ -32,7 +34,7 @@
 						<tr>
 							<td class="lbl_left">氏名:</td>
 							<td align="left"><input class="txBox" type="text"
-								name="name" value="${name}" size="20"
+								name="fullName" value="${fullName}" size="20"
 								onfocus="this.style.borderColor='#0066ff';"
 								onblur="this.style.borderColor='#aaaaaa';" /></td>
 							<td></td>
@@ -62,24 +64,25 @@
 		<tr class="tr2">
 			<th align="center" width="20px">ID</th>
 			<th align="left">氏名 <a
-				href="${pageContext.request.contextPath}/listUser?type=sort&typeSort=full_name&sortByFullName=${sortByFullname}">▲▽</a>
+				href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name&sortByFullName=${sortByFullname}">▲▽</a>
 			</th>
 			<th align="left">生年月日</th>
 			<th align="left">グループ</th>
 			<th align="left">メールアドレス</th>
 			<th align="left" width="70px">電話番号</th>
 			<th align="left">日本語能力 <a
-				href="${pageContext.request.contextPath}/listUser?type=sort&typeSort=code_level&sortByCodeLevel=${sortByCodeLevel}">▲▽</a>
+				href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level&sortByCodeLevel=${sortByCodeLevel}">▲▽</a>
 			</th>
 			<th align="left">失効日 <a
-				href="${pageContext.request.contextPath}/listUser?type=sort&typeSort=end_date&sortByEndDate=${sortByEndDate}">△▼</a>
+				href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date&sortByEndDate=${sortByEndDate}">△▼</a>
 			</th>
 			<th align="left">点数</th>
 		</tr>
 
 		<c:forEach items="${listUser}" var="user">
 			<tr>
-				<td align="right"><a href="#">${user.userId}</a></td>
+				<td align="right"><a
+					href="${pageContext.request.contextPath}/<%=Constant.ADM005%>">${user.userId}</a></td>
 				<td>${user.fullName}</td>
 				<td align="center">${user.birthday}</td>
 				<td>${user.groupName}</td>
@@ -100,17 +103,17 @@
 			<td class="lbl_paging"><c:if
 					test="${currentPage > listPaging.size()}">
 					<a
-						href="${pageContext.request.contextPath}/listUser?type=paging&page=${previousPage}">
+						href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${previousPage}">
 						&lt;&lt; </a>&nbsp;
 				</c:if> <c:forEach items="${listPaging}" var="currentPage">
 					<c:if test="${currentPage <= totalPage}">
 						<a
-							href="${pageContext.request.contextPath}/listUser?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
+							href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
 						</c:if>
 				</c:forEach> <c:if
 					test="${listPaging.size() < totalPage && currentPage < totalPage }">
 					<a
-						href="${pageContext.request.contextPath}/listUser?type=paging&page=${nextPage}">
+						href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
 						&gt;&gt; </a>
 				</c:if></td>
 		</tr>
