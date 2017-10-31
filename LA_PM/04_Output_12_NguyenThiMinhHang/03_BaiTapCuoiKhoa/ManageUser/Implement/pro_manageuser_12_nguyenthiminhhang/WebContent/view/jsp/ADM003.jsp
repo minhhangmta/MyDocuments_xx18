@@ -309,7 +309,8 @@
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
-					<td><input class="btn" type="button" value="戻る" /></td>
+					<td><input class="btn" type="button" value="戻る"
+						onclick="window.location='/listUser.do'" /></td>
 				</tr>
 			</table>
 			<!-- End vung button -->

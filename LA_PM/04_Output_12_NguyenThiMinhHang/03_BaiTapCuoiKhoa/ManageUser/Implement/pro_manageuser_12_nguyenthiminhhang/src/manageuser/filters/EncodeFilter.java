@@ -9,18 +9,20 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+import manageuser.utils.Constant;
+
 /**
  * Servlet Filter implementation class EncodeFilter
  */
-@WebFilter("/EncodeFilter")
+@WebFilter(urlPatterns = { "*.do" })
 public class EncodeFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public EncodeFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public EncodeFilter() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -32,11 +34,10 @@ public class EncodeFilter implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		request.setCharacterEncoding(Constant.CHARSET);
+		response.setCharacterEncoding(Constant.CHARSET);
 		chain.doFilter(request, response);
 	}
 

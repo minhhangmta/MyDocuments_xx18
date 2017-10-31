@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,9 +35,9 @@
 						<tr>
 							<td class="lbl_left">氏名:</td>
 							<td align="left"><input class="txBox" type="text"
-								name="fullName" value="${fullName}" size="20"
+								name="fullName" value="${fn:escapeXml(fullName)}" size="20"
 								onfocus="this.style.borderColor='#0066ff';"
-								onblur="this.style.borderColor='#aaaaaa';" /></td>
+								onblur="this.style.borderColor='#aaaaaa';"/></td>
 							<td></td>
 						</tr>
 						<tr>
@@ -49,7 +50,8 @@
 									</c:forEach>
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
-								<input class="btn" type="button" value="新規追加" /></td>
+								<input class="btn" type="button" value="新規追加"
+								onclick="window.location='view/jsp/ADM003.jsp'" /></td>
 						</tr>
 					</table>
 				</td>
@@ -105,11 +107,16 @@
 					<a
 						href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${previousPage}">
 						&lt;&lt; </a>&nbsp;
-				</c:if> <c:forEach items="${listPaging}" var="currentPage">
-					<c:if test="${currentPage <= totalPage}">
-						<a
-							href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${currentPage}">${currentPage}</a> &nbsp;
+				</c:if> <c:forEach items="${listPaging}" var="page">
+					<c:if test="${page == currentPage }">${page} | </c:if>
+					<c:if test="${page != currentPage }">
+
+						<c:if test="${page <= totalPage && totalPage != 1 }">
+							<a
+								href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+							</a> | 
 						</c:if>
+					</c:if>
 				</c:forEach> <c:if
 					test="${listPaging.size() < totalPage && currentPage < totalPage }">
 					<a

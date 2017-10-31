@@ -33,15 +33,15 @@ public class LogoutController extends HttpServlet {
 
 	/**
 	 * Hàm xử lý khi click link logout
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			HttpSession session = request.getSession();
-//			session.removeAttribute("username");
 			session.invalidate();
-			response.sendRedirect(Constant.ADM001);
+			response.sendRedirect(request.getContextPath() + Constant.LOGIN_SERVLET);
 		} catch (Exception e) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			try {

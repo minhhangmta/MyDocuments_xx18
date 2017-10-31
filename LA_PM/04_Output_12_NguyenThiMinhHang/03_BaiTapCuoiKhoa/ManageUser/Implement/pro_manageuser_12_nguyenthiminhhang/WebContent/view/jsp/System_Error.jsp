@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="2"><input class="btn" type="submit"
-					value="OK" onclick="" /></td>
+					value="OK" /></td>
 			</tr>
 		</table>
 	</form>

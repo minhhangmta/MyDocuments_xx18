@@ -18,7 +18,7 @@ import manageuser.utils.Constant;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter("/LoginFilter")
+@WebFilter("*.do")
 public class LoginFilter implements Filter {
 
 	/**
@@ -42,12 +42,16 @@ public class LoginFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		HttpSession session = req.getSession(false);
-		if (Common.checkLogin(session)) {
-			// Cho phép request vượt qua Filter
-			chain.doFilter(request, response);
+		HttpSession session = req.getSession();
+		if (req.getContextPath().contains("listUser.do")) {
+			if (Common.checkLogin(session)) {
+				// Cho phép request vượt qua Filter
+				chain.doFilter(request, response);
+			} else {
+				res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
+			}
 		} else {
-			res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
+			chain.doFilter(request, response);
 		}
 	}
 

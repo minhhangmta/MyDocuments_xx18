@@ -33,8 +33,33 @@ public class LoginController extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
+	 */
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
+			requestDispatcher.forward(req, resp);
+		} catch (Exception e) {
+			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
+			try {
+				requestDispatcher.forward(req, resp);
+			} catch (ServletException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
 	/**
-	 * Hàm xử lý khi submit form 
+	 * Hàm xử lý khi submit form
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
