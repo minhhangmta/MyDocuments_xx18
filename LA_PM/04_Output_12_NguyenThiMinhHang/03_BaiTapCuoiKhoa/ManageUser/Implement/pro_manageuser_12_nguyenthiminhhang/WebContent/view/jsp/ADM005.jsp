@@ -93,7 +93,8 @@
 					<td><input class="btn" type="button" value="戻る" /></td>
 				</tr>
 			</table>
-			<!-- End vung button -->
+		</div>
+		<!-- End vung button -->
 	</form>
 	<!-- End vung input -->
 

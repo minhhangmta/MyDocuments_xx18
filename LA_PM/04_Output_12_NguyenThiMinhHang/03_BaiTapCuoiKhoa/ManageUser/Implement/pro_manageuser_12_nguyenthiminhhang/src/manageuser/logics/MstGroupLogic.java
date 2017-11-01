@@ -4,6 +4,7 @@
 */
 package manageuser.logics;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.entities.MstGroup;
@@ -18,6 +19,7 @@ public interface MstGroupLogic {
 	 * Hàm lấy danh sách group
 	 * 
 	 * @return List<MstGroup> danh sách group
+	 * @throws SQLException 
 	 */
-	public List<MstGroup> getAllGroups();
+	public List<MstGroup> getAllGroups() throws SQLException;
 }

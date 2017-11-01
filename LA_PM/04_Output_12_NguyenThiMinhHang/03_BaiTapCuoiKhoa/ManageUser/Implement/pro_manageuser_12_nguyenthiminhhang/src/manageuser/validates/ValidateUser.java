@@ -26,18 +26,17 @@ public class ValidateUser {
 	 */
 	public ArrayList<String> validateLogin(String username, String password) {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
-		MessageErrorProperties errorProperties = new MessageErrorProperties();
 		ArrayList<String> errMassages = new ArrayList<>();
 		if ("".equals(username) && "".equals(password)) {
-			errMassages.add(errorProperties.getData("ER001_Username"));
-			errMassages.add(errorProperties.getData("ER001_Pass"));
+			errMassages.add(MessageErrorProperties.getData("ER001_Username"));
+			errMassages.add(MessageErrorProperties.getData("ER001_Pass"));
 		} else if ("".equals(username)) {
-			errMassages.add(errorProperties.getData("ER001_Username"));
+			errMassages.add(MessageErrorProperties.getData("ER001_Username"));
 		} else if ("".equals(password)) {
-			errMassages.add(errorProperties.getData("ER001_Pass"));
+			errMassages.add(MessageErrorProperties.getData("ER001_Pass"));
 		} else {
 			if (!logicImpl.existLogin(username, password)) {
-				errMassages.add(errorProperties.getData("ER016"));
+				errMassages.add(MessageErrorProperties.getData("ER016"));
 			}
 		}
 		return errMassages;

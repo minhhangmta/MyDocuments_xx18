@@ -27,7 +27,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() {
+	public List<MstGroup> getAllGroups() throws SQLException {
 		List<MstGroup> listGroup = new ArrayList<>();
 		String query = "SELECT * FROM mst_group";
 		try {
@@ -40,10 +40,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 				mstGroup.setGroupName(resultSet.getString("group_name"));
 				listGroup.add(mstGroup);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+		}  finally {
 			closeConnection();
 		}
 		return listGroup;

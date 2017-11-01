@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);
@@ -54,14 +55,14 @@ public class LoginController extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
-
 	}
 
-	/**
-	 * Hàm xử lý khi submit form
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -70,16 +71,15 @@ public class LoginController extends HttpServlet {
 			String password = request.getParameter("password");
 			// Khởi tạo lớp ValidateUser
 			ValidateUser validateUser = new ValidateUser();
+			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
 			// nếu validateLogin trả về null/không có lỗi
-			if (validateUser.validateLogin(username, password).isEmpty()) {
+			if (errMassages.isEmpty()) {
 				// Lưu username vào session
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
 				// điều hướng đến ADM002
 				response.sendRedirect(request.getContextPath() + Constant.LISTUSER_SERVLET);
 			} else {
-				// Lấy list thông báo lỗi từ validateLogin
-				ArrayList<String> errMassages = validateUser.validateLogin(username, password);
 				// lưu list đó vào request
 				request.setAttribute("errMassages", errMassages);
 				// lưu username vừa nhập vào request
@@ -90,6 +90,8 @@ public class LoginController extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
+			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
+			request.setAttribute("errorSystem", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			try {
 				requestDispatcher.forward(request, response);

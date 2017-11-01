@@ -17,7 +17,7 @@ import manageuser.utils.Common;
  * @author minhhang
  */
 public class TblUserLogicImpl implements TblUserLogic {
-	private TblUserDaoImpl userDaoImpl;
+	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();;
 
 	/*
 	 * (non-Javadoc)
@@ -27,8 +27,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existLogin(String username, String password) {
-		// Khởi tạo lớp TblUserDaoImpl
-		userDaoImpl = new TblUserDaoImpl();
 		// Lấy salt từ DB
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
@@ -50,8 +48,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		return (new TblUserDaoImpl().getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
-				sortByCodeLevel, sortByEndDate));
+		return (userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
+				sortByEndDate));
 	}
 
 	/*
@@ -61,7 +59,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(int groupId, String fullName) {
-		return new TblUserDaoImpl().getTotalUsers(groupId, fullName);
+		return userDaoImpl.getTotalUsers(groupId, fullName);
 	}
 
 }
