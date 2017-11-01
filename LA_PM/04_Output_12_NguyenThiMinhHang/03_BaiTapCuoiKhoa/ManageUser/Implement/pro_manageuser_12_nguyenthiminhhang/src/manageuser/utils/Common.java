@@ -229,8 +229,4 @@ public class Common {
 		return df1.parse(string);
 	}
 
-	public static void main(String[] args) throws ParseException {
-		
-	}
-
 }

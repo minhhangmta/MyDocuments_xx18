@@ -54,7 +54,6 @@ public class LoginController extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
-
 	}
 
 	/**

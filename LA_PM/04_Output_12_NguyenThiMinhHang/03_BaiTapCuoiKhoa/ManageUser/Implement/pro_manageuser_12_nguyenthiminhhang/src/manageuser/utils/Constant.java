@@ -32,6 +32,5 @@ public class Constant {
 	public static final String DEFAULT_INT = "0";
 	public static String DEFAULT_CURRENT_PAGE = "1";
 	public static final String CHARSET = "UTF-8";
-
 	
 }

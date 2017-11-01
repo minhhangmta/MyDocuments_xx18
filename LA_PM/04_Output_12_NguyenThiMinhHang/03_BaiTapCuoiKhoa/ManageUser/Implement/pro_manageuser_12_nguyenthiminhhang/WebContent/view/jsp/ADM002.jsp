@@ -19,9 +19,9 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung dieu kien tim kiem -->
-	<form
-		action="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=search"
-		method="post" name="mainform">
+	<c:set var="path" value="${pageContext.request.contextPath}"></c:set>
+	<form action="${path}<%=Constant.LISTUSER_SERVLET%>" method="post"
+		name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -58,6 +58,7 @@
 				</td>
 			</tr>
 		</table>
+		<input type="hidden" name="type" value="search">
 		<!-- End vung dieu kien tim kiem -->
 	</form>
 	<!-- Begin vung hien thi danh sach user -->
@@ -71,49 +72,42 @@
 
 				<tr class="tr2">
 					<th align="center" width="20px">ID</th>
-					<th align="left">氏名 <c:choose>
-							<c:when test="${sortByFullName == DESC}">
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name">△▼</a>
-							</c:when>
-							<c:otherwise>
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name">▲▽</a>
-							</c:otherwise>
-						</c:choose>
+					<th align="left">氏名 <a
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name">
+							<!-- Start fix bug ID 47 – NguyenThiMinhHang 2017/11/1 --> <c:if
+								test="${sortByName == 'ASC'}">
+									▲▽
+									</c:if> <c:if test="${sortByName == 'DESC'}">
+									△▼
+									</c:if>
+					</a>
 					</th>
 					<th align="left">生年月日</th>
 					<th align="left">グループ</th>
 					<th align="left">メールアドレス</th>
 					<th align="left" width="70px">電話番号</th>
-					<th align="left">日本語能力 <c:choose>
-							<c:when test="${sortByCodeLevel == DESC}">
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level">△▼</a>
-							</c:when>
-							<c:otherwise>
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level">▲▽</a>
-							</c:otherwise>
-						</c:choose></th>
-					<th align="left">失効日 <c:choose>
-							<c:when test="${sortByEndDate == ASC}">
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date">▲▽</a>
-							</c:when>
-							<c:otherwise>
-								<a
-									href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date">△▼</a>
-							</c:otherwise>
-						</c:choose>
+					<th align="left">日本語能力 <a
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level"><c:if
+								test="${sortByCodeLevel == 'ASC'}">
+									▲▽
+									</c:if> <c:if test="${sortByCodeLevel == 'DESC'}">
+									△▼
+									</c:if></a>
+					</th>
+					<th align="left">失効日 <a
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date"><c:if
+								test="${sortByEndDate == 'ASC'}">
+									▲▽
+									</c:if> <c:if test="${sortByEndDate == 'DESC'}">
+									△▼
+									</c:if> <!-- End fix bug ID 47 – NguyenThiMinhHang 2017/11/1 --> </a>
 					</th>
 					<th align="left">点数</th>
 				</tr>
 
 				<c:forEach items="${listUser}" var="user">
 					<tr>
-						<td align="right"><a
-							href="${pageContext.request.contextPath}/<%=Constant.ADM005%>">${user.userId}</a></td>
+						<td align="right"><a href="${path}/<%=Constant.ADM005%>">${user.userId}</a></td>
 						<td>${user.fullName}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="yyyy/MM/dd" value="${user.birthday}" /></td>
@@ -138,9 +132,10 @@
 			<td class="lbl_paging"><c:if
 					test="${currentPage > listPaging.size()}">
 					<a
-						href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${previousPage}">
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${previousPage}">
 						&lt;&lt; </a>&nbsp;
 				</c:if> <c:forEach items="${listPaging}" var="page">
+					<!-- Start fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 					<c:choose>
 						<c:when test="${page == currentPage && totalPage > 1 }">
 							<c:choose>
@@ -156,17 +151,17 @@
 								<c:choose>
 									<c:when test="${listPaging.indexOf(page)==listPaging.size()-1}">
 										<a
-											href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
 										</a>&nbsp;
 									</c:when>
-									<c:when test="${page>listPaging.size() && page==totalPage }">
+									<c:when test="${page == totalPage}">
 										<a
-											href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
 										</a>
 									</c:when>
 									<c:otherwise>
 										<a
-											href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
 										</a>|
 								</c:otherwise>
 								</c:choose>
@@ -174,10 +169,11 @@
 
 						</c:otherwise>
 					</c:choose>
+					<!-- End fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 				</c:forEach> <c:if
 					test="${listPaging.size() < totalPage && currentPage < totalPage }">
 					<a
-						href="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
 						&gt;&gt; </a>
 				</c:if></td>
 		</tr>
