@@ -26,4 +26,5 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	public List<MstGroup> getAllGroups() {
 		return new MstGroupDaoImpl().getAllGroups();
 	}
+	
 }

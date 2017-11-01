@@ -71,27 +71,26 @@ public class ListUserController extends HttpServlet {
 			int nextPage = 0;
 			int previousPage = 0;
 			int totalRecord = 0;
+			sortByFullName = sortByCodeLevel = sortByEndDate = Constant.EMPTY_STRING;
 
 			// get type from jsp
 			String type = request.getParameter("type");
 			// get listGroup
 			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
+			
 			// set default cho cac gia tri sort
-			sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
-
-			if (sortType.isEmpty()) {
+			if (session.getAttribute("sortByFullName") == null) {
+				System.out.println("test");
 				sortByFullName = Constant.DEFAULT_FULL_NAME_SORT;
 				sortByCodeLevel = Constant.DEFAULT_CODE_LEVEL_SORT;
 				sortByEndDate = Constant.DEFAULT_END_DATE_SORT;
-
-				request.setAttribute("sortByFullname", Constant.DECREASE);
-				request.setAttribute("sortByCodeLevel", Constant.DECREASE);
-				request.setAttribute("sortByEndDate", Constant.ASCENDING);
-
-				session.setAttribute("sortByFullname", sortByFullName);
+				session.setAttribute("sortByFullName", sortByFullName);
 				session.setAttribute("sortByCodeLevel", sortByCodeLevel);
 				session.setAttribute("sortByEndDate", sortByEndDate);
 			}
+			sortByFullName = (String) session.getAttribute("sortByFullName");
+			sortByCodeLevel = (String) session.getAttribute("sortByCodeLevel");
+			sortByEndDate = (String) session.getAttribute("sortByEndDate");
 			// truong hop tim kiem
 			if ("search".equals(type)) {
 				fullName = request.getParameter("fullName");
@@ -109,19 +108,17 @@ public class ListUserController extends HttpServlet {
 
 				switch (sortType) {
 				case Constant.FULL_NAME:
-					sortByFullName = Common.getSessionValue(session, "sortByFullName", Constant.DEFAULT_FULL_NAME_SORT);
-					request.setAttribute("sortByFullname", sortByFullName);
+					System.out.println("0- " + sortByFullName);
 					if (sortByFullName.equals(Constant.DECREASE)) {
 						sortByFullName = Constant.ASCENDING;
 					} else if (sortByFullName.equals(Constant.ASCENDING)) {
 						sortByFullName = Constant.DECREASE;
 					}
-					session.setAttribute("sortByFullName", sortByFullName);
+					session.setAttribute("sortByFullname", sortByFullName);
+					System.out.println("1- " + session.getAttribute("sortByFullname").toString());
+					System.out.println("1- " + sortByFullName);
 					break;
 				case Constant.CODE_LEVEL:
-					sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel",
-							Constant.DEFAULT_CODE_LEVEL_SORT);
-					request.setAttribute("sortByCodeLevel", sortByCodeLevel);
 					if (sortByCodeLevel.equals(Constant.DECREASE)) {
 						sortByCodeLevel = Constant.ASCENDING;
 					} else if (sortByCodeLevel.equals(Constant.ASCENDING)) {
@@ -130,8 +127,6 @@ public class ListUserController extends HttpServlet {
 					session.setAttribute("sortByCodeLevel", sortByCodeLevel);
 					break;
 				case Constant.END_DATE:
-					sortByEndDate = Common.getSessionValue(session, "sortByEndDate", Constant.DEFAULT_END_DATE_SORT);
-					request.setAttribute("sortByEndDate", sortByEndDate);
 					if (sortByEndDate.equals(Constant.DECREASE)) {
 						sortByEndDate = Constant.ASCENDING;
 					} else if (sortByEndDate.equals(Constant.ASCENDING)) {
@@ -155,11 +150,22 @@ public class ListUserController extends HttpServlet {
 
 			sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
 
-			sortByFullName = Common.getSessionValue(session, "sortByFullName", Constant.DEFAULT_FULL_NAME_SORT);
-			sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel", Constant.DEFAULT_CODE_LEVEL_SORT);
-			sortByEndDate = Common.getSessionValue(session, "sortByEndDate", Constant.DEFAULT_CODE_LEVEL_SORT);
+			// sortByFullName = Common.getSessionValue(session, "sortByFullName",
+			// Constant.DEFAULT_FULL_NAME_SORT);
+			// System.out.println("2- " + sortByFullName);
+			// sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel",
+			// Constant.DEFAULT_CODE_LEVEL_SORT);
+			// sortByEndDate = Common.getSessionValue(session, "sortByEndDate",
+			// Constant.DEFAULT_END_DATE_SORT);
+
 			currentPage = Common
 					.tryParseInt(Common.getSessionValue(session, "currentPage", Constant.DEFAULT_CURRENT_PAGE));
+
+			request.setAttribute("sortByFullname", sortByFullName);
+			request.setAttribute("sortByCodeLevel", sortByCodeLevel);
+			request.setAttribute("sortByEndDate", sortByEndDate);
+
+			System.out.println(sortByFullName + " " + sortByCodeLevel + " " + sortByEndDate);
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(group_id, fullName);
 			// get totalPage

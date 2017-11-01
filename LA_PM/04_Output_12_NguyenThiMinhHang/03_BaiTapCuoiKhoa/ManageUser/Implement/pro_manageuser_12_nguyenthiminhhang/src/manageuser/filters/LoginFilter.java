@@ -40,19 +40,37 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
+		 HttpServletRequest req = (HttpServletRequest) request;
+		 HttpServletResponse res = (HttpServletResponse) response;
+		 HttpSession session = req.getSession();
+		 if (req.getContextPath().contains("listUser.do")) {
+		 if (Common.checkLogin(session)) {
+		 // Cho phép request vượt qua Filter
+		 chain.doFilter(request, response);
+		 } else {
+		 res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
+		 }
+		 } else {
+		 chain.doFilter(request, response);
+		 }
+	/*	HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		if (req.getContextPath().contains("listUser.do")) {
-			if (Common.checkLogin(session)) {
-				// Cho phép request vượt qua Filter
-				chain.doFilter(request, response);
-			} else {
-				res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
-			}
+		String username = (String) session.getAttribute("loginName");
+		String reqUrl = req.getRequestURL().toString();
+		boolean bLogin = reqUrl.contains(Constant.LOGIN_SERVLET);
+		boolean bADM = reqUrl.contains("/" + Constant.ADM001);
+		if (username == null && ((!bADM && !bLogin) || (bLogin && req.getParameter("username") == null))) {
+			// if not login yet
+			// case 1: enter any url except ADM001 and LoginController
+			// case 2: enter url LoginController
+			res.sendRedirect(req.getContextPath() + "/" + Constant.ADM001);
+		} else if (username != null && bLogin) {
+			// if logged, enter url LoginController
+			res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
 		} else {
 			chain.doFilter(request, response);
-		}
+		}*/
 	}
 
 	/**
