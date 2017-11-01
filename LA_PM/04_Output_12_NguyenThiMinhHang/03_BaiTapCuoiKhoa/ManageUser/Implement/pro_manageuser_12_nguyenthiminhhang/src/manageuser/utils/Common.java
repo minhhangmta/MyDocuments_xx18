@@ -7,14 +7,9 @@ package manageuser.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
@@ -212,21 +207,6 @@ public class Common {
 		} else {
 			return value.toString();
 		}
-	}
-
-	/**
-	 * Chuẩn hóa ngày về yyyy/mm/dd
-	 * 
-	 * @param key
-	 *            ngày cần chuẩn hóa
-	 * @return Date ngày sau khi chuẩn hóa
-	 * @throws ParseException
-	 */
-	public static Date standardDate(Date key) throws ParseException {
-		String string = key.toString();
-		DateFormat df1 = new SimpleDateFormat("yyyy/mm/dd");
-		string = string.replace("-", "/");
-		return df1.parse(string);
 	}
 
 }

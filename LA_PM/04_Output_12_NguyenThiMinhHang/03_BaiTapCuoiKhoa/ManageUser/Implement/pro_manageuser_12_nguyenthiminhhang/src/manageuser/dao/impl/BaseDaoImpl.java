@@ -21,6 +21,7 @@ public class BaseDaoImpl implements BaseDao {
 	private String URL;
 	private String USER;
 	private String PASS;
+	private String DRIVER;
 
 	/*
 	 * (non-Javadoc)
@@ -35,7 +36,8 @@ public class BaseDaoImpl implements BaseDao {
 			URL = properties.getData("url"); // lấy giá trị url trong file
 			USER = properties.getData("user"); // lấy giá trị user trong file
 			PASS = properties.getData("password"); // lấy giá trị password trong file
-			Class.forName("com.mysql.jdbc.Driver");
+			DRIVER = properties.getData("driver"); //lấy giá trị driver
+			Class.forName(DRIVER);
 			connection = DriverManager.getConnection(URL, USER, PASS);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
