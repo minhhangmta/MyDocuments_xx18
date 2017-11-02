@@ -12,12 +12,13 @@
 <title>ユーザ管理</title>
 </head>
 <body>
+	<c:set var="path" value="${pageContext.request.contextPath}"></c:set>
 	<!-- Begin vung header -->
 	<c:import url="header.jsp"></c:import>
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="ADM004.html" method="post" name="inputform">
+	<form action="#" method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -44,9 +45,11 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
 								<td align="left"><select name="group_id">
-										<option value="0">選択してください</option>
-										<option value="0">Nhóm 1</option>
-										<option value="0">Nhóm 2</option>
+										<option value="" selected disabled hidden="">選択してください</option>
+										<c:forEach items="${listGroup}" var="group">
+											<option value="${group.groupId}"
+												${group.groupId == group_id ? 'selected' : ''}>${group.groupName}</option>
+										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
 							</tr>
 							<tr>
@@ -66,63 +69,19 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<td align="left"><select>
-										<option value="2000">2000</option>
-										<option value="2001">2001</option>
-										<option value="2002">2002</option>
-										<option value="2003">2003</option>
-										<option value="2004">2004</option>
-										<option value="2005">2005</option>
-										<option value="2006">2006</option>
-										<option value="2007">2007</option>
-										<option value="2008">2008</option>
-										<option value="2009">2009</option>
-										<option value="2010" selected="selected">2010</option>
-										<option value="2011">2011</option>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year}"
+												${year == currentYear ? 'selected' : ''}>${year}</option>
+										</c:forEach>
 								</select>年 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12" selected="selected">12</option>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month}"
+												${month == currentMonth ? 'selected' : ''}>${month}</option>
+										</c:forEach>
 								</select>月 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-										<option value="16">16</option>
-										<option value="17">17</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="31" selected="selected">31</option>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
@@ -154,141 +113,55 @@
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
-								<th align="left" colspan="2"><a href="#">日本語能力</a></th>
+								<th align="left" colspan="2"><a href="#"
+									onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
+							<!-- </table> -->
+							<!-- <table id="japan_table"> -->
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="kyu_id">
-										<option value="0">選択してください</option>
-										<option value="0">N1</option>
-										<option value="0">N2</option>
-										<option value="0">N3</option>
-										<option value="0">N4</option>
-										<option value="0">N5</option>
+										<option value="" selected disabled hidden="">選択してください</option>
+										<c:forEach items="${listJapan}" var="japan">
+											<option value="${japan.nameLevel}">${japan.nameLevel}</option>
+										</c:forEach>
 								</select></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select>
-										<option value="2000">2000</option>
-										<option value="2001">2001</option>
-										<option value="2002">2002</option>
-										<option value="2003">2003</option>
-										<option value="2004">2004</option>
-										<option value="2005">2005</option>
-										<option value="2006">2006</option>
-										<option value="2007">2007</option>
-										<option value="2008">2008</option>
-										<option value="2009">2009</option>
-										<option value="2010" selected="selected">2010</option>
-										<option value="2011">2011</option>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year}"
+												${year == currentYear ? 'selected' : ''}>${year}</option>
+										</c:forEach>
 								</select>年 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12" selected="selected">12</option>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month}"
+												${month == currentMonth ? 'selected' : ''}>${month}</option>
+										</c:forEach>
 								</select>月 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-										<option value="16">16</option>
-										<option value="17">17</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="31" selected="selected">31</option>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select>
-										<option value="2000">2000</option>
-										<option value="2001">2001</option>
-										<option value="2002">2002</option>
-										<option value="2003">2003</option>
-										<option value="2004">2004</option>
-										<option value="2005">2005</option>
-										<option value="2006">2006</option>
-										<option value="2007">2007</option>
-										<option value="2008">2008</option>
-										<option value="2009">2009</option>
-										<option value="2010" selected="selected">2010</option>
-										<option value="2011">2011</option>
+										<c:forEach items="${listYear}" var="year">
+											<option value="${year}"
+												${year == currentYear ? 'selected' : ''}>${year}</option>
+											<option value="${year+1}">${year+1}</option>
+										</c:forEach>
 								</select>年 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12" selected="selected">12</option>
+										<c:forEach items="${listMonth}" var="month">
+											<option value="${month}"
+												${month == currentMonth ? 'selected' : ''}>${month}</option>
+										</c:forEach>
 								</select>月 <select>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-										<option value="16">16</option>
-										<option value="17">17</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="31" selected="selected">31</option>
+										<c:forEach items="${listDay}" var="day">
+											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
@@ -311,10 +184,11 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="window.location= ${pageContext.request.contextPath}/listUser.do" /></td>
+						onclick="javascript:window.location='${path}/listUser.do'" /></td>
 				</tr>
 			</table>
-			<!-- End vung button -->
+		</div>
+		<!-- End vung button -->
 	</form>
 	<!-- End vung input -->
 

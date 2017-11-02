@@ -29,8 +29,10 @@ public class Constant {
 	public static final String DEFAULT_CODE_LEVEL_SORT = "ASC";
 	public static final String DEFAULT_END_DATE_SORT = "DESC";
 	public static final String EMPTY_STRING = "";
-	public static final String DEFAULT_INT = "0";
-	public static String DEFAULT_CURRENT_PAGE = "1";
+	public static final int DEFAULT_INT = 0;
+	public static final int DEFAULT_CURRENT_PAGE = 1;
 	public static final String CHARSET = "UTF-8";
-	
+
+	public static final int START_YEAR = 1980;
+
 }

@@ -21,6 +21,51 @@ public class UserInfor {
 	private String nameLevel;
 	private Date endDate;
 	private int total;
+	private int year;
+	private int month;
+	private int day;
+
+	/**
+	 * @return the year
+	 */
+	public int getYear() {
+		return year;
+	}
+
+	/**
+	 * @param year the year to set
+	 */
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	/**
+	 * @return the month
+	 */
+	public int getMonth() {
+		return month;
+	}
+
+	/**
+	 * @param month the month to set
+	 */
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	/**
+	 * @return the day
+	 */
+	public int getDay() {
+		return day;
+	}
+
+	/**
+	 * @param day the day to set
+	 */
+	public void setDay(int day) {
+		this.day = day;
+	}
 
 	/**
 	 * @return the userId
@@ -163,17 +208,5 @@ public class UserInfor {
 	public UserInfor() {
 		super();
 	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "UserInfor [userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", tel=" + tel
-				+ ", birthday=" + birthday + ", groupName=" + groupName + ", nameLevel=" + nameLevel + ", endDate="
-				+ endDate + ", total=" + total + "]";
-	}
-	
-	
 
 }

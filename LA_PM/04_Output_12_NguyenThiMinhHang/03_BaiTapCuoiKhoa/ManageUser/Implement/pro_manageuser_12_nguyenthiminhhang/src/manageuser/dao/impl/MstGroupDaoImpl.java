@@ -13,6 +13,7 @@ import java.util.List;
 
 import manageuser.dao.MstGroupDao;
 import manageuser.entities.MstGroup;
+import manageuser.utils.Constant;
 
 /**
  * Implement Thao tác với bảng MstGroup trong DB
@@ -27,12 +28,15 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() {
+	public List<MstGroup> getAllGroups() throws SQLException {
 		List<MstGroup> listGroup = new ArrayList<>();
-		String query = "SELECT * FROM mst_group";
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT * FROM mst_group");
+		query.append(" ORDER BY").append(" group_name ").append(Constant.ASCENDING);
+		query.append(";");
 		try {
 			Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				MstGroup mstGroup = new MstGroup();
@@ -40,12 +44,10 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 				mstGroup.setGroupName(resultSet.getString("group_name"));
 				listGroup.add(mstGroup);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} finally {
 			closeConnection();
 		}
 		return listGroup;
 	}
+
 }

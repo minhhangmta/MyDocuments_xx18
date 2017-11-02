@@ -23,7 +23,7 @@
 						src="${path}/view/img/logo-manager-user.gif" alt="Luvina" /></td>
 					<td></td>
 					<td align="left"><a
-						href="${pageContext.request.contextPath}<%=Constant.LOGOUT_SERVLET %>">ログアウト</a>
+						href="${path}<%=Constant.LOGOUT_SERVLET%>">ログアウト</a>
 						&nbsp; <a
 						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=default">トップ</a></td>
 					<td></td>

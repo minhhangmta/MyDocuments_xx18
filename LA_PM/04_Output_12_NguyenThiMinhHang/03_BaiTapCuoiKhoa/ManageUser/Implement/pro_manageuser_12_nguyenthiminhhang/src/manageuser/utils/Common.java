@@ -7,7 +7,11 @@ package manageuser.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -207,6 +211,117 @@ public class Common {
 		} else {
 			return value.toString();
 		}
+	}
+
+	/**
+	 * Lấy danh sách các năm từ năm 1980 -> năm hiện tại + 1
+	 * 
+	 * @param fromYear
+	 *            Lấy từ năm nào
+	 * @param toYear
+	 *            Lấy đến năm nào
+	 * @return List<Integer> list các năm
+	 */
+	public static List<Integer> getListYear(int fromYear, int toYear) {
+		List<Integer> listYear = new ArrayList<>();
+		for (int year = fromYear; year <= toYear; year++) {
+			listYear.add(year);
+		}
+		return listYear;
+	}
+
+	/**
+	 * Hàm lấy năm hiện tại
+	 * 
+	 * @return int năm hiện tại
+	 */
+	public static int getCurrentYear() {
+		return Calendar.getInstance().get(Calendar.YEAR);
+	}
+
+	/**
+	 * Lấy danh sách các tháng từ 1->12
+	 * 
+	 * @return List<Integer> list các tháng
+	 */
+	public static List<Integer> getListMonth() {
+		List<Integer> listMonth = new ArrayList<>();
+		for (int month = 0; month < 12; month++) {
+			listMonth.add(month + 1);
+		}
+		return listMonth;
+	}
+
+	/**
+	 * Lấy danh sách các ngày từ 1->31
+	 * 
+	 * @return List<Integer> list các ngày
+	 */
+	public static List<Integer> getListDay() {
+		List<Integer> listDay = new ArrayList<>();
+		for (int day = 0; day < 12; day++) {
+			listDay.add(day + 1);
+		}
+		return listDay;
+	}
+
+	/**
+	 * Hàm lấy ra ngày tháng năm hiện tại
+	 * 
+	 * @return String ngày tháng năm hiện tại
+	 */
+	public static String getCurrentDate() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate localDate = LocalDate.now();
+		return dtf.format(localDate);
+	}
+
+	/**
+	 * Hàm lấy ngày hiện tại
+	 * 
+	 * @return int ngày hiện tại
+	 */
+	public static int getCurrentDay() {
+		return Calendar.getInstance().get(Calendar.DATE);
+	}
+
+	/**
+	 * Hàm lấy tháng hiện tại
+	 * 
+	 * @return int tháng hiện tại
+	 */
+	public static int getCurrentMonth() {
+		return Calendar.getInstance().get(Calendar.MONTH) + 1;
+	}
+
+	/**
+	 * Convert các số năm tháng ngày thành 1 chuỗi ngày tháng có format yyyy/mm/dd
+	 * 
+	 * @param year
+	 *            năm
+	 * @param month
+	 *            tháng
+	 * @param day
+	 *            ngày
+	 * @return String chuỗi ngày tháng
+	 */
+	public static String convertToString(int year, int month, int day) {
+		return null;
+	}
+
+	/**
+	 * Convert các số năm tháng ngày thành 1 ngày tháng có format yyyy/mm/dd
+	 * 
+	 * @param year
+	 *            năm
+	 * @param month
+	 *            tháng
+	 * @param day
+	 *            ngày
+	 * @return Date năm tháng ngày
+	 */
+	public static Date toDate(int year, int month, int day) {
+		return null;
 	}
 
 }

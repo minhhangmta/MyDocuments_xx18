@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -30,7 +29,7 @@
 			</tr>
 			<tr>
 				<!-- Start fix bug ID 50 - NguyenThiMinhHang 2017/11/1  -->
-				<td align="center" colspan="2"><font color="red">システムエラーが発生しました。</font></td>
+				<td align="center" colspan="2"><font color="red">${errorSystem}</font></td>
 				<!-- End fix bug ID 50 - NguyenThiMinhHang 2017/11/1  -->
 			</tr>
 			<tr>

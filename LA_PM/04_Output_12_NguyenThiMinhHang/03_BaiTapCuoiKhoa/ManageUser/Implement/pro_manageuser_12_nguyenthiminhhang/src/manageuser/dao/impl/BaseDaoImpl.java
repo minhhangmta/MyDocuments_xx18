@@ -17,11 +17,7 @@ import manageuser.properties.DatabaseProperties;
  * @author minhhang
  */
 public class BaseDaoImpl implements BaseDao {
-	private Connection connection = null;
-	private String URL;
-	private String USER;
-	private String PASS;
-	private String DRIVER;
+	private Connection connection;
 
 	/*
 	 * (non-Javadoc)
@@ -30,15 +26,15 @@ public class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public Connection getConnection() {
+		String url, user, pass, driver;
 		try {
-			DatabaseProperties properties = new DatabaseProperties();
 			// lấy danh sách property từ file vào
-			URL = properties.getData("url"); // lấy giá trị url trong file
-			USER = properties.getData("user"); // lấy giá trị user trong file
-			PASS = properties.getData("password"); // lấy giá trị password trong file
-			DRIVER = properties.getData("driver"); //lấy giá trị driver
-			Class.forName(DRIVER);
-			connection = DriverManager.getConnection(URL, USER, PASS);
+			url = DatabaseProperties.getData("url"); // lấy giá trị url trong file
+			user = DatabaseProperties.getData("user"); // lấy giá trị user trong file
+			pass = DatabaseProperties.getData("password"); // lấy giá trị password trong file
+			driver = DatabaseProperties.getData("driver"); // lấy giá trị driver
+			Class.forName(driver);
+			connection = DriverManager.getConnection(url, user, pass);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,3 +1,4 @@
+<%@page import="manageuser.properties.MessageProperties"%>
 <%@page import="manageuser.utils.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -52,7 +53,7 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="window.location='view/jsp/ADM003.jsp'" /></td>
+								onclick="javascript:window.location='${path}/addUser.do'" /></td>
 						</tr>
 					</table>
 				</td>
@@ -63,9 +64,9 @@
 	</form>
 	<!-- Begin vung hien thi danh sach user -->
 	<c:choose>
-		<c:when test="${listUser.size() == 0}">
-	検索条件に該当するユーザが見つかりません。
-	</c:when>
+		<c:when test="${totalRecord == 0}">
+		${msg005}
+		</c:when>
 		<c:otherwise>
 			<table class="tbl_list" border="1" cellpadding="4" cellspacing="0"
 				width="80%">

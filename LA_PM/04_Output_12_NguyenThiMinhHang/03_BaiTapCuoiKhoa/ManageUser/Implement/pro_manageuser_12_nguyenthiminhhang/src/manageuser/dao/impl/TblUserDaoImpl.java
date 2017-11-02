@@ -8,13 +8,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import manageuser.dao.TblUserDao;
-import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -25,8 +22,6 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
-	private List<TblUser> listUser;
-	private List<UserInfor> listUserInfor;
 
 	/*
 	 * (non-Javadoc)
@@ -36,8 +31,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public String getSalt(String username) {
 		String salt = "";
-		listUser = new ArrayList<>();
-		String query = "SELECT salt FROM tbl_user WHERE login_name = ? AND role = 1 ;";
+		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -91,7 +85,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		listUserInfor = new ArrayList<>();
+		List<UserInfor> listUserInfor = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday,")
 				.append(" gr.group_name, jp.name_level, dt.end_date, dt.total")
@@ -102,10 +96,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		if (groupId > 0) {
 			query.append(" AND gr.group_id = ?");
 		}
-		// Nếu fullName có giá trị
-		if (!"".equals(fullName)) {
-			query.append(" AND us.full_name LIKE ?");
-		}
+		query.append(" AND us.full_name LIKE ?");
+
 		if (Constant.CODE_LEVEL.equals(sortType)) {
 			query.append(" ORDER BY ");
 			query.append("dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
@@ -122,9 +114,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(", dt.").append(Constant.CODE_LEVEL).append(" ").append(sortByCodeLevel);
 			query.append(", dt.").append(Constant.END_DATE).append(" ").append(sortByEndDate);
 		}
-		query.append(" LIMIT ").append(offset).append(",").append(limit);
+		query.append(" LIMIT ?,?");
 		query.append(";");
-		// System.out.println(query);
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
@@ -132,10 +123,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			if (groupId > 0) {
 				preparedStatement.setInt(index++, groupId);
 			}
-			if (!"".equals(fullName)) {
-				fullName = Common.standardString(fullName);
-				preparedStatement.setString(index++, "%" + fullName + "%");
-			}
+			fullName = Common.standardString(fullName);
+			preparedStatement.setString(index++, "%" + fullName + "%");
+			
+			preparedStatement.setInt(index++, offset);
+			preparedStatement.setInt(index++, limit);
+
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				UserInfor userInfor = new UserInfor();

@@ -4,6 +4,7 @@
 */
 package manageuser.logics.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.dao.impl.MstGroupDaoImpl;
@@ -23,7 +24,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 * @see manageuser.logics.MstGroupLogic#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() {
+	public List<MstGroup> getAllGroups() throws SQLException {
 		return new MstGroupDaoImpl().getAllGroups();
 	}
 	
