@@ -90,7 +90,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="編集" /></td>
 					<td><input class="btn" type="button" value="削除" /></td>
-					<td><input class="btn" type="button" value="戻る" /></td>
+					<td><input class="btn" type="button" value="戻る" onclick="javascript:window.location='../../listUser.do'" /></td>
 				</tr>
 			</table>
 		</div>
