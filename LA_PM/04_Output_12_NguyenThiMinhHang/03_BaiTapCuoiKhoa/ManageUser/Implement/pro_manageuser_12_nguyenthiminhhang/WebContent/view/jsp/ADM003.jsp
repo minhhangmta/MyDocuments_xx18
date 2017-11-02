@@ -71,16 +71,17 @@
 								<td align="left"><select>
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
-												${year == currentYear ? 'selected' : ''}>${year}</option>
+												${year == userInfor.year ? 'selected' : ''}>${year}</option>
 										</c:forEach>
 								</select>年 <select>
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == currentMonth ? 'selected' : ''}>${month}</option>
+												${month == userInfor.month ? 'selected' : ''}>${month}</option>
 										</c:forEach>
 								</select>月 <select>
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+											<option value="${day}"
+												${day == userInfor.day ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -132,16 +133,17 @@
 								<td align="left"><select>
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
-												${year == currentYear ? 'selected' : ''}>${year}</option>
+												${year == userInfor.year ? 'selected' : ''}>${year}</option>
 										</c:forEach>
 								</select>年 <select>
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == currentMonth ? 'selected' : ''}>${month}</option>
+												${month == userInfor.month ? 'selected' : ''}>${month}</option>
 										</c:forEach>
 								</select>月 <select>
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+											<option value="${day}"
+												${day == userInfor.day ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -149,18 +151,17 @@
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select>
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year}"
-												${year == currentYear ? 'selected' : ''}>${year}</option>
-											<option value="${year+1}">${year+1}</option>
+											<option value="${year}">${year}</option>
 										</c:forEach>
+										<option value="${userInfor.year+1}" selected>${userInfor.year+1}</option>
 								</select>年 <select>
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == currentMonth ? 'selected' : ''}>${month}</option>
+												${month == userInfor.month ? 'selected' : ''}>${month}</option>
 										</c:forEach>
 								</select>月 <select>
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day}" ${day == currentDay ? 'selected' : ''}>${day}</option>
+											<option value="${day}" ${day == userInfor.day ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
@@ -184,11 +185,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-<<<<<<< HEAD
-						onclick="window.location= ${pageContext.request.contextPath}/listUser.do" /></td>
-=======
 						onclick="javascript:window.location='${path}/listUser.do'" /></td>
->>>>>>> dfe03b2070027426b54a325038dcfaaada8b5c2e
 				</tr>
 			</table>
 		</div>

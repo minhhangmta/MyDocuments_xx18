@@ -7,15 +7,11 @@ package manageuser.utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-<<<<<<< HEAD
-import java.util.ArrayList;
-=======
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
->>>>>>> dfe03b2070027426b54a325038dcfaaada8b5c2e
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -217,8 +213,6 @@ public class Common {
 		}
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 	 * Lấy danh sách các năm từ năm 1980 -> năm hiện tại + 1
 	 * 
@@ -252,8 +246,8 @@ public class Common {
 	 */
 	public static List<Integer> getListMonth() {
 		List<Integer> listMonth = new ArrayList<>();
-		for (int month = 0; month < 12; month++) {
-			listMonth.add(month + 1);
+		for (int month = 1; month <= 12; month++) {
+			listMonth.add(month);
 		}
 		return listMonth;
 	}
@@ -265,8 +259,8 @@ public class Common {
 	 */
 	public static List<Integer> getListDay() {
 		List<Integer> listDay = new ArrayList<>();
-		for (int day = 0; day < 12; day++) {
-			listDay.add(day + 1);
+		for (int day = 1; day <= 31; day++) {
+			listDay.add(day);
 		}
 		return listDay;
 	}
@@ -330,5 +324,4 @@ public class Common {
 		return null;
 	}
 
->>>>>>> dfe03b2070027426b54a325038dcfaaada8b5c2e
 }

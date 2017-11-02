@@ -202,7 +202,6 @@ public class UserInfor {
 		this.total = total;
 	}
 
-	
 	/**
 	 * 
 	 */

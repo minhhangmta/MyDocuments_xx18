@@ -44,11 +44,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 				mstGroup.setGroupName(resultSet.getString("group_name"));
 				listGroup.add(mstGroup);
 			}
-<<<<<<< HEAD
-		}  finally {
-=======
 		} finally {
->>>>>>> dfe03b2070027426b54a325038dcfaaada8b5c2e
 			closeConnection();
 		}
 		return listGroup;

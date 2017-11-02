@@ -32,11 +32,7 @@ public class Constant {
 	public static final int DEFAULT_INT = 0;
 	public static final int DEFAULT_CURRENT_PAGE = 1;
 	public static final String CHARSET = "UTF-8";
-<<<<<<< HEAD
-	
-=======
 
 	public static final int START_YEAR = 1980;
 
->>>>>>> dfe03b2070027426b54a325038dcfaaada8b5c2e
 }

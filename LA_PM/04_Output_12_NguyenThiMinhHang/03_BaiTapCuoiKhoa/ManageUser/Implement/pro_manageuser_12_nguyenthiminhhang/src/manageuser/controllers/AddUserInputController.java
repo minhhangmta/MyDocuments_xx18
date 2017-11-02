@@ -2,6 +2,7 @@ package manageuser.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -41,10 +42,13 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			UserInfor userInfor = new UserInfor();
 			// set dữ liệu
 			setDataLogicADM003(request, response);
 			// set defualt
-			setDefault(request, response);
+			userInfor = setDefault(request, response);
+			request.setAttribute("userInfor", userInfor);
+
 			// Forward đến ADM002
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 			requestDispatcher.forward(request, response);
@@ -114,21 +118,26 @@ public class AddUserInputController extends HttpServlet {
 	 * @return UserInfor đối tượng UserInfor
 	 */
 	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
+		UserInfor userInfor = new UserInfor();
+		String tab = request.getParameter("tab");
+		int currentYear, currentMonth, currentDay;
 		// trường hợp từ ADM002 sang -> thêm mới
-		int currentYear = Common.getCurrentYear();
-		int currentMonth = Common.getCurrentMonth();
-		int currentDay = Common.getCurrentDay();
+		if ("add".equals(tab)) {
+			currentYear = Common.getCurrentYear();
+			currentMonth = Common.getCurrentMonth();
+			currentDay = Common.getCurrentDay();
 
-		request.setAttribute("currentYear", currentYear);
-		request.setAttribute("currentMonth", currentMonth);
-		request.setAttribute("currentDay", currentDay);
+			userInfor.setYear(currentYear);
+			userInfor.setMonth(currentMonth);
+			userInfor.setDay(currentDay);
+		}
 		// trường hợp sửa từ ADM005
 
 		// trường hợp xác nhận tại ADM003
 
 		// trường hợp back từ ADM004
 
-		return null;
+		return userInfor;
 	}
 
 }
