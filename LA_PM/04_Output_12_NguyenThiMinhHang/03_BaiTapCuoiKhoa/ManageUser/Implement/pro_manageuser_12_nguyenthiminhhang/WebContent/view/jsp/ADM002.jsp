@@ -116,7 +116,7 @@
 						<td>${user.email}</td>
 						<td>${user.tel}</td>
 						<td>${user.nameLevel}</td>
-						<td align="center"><fmt:formatDate type="date"
+						<td align="center"><fmt:formatDate type="d9ate"
 								pattern="yyyy/MM/dd" value="${user.endDate}" /></td>
 						<td align="right">${user.total}</td>
 					</tr>
@@ -141,9 +141,7 @@
 						<c:when test="${page == currentPage && totalPage > 1 }">
 							<c:choose>
 								<c:when
-									test="${listPaging.indexOf(currentPage)==listPaging.size()-1}">${page}</c:when>
-								<c:when
-									test="${currentPage>listPaging.size() && currentPage==totalPage }">${page}</c:when>
+									test="${listPaging.indexOf(currentPage) == listPaging.size()-1 || currentPage == totalPage }">${page}</c:when>
 								<c:otherwise>${page}|</c:otherwise>
 							</c:choose>
 						</c:when>

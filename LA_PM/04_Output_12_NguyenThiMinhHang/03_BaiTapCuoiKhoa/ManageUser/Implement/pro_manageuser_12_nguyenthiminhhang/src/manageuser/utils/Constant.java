@@ -15,7 +15,7 @@ public class Constant {
 	public static final String ADM003 = "view/jsp/ADM003.jsp";
 	public static final String ADM005 = "view/jsp/ADM005.jsp";
 	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
-	public static final String LISTUSER_SERVLET = "/listUser.do?type=first";
+	public static final String LISTUSER_SERVLET = "/listUser.do";
 	public static final String LOGIN_SERVLET = "/login.do";
 	public static final String LOGOUT_SERVLET = "/logout.do";
 

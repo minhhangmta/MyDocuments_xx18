@@ -108,7 +108,6 @@ public class ListUserController extends HttpServlet {
 				} else if ("sort".equals(type)) {
 					// sort
 					sortType = request.getParameter("typeSort");
-					session.setAttribute("sortType", sortType);
 					currentPage = Constant.DEFAULT_CURRENT_PAGE;
 					switch (sortType) {
 					case Constant.FULL_NAME:
