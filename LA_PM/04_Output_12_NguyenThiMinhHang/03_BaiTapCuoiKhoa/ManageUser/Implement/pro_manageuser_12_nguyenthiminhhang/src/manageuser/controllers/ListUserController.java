@@ -67,52 +67,49 @@ public class ListUserController extends HttpServlet {
 			List<UserInfor> listUser = new ArrayList<>();
 			List<Integer> listPaging = new ArrayList<>();
 			String fullName, sortType, sortByName, sortByCodeLevel, sortByEndDate;
-			int group_id, offset, totalPage, nextPage, previousPage, totalRecord;
-			int currentPage = Constant.DEFAULT_CURRENT_PAGE;
-			int limit = Common.getLimit();
-			offset = Common.getOffset(currentPage, limit);
-			fullName = sortType = sortByName = sortByCodeLevel = sortByEndDate = Constant.EMPTY_STRING;
+			int group_id, offset, totalPage, nextPage, previousPage, totalRecord, currentPage, limit;
 			// get type from jsp
 			String type = request.getParameter("type");
+			// set session cho type
 			session.setAttribute("type", type);
 			type = Common.getSessionValue(session, "type", Constant.EMPTY_STRING);
-			// get listGroup
+			// set data group cho man hinh
 			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
-
-			// set default cho cac gia tri
-			if (session.getAttribute("sortByName") == null || "default".equals(type)) {
-				fullName = Constant.EMPTY_STRING;
+			// Lan dau vao man hinh va khi click link top
+			if ("first".equals(type)) {
+				fullName = sortType = Constant.EMPTY_STRING;
 				group_id = Constant.DEFAULT_INT;
+				currentPage = Constant.DEFAULT_CURRENT_PAGE;
 				sortType = Constant.EMPTY_STRING;
 				sortByName = Constant.DEFAULT_FULL_NAME_SORT;
 				sortByCodeLevel = Constant.DEFAULT_CODE_LEVEL_SORT;
 				sortByEndDate = Constant.DEFAULT_END_DATE_SORT;
-				session.setAttribute("sortByName", sortByName);
-				session.setAttribute("sortByCodeLevel", sortByCodeLevel);
-				session.setAttribute("sortByEndDate", sortByEndDate);
-				session.setAttribute("sortType", sortType);
-				session.setAttribute("fullName", fullName);
-				session.setAttribute("group_id", group_id);
 			} else {
-				sortByName = session.getAttribute("sortByName").toString();
-				sortByCodeLevel = session.getAttribute("sortByCodeLevel").toString();
-				sortByEndDate = session.getAttribute("sortByEndDate").toString();
+				// lấy dữ liệu từ session
+				fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
+				group_id = Common.tryParseInt(
+						Common.getSessionValue(session, "group_id", Integer.toString(Constant.DEFAULT_INT)));
+				sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
+				currentPage = Common.tryParseInt(Common.getSessionValue(session, "currentPage",
+						Integer.toString(Constant.DEFAULT_CURRENT_PAGE)));
+				sortByName = Common.getSessionValue(session, "sortByName", Constant.DEFAULT_FULL_NAME_SORT);
+				sortByCodeLevel = Common.getSessionValue(session, "sortByCodeLevel", Constant.DEFAULT_CODE_LEVEL_SORT);
+				sortByEndDate = Common.getSessionValue(session, "sortByEndDate", Constant.DEFAULT_END_DATE_SORT);
+
 				if ("search".equals(type)) {
 					// search
 					fullName = request.getParameter("fullName");
-					session.setAttribute("fullName", fullName);
-
 					group_id = Common.tryParseInt(request.getParameter("group_id"));
-					session.setAttribute("group_id", group_id);
+					currentPage = Constant.DEFAULT_CURRENT_PAGE;
+					sortType = Constant.EMPTY_STRING;
+					sortByName = Constant.DEFAULT_FULL_NAME_SORT;
+					sortByCodeLevel = Constant.DEFAULT_CODE_LEVEL_SORT;
+					sortByEndDate = Constant.DEFAULT_END_DATE_SORT;
 				} else if ("sort".equals(type)) {
 					// sort
 					sortType = request.getParameter("typeSort");
 					session.setAttribute("sortType", sortType);
-
-					fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
-					group_id = Common.tryParseInt(
-							Common.getSessionValue(session, "group_id", Integer.toString(Constant.DEFAULT_INT)));
-
+					currentPage = Constant.DEFAULT_CURRENT_PAGE;
 					switch (sortType) {
 					case Constant.FULL_NAME:
 						if (sortByName.equals(Constant.DECREASE)) {
@@ -120,7 +117,6 @@ public class ListUserController extends HttpServlet {
 						} else if (sortByName.equals(Constant.ASCENDING)) {
 							sortByName = Constant.DECREASE;
 						}
-						session.setAttribute("sortByName", sortByName);
 						break;
 					case Constant.CODE_LEVEL:
 						if (sortByCodeLevel.equals(Constant.DECREASE)) {
@@ -128,7 +124,6 @@ public class ListUserController extends HttpServlet {
 						} else if (sortByCodeLevel.equals(Constant.ASCENDING)) {
 							sortByCodeLevel = Constant.DECREASE;
 						}
-						session.setAttribute("sortByCodeLevel", sortByCodeLevel);
 						break;
 					case Constant.END_DATE:
 						if (sortByEndDate.equals(Constant.DECREASE)) {
@@ -136,7 +131,6 @@ public class ListUserController extends HttpServlet {
 						} else if (sortByEndDate.equals(Constant.ASCENDING)) {
 							sortByEndDate = Constant.DECREASE;
 						}
-						session.setAttribute("sortByEndDate", sortByEndDate);
 						break;
 					default:
 						break;
@@ -144,23 +138,24 @@ public class ListUserController extends HttpServlet {
 				} else if ("paging".equals(type)) {
 					// paging
 					currentPage = Common.tryParseInt(request.getParameter("page"));
-					offset = Common.getOffset(currentPage, limit);
 				}
 			}
+			// set session cho cac gia tri
+			session.setAttribute("sortByName", sortByName);
+			session.setAttribute("sortByCodeLevel", sortByCodeLevel);
+			session.setAttribute("sortByEndDate", sortByEndDate);
+			session.setAttribute("sortType", sortType);
+			session.setAttribute("fullName", fullName);
+			session.setAttribute("group_id", group_id);
+			session.setAttribute("currentPage", currentPage);
 
-			// lấy dữ liệu từ session
-			fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
-			group_id = Common
-					.tryParseInt(Common.getSessionValue(session, "group_id", Integer.toString(Constant.DEFAULT_INT)));
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(group_id, fullName);
 			if (totalRecord != 0) {
-				// Lưu trang hiện tại vào session
-				session.setAttribute("currentPage", currentPage);
-				// Lấy dữ liệu từ session
-				sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
-				currentPage = Common.tryParseInt(Common.getSessionValue(session, "currentPage",
-						Integer.toString(Constant.DEFAULT_CURRENT_PAGE)));
+				// Lay ban ghi
+				limit = Common.getLimit();
+				offset = Common.getOffset(currentPage, limit);
+
 				// set currentPage cho request
 				request.setAttribute("currentPage", currentPage);
 
@@ -194,6 +189,7 @@ public class ListUserController extends HttpServlet {
 				request.setAttribute("totalRecord", totalRecord);
 				request.setAttribute("msg005", msg005);
 			}
+
 			// Forward đến ADM002
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM002);
 			requestDispatcher.forward(request, response);
