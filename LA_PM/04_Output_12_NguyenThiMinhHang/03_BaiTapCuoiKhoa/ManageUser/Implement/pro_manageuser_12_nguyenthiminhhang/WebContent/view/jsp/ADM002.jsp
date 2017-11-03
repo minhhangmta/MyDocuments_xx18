@@ -44,16 +44,16 @@
 						</tr>
 						<tr>
 							<td class="lbl_left">グループ:</td>
-							<td align="left" width="80px"><select name="group_id">
+							<td align="left" width="80px"><select name="groupId">
 									<option value="0">全て</option>
 									<c:forEach items="${listGroup}" var="group">
 										<option value="${group.groupId}"
-											${group.groupId == group_id ? 'selected' : ''}>${group.groupName}</option>
+											${group.groupId == groupId ? 'selected' : ''}>${group.groupName}</option>
 									</c:forEach>
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="javascript:window.location='${path}/addUser.do?tab=add'" /></td>
+								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=add'" /></td>
 						</tr>
 					</table>
 				</td>
@@ -138,7 +138,7 @@
 				</c:if> <c:forEach items="${listPaging}" var="page">
 					<!-- Start fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 					<c:choose>
-						<c:when test="${page == currentPage}">
+						<c:when test="${page == currentPage  && totalPage > 1 }">
 							<c:choose>
 								<c:when
 									test="${listPaging.indexOf(currentPage) == listPaging.size()-1 || currentPage == totalPage}">${page}</c:when>

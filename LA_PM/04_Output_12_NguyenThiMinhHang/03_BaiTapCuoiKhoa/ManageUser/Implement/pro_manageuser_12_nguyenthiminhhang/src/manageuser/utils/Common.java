@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
@@ -206,6 +207,15 @@ public class Common {
 	 */
 	public static String getSessionValue(HttpSession session, String key, String defaultValue) {
 		Object value = session.getAttribute(key);
+		if (value == null) {
+			return defaultValue;
+		} else {
+			return value.toString();
+		}
+	}
+	
+	public static String getRequestValue(HttpServletRequest request, String key, String defaultValue) {
+		Object value = request.getParameter(key);
 		if (value == null) {
 			return defaultValue;
 		} else {

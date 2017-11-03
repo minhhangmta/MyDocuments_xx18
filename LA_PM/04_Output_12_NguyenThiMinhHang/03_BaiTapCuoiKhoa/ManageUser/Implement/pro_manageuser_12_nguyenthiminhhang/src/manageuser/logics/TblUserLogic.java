@@ -50,7 +50,7 @@ public interface TblUserLogic {
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
 
 	/**
-	 * Hàm lấy tổng số user 
+	 * Hàm lấy tổng số user
 	 * 
 	 * @param groupId
 	 *            mã nhóm
@@ -59,4 +59,13 @@ public interface TblUserLogic {
 	 * @return total tổng số records
 	 */
 	public int getTotalUsers(int groupId, String fullName);
+
+	/**
+	 * hàm kiểm tra username có tồn tại trong db chưa
+	 * 
+	 * @param newUsername
+	 *            tên đăng nhập cần check
+	 * @return true nếu tồn tại, false nếu chưa tồn tại
+	 */
+	public boolean existUsername(String newUsername);
 }

@@ -12,6 +12,10 @@ import java.util.Date;
  * @author minhhang
  */
 public class UserInfor {
+	private int groupId;
+	private String loginName;
+	private String passwords;
+	private String fullNameKana;
 	private int userId;
 	private String fullName;
 	private String email;
@@ -25,6 +29,63 @@ public class UserInfor {
 	private int month;
 	private int day;
 
+	
+	/**
+	 * @return the groupId
+	 */
+	public int getGroupId() {
+		return groupId;
+	}
+
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * @return the loginName
+	 */
+	public String getLoginName() {
+		return loginName;
+	}
+
+	/**
+	 * @param loginName the loginName to set
+	 */
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	/**
+	 * @return the passwords
+	 */
+	public String getPasswords() {
+		return passwords;
+	}
+
+	/**
+	 * @param passwords the passwords to set
+	 */
+	public void setPasswords(String passwords) {
+		this.passwords = passwords;
+	}
+
+	/**
+	 * @return the fullNameKana
+	 */
+	public String getFullNameKana() {
+		return fullNameKana;
+	}
+
+	/**
+	 * @param fullNameKana the fullNameKana to set
+	 */
+	public void setFullNameKana(String fullNameKana) {
+		this.fullNameKana = fullNameKana;
+	}
+
 	/**
 	 * @return the year
 	 */
@@ -33,7 +94,8 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param year the year to set
+	 * @param year
+	 *            the year to set
 	 */
 	public void setYear(int year) {
 		this.year = year;
@@ -47,7 +109,8 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param month the month to set
+	 * @param month
+	 *            the month to set
 	 */
 	public void setMonth(int month) {
 		this.month = month;
@@ -61,7 +124,8 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param day the day to set
+	 * @param day
+	 *            the day to set
 	 */
 	public void setDay(int day) {
 		this.day = day;

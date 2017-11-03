@@ -19,11 +19,12 @@ import manageuser.logics.impl.MstJapanLogicImpl;
 import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
+import manageuser.validates.ValidateUser;
 
 /**
  * Servlet implementation class AddUserInputController
  */
-@WebServlet("/addUser.do")
+@WebServlet("/addUserInput.do")
 public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,14 +42,12 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			UserInfor userInfor = new UserInfor();
 			// set dữ liệu
 			setDataLogicADM003(request, response);
-			// set defualt
-			userInfor = setDefault(request, response);
+			// set default
+			UserInfor userInfor = setDefault(request, response);
 			request.setAttribute("userInfor", userInfor);
-
-			// Forward đến ADM002
+			// Forward đến ADM003
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
@@ -70,7 +69,31 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try {
+			UserInfor userInfor = setDefault(request, response);
+			ValidateUser validateUser = new ValidateUser();
+			// validate thông tin
+			List<String> lstError = validateUser.validateUserInfor(userInfor);
 
+			if (lstError.isEmpty()) {
+				//
+			} else {
+				request.setAttribute("lstError", lstError);
+				// Forward đến ADM003
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
+				requestDispatcher.forward(request, response);
+			}
+		} catch (Exception e) {
+			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
+			request.setAttribute("errorSystem", errorSystem);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+			try {
+				requestDispatcher.forward(request, response);
+			} catch (ServletException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -82,13 +105,6 @@ public class AddUserInputController extends HttpServlet {
 	 *            phản hồi
 	 */
 	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) {
-		/**
-		 * Thực hiện gọi các hàm trong lớp logic: - mstGroupLogic.getAllMstGroup() -
-		 * mstJapanLogic.getAllMstJapan() Thực hiện gọi các hàm trong lớp Common: -
-		 * common.getListYear(int, int) - common.getListMonth() - common.getListDay()
-		 * Sau khi lấy được dữ liệu thì thực hiện set các dữ liệu đó lên request.
-		 * 
-		 */
 		MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 		MstJapanLogicImpl japanLogicImpl = new MstJapanLogicImpl();
 		try {
@@ -120,8 +136,12 @@ public class AddUserInputController extends HttpServlet {
 		UserInfor userInfor = new UserInfor();
 		String tab = request.getParameter("tab");
 		int currentYear, currentMonth, currentDay;
+		String username = Constant.EMPTY_STRING;
+
 		// trường hợp từ ADM002 sang -> thêm mới
-		if ("add".equals(tab)) {
+		// trường hợp xác nhận tại ADM003
+		if ("add".equals(tab) || "confirm".equals(tab)) {
+			// rỗng
 			currentYear = Common.getCurrentYear();
 			currentMonth = Common.getCurrentMonth();
 			currentDay = Common.getCurrentDay();
@@ -129,12 +149,16 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setYear(currentYear);
 			userInfor.setMonth(currentMonth);
 			userInfor.setDay(currentDay);
+			// request
+			username = Common.getRequestValue(request, "username", Constant.EMPTY_STRING);
+			userInfor.setLoginName(username);
 		}
-		// trường hợp sửa từ ADM005
-
-		// trường hợp xác nhận tại ADM003
 
 		// trường hợp back từ ADM004
+		// session
+
+		// trường hợp sửa từ ADM005
+		// database
 
 		return userInfor;
 	}

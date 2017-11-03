@@ -18,7 +18,9 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="#" method="post" name="inputform">
+	<form
+		action="${pageContext.request.contextPath}<%=Constant.ADD_USER_INPUT%>?tab=confirm"
+		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -28,7 +30,10 @@
 			</tr>
 			<tr>
 				<td class="errMsg">
-					<div style="padding-left: 120px">&nbsp;</div>
+					<div style="padding-left: 120px">
+						<c:forEach items="${lstError}" var="error">&nbsp;${error}
+						</c:forEach>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -38,8 +43,9 @@
 							cellspacing="0">
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
-								<td align="left"><input class="txBox" type="text" name="id"
-									value="" size="15" onfocus="this.style.borderColor='#0066ff';"
+								<td align="left"><input class="txBox" type="text"
+									name="username" value="" size="15"
+									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -48,7 +54,7 @@
 										<option value="" selected disabled hidden="">選択してください</option>
 										<c:forEach items="${listGroup}" var="group">
 											<option value="${group.groupId}"
-												${group.groupId == group_id ? 'selected' : ''}>${group.groupName}</option>
+												${group.groupId == groupId ? 'selected' : ''}>${group.groupName}</option>
 										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
 							</tr>
@@ -161,7 +167,8 @@
 										</c:forEach>
 								</select>月 <select>
 										<c:forEach items="${listDay}" var="day">
-											<option value="${day}" ${day == userInfor.day ? 'selected' : ''}>${day}</option>
+											<option value="${day}"
+												${day == userInfor.day ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>

@@ -67,7 +67,7 @@ public class ListUserController extends HttpServlet {
 			List<UserInfor> listUser = new ArrayList<>();
 			List<Integer> listPaging = new ArrayList<>();
 			String fullName, sortType, sortByName, sortByCodeLevel, sortByEndDate;
-			int group_id, offset, totalPage, nextPage, previousPage, totalRecord, currentPage, limit;
+			int groupId, offset, totalPage, nextPage, previousPage, totalRecord, currentPage, limit;
 			// get type from jsp
 			String type = request.getParameter("type");
 			// set session cho type
@@ -78,7 +78,7 @@ public class ListUserController extends HttpServlet {
 			// Lan dau vao man hinh va khi click link top
 			if ("first".equals(type)) {
 				fullName = sortType = Constant.EMPTY_STRING;
-				group_id = Constant.DEFAULT_INT;
+				groupId = Constant.DEFAULT_INT;
 				currentPage = Constant.DEFAULT_CURRENT_PAGE;
 				sortType = Constant.EMPTY_STRING;
 				sortByName = Constant.DEFAULT_FULL_NAME_SORT;
@@ -87,8 +87,8 @@ public class ListUserController extends HttpServlet {
 			} else {
 				// lấy dữ liệu từ session
 				fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
-				group_id = Common.tryParseInt(
-						Common.getSessionValue(session, "group_id", Integer.toString(Constant.DEFAULT_INT)));
+				groupId = Common.tryParseInt(
+						Common.getSessionValue(session, "groupId", Integer.toString(Constant.DEFAULT_INT)));
 				sortType = Common.getSessionValue(session, "sortType", Constant.EMPTY_STRING);
 				currentPage = Common.tryParseInt(Common.getSessionValue(session, "currentPage",
 						Integer.toString(Constant.DEFAULT_CURRENT_PAGE)));
@@ -99,7 +99,7 @@ public class ListUserController extends HttpServlet {
 				if ("search".equals(type)) {
 					// search
 					fullName = request.getParameter("fullName");
-					group_id = Common.tryParseInt(request.getParameter("group_id"));
+					groupId = Common.tryParseInt(request.getParameter("groupId"));
 					currentPage = Constant.DEFAULT_CURRENT_PAGE;
 					sortType = Constant.EMPTY_STRING;
 					sortByName = Constant.DEFAULT_FULL_NAME_SORT;
@@ -145,23 +145,15 @@ public class ListUserController extends HttpServlet {
 			session.setAttribute("sortByEndDate", sortByEndDate);
 			session.setAttribute("sortType", sortType);
 			session.setAttribute("fullName", fullName);
-			session.setAttribute("group_id", group_id);
+			session.setAttribute("groupId", groupId);
 			session.setAttribute("currentPage", currentPage);
 
 			// get totalRecord
-			totalRecord = tblUserLogicImpl.getTotalUsers(group_id, fullName);
+			totalRecord = tblUserLogicImpl.getTotalUsers(groupId, fullName);
 			if (totalRecord != 0) {
 				// Lay ban ghi
 				limit = Common.getLimit();
 				offset = Common.getOffset(currentPage, limit);
-
-				// set currentPage cho request
-				request.setAttribute("currentPage", currentPage);
-
-				// set giá trị cho request để thay đổi icon sort
-				request.setAttribute("sortByName", sortByName);
-				request.setAttribute("sortByCodeLevel", sortByCodeLevel);
-				request.setAttribute("sortByEndDate", sortByEndDate);
 
 				// get totalPage
 				totalPage = Common.getTotalPage(totalRecord, limit);
@@ -179,7 +171,7 @@ public class ListUserController extends HttpServlet {
 				previousPage = Common.getPrePage(listPaging, currentPage);
 				request.setAttribute("previousPage", previousPage);
 				// get list user
-				listUser = tblUserLogicImpl.getListUsers(offset, limit, group_id, fullName, sortType, sortByName,
+				listUser = tblUserLogicImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByName,
 						sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);

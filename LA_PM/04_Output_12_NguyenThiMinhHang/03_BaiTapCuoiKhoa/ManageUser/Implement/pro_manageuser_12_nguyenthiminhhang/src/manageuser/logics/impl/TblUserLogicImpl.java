@@ -62,4 +62,17 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return userDaoImpl.getTotalUsers(groupId, fullName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#existUsername(java.lang.String)
+	 */
+	@Override
+	public boolean existUsername(String newUsername) {
+		if (userDaoImpl.existUsername(newUsername)) {
+			return true;
+		} // ngược lại
+		return false;
+	}
+
 }

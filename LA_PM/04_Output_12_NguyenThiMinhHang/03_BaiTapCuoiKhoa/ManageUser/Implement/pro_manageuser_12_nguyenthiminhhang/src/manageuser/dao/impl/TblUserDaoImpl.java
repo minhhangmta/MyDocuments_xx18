@@ -125,7 +125,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 			fullName = Common.standardString(fullName);
 			preparedStatement.setString(index++, "%" + fullName + "%");
-			
+
 			preparedStatement.setInt(index++, offset);
 			preparedStatement.setInt(index++, limit);
 
@@ -192,6 +192,32 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			closeConnection();
 		}
 		return total;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#existUsername(java.lang.String)
+	 */
+	@Override
+	public boolean existUsername(String newUsername) {
+		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			int index = 1;
+			preparedStatement.setString(index++, newUsername);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return true;
 	}
 
 }

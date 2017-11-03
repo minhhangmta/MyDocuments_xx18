@@ -18,6 +18,7 @@ public class Constant {
 	public static final String LISTUSER_SERVLET = "/listUser.do";
 	public static final String LOGIN_SERVLET = "/login.do";
 	public static final String LOGOUT_SERVLET = "/logout.do";
+	public static final String ADD_USER_INPUT = "/addUserInput.do";
 
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
