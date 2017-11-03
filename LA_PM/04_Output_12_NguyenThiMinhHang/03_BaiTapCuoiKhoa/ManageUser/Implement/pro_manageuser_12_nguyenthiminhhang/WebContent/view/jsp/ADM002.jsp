@@ -138,26 +138,21 @@
 				</c:if> <c:forEach items="${listPaging}" var="page">
 					<!-- Start fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 					<c:choose>
-						<c:when test="${page == currentPage && totalPage > 1 }">
+						<c:when test="${page == currentPage}">
 							<c:choose>
 								<c:when
-									test="${listPaging.indexOf(currentPage) == listPaging.size()-1}">${page}</c:when>
-								<c:when test="${currentPage == totalPage}">${page}</c:when>
+									test="${listPaging.indexOf(currentPage) == listPaging.size()-1 || currentPage == totalPage}">${page}</c:when>
 								<c:otherwise>${page}|</c:otherwise>
 							</c:choose>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${page <= totalPage && totalPage > 1 }">
 								<c:choose>
-									<c:when test="${listPaging.indexOf(page)==listPaging.size()-1}">
+									<c:when
+										test="${listPaging.indexOf(page)==listPaging.size()-1 || page == totalPage }">
 										<a
 											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
 										</a>&nbsp;
-									</c:when>
-									<c:when test="${page == totalPage}">
-										<a
-											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
-										</a>
 									</c:when>
 									<c:otherwise>
 										<a
