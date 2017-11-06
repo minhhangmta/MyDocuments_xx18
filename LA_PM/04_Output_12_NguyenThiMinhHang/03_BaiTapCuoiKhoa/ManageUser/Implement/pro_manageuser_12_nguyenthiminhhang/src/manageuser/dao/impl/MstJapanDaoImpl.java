@@ -48,4 +48,30 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		return listJapan;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.MstJapanDao#getNameLevel(java.lang.String)
+	 */
+	@Override
+	public String getNameLevel(String codeLevel) {
+		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
+		String nameLevel = "";
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, codeLevel);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				nameLevel = resultSet.getString("name_level");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return nameLevel;
+	}
+
 }

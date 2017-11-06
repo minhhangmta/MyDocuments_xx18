@@ -4,21 +4,29 @@
  */
 package manageuser.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.logics.impl.MstGroupLogicImpl;
+import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.ConfigProperties;
+import manageuser.properties.MessageErrorProperties;
 
 /**
  * Lớp chứa các hàm common của dự án
@@ -213,7 +221,7 @@ public class Common {
 			return value.toString();
 		}
 	}
-	
+
 	public static String getRequestValue(HttpServletRequest request, String key, String defaultValue) {
 		Object value = request.getParameter(key);
 		if (value == null) {
@@ -316,7 +324,10 @@ public class Common {
 	 * @return String chuỗi ngày tháng
 	 */
 	public static String convertToString(int year, int month, int day) {
-		return null;
+		StringBuilder date = new StringBuilder("");
+		date.append(String.valueOf(year)).append("/").append(String.valueOf(month)).append("/")
+				.append(String.valueOf(day));
+		return date.toString();
 	}
 
 	/**
@@ -331,7 +342,407 @@ public class Common {
 	 * @return Date năm tháng ngày
 	 */
 	public static Date toDate(int year, int month, int day) {
-		return null;
+		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
+		String date = convertToString(year, month, day);
+		Date dt = new Date();
+		try {
+			dt = (Date) df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dt;
+	}
+
+	/**
+	 * Hàm convert kiểu Date sang String
+	 * 
+	 * @param date
+	 *            ngày cần chuyển đổi
+	 * @return String chuỗi yyyy/MM/dd
+	 */
+	public static String convertDateToString(Date date) {
+		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
+		return df.format(date);
+	}
+
+	/**
+	 * Hàm validate username
+	 * 
+	 * @param username
+	 *            tên đăng nhập
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateUsername(String username) {
+		String errUsername = "";
+		if (username.length() < 1) {
+			errUsername = MessageErrorProperties.getData("ER001_USERNAME");
+		} else {
+			Pattern pattern = Pattern.compile(getRegex());
+			int minLength = getMinLength();
+			int maxLength = getMaxLength();
+			boolean validFormat = pattern.matcher(username).matches();
+			boolean validUser = new TblUserLogicImpl().existUsername(username);
+			if (username.length() < minLength || username.length() > maxLength) {
+				errUsername = MessageErrorProperties.getData("ER007_USERNAME");
+			} else if (!validFormat) {
+				errUsername = MessageErrorProperties.getData("ER019");
+			} else if (validUser) {
+				errUsername = MessageErrorProperties.getData("ER003_USERNAME");
+			}
+		}
+		return errUsername;
+	}
+
+	/**
+	 * Hàm lấy giá trị minlength (username, tel) từ config.properties
+	 * 
+	 * @return int giá trị minlength
+	 */
+	public static int getMinLength() {
+		return tryParseInt(ConfigProperties.getData("minLength"));
+	}
+
+	/**
+	 * Hàm lấy giá trị maxlength(username, tel) từ config.properties
+	 * 
+	 * @return int giá trị maxlength
+	 */
+	public static int getMaxLength() {
+		return tryParseInt(ConfigProperties.getData("maxLength"));
+	}
+
+	/**
+	 * Hàm lấy regex từ file config.properties
+	 * 
+	 * @return String chuỗi regex
+	 */
+	public static String getRegex() {
+		return ConfigProperties.getData("regex");
+	}
+
+	/**
+	 * Hàm validate group
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateGroup(int groupId) {
+		String errGroup = "";
+		boolean valid = new MstGroupLogicImpl().existGroup(groupId);
+		// Chua chon nhom
+		if (groupId == 0) {
+			errGroup = MessageErrorProperties.getData("ER002");
+		} else if (!valid) {// Nhom khong ton tai
+			errGroup = MessageErrorProperties.getData("ER004_GROUP");
+		}
+		return errGroup;
+	}
+
+	/**
+	 * Hàm lấy giá trị max của chuỗi(tên, email) từ file config.properties
+	 * 
+	 * @return int giá trị maxLength
+	 */
+	public static int getMaxLengthString() {
+		return tryParseInt(ConfigProperties.getData("maxLengthString"));
+	}
+
+	/**
+	 * Hàm validate fullname
+	 * 
+	 * @param fullName
+	 *            họ và tên
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateFullname(String fullName) {
+		String errName = "";
+		// Nếu không nhập
+		if (fullName.length() < 1) {
+			errName = MessageErrorProperties.getData("ER001_FULLNAME");
+		} else if (fullName.length() > getMaxLengthString()) {// Nếu quá 255 kí tự
+			errName = MessageErrorProperties.getData("ER006_FULLNAME");
+		}
+		return errName;
+	}
+
+	/**
+	 * Hàm validate fullname kana
+	 * 
+	 * @param fullnameKana
+	 *            họ tên kana
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateFullnameKana(String fullnameKana) {
+		String errKana = "";
+		// Nếu vượt quá 255 kí tự
+		if (fullnameKana.length() > getMaxLengthString()) {
+			errKana = MessageErrorProperties.getData("ER006_FULLNAME_KANA");
+		} else if (!fullnameKana.isEmpty() && !checkKana(fullnameKana)) {// Nếu không có kí tự kana
+			errKana = MessageErrorProperties.getData("ER009");
+		}
+		return errKana;
+	}
+
+	/**
+	 * Hàm kiểm tra chuỗi có phải chuỗi kana không
+	 * 
+	 * @param str
+	 *            chuỗi cần check
+	 * @return true nếu đúng, false nếu sai
+	 */
+	public static boolean checkKana(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (Character.UnicodeBlock.of(c) != Character.UnicodeBlock.KATAKANA) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// Check ngày sinh
+
+	/**
+	 * Hàm validate Email
+	 * 
+	 * @param email
+	 *            email cần check
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateEmail(String email) {
+		String errEmail = "";
+		if (email.length() < 1) {
+			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
+		} else {
+			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
+			boolean validFormat = pattern.matcher(email).matches();
+			boolean validEmail = new TblUserLogicImpl().existEmail(email);
+			if (email.length() > getMaxLengthString()) {// Nếu quá 255 kí tự
+				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
+			} else if (!validFormat) {// Nếu sai định dạng
+				errEmail = MessageErrorProperties.getData("ER005_EMAIL");
+			} else if (validEmail) {// Nếu đã tồn tại email
+				errEmail = MessageErrorProperties.getData("ER003_EMAIL");
+			}
+		}
+		return errEmail;
+	}
+
+	/**
+	 * Hàm validate telephone
+	 * 
+	 * @param tel
+	 *            số điện thoại
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateTel(String tel) {
+		String errTel = "";
+		if (tel.length() < 1) {
+			errTel = MessageErrorProperties.getData("ER001_TEL");
+		} else {
+			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTel"));
+			boolean validFormat = pattern.matcher(tel).matches();
+			if (tel.length() > getMaxLength()) {
+				errTel = MessageErrorProperties.getData("ER006_TEL");
+			} else if (!validFormat) {// định dạng xxxx-xxxx-xxxx
+				errTel = MessageErrorProperties.getData("ER005_TEL");
+			}
+		}
+		return errTel;
+	}
+
+	/**
+	 * Hàm validate password
+	 * 
+	 * @param password
+	 *            mật khẩu
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validatePass(String password) {
+		String errPass = "";
+		if (password.length() < 1) {// check khong nhap
+			errPass = MessageErrorProperties.getData("ER001_PASS");
+		} else {
+			// check length
+			if (password.length() < getMinLength() || password.length() > getMaxLength()) {
+				errPass = MessageErrorProperties.getData("ER007_PASS");
+			} else if (!checkOneByteChar(password)) {// check co ki tu khac 1 byte
+				errPass = MessageErrorProperties.getData("ER008");
+			}
+		}
+		return errPass;
+	}
+
+	/**
+	 * Hàm check kí tự 1 byte trong chuỗi
+	 * 
+	 * @param str
+	 *            chuỗi cần check
+	 * @return true nếu cả chuỗi chứa kí tự 1 byte, false nếu khác
+	 */
+	public static boolean checkOneByteChar(String str) {
+		for (int i = 0; i < str.length(); i++) {
+			// Lấy từng phần tử của str dạng string
+			String s = new StringBuilder().append("").append(str.charAt(i)).toString();
+			try {
+				byte[] utf8Bytes = s.getBytes("UTF-8");
+				if (utf8Bytes.length != 1) {
+					return false;
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Hàm validate xác nhận mật khẩu
+	 * 
+	 * @param password
+	 *            mật khẩu
+	 * @param passConfirm
+	 *            mật khẩu xác nhận
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validatePassConfirm(String password, String passConfirm) {
+		if (!password.isEmpty() && !password.equals(passConfirm)) {
+			return MessageErrorProperties.getData("ER017");
+		}
+		return "";
+	}
+
+	/**
+	 * Hàm validate trình độ tiếng nhật
+	 * 
+	 * @param codeLevel
+	 *            mã trình độ
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateCodeLevel(String codeLevel) {
+		boolean valid = new TblUserLogicImpl().existCodeLevel(codeLevel);
+		// Nếu không tồn tại
+		if (codeLevel != Constant.EMPTY_STRING && !valid) {
+			return MessageErrorProperties.getData("ER004_LEVEL");
+		}
+		return "";
+	}
+
+	public static String validateTotal(String total, String code_level) {
+		String errTotal = "";
+		String totalStr = String.valueOf(total);
+		// trình độ japan được chọn
+		if (code_level != Constant.EMPTY_STRING) {
+			// nếu ko nhập
+			if (total == Constant.EMPTY_STRING) {
+				errTotal = MessageErrorProperties.getData("ER001_TOTAL");
+			} else if (!checkHalfSizeTotal(totalStr)) {// nếu có kí tự khác halfsize
+				errTotal = MessageErrorProperties.getData("ER018");
+			}
+		}
+		return errTotal;
+	}
+
+	/**
+	 * Hàm check giá trị halfsize
+	 * 
+	 * @param number
+	 *            số cần check
+	 * @return true nếu đều là halfsize, false nếu có kí tự khác halfsize
+	 */
+	public static boolean checkHalfSizeTotal(String number) {
+		Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTotal"));
+		boolean validFormat = pattern.matcher(number).matches();
+		return validFormat;
+	}
+
+	/**
+	 * Hàm check date hợp lệ
+	 * 
+	 * @param date
+	 *            ngày cần check
+	 * @return true nếu hợp lệ, false nếu không
+	 */
+	public static boolean isDateValid(String date) {
+		try {
+			DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
+			df.setLenient(false);
+			df.parse(date);
+			return true;
+		} catch (ParseException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Hàm validate birthday
+	 * 
+	 * @param year
+	 *            năm
+	 * @param month
+	 *            tháng
+	 * @param day
+	 *            ngày
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateBirthday(int year, int month, int day) {
+		String date = convertToString(year, month, day);
+		if (!isDateValid(date)) {
+			return MessageErrorProperties.getData("ER011_BIRTHDAY");
+		}
+		return "";
+	}
+
+	/**
+	 * Hàm validate ngày bắt đầu
+	 * 
+	 * @param year
+	 *            năm
+	 * @param month
+	 *            tháng
+	 * @param day
+	 *            ngày
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateStartDate(int year, int month, int day) {
+		String date = convertToString(year, month, day);
+		if (!isDateValid(date)) {
+			return MessageErrorProperties.getData("ER011_START_DATE");
+		}
+		return "";
+	}
+
+	/**
+	 * Hàm validate ngày kết thúc
+	 * 
+	 * @param year
+	 *            năm
+	 * @param month
+	 *            tháng
+	 * @param day
+	 *            ngày
+	 * @return String chuỗi thông báo lỗi
+	 */
+	public static String validateEndDate(int year, int month, int day) {
+		String date = convertToString(year, month, day);
+		if (!isDateValid(date)) {
+			return MessageErrorProperties.getData("ER011_END_DATE");
+		}
+		return "";
+	}
+
+	/**
+	 * Hàm tạo key cho session
+	 * 
+	 * @param email
+	 *            chuỗi email
+	 * @return String key của session
+	 */
+	public static String createKeySession(String email) {
+		return encodeSHA1("", email).substring(0, 10);
 	}
 
 }

@@ -63,9 +63,27 @@ public interface TblUserLogic {
 	/**
 	 * hàm kiểm tra username có tồn tại trong db chưa
 	 * 
-	 * @param newUsername
+	 * @param username
 	 *            tên đăng nhập cần check
 	 * @return true nếu tồn tại, false nếu chưa tồn tại
 	 */
-	public boolean existUsername(String newUsername);
+	public boolean existUsername(String username);
+
+	/**
+	 * Hàm kiểm tra email có tồn tại trong DB không
+	 * 
+	 * @param email
+	 *            email
+	 * @return true nếu tồn tại, false nếu không tồn tại
+	 */
+	public boolean existEmail(String email);
+
+	/**
+	 * Hàm kiểm tra codelevel có tồn tại trong DB không
+	 * 
+	 * @param codeLevel
+	 *            mã level
+	 * @return true nếu tồn tại, false nếu không
+	 */
+	public boolean existCodeLevel(String codeLevel);
 }

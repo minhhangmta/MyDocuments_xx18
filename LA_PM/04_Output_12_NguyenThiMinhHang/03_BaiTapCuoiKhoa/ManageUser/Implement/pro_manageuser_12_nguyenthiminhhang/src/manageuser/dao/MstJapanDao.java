@@ -23,4 +23,15 @@ public interface MstJapanDao {
 	 *             ngoại lệ cho SQL
 	 */
 	public List<MstJapan> getAllMstJapan() throws SQLException;
+	
+
+
+	/**
+	 * Hàm lấy tên level từ code level
+	 * 
+	 * @param codeLevel
+	 *            mã level
+	 * @return String tên level
+	 */
+	public String getNameLevel(String codeLevel);
 }

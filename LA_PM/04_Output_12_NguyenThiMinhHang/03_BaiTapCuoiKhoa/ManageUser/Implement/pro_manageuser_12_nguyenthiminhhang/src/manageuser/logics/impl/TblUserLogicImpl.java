@@ -68,11 +68,30 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#existUsername(java.lang.String)
 	 */
 	@Override
-	public boolean existUsername(String newUsername) {
-		if (userDaoImpl.existUsername(newUsername)) {
+	public boolean existUsername(String username) {
+		if (userDaoImpl.existUsername(username)) {
 			return true;
 		} // ngược lại
 		return false;
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String)
+	 */
+	@Override
+	public boolean existEmail(String email) {
+		return userDaoImpl.existEmail(email);
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see manageuser.logics.TblUserLogic#existCodeLevel(java.lang.String)
+	 */
+	@Override
+	public boolean existCodeLevel(String codeLevel) {
+		return userDaoImpl.existCodeLevel(codeLevel);
 	}
 
 }
