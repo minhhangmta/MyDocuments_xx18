@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manageuser.dao.TblUserDao;
+import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -140,7 +141,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				userInfor.setGroupName(resultSet.getString("group_name"));
 				userInfor.setNameLevel(resultSet.getString("name_level"));
 				userInfor.setEndDate(resultSet.getDate("end_date"));
-				userInfor.setTotal(resultSet.getInt("total"));
+				userInfor.setTotal(resultSet.getString("total"));
 				listUserInfor.add(userInfor);
 			}
 		} catch (SQLException e) {
@@ -200,13 +201,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existUsername(java.lang.String)
 	 */
 	@Override
-	public boolean existUsername(String newUsername) {
+	public boolean existUsername(String username) {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			int index = 1;
-			preparedStatement.setString(index++, newUsername);
+			preparedStatement.setString(1, username);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (!resultSet.first()) {
 				return false;
@@ -220,4 +220,62 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#existEmail(java.lang.String)
+	 */
+	public boolean existEmail(String email) {
+		String query = "SELECT email FROM tbl_user WHERE email = ?";
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#existCodeLevel(java.lang.String)
+	 */
+	@Override
+	public boolean existCodeLevel(String codeLevel) {
+		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
+		try {
+			Connection connection = getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, codeLevel);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see manageuser.dao.TblUserDao#insertUser(manageuser.entities.TblUser)
+	 */
+	@Override
+	public int insertUser(TblUser tblUser) {
+//		String query = "INSERT INTO "
+		return 0;
+	}
+	
 }

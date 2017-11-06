@@ -7,7 +7,7 @@ package manageuser.entities;
 import java.util.Date;
 
 /**
- * Description class here
+ * Lớp đối tượng UserInfor
  * 
  * @author minhhang
  */
@@ -15,21 +15,32 @@ public class UserInfor {
 	private int groupId;
 	private String loginName;
 	private String passwords;
+	private String confirmPassword;
 	private String fullNameKana;
 	private int userId;
 	private String fullName;
 	private String email;
 	private String tel;
-	private Date birthday;
 	private String groupName;
 	private String nameLevel;
+	private String codeLevel;
+	private Date birthday;
+	private Date startDate;
 	private Date endDate;
-	private int total;
+	private String total;
 	private int year;
 	private int month;
 	private int day;
+	private int yearBirthday;
+	private int monthBirthday;
+	private int dayBirthday;
+	private int yearStartDate;
+	private int monthStartDate;
+	private int dayStartDate;
+	private int yearEndDate;
+	private int monthEndDate;
+	private int dayEndDate;
 
-	
 	/**
 	 * @return the groupId
 	 */
@@ -38,7 +49,8 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param groupId the groupId to set
+	 * @param groupId
+	 *            the groupId to set
 	 */
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
@@ -52,7 +64,8 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param loginName the loginName to set
+	 * @param loginName
+	 *            the loginName to set
 	 */
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
@@ -66,10 +79,26 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param passwords the passwords to set
+	 * @param passwords
+	 *            the passwords to set
 	 */
 	public void setPasswords(String passwords) {
 		this.passwords = passwords;
+	}
+
+	/**
+	 * @return the confirmPassword
+	 */
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	/**
+	 * @param confirmPassword
+	 *            the confirmPassword to set
+	 */
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	/**
@@ -80,10 +109,41 @@ public class UserInfor {
 	}
 
 	/**
-	 * @param fullNameKana the fullNameKana to set
+	 * @param fullNameKana
+	 *            the fullNameKana to set
 	 */
 	public void setFullNameKana(String fullNameKana) {
 		this.fullNameKana = fullNameKana;
+	}
+
+	/**
+	 * @return the codeLevel
+	 */
+	public String getCodeLevel() {
+		return codeLevel;
+	}
+
+	/**
+	 * @param codeLevel
+	 *            the codeLevel to set
+	 */
+	public void setCodeLevel(String codeLevel) {
+		this.codeLevel = codeLevel;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @param startDate
+	 *            the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	/**
@@ -129,6 +189,141 @@ public class UserInfor {
 	 */
 	public void setDay(int day) {
 		this.day = day;
+	}
+
+	/**
+	 * @return the yearBirthday
+	 */
+	public int getYearBirthday() {
+		return yearBirthday;
+	}
+
+	/**
+	 * @param yearBirthday
+	 *            the yearBirthday to set
+	 */
+	public void setYearBirthday(int yearBirthday) {
+		this.yearBirthday = yearBirthday;
+	}
+
+	/**
+	 * @return the monthBirthday
+	 */
+	public int getMonthBirthday() {
+		return monthBirthday;
+	}
+
+	/**
+	 * @param monthBirthday
+	 *            the monthBirthday to set
+	 */
+	public void setMonthBirthday(int monthBirthday) {
+		this.monthBirthday = monthBirthday;
+	}
+
+	/**
+	 * @return the dayBirthday
+	 */
+	public int getDayBirthday() {
+		return dayBirthday;
+	}
+
+	/**
+	 * @param dayBirthday
+	 *            the dayBirthday to set
+	 */
+	public void setDayBirthday(int dayBirthday) {
+		this.dayBirthday = dayBirthday;
+	}
+
+	/**
+	 * @return the yearStartDate
+	 */
+	public int getYearStartDate() {
+		return yearStartDate;
+	}
+
+	/**
+	 * @param yearStartDate
+	 *            the yearStartDate to set
+	 */
+	public void setYearStartDate(int yearStartDate) {
+		this.yearStartDate = yearStartDate;
+	}
+
+	/**
+	 * @return the monthStartDate
+	 */
+	public int getMonthStartDate() {
+		return monthStartDate;
+	}
+
+	/**
+	 * @param monthStartDate
+	 *            the monthStartDate to set
+	 */
+	public void setMonthStartDate(int monthStartDate) {
+		this.monthStartDate = monthStartDate;
+	}
+
+	/**
+	 * @return the dayStartDate
+	 */
+	public int getDayStartDate() {
+		return dayStartDate;
+	}
+
+	/**
+	 * @param dayStartDate
+	 *            the dayStartDate to set
+	 */
+	public void setDayStartDate(int dayStartDate) {
+		this.dayStartDate = dayStartDate;
+	}
+
+	/**
+	 * @return the yearEndDate
+	 */
+	public int getYearEndDate() {
+		return yearEndDate;
+	}
+
+	/**
+	 * @param yearEndDate
+	 *            the yearEndDate to set
+	 */
+	public void setYearEndDate(int yearEndDate) {
+		this.yearEndDate = yearEndDate;
+	}
+
+	/**
+	 * @return the monthEndDate
+	 */
+	public int getMonthEndDate() {
+		return monthEndDate;
+	}
+
+	/**
+	 * @param monthEndDate
+	 *            the monthEndDate to set
+	 */
+	public void setMonthEndDate(int monthEndDate) {
+		this.monthEndDate = monthEndDate;
+	}
+
+	/**
+	 * @return the dayEndDate
+	 */
+	public int getDayEndDate() {
+		return dayEndDate;
+	}
+
+	/**
+	 * @param dayEndDate
+	 *            the dayEndDate to set
+	 */
+	public void setDayEndDate(int dayEndDate) {
+		this.dayEndDate = dayEndDate;
 	}
 
 	/**
@@ -254,7 +449,7 @@ public class UserInfor {
 	/**
 	 * @return the total
 	 */
-	public int getTotal() {
+	public String getTotal() {
 		return total;
 	}
 
@@ -262,7 +457,7 @@ public class UserInfor {
 	 * @param total
 	 *            the total to set
 	 */
-	public void setTotal(int total) {
+	public void setTotal(String total) {
 		this.total = total;
 	}
 

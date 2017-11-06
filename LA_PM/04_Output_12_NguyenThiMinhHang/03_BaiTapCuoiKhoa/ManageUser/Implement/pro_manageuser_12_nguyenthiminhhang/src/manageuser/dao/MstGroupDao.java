@@ -19,7 +19,25 @@ public interface MstGroupDao {
 	 * Hàm lấy danh sách group
 	 * 
 	 * @return List<MstGroup> danh sách group
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public List<MstGroup> getAllGroups() throws SQLException;
+	
+	/**
+	 * Hàm kiểm tra group có tồn tại trong db không
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @return true nếu tồn tại, false nếu không tồn tại
+	 */
+	public boolean existGroup(int groupId);
+
+	/**
+	 * Hàm lấy groupname từ group id
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @return String tên nhóm
+	 */
+	public String getGroupName(int groupId);
 }

@@ -18,8 +18,7 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form
-		action="${pageContext.request.contextPath}<%=Constant.ADD_USER_INPUT%>?tab=confirm"
+	<form action="${path}<%=Constant.ADD_USER_VALIDATE%>?tab=confirm"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
@@ -31,7 +30,8 @@
 			<tr>
 				<td class="errMsg">
 					<div style="padding-left: 120px">
-						<c:forEach items="${lstError}" var="error">&nbsp;${error}
+						<c:forEach items="${lstError}" var="error">
+							&nbsp;${error}<br>
 						</c:forEach>
 					</div>
 				</td>
@@ -44,138 +44,139 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="username" value="" size="15"
+									name="username" value="${userInfor.loginName}" size="15"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
-								<td align="left"><select name="group_id">
-										<option value="" selected disabled hidden="">選択してください</option>
+								<td align="left"><select name="groupId">
+										<option value="0" selected disabled hidden="">選択してください</option>
 										<c:forEach items="${listGroup}" var="group">
 											<option value="${group.groupId}"
-												${group.groupId == groupId ? 'selected' : ''}>${group.groupName}</option>
+												${group.groupId == userInfor.groupId ? 'selected' : ''}>${group.groupName}</option>
 										</c:forEach>
 								</select> <span>&nbsp;&nbsp;&nbsp;</span></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="name" value="" size="30"
+									name="fullName" value="${userInfor.fullName}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">カタカナ氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="name" value="" size="30"
+									name="fullNameKana" value="${userInfor.fullNameKana}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
-								<td align="left"><select>
+								<td align="left"><select name="yearBirthday">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
-												${year == userInfor.year ? 'selected' : ''}>${year}</option>
+												${year == userInfor.yearBirthday ? 'selected' : ''}>${year}</option>
 										</c:forEach>
-								</select>年 <select>
+								</select>年 <select name="monthBirthday">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == userInfor.month ? 'selected' : ''}>${month}</option>
+												${month == userInfor.monthBirthday ? 'selected' : ''}>${month}</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select name="dayBirthday">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day}"
-												${day == userInfor.day ? 'selected' : ''}>${day}</option>
+												${day == userInfor.dayBirthday ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="email" value="" size="30"
+									name="email" value="${userInfor.email}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font>電話番号:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="tel" value="" size="30"
+									name="tel" value="${userInfor.tel}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="email" value="" size="30"
+									name="password" value="${userInfor.passwords}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="email" value="" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="confirmPassword" value="${userInfor.confirmPassword}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<th align="left" colspan="2"><a href="#"
 									onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
-							<!-- </table> -->
-							<!-- <table id="japan_table"> -->
+						</table>
+						<table id="japan_table" style="">
 							<tr>
 								<td class="lbl_left">資格:</td>
-								<td align="left"><select name="kyu_id">
-										<option value="" selected disabled hidden="">選択してください</option>
+								<td align="left"><select name="codeLevel">
+										<option value="-1" selected disabled hidden="">選択してください</option>
 										<c:forEach items="${listJapan}" var="japan">
-											<option value="${japan.nameLevel}">${japan.nameLevel}</option>
+											<option value="${japan.codeLevel}"
+												${japan.codeLevel == userInfor.codeLevel ? 'selected' : ''}>${japan.nameLevel}</option>
 										</c:forEach>
 								</select></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">資格交付日:</td>
-								<td align="left"><select>
+								<td align="left"><select name="yearStartDate">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
-												${year == userInfor.year ? 'selected' : ''}>${year}</option>
+												${year == userInfor.yearStartDate ? 'selected' : ''}>${year}</option>
 										</c:forEach>
-								</select>年 <select>
+								</select>年 <select name="monthStartDate">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == userInfor.month ? 'selected' : ''}>${month}</option>
+												${month == userInfor.monthStartDate ? 'selected' : ''}>${month}</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select name="dayStartDate">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day}"
-												${day == userInfor.day ? 'selected' : ''}>${day}</option>
+												${day == userInfor.dayStartDate ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">失効日:</td>
-								<td align="left"><select>
+								<td align="left"><select name="yearEndDate">
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}">${year}</option>
 										</c:forEach>
 										<option value="${userInfor.year+1}" selected>${userInfor.year+1}</option>
-								</select>年 <select>
+								</select>年 <select name="monthEndDate">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"
-												${month == userInfor.month ? 'selected' : ''}>${month}</option>
+												${month == userInfor.monthEndDate ? 'selected' : ''}>${month}</option>
 										</c:forEach>
-								</select>月 <select>
+								</select>月 <select name="dayEndDate">
 										<c:forEach items="${listDay}" var="day">
 											<option value="${day}"
-												${day == userInfor.day ? 'selected' : ''}>${day}</option>
+												${day == userInfor.dayEndDate ? 'selected' : ''}>${day}</option>
 										</c:forEach>
 								</select>日</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">点数:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="total" value="" size="5"
+									name="total" value="${userInfor.total}" size="5"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -192,7 +193,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}/listUser.do'" /></td>
+						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
 				</tr>
 			</table>
 		</div>

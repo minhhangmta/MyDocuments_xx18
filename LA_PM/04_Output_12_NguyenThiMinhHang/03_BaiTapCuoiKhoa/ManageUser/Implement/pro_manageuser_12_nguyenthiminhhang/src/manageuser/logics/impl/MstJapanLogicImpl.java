@@ -28,4 +28,12 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 		return new MstJapanDaoImpl().getAllMstJapan();
 	}
 
+	/* (non-Javadoc)
+	 * @see manageuser.logics.MstJapanLogic#getNameLevel(java.lang.String)
+	 */
+	@Override
+	public String getNameLevel(String codeLevel) {
+		return new MstJapanDaoImpl().getNameLevel(codeLevel);
+	}
+
 }

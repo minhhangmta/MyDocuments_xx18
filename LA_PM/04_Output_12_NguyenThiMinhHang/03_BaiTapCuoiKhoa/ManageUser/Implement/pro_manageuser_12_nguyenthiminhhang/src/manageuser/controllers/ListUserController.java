@@ -76,7 +76,7 @@ public class ListUserController extends HttpServlet {
 			// set data group cho man hinh
 			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
 			// Lan dau vao man hinh va khi click link top
-			if ("first".equals(type)) {
+			if ("default".equals(type)) {
 				fullName = sortType = Constant.EMPTY_STRING;
 				groupId = Constant.DEFAULT_INT;
 				currentPage = Constant.DEFAULT_CURRENT_PAGE;

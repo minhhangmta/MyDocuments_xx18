@@ -7,7 +7,7 @@ package manageuser.entities;
 import java.util.Date;
 
 /**
- * Lớp đối tượng User
+ * Lớp đối tượng tblUser
  * 
  * @author minhhang
  */
