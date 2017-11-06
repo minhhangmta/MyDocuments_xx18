@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,7 +54,9 @@
 							</tr>
 							<tr>
 								<td class="lbl_left">生年月日:</td>
-								<td align="left">${userInfor.birthday}</td>
+								<td align="left"><fmt:formatDate type="date"
+										pattern="<%=Constant.FORMAT_DATE%>"
+										value="${userInfor.birthday}" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">メールアドレス:</td>
@@ -72,11 +75,15 @@
 							</tr>
 							<tr>
 								<td class="lbl_left">資格交付日:</td>
-								<td align="left">${userInfor.startDate}</td>
+								<td align="left"><fmt:formatDate type="date"
+										pattern="<%=Constant.FORMAT_DATE%>"
+										value="${userInfor.startDate}" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">失効日:</td>
-								<td align="left">${userInfor.endDate}</td>
+								<td align="left"><fmt:formatDate type="date"
+										pattern="<%=Constant.FORMAT_DATE%>"
+										value="${userInfor.endDate}" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">点数:</td>

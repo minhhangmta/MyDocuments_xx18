@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manageuser.dao.TblUserDao;
+import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -136,10 +137,10 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				userInfor.setFullName(resultSet.getString("full_name"));
 				userInfor.setEmail(resultSet.getString("email"));
 				userInfor.setTel(resultSet.getString("tel"));
-				userInfor.setBirthday(resultSet.getString("birthday"));
+				userInfor.setBirthday(resultSet.getDate("birthday"));
 				userInfor.setGroupName(resultSet.getString("group_name"));
 				userInfor.setNameLevel(resultSet.getString("name_level"));
-				userInfor.setEndDate(resultSet.getString("end_date"));
+				userInfor.setEndDate(resultSet.getDate("end_date"));
 				userInfor.setTotal(resultSet.getString("total"));
 				listUserInfor.add(userInfor);
 			}
@@ -266,6 +267,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			closeConnection();
 		}
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see manageuser.dao.TblUserDao#insertUser(manageuser.entities.TblUser)
+	 */
+	@Override
+	public int insertUser(TblUser tblUser) {
+//		String query = "INSERT INTO "
+		return 0;
 	}
 	
 }

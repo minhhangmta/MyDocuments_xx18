@@ -6,6 +6,7 @@ package manageuser.dao;
 
 import java.util.List;
 
+import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 
 /**
@@ -97,5 +98,13 @@ public interface TblUserDao {
 	 */
 	public boolean existCodeLevel(String codeLevel);
 
+	/**
+	 * Thực hiện thêm mới 1 user vào DB
+	 * 
+	 * @param tblUser
+	 *            tblUser Đối tượng chứa thông tin của user
+	 * @return true thành công, false nếu không thành công
+	 */
+	public int insertUser(TblUser tblUser);
 
 }

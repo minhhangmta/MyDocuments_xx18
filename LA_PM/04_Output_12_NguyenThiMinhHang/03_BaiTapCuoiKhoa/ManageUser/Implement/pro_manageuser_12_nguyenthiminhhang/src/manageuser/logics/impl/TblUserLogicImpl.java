@@ -7,6 +7,7 @@ package manageuser.logics.impl;
 import java.util.List;
 
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
@@ -75,9 +76,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return false;
 	}
 
-	
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String)
 	 */
 	@Override
@@ -85,13 +86,24 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return userDaoImpl.existEmail(email);
 	}
 
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see manageuser.logics.TblUserLogic#existCodeLevel(java.lang.String)
 	 */
 	@Override
 	public boolean existCodeLevel(String codeLevel) {
 		return userDaoImpl.existCodeLevel(codeLevel);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#insertUser(manageuser.entities.TblUser)
+	 */
+	@Override
+	public int insertUser(TblUser tblUser) {
+		return userDaoImpl.insertUser(tblUser);
 	}
 
 }

@@ -24,9 +24,9 @@ public class UserInfor {
 	private String groupName;
 	private String nameLevel;
 	private String codeLevel;
-	private String birthday;
-	private String startDate;
-	private String endDate;
+	private Date birthday;
+	private Date startDate;
+	private Date endDate;
 	private String total;
 	private int year;
 	private int month;
@@ -132,24 +132,9 @@ public class UserInfor {
 	}
 
 	/**
-	 * @return the birthday
-	 */
-	public String getBirthday() {
-		return birthday;
-	}
-
-	/**
-	 * @param birthday
-	 *            the birthday to set
-	 */
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	/**
 	 * @return the startDate
 	 */
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -157,23 +142,8 @@ public class UserInfor {
 	 * @param startDate
 	 *            the startDate to set
 	 */
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
-	}
-
-	/**
-	 * @return the endDate
-	 */
-	public String getEndDate() {
-		return endDate;
-	}
-
-	/**
-	 * @param endDate
-	 *            the endDate to set
-	 */
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
 	}
 
 	/**
@@ -417,6 +387,21 @@ public class UserInfor {
 	}
 
 	/**
+	 * @return the birthday
+	 */
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	/**
+	 * @param birthday
+	 *            the birthday to set
+	 */
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	/**
 	 * @return the groupName
 	 */
 	public String getGroupName() {
@@ -444,6 +429,21 @@ public class UserInfor {
 	 */
 	public void setNameLevel(String nameLevel) {
 		this.nameLevel = nameLevel;
+	}
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @param endDate
+	 *            the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	/**

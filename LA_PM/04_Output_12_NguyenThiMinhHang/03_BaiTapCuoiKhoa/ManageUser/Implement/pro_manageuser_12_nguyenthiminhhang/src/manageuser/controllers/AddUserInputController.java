@@ -163,12 +163,14 @@ public class AddUserInputController extends HttpServlet {
 		yearBirthday = yearStartDate = yearEndDate = dayBirthday = currentYear;
 		monthBirthday = monthStartDate = monthEndDate = currentMonth;
 		dayBirthday = dayStartDate = dayEndDate = currentMonth;
-		String birthday, startDate, endDate, groupName, nameLevel;
+		Date birthday, startDate, endDate;
+		String groupName, nameLevel;
 		// Khoi tao gia tri mac dinh
 		groupId = Constant.DEFAULT_INT;
 		codeLevel = Constant.EMPTY_STRING;
 		total = Constant.EMPTY_STRING;
-		birthday = startDate = endDate = groupName = nameLevel = Constant.EMPTY_STRING;
+		birthday = startDate = endDate = null;
+		groupName = nameLevel = Constant.EMPTY_STRING;
 
 		// trường hợp từ ADM002 sang -> thêm mới
 		// trường hợp xác nhận tại ADM003
@@ -197,30 +199,26 @@ public class AddUserInputController extends HttpServlet {
 					.tryParseInt(Common.getRequestValue(request, "monthBirthday", String.valueOf(currentMonth)));
 			dayBirthday = Common
 					.tryParseInt(Common.getRequestValue(request, "dayBirthday", String.valueOf(currentDay)));
-			birthday = Common.convertToString(yearBirthday, monthBirthday, dayBirthday);
-			if (!codeLevel.isEmpty()) {
-				nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
-				// Start date
-				yearStartDate = Common
-						.tryParseInt(Common.getRequestValue(request, "yearStartDate", String.valueOf(currentYear)));
-				monthStartDate = Common
-						.tryParseInt(Common.getRequestValue(request, "monthStartDate", String.valueOf(currentMonth)));
-				dayStartDate = Common
-						.tryParseInt(Common.getRequestValue(request, "dayStartDate", String.valueOf(currentDay)));
-				startDate = Common.convertToString(yearStartDate, monthStartDate, dayStartDate);
-				// End date
-				yearEndDate = Common
-						.tryParseInt(Common.getRequestValue(request, "yearEndDate", String.valueOf(currentYear)));
-				monthEndDate = Common
-						.tryParseInt(Common.getRequestValue(request, "monthEndDate", String.valueOf(currentMonth)));
-				dayEndDate = Common
-						.tryParseInt(Common.getRequestValue(request, "dayEndDate", String.valueOf(currentDay)));
-				endDate = Common.convertToString(yearEndDate, monthEndDate, dayEndDate);
+			birthday = Common.toDate(yearBirthday, monthBirthday, dayBirthday);
+			// Start date
+			yearStartDate = Common
+					.tryParseInt(Common.getRequestValue(request, "yearStartDate", String.valueOf(currentYear)));
+			monthStartDate = Common
+					.tryParseInt(Common.getRequestValue(request, "monthStartDate", String.valueOf(currentMonth)));
+			dayStartDate = Common
+					.tryParseInt(Common.getRequestValue(request, "dayStartDate", String.valueOf(currentDay)));
+			startDate = Common.toDate(yearStartDate, monthStartDate, dayStartDate);
+			// End date
+			yearEndDate = Common
+					.tryParseInt(Common.getRequestValue(request, "yearEndDate", String.valueOf(currentYear)));
+			monthEndDate = Common
+					.tryParseInt(Common.getRequestValue(request, "monthEndDate", String.valueOf(currentMonth)));
+			dayEndDate = Common.tryParseInt(Common.getRequestValue(request, "dayEndDate", String.valueOf(currentDay)));
+			endDate = Common.toDate(yearEndDate, monthEndDate, dayEndDate);
+			nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
+			// total
+			total = Common.getRequestValue(request, "total", Constant.EMPTY_STRING);
 
-				// total
-				total = Common.getRequestValue(request, "total", Constant.EMPTY_STRING);
-
-			}
 			// set vào userInfor
 			userInfor.setLoginName(username);
 			userInfor.setGroupId(groupId);
@@ -258,7 +256,6 @@ public class AddUserInputController extends HttpServlet {
 
 		// trường hợp sửa từ ADM005
 		// database
-		
 
 		return userInfor;
 	}

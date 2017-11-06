@@ -110,12 +110,14 @@
 					<tr>
 						<td align="right"><a href="${path}/<%=Constant.ADM005%>">${user.userId}</a></td>
 						<td>${user.fullName}</td>
-						<td align="center">${user.birthday}</td>
+						<td align="center"><fmt:formatDate type="date"
+								pattern="<%=Constant.FORMAT_DATE%>" value="${user.birthday}" /></td>
 						<td>${user.groupName}</td>
 						<td>${user.email}</td>
 						<td>${user.tel}</td>
 						<td>${user.nameLevel}</td>
-						<td align="center">${user.endDate}</td>
+						<td align="center"><fmt:formatDate type="date"
+								pattern="<%=Constant.FORMAT_DATE%>" value="${user.endDate}" /></td>
 						<td align="right">${user.total}</td>
 					</tr>
 				</c:forEach>
