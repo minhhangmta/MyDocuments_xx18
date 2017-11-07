@@ -25,7 +25,7 @@ import manageuser.utils.Constant;
 public class TblUserLogicImpl implements TblUserLogic {
 	Connection connection = new BaseDaoImpl().getConnection();
 	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-	private TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl();
+	private TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 
 	/*
 	 * (non-Javadoc)
@@ -150,6 +150,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
 		tblUser.setTel(userInfor.getTel());
 		tblUser.setRole(Constant.ROLE_USER);
+		System.out.println("x");
 		// get userId from TblUser
 		int userId = insertUser(tblUser);
 		if (userId == Constant.DEFAULT_INT) {

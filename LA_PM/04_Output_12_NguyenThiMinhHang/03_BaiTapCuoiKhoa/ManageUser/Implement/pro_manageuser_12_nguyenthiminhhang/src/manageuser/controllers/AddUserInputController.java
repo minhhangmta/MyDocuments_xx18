@@ -48,6 +48,7 @@ public class AddUserInputController extends HttpServlet {
 			setDataLogicADM003(request, response);
 			// set default
 			UserInfor userInfor = setDefault(request, response);
+			//set request
 			request.setAttribute("userInfor", userInfor);
 			// Forward đến ADM003
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
@@ -69,8 +70,7 @@ public class AddUserInputController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			UserInfor userInfor = setDefault(request, response);
 			ValidateUser validateUser = new ValidateUser();

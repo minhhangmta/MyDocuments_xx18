@@ -91,7 +91,7 @@ public class LoginController extends HttpServlet {
 			}
 		} catch (Exception e) {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("content", errorSystem);
+			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			try {
 				requestDispatcher.forward(request, response);

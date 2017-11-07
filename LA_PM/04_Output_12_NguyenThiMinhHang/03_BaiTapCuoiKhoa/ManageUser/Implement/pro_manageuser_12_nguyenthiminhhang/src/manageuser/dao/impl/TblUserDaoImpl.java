@@ -288,24 +288,25 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public int insertUser(TblUser tblUser) {
 		int userId = Constant.DEFAULT_INT;
 		StringBuilder query = new StringBuilder();
-		query.append("INSERT INTO tbl_user ").append("(login_name, passwords, full_name, full_name_kana, ")
-				.append("email, tel, birthday, salt, role)").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+		query.append("INSERT INTO tbl_user ").append("(group_id, login_name, passwords, full_name, full_name_kana, ")
+				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )").append(";");
 		try {
 			connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			int index = 1;
+			preparedStatement.setInt(index++, tblUser.getGroupId());
 			preparedStatement.setString(index++, tblUser.getLoginName());
 			preparedStatement.setString(index++, tblUser.getPasswords());
 			preparedStatement.setString(index++, tblUser.getFullName());
 			preparedStatement.setString(index++, tblUser.getFullNameKana());
 			preparedStatement.setString(index++, tblUser.getEmail());
 			preparedStatement.setString(index++, tblUser.getTel());
-			preparedStatement.setDate(index++, (Date) tblUser.getBirthday());
+			preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
 			preparedStatement.setString(index++, tblUser.getSalt());
 			preparedStatement.setInt(index++, tblUser.getRole());
-
+			System.out.println(query);
 			preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate(query.toString());
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.last()) {
 				userId = resultSet.getInt("user_id");

@@ -65,10 +65,12 @@ public class AddUserConfirmController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-			UserInfor userInfor = (UserInfor) req.getAttribute("keySession");
+			HttpSession session = req.getSession();
+			String keySesion = req.getParameter("keySession");
+			UserInfor userInfor = (UserInfor) session.getAttribute(keySesion);
 			if (tblUserLogicImpl.createUser(userInfor)) {
 				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
 			}

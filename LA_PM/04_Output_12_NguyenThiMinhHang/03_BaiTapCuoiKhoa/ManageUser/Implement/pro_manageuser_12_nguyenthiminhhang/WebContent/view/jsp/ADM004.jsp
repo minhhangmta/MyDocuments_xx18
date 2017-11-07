@@ -19,8 +19,9 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form action="${path} <%=Constant.SYSTEM_ERROR%>" method="post"
-		name="inputform">
+	<form
+		action="${path}<%=Constant.ADD_USER_OK%>?keySession=${keySession}"
+		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -100,8 +101,7 @@
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
-					<td><input class="btn" type="submit" value="OK"
-						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_OK%>" /></td>
+					<td><input class="btn" type="submit" value="OK" /></td>
 					<td><input class="btn" type="button" value="戻る"
 						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}'" /></td>
 				</tr>
