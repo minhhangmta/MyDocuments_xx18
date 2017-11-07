@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -745,4 +746,21 @@ public class Common {
 		return encodeSHA1("", email).substring(0, 10);
 	}
 
+	/**
+	 * Hàm sinh chuỗi salt ngẫu nhiên
+	 * 
+	 * @return String chuỗi salt
+	 */
+	public static String createSaltString() {
+		char[] chars = Constant.SALT_CHARS.toCharArray();
+		StringBuilder stringBuilder = new StringBuilder();
+		Random random = new Random();
+		// chuoi random 30 ki tu
+		for (int i = 0; i < 30; i++) {
+			char c = chars[random.nextInt(chars.length)];
+			stringBuilder.append(c);
+		}
+		return stringBuilder.toString();
+	}
+	
 }

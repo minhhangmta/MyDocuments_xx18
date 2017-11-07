@@ -4,9 +4,11 @@
  */
 package manageuser.logics.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import manageuser.dao.impl.BaseDaoImpl;
 import manageuser.dao.impl.MstJapanDaoImpl;
 import manageuser.entities.MstJapan;
 import manageuser.logics.MstJapanLogic;
@@ -17,6 +19,8 @@ import manageuser.logics.MstJapanLogic;
  * @author minhhang
  */
 public class MstJapanLogicImpl implements MstJapanLogic {
+	Connection connection = new BaseDaoImpl().getConnection();
+	private MstJapanDaoImpl mstJapanDaoImpl = new MstJapanDaoImpl(connection);
 
 	/*
 	 * (non-Javadoc)
@@ -25,15 +29,17 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 */
 	@Override
 	public List<MstJapan> getAllMstJapan() throws SQLException {
-		return new MstJapanDaoImpl().getAllMstJapan();
+		return mstJapanDaoImpl.getAllMstJapan();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see manageuser.logics.MstJapanLogic#getNameLevel(java.lang.String)
 	 */
 	@Override
 	public String getNameLevel(String codeLevel) {
-		return new MstJapanDaoImpl().getNameLevel(codeLevel);
+		return mstJapanDaoImpl.getNameLevel(codeLevel);
 	}
 
 }

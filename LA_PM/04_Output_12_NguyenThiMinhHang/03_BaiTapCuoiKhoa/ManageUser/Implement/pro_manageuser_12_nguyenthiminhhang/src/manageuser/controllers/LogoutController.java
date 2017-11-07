@@ -46,7 +46,7 @@ public class LogoutController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_SERVLET);
 		} catch (Exception e) {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("errorSystem", errorSystem);
+			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			try {
 				requestDispatcher.forward(request, response);

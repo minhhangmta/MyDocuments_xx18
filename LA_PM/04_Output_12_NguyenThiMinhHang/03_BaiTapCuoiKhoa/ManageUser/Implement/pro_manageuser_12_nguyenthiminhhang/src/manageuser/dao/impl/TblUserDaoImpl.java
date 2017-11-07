@@ -5,11 +5,14 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.mysql.jdbc.Statement;
 
 import manageuser.dao.TblUserDao;
 import manageuser.entities.TblUser;
@@ -23,6 +26,20 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
+	public Connection connection = getConnection();
+
+	/**
+	 * @param connection
+	 */
+	public TblUserDaoImpl(Connection connection) {
+		this.connection = connection;
+	}
+
+	/**
+	 * 
+	 */
+	public TblUserDaoImpl() {
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -34,7 +51,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		String salt = "";
 		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -59,7 +75,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existLogin(String username, String password) {
 		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			int index = 1;
 			preparedStatement.setString(index++, username);
@@ -118,7 +133,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		query.append(" LIMIT ?,?");
 		query.append(";");
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			int index = 1;
 			if (groupId > 0) {
@@ -172,7 +186,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(";");
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			int index = 1;
 			if (groupId > 0) {
@@ -204,7 +217,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existUsername(String username) {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, username);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -228,7 +240,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existEmail(String email) {
 		String query = "SELECT email FROM tbl_user WHERE email = ?";
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -253,7 +264,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existCodeLevel(String codeLevel) {
 		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
 		try {
-			Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, codeLevel);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -269,13 +279,51 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see manageuser.dao.TblUserDao#insertUser(manageuser.entities.TblUser)
 	 */
 	@Override
 	public int insertUser(TblUser tblUser) {
-//		String query = "INSERT INTO "
-		return 0;
+		int userId = Constant.DEFAULT_INT;
+		StringBuilder query = new StringBuilder();
+		query.append("INSERT INTO tbl_user ").append("(login_name, passwords, full_name, full_name_kana, ")
+				.append("email, tel, birthday, salt, role)").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+		try {
+			connection.setAutoCommit(false);
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			preparedStatement.setString(index++, tblUser.getLoginName());
+			preparedStatement.setString(index++, tblUser.getPasswords());
+			preparedStatement.setString(index++, tblUser.getFullName());
+			preparedStatement.setString(index++, tblUser.getFullNameKana());
+			preparedStatement.setString(index++, tblUser.getEmail());
+			preparedStatement.setString(index++, tblUser.getTel());
+			preparedStatement.setDate(index++, (Date) tblUser.getBirthday());
+			preparedStatement.setString(index++, tblUser.getSalt());
+			preparedStatement.setInt(index++, tblUser.getRole());
+
+			preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.executeUpdate();
+			ResultSet resultSet = preparedStatement.getGeneratedKeys();
+			if (resultSet.last()) {
+				userId = resultSet.getInt("user_id");
+			}
+			connection.commit();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			closeConnection();
+		}
+		return userId;
 	}
-	
+
 }

@@ -6,6 +6,7 @@ package manageuser.logics;
 
 import java.util.List;
 
+import manageuser.entities.TblDetailUserJapan;
 import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 
@@ -96,4 +97,22 @@ public interface TblUserLogic {
 	 * @return true thành công, false nếu không thành công
 	 */
 	public int insertUser(TblUser tblUser);
+
+	/**
+	 * Inser thông tin chi tiết của user vào bảng tbl_detail_user_japan
+	 * 
+	 * @param tblDetailUserJapan
+	 *            Đối tượng chứa thông tin của TblDetailUserJapan
+	 * @return true nếu insert thành công, false nếu không
+	 */
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan);
+
+	/**
+	 * Insert data user vào bảng tbl_user và tbl_detail_user_japan
+	 * 
+	 * @param userInfor
+	 *            đối tượng UserInfor
+	 * @return true nếu insert thành công, false nếu không insert thành công
+	 */
+	public boolean createUser(UserInfor userInfor);
 }

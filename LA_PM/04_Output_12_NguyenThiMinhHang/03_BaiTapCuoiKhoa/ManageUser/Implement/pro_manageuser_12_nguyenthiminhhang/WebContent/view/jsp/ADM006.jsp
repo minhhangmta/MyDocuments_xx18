@@ -17,9 +17,7 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form
-		action="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>"
-		method="post" name="inputform">
+	<form action="ADM002.html" method="post" name="inputform">
 		<table class="tbl_input" border="0" width="80%" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -28,9 +26,7 @@
 				</td>
 			</tr>
 			<tr>
-				<!-- Start fix bug ID 50 - NguyenThiMinhHang 2017/11/1  -->
-				<td align="center" colspan="2"><font color="red">${error}</font></td>
-				<!-- End fix bug ID 50 - NguyenThiMinhHang 2017/11/1  -->
+				<td align="center" colspan="2">${content}</td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
@@ -39,7 +35,8 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="2"><input class="btn" type="submit"
-					value="OK" /></td>
+					value="OK"
+					onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
 			</tr>
 		</table>
 	</form>

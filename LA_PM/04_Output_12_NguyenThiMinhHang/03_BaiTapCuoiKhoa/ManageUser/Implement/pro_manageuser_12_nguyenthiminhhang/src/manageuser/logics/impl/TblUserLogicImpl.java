@@ -4,13 +4,18 @@
  */
 package manageuser.logics.impl;
 
+import java.sql.Connection;
 import java.util.List;
 
+import manageuser.dao.impl.BaseDaoImpl;
+import manageuser.dao.impl.TblDetailUserJapanDaoImpl;
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblDetailUserJapan;
 import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
+import manageuser.utils.Constant;
 
 /**
  * Xử lý logic liên quan đến thông tin của user
@@ -18,7 +23,9 @@ import manageuser.utils.Common;
  * @author minhhang
  */
 public class TblUserLogicImpl implements TblUserLogic {
-	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();;
+	Connection connection = new BaseDaoImpl().getConnection();
+	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+	private TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl();
 
 	/*
 	 * (non-Javadoc)
@@ -104,6 +111,65 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public int insertUser(TblUser tblUser) {
 		return userDaoImpl.insertUser(tblUser);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * manageuser.logics.TblUserLogic#insertDetailUserJapan(manageuser.entities.
+	 * TblDetailUserJapan)
+	 */
+	@Override
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) {
+		return detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#createUser(manageuser.entities.UserInfor)
+	 */
+	@Override
+	public boolean createUser(UserInfor userInfor) {
+		boolean check = false;
+		String fullNameKana = userInfor.getFullNameKana();
+		// insert vao tbl_user
+		TblUser tblUser = new TblUser();
+		tblUser.setLoginName(userInfor.getLoginName());
+		tblUser.setEmail(userInfor.getEmail());
+		tblUser.setBirthday(userInfor.getBirthday());
+		tblUser.setFullName(userInfor.getFullName());
+		if (!fullNameKana.isEmpty()) {
+			tblUser.setFullNameKana(fullNameKana);
+		}
+		tblUser.setGroupId(userInfor.getGroupId());
+		// get salt from createSaltString()
+		tblUser.setSalt(Common.createSaltString());
+		// ma hoa password
+		tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
+		tblUser.setTel(userInfor.getTel());
+		tblUser.setRole(Constant.ROLE_USER);
+		// get userId from TblUser
+		int userId = insertUser(tblUser);
+		if (userId == Constant.DEFAULT_INT) {
+			return false;
+		}
+		// insert vao detail_japan (neu co)
+		String codeLevel = userInfor.getCodeLevel();
+		if (!codeLevel.isEmpty()) {
+			TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
+			detailUserJapan.setCodeLevel(codeLevel);
+			detailUserJapan.setUserId(userId);
+			detailUserJapan.setStartDate(userInfor.getStartDate());
+			detailUserJapan.setEndDate(userInfor.getEndDate());
+			detailUserJapan.setTotal(userInfor.getTotal());
+			check = insertDetailUserJapan(detailUserJapan);
+		}
+		if (!check) {
+			return false;
+		}
+		return true;
 	}
 
 }

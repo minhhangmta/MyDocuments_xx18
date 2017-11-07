@@ -103,7 +103,7 @@ public interface TblUserDao {
 	 * 
 	 * @param tblUser
 	 *            tblUser Đối tượng chứa thông tin của user
-	 * @return true thành công, false nếu không thành công
+	 * @return int mã user vừa thêm
 	 */
 	public int insertUser(TblUser tblUser);
 

@@ -16,6 +16,7 @@ public class Constant {
 	public static final String ADM003 = "view/jsp/ADM003.jsp";
 	public static final String ADM004 = "view/jsp/ADM004.jsp";
 	public static final String ADM005 = "view/jsp/ADM005.jsp";
+	public static final String ADM006 = "view/jsp/ADM006.jsp";
 	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
 	// Controller
 	public static final String LISTUSER_SERVLET = "/listUser.do";
@@ -25,6 +26,8 @@ public class Constant {
 	public static final String ADD_USER_VALIDATE = "/addUserValidate.do";
 	public static final String ADD_USER_CONFIRM = "/addUserConfirm.do";
 	public static final String ADD_USER_OK = "/addUserOK.do";
+	public static final String SUCCESS_SERVLET = "/success.do";
+	public static final String ERROR_SERVLET = "/error.do";
 	//
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
@@ -40,9 +43,13 @@ public class Constant {
 	public static final int DEFAULT_TOTAL = -1;
 	public static final int DEFAULT_CODE_LEVEL = -1;
 	public static final int DEFAULT_CURRENT_PAGE = 1;
-	//Format default
+	// Format default
 	public static final String CHARSET = "UTF-8";
 	public static final int START_YEAR = 1980;
 	public static final String FORMAT_DATE = "yyyy/MM/dd";
+	public static final int ROLE_USER = 0;
+	public static final String SALT_CHARS = "abcdefghijklmnopqrstuvwxyz";
+	public static final String INSERT_SUCCESS = "insertSuccess";
+	public static final String INSERT_FAIL = "insertFail";
 
 }
