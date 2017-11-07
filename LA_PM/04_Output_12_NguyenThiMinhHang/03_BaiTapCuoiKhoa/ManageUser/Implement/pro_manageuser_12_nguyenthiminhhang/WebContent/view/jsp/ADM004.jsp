@@ -68,8 +68,11 @@
 								<td align="left">${userInfor.tel}</td>
 							</tr>
 							<tr>
-								<th colspan="2"><a href="#">日本語能力</a></th>
+								<th colspan="2"><a href="" onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
+						<!-- </table>
+						<table border="1" width="70%" id="japan_table" class="tbl_input" cellpadding="4"
+							cellspacing="0"> -->
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left">${userInfor.nameLevel}</td>

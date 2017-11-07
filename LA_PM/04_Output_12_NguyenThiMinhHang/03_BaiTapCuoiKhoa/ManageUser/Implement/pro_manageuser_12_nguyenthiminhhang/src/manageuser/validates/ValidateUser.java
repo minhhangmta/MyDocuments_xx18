@@ -102,30 +102,33 @@ public class ValidateUser {
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
+		String codeLevel = userInfor.getCodeLevel();
 		// codeLevel
-		errorMsg = Common.validateCodeLevel(userInfor.getCodeLevel());
+		errorMsg = Common.validateCodeLevel(codeLevel);
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
-		//
-		// // date of issue x
-		errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
-				userInfor.getDayStartDate());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
-		//
-		// // expiration date x
-		errorMsg = Common.validateEndDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
-				userInfor.getDayEndDate());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
-		//
-		// total
-		errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
+		if (!codeLevel.isEmpty()) {
+			//
+			// // date of issue x
+			errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
+					userInfor.getDayStartDate());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
+			//
+			// // expiration date x
+			errorMsg = Common.validateEndDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
+					userInfor.getDayEndDate());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
+			//
+			// total
+			errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
 		}
 		return lstError;
 	}

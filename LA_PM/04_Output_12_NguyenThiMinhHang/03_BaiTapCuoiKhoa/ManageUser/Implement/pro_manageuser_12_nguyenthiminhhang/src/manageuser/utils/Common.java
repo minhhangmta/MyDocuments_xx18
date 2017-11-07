@@ -756,7 +756,7 @@ public class Common {
 		StringBuilder stringBuilder = new StringBuilder();
 		Random random = new Random();
 		// chuoi random 30 ki tu
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 20; i++) {
 			char c = chars[random.nextInt(chars.length)];
 			stringBuilder.append(c);
 		}

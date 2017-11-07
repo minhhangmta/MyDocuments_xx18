@@ -5,4 +5,3 @@ function hiddenTable() {
 		document.getElementById("japan_table").style.display = "block";
 	}
 }
-

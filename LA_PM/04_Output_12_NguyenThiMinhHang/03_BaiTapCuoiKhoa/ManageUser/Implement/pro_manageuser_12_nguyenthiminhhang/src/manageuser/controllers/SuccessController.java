@@ -35,13 +35,13 @@ public class SuccessController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String type = request.getParameter("type");
-			if (type == Constant.INSERT_SUCCESS) {
+			if (Constant.INSERT_SUCCESS.equals(type)) {
 				request.setAttribute("content", MessageProperties.getData("MSG001"));
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
-			} else if (type == Constant.INSERT_FAIL) {
-				request.setAttribute("error", MessageProperties.getData("MSG005"));
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+			} else if (Constant.INSERT_FAIL.equals(type)) {
+				request.setAttribute("content", MessageErrorProperties.getData("MSG015"));
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {

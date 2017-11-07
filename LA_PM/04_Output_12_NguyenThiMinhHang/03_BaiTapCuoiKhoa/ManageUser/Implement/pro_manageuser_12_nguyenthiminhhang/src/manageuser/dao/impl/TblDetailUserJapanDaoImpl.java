@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import manageuser.dao.TblDetailUserJapanDao;
 import manageuser.entities.TblDetailUserJapan;
+import manageuser.utils.Common;
 
 /**
  * Implement Thao tác với bảng TblDetailUserJapan trong DB
@@ -46,16 +47,16 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		boolean check = false;
 		query.append("INSERT INTO tbl_detail_user_japan ").append("(")
 				.append("user_id, code_level, start_date, end_date, total").append(")")
-				.append("VALUES(?, ?, ?, ?, ? )");
+				.append(" VALUES(?, ?, ?, ?, ? )");
 		try {
 			connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			int index = 1;
 			preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
 			preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
-			preparedStatement.setDate(index++, (Date) tblDetailUserJapan.getStartDate());
-			preparedStatement.setDate(index++, (Date) tblDetailUserJapan.getEndDate());
-			preparedStatement.setString(index++, tblDetailUserJapan.getTotal());
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
+			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
 			preparedStatement.executeUpdate();
 			check = true;
 			connection.commit();

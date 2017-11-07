@@ -73,8 +73,9 @@ public class AddUserConfirmController extends HttpServlet {
 			UserInfor userInfor = (UserInfor) session.getAttribute(keySesion);
 			if (tblUserLogicImpl.createUser(userInfor)) {
 				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
+			} else {
+				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
 			}
-			resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
 		} catch (Exception e) {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			req.setAttribute("error", errorSystem);

@@ -150,7 +150,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
 		tblUser.setTel(userInfor.getTel());
 		tblUser.setRole(Constant.ROLE_USER);
-		System.out.println("x");
 		// get userId from TblUser
 		int userId = insertUser(tblUser);
 		if (userId == Constant.DEFAULT_INT) {

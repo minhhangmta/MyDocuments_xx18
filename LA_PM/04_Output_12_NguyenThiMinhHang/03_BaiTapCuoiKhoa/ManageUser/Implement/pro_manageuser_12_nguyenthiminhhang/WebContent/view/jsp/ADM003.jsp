@@ -124,7 +124,7 @@
 									onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<table id="japan_table" style="">
+						<table id="japan_table" style="display: none;">
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="codeLevel">

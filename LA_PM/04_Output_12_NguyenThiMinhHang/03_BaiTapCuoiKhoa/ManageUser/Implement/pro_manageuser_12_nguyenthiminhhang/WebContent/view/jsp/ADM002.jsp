@@ -86,7 +86,7 @@
 					<th align="left">生年月日</th>
 					<th align="left">グループ</th>
 					<th align="left">メールアドレス</th>
-					<th align="left" width="70px">電話番号</th>
+					<th align="left" width="100px">電話番号</th>
 					<th align="left">日本語能力 <a
 						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level"><c:if
 								test="${sortByCodeLevel == 'ASC'}">
@@ -166,7 +166,7 @@
 					</c:choose>
 					<!-- End fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 				</c:forEach> <c:if
-					test="${listPaging.size() < totalPage && currentPage < totalPage }">
+					test="${listPaging.get(listPaging.size()-1) < totalPage}">
 					<a
 						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
 						&gt;&gt; </a>

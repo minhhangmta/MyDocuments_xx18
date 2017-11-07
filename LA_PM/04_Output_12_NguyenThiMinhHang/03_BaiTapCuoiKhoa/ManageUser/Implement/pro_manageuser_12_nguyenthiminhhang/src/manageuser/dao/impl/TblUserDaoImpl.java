@@ -5,7 +5,6 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +57,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				salt = resultSet.getString("salt");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -84,7 +82,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				return false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -159,7 +156,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				listUserInfor.add(userInfor);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -200,7 +196,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				total = resultSet.getInt("total");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -224,7 +220,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				return false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -247,7 +242,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				return false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -271,7 +265,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				return false;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -289,10 +282,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		int userId = Constant.DEFAULT_INT;
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO tbl_user ").append("(group_id, login_name, passwords, full_name, full_name_kana, ")
-				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )").append(";");
+				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )")
+				.append(";");
 		try {
+			// start a transaction block
 			connection.setAutoCommit(false);
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString(),
+					PreparedStatement.RETURN_GENERATED_KEYS);
 			int index = 1;
 			preparedStatement.setInt(index++, tblUser.getGroupId());
 			preparedStatement.setString(index++, tblUser.getLoginName());
@@ -304,21 +300,19 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
 			preparedStatement.setString(index++, tblUser.getSalt());
 			preparedStatement.setInt(index++, tblUser.getRole());
-			System.out.println(query);
-			preparedStatement = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
-			preparedStatement.executeUpdate(query.toString());
+			preparedStatement.executeUpdate();
+
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.last()) {
-				userId = resultSet.getInt("user_id");
+				userId = resultSet.getInt(1);
 			}
+			// end transaction block
 			connection.commit();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} finally {
