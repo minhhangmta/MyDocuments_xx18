@@ -42,18 +42,13 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);
 		} catch (Exception e) {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(req, resp);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(req, resp);
 		}
 	}
 
@@ -64,7 +59,7 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// Lấy username và password từ jsp
 			String username = request.getParameter("username");
@@ -93,12 +88,7 @@ public class LoginController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 }

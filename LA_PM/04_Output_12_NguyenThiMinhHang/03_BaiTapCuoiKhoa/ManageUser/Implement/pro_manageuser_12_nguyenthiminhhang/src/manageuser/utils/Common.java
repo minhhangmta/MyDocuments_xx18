@@ -223,6 +223,17 @@ public class Common {
 		}
 	}
 
+	/**
+	 * Hàm lấy giá trị từ request
+	 * 
+	 * @param request
+	 *            request
+	 * @param key
+	 *            key value
+	 * @param defaultValue
+	 *            value mặc định
+	 * @return String giá trị value
+	 */
 	public static String getRequestValue(HttpServletRequest request, String key, String defaultValue) {
 		Object value = request.getParameter(key);
 		if (value == null) {
@@ -451,6 +462,34 @@ public class Common {
 	}
 
 	/**
+	 * Check không nhập
+	 * 
+	 * @param key
+	 *            chuỗi cần check
+	 * @return true nếu nhập, false nếu không nhập
+	 */
+	public static boolean checkPressTxt(String key) {
+		if (key.length() < 1) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check có nhỏ hơn hoặc bằng 255 kí tự không
+	 * 
+	 * @param key
+	 *            chuỗi cần check
+	 * @return true nếu nhỏ hơn hoặc bằng, false nếu vượt quá 255 kí tự
+	 */
+	public static boolean check255Chars(String key) {
+		if (key.length() > getMaxLengthString()) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * Hàm validate fullname
 	 * 
 	 * @param fullName
@@ -460,9 +499,9 @@ public class Common {
 	public static String validateFullname(String fullName) {
 		String errName = "";
 		// Nếu không nhập
-		if (fullName.length() < 1) {
+		if (!checkPressTxt(fullName)) {
 			errName = MessageErrorProperties.getData("ER001_FULLNAME");
-		} else if (fullName.length() > getMaxLengthString()) {// Nếu quá 255 kí tự
+		} else if (!check255Chars(fullName)) {// Nếu quá 255 kí tự
 			errName = MessageErrorProperties.getData("ER006_FULLNAME");
 		}
 		return errName;
@@ -478,7 +517,7 @@ public class Common {
 	public static String validateFullnameKana(String fullnameKana) {
 		String errKana = "";
 		// Nếu vượt quá 255 kí tự
-		if (fullnameKana.length() > getMaxLengthString()) {
+		if (!check255Chars(fullnameKana)) {
 			errKana = MessageErrorProperties.getData("ER006_FULLNAME_KANA");
 		} else if (!fullnameKana.isEmpty() && !checkKana(fullnameKana)) {// Nếu không có kí tự kana
 			errKana = MessageErrorProperties.getData("ER009");
@@ -514,13 +553,13 @@ public class Common {
 	 */
 	public static String validateEmail(String email) {
 		String errEmail = "";
-		if (email.length() < 1) {
+		if (!checkPressTxt(email)) {// Khong nhap
 			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
 		} else {
 			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
 			boolean validFormat = pattern.matcher(email).matches();
 			boolean validEmail = new TblUserLogicImpl().existEmail(email);
-			if (email.length() > getMaxLengthString()) {// Nếu quá 255 kí tự
+			if (!check255Chars(email)) {// Nếu quá 255 kí tự
 				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
 			} else if (!validFormat) {// Nếu sai định dạng
 				errEmail = MessageErrorProperties.getData("ER005_EMAIL");
@@ -540,12 +579,12 @@ public class Common {
 	 */
 	public static String validateTel(String tel) {
 		String errTel = "";
-		if (tel.length() < 1) {
+		if (tel.length() < 1) {// Khong nhap
 			errTel = MessageErrorProperties.getData("ER001_TEL");
 		} else {
 			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTel"));
 			boolean validFormat = pattern.matcher(tel).matches();
-			if (tel.length() > getMaxLength()) {
+			if (tel.length() > getMaxLength()) {//
 				errTel = MessageErrorProperties.getData("ER006_TEL");
 			} else if (!validFormat) {// định dạng xxxx-xxxx-xxxx
 				errTel = MessageErrorProperties.getData("ER005_TEL");
@@ -610,7 +649,7 @@ public class Common {
 	 * @return String chuỗi thông báo lỗi
 	 */
 	public static String validatePassConfirm(String password, String passConfirm) {
-		if (!password.isEmpty() && !password.equals(passConfirm)) {
+		if (!password.equals(passConfirm)) {
 			return MessageErrorProperties.getData("ER017");
 		}
 		return "";
@@ -632,6 +671,15 @@ public class Common {
 		return "";
 	}
 
+	/**
+	 * Hàm validate điểm total
+	 * 
+	 * @param total
+	 *            điểm
+	 * @param code_level
+	 *            mã trình độ
+	 * @return String chuỗi thông báo lỗi
+	 */
 	public static String validateTotal(String total, String code_level) {
 		String errTotal = "";
 		String totalStr = String.valueOf(total);
@@ -798,7 +846,7 @@ public class Common {
 		char[] chars = Constant.SALT_CHARS.toCharArray();
 		StringBuilder stringBuilder = new StringBuilder();
 		Random random = new Random();
-		// chuoi random 30 ki tu
+		// chuoi random 20 ki tu
 		for (int i = 0; i < 20; i++) {
 			char c = chars[random.nextInt(chars.length)];
 			stringBuilder.append(c);

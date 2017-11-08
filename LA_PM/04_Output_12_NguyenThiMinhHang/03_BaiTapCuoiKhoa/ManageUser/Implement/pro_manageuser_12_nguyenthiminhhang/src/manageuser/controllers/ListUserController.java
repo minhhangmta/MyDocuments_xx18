@@ -47,7 +47,7 @@ public class ListUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -58,7 +58,7 @@ public class ListUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
 			// Khởi tạo
@@ -188,12 +188,7 @@ public class ListUserController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 }

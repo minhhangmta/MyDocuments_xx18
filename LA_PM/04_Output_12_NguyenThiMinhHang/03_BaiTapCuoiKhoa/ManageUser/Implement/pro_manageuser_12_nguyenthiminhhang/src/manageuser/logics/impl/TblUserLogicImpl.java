@@ -134,7 +134,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean createUser(UserInfor userInfor) {
-		boolean check = false;
+		boolean check = true;
 		String fullNameKana = userInfor.getFullNameKana();
 		// insert vao tbl_user
 		TblUser tblUser = new TblUser();
@@ -161,7 +161,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			}
 			// insert vao detail_japan (neu co)
 			String codeLevel = userInfor.getCodeLevel();
-			if (!codeLevel.isEmpty() && userId != 0) {
+			if (!codeLevel.isEmpty()) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
 				detailUserJapan.setCodeLevel(codeLevel);
 				detailUserJapan.setUserId(userId);
@@ -176,7 +176,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} finally {

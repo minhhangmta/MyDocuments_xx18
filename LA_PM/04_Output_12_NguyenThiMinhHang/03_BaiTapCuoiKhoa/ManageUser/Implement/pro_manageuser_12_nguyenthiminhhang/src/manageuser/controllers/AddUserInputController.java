@@ -24,7 +24,7 @@ import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
- * Servlet implementation class AddUserInputController
+ * Controller xử lý các logic của màn hình ADM003
  */
 @WebServlet({ "/addUserInput.do", "/addUserValidate.do" })
 public class AddUserInputController extends HttpServlet {
@@ -39,16 +39,19 @@ public class AddUserInputController extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException
+	 * @throws ServletException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			// set dữ liệu
 			setDataLogicADM003(request, response);
 			// set default
 			UserInfor userInfor = setDefault(request, response);
-			//set request
+			// set request
 			request.setAttribute("userInfor", userInfor);
 			// Forward đến ADM003
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
@@ -57,20 +60,18 @@ public class AddUserInputController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 
 	/**
+	 * @throws IOException
+	 * @throws ServletException
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			UserInfor userInfor = setDefault(request, response);
 			ValidateUser validateUser = new ValidateUser();
@@ -99,12 +100,7 @@ public class AddUserInputController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 

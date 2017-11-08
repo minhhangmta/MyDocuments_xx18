@@ -30,6 +30,7 @@ public class DatabaseProperties {
 			e.printStackTrace();
 		}
 
+		
 		@SuppressWarnings("unchecked")
 		Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();
 		while (enumeration.hasMoreElements()) {

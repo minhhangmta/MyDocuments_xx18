@@ -57,7 +57,6 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
 			preparedStatement.executeUpdate();
 			check = true;
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

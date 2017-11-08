@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 
 /**
@@ -39,21 +38,15 @@ public class LogoutController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException{
 		try {
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_SERVLET);
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 }

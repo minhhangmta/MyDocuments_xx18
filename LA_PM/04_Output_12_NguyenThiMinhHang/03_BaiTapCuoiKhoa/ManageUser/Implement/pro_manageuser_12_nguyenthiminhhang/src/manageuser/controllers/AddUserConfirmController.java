@@ -16,7 +16,7 @@ import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class AddUserConfirmController
+ * Controller xử lý các logic của màn hình ADM004
  */
 @WebServlet({ "/addUserConfirm.do", "/addUserOK.do" })
 public class AddUserConfirmController extends HttpServlet {
@@ -31,10 +31,13 @@ public class AddUserConfirmController extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException
+	 * @throws ServletException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
 			String keySesion = request.getParameter("keySession");
@@ -48,12 +51,7 @@ public class AddUserConfirmController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(request, response);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(request, response);
 		}
 	}
 
@@ -65,13 +63,14 @@ public class AddUserConfirmController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			HttpSession session = req.getSession();
-			String keySesion = req.getParameter("keySession");
-			UserInfor userInfor = (UserInfor) session.getAttribute(keySesion);
+			String keySession = req.getParameter("keySession");
+			UserInfor userInfor = (UserInfor) session.getAttribute(keySession);
 			if (tblUserLogicImpl.createUser(userInfor)) {
+				// req.setAttribute(keySession, keySession);
 				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
 			} else {
 				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
@@ -80,13 +79,7 @@ public class AddUserConfirmController extends HttpServlet {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			req.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			try {
-				requestDispatcher.forward(req, resp);
-			} catch (ServletException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			requestDispatcher.forward(req, resp);
 		}
 	}
-
 }

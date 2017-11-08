@@ -138,7 +138,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 			preparedStatement.setInt(index++, offset);
 			preparedStatement.setInt(index++, limit);
-
+			
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				UserInfor userInfor = new UserInfor();

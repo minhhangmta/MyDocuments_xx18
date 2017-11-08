@@ -133,5 +133,4 @@ public class ValidateUser {
 		}
 		return lstError;
 	}
-
 }
