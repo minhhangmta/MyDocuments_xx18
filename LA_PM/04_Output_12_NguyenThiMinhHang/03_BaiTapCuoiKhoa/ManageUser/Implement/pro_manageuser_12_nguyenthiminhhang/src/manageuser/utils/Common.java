@@ -433,7 +433,7 @@ public class Common {
 		String errGroup = "";
 		boolean valid = new MstGroupLogicImpl().existGroup(groupId);
 		// Chua chon nhom
-		if (groupId == 0) {
+		if (groupId < 0) {
 			errGroup = MessageErrorProperties.getData("ER002");
 		} else if (!valid) {// Nhom khong ton tai
 			errGroup = MessageErrorProperties.getData("ER004_GROUP");
@@ -719,20 +719,63 @@ public class Common {
 	/**
 	 * Hàm validate ngày kết thúc
 	 * 
-	 * @param year
-	 *            năm
-	 * @param month
-	 *            tháng
-	 * @param day
-	 *            ngày
+	 * @param yearStart
+	 *            năm bắt đầu
+	 * @param monthStart
+	 *            tháng bắt đầu
+	 * @param dayStart
+	 *            ngày bắt đầu
+	 * @param yearEnd
+	 *            năm kết thúc
+	 * @param monthEnd
+	 *            tháng kết thúc
+	 * @param dayEnd
+	 *            ngày kết thúc
 	 * @return String chuỗi thông báo lỗi
 	 */
-	public static String validateEndDate(int year, int month, int day) {
-		String date = convertToString(year, month, day);
-		if (!isDateValid(date)) {
+	public static String validateEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
+			int dayEnd) {
+		String endDate = convertToString(yearEnd, monthEnd, dayEnd);
+		if (!isDateValid(endDate)) {
 			return MessageErrorProperties.getData("ER011_END_DATE");
+		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {
+			return MessageErrorProperties.getData("ER012");
 		}
 		return "";
+	}
+
+	/**
+	 * Hàm so sánh end date và start date
+	 * 
+	 * @param yearStart
+	 *            năm bắt đầu
+	 * @param monthStart
+	 *            tháng bắt đầu
+	 * @param dayStart
+	 *            ngày bắt đầu
+	 * @param yearEnd
+	 *            năm kết thúc
+	 * @param monthEnd
+	 *            tháng kết thúc
+	 * @param dayEnd
+	 *            ngày kết thúc
+	 * @return true nếu end date lớn hơn start date, false nếu ngược lại
+	 */
+	public static boolean compareStartEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
+			int dayEnd) {
+		boolean check = true;
+		if (yearStart == yearEnd) {
+			if (monthStart > monthEnd) {
+				check = false;
+			} else if (monthStart == monthEnd) {
+				if (dayStart >= dayEnd) {
+					check = false;
+				}
+			}
+		} else if (yearStart > yearEnd) {
+			check = false;
+		}
+		return check;
 	}
 
 	/**
@@ -762,5 +805,5 @@ public class Common {
 		}
 		return stringBuilder.toString();
 	}
-	
+
 }

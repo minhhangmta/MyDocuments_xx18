@@ -51,7 +51,7 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> グループ:</td>
 								<td align="left"><select name="groupId">
-										<option value="0" selected disabled hidden="">選択してください</option>
+										<option value="0" selected>選択してください</option>
 										<c:forEach items="${listGroup}" var="group">
 											<option value="${group.groupId}"
 												${group.groupId == userInfor.groupId ? 'selected' : ''}>${group.groupName}</option>
@@ -128,7 +128,7 @@
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="codeLevel">
-										<option value="-1" selected disabled hidden="">選択してください</option>
+										<option value="" selected>選択してください</option>
 										<c:forEach items="${listJapan}" var="japan">
 											<option value="${japan.codeLevel}"
 												${japan.codeLevel == userInfor.codeLevel ? 'selected' : ''}>${japan.nameLevel}</option>
@@ -158,9 +158,15 @@
 								<td class="lbl_left">失効日:</td>
 								<td align="left"><select name="yearEndDate">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year}">${year}</option>
+											<option value="${year}"
+												${year == userInfor.yearEndDate ? 'selected' : ''}>${year}</option>
+											<%-- <c:if test="${year==userInfor.year}">
+											<option value="${year+1}"
+												${year == userInfor.yearEndDate? 'selected' : ''}>${year+1}</option>
+												</c:if> --%>
 										</c:forEach>
-										<option value="${userInfor.year+1}" selected>${userInfor.year+1}</option>
+										<option value="${userInfor.year+1}"
+											${userInfor.year == userInfor.yearEndDate ? 'selected' : ''}>${userInfor.year+1}</option>
 								</select>年 <select name="monthEndDate">
 										<c:forEach items="${listMonth}" var="month">
 											<option value="${month}"

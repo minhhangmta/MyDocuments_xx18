@@ -5,7 +5,6 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -49,7 +48,6 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 				.append("user_id, code_level, start_date, end_date, total").append(")")
 				.append(" VALUES(?, ?, ?, ?, ? )");
 		try {
-			connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 			int index = 1;
 			preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
@@ -59,20 +57,12 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
 			preparedStatement.executeUpdate();
 			check = true;
-			connection.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		} finally {
 			closeConnection();
 		}
 		return check;
 	}
-
 }

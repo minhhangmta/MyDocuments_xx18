@@ -40,7 +40,7 @@ public class SuccessController extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			} else if (Constant.INSERT_FAIL.equals(type)) {
-				request.setAttribute("content", MessageErrorProperties.getData("MSG015"));
+				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			}

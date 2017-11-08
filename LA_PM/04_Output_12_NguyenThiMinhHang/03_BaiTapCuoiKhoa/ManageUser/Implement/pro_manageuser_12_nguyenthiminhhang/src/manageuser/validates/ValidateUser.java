@@ -118,7 +118,8 @@ public class ValidateUser {
 			}
 			//
 			// // expiration date x
-			errorMsg = Common.validateEndDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
+			errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
+					userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 					userInfor.getDayEndDate());
 			if (!errorMsg.isEmpty()) {
 				lstError.add(errorMsg);

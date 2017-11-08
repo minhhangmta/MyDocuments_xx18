@@ -5,6 +5,7 @@
 package manageuser.logics.impl;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.dao.impl.BaseDaoImpl;
@@ -23,7 +24,8 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserLogicImpl implements TblUserLogic {
-	Connection connection = new BaseDaoImpl().getConnection();
+	BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+	Connection connection = baseDaoImpl.getConnection();
 	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
 	private TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 
@@ -150,26 +152,41 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
 		tblUser.setTel(userInfor.getTel());
 		tblUser.setRole(Constant.ROLE_USER);
-		// get userId from TblUser
-		int userId = insertUser(tblUser);
-		if (userId == Constant.DEFAULT_INT) {
-			return false;
+		try {
+			connection.setAutoCommit(false);
+			// get userId from TblUser
+			int userId = insertUser(tblUser);
+			if (userId == 0) {
+				return false;
+			}
+			// insert vao detail_japan (neu co)
+			String codeLevel = userInfor.getCodeLevel();
+			if (!codeLevel.isEmpty() && userId != 0) {
+				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
+				detailUserJapan.setCodeLevel(codeLevel);
+				detailUserJapan.setUserId(userId);
+				detailUserJapan.setStartDate(userInfor.getStartDate());
+				detailUserJapan.setEndDate(userInfor.getEndDate());
+				detailUserJapan.setTotal(userInfor.getTotal());
+				check = insertDetailUserJapan(detailUserJapan);
+			}
+			connection.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+				return false;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			baseDaoImpl.closeConnection();
 		}
-		// insert vao detail_japan (neu co)
-		String codeLevel = userInfor.getCodeLevel();
-		if (!codeLevel.isEmpty()) {
-			TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
-			detailUserJapan.setCodeLevel(codeLevel);
-			detailUserJapan.setUserId(userId);
-			detailUserJapan.setStartDate(userInfor.getStartDate());
-			detailUserJapan.setEndDate(userInfor.getEndDate());
-			detailUserJapan.setTotal(userInfor.getTotal());
-			check = insertDetailUserJapan(detailUserJapan);
+		if (check) {
+			return true;
 		}
-		if (!check) {
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 }

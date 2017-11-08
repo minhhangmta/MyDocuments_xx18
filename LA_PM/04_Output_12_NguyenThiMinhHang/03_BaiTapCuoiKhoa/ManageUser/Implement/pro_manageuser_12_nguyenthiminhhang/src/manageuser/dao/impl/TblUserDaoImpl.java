@@ -11,8 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Statement;
-
 import manageuser.dao.TblUserDao;
 import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
@@ -285,8 +283,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )")
 				.append(";");
 		try {
-			// start a transaction block
-			connection.setAutoCommit(false);
 			PreparedStatement preparedStatement = connection.prepareStatement(query.toString(),
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			int index = 1;
@@ -306,15 +302,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			if (resultSet.last()) {
 				userId = resultSet.getInt(1);
 			}
-			// end transaction block
-			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} finally {
 			closeConnection();
 		}
