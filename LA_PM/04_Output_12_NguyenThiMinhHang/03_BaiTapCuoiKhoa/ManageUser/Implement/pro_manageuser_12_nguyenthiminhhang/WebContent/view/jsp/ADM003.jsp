@@ -160,10 +160,6 @@
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
 												${year == userInfor.yearEndDate ? 'selected' : ''}>${year}</option>
-											<%-- <c:if test="${year==userInfor.year}">
-											<option value="${year+1}"
-												${year == userInfor.yearEndDate? 'selected' : ''}>${year+1}</option>
-												</c:if> --%>
 										</c:forEach>
 										<option value="${userInfor.year+1}"
 											${userInfor.year == userInfor.yearEndDate ? 'selected' : ''}>${userInfor.year+1}</option>

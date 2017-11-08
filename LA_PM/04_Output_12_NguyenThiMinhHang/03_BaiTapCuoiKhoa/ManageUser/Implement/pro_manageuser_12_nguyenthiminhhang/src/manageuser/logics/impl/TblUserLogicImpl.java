@@ -175,7 +175,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 			e.printStackTrace();
 			try {
 				connection.rollback();
-				return false;
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
