@@ -254,7 +254,7 @@ public class Common {
 	 */
 	public static List<Integer> getListYear(int fromYear, int toYear) {
 		List<Integer> listYear = new ArrayList<>();
-		for (int year = fromYear; year <= toYear; year++) {
+		for (int year = fromYear; year <= toYear + 1; year++) {
 			listYear.add(year);
 		}
 		return listYear;
@@ -387,19 +387,19 @@ public class Common {
 	 */
 	public static String validateUsername(String username) {
 		String errUsername = "";
-		if (username.length() < 1) {
+		if (!checkPressTxt(username)) {// neu khong nhap
 			errUsername = MessageErrorProperties.getData("ER001_USERNAME");
 		} else {
 			Pattern pattern = Pattern.compile(getRegex());
-			int minLength = getMinLength();
-			int maxLength = getMaxLength();
 			boolean validFormat = pattern.matcher(username).matches();
 			boolean validUser = new TblUserLogicImpl().existUsername(username);
-			if (username.length() < minLength || username.length() > maxLength) {
+			// do dai trong khoang min - max
+			if (!checkMinLength(getlengthString("minLengthUsername"), username)
+					|| !checkMaxLength(getlengthString("maxLengthUsername"), username)) {
 				errUsername = MessageErrorProperties.getData("ER007_USERNAME");
-			} else if (!validFormat) {
+			} else if (!validFormat) {// sai dinh dang
 				errUsername = MessageErrorProperties.getData("ER019");
-			} else if (validUser) {
+			} else if (validUser) {// da ton tai
 				errUsername = MessageErrorProperties.getData("ER003_USERNAME");
 			}
 		}
@@ -407,21 +407,17 @@ public class Common {
 	}
 
 	/**
-	 * Hàm lấy giá trị minlength (username, tel) từ config.properties
+	 * Hàm lấy giá trị length string từ file config.properties
 	 * 
-	 * @return int giá trị minlength
+	 * @param keyProperties
+	 *            key cần get từ file config.properties
+	 * @return int độ dài chuỗi
 	 */
-	public static int getMinLength() {
-		return tryParseInt(ConfigProperties.getData("minLength"));
-	}
-
-	/**
-	 * Hàm lấy giá trị maxlength(username, tel) từ config.properties
-	 * 
-	 * @return int giá trị maxlength
-	 */
-	public static int getMaxLength() {
-		return tryParseInt(ConfigProperties.getData("maxLength"));
+	public static int getlengthString(String keyProperties) {
+		if (!keyProperties.isEmpty()) {
+			return tryParseInt(ConfigProperties.getData(keyProperties));
+		}
+		return 0;
 	}
 
 	/**
@@ -453,15 +449,6 @@ public class Common {
 	}
 
 	/**
-	 * Hàm lấy giá trị max của chuỗi(tên, email) từ file config.properties
-	 * 
-	 * @return int giá trị maxLength
-	 */
-	public static int getMaxLengthString() {
-		return tryParseInt(ConfigProperties.getData("maxLengthString"));
-	}
-
-	/**
 	 * Check không nhập
 	 * 
 	 * @param key
@@ -476,14 +463,32 @@ public class Common {
 	}
 
 	/**
-	 * Check có nhỏ hơn hoặc bằng 255 kí tự không
+	 * Check chuỗi có thỏa mãn độ dài maxLength không
 	 * 
 	 * @param key
 	 *            chuỗi cần check
-	 * @return true nếu nhỏ hơn hoặc bằng, false nếu vượt quá 255 kí tự
+	 * @param maxLength
+	 *            độ dài max chuỗi cần check
+	 * @return true nếu nhỏ hơn hoặc bằng, false nếu vượt quá size chuỗi
 	 */
-	public static boolean check255Chars(String key) {
-		if (key.length() > getMaxLengthString()) {
+	public static boolean checkMaxLength(int maxLength, String key) {
+		if (key.length() > maxLength) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check chuỗi có thỏa mãn độ dài minLength không
+	 * 
+	 * @param key
+	 *            chuỗi cần check
+	 * @param minLength
+	 *            độ dài min chuỗi cần check
+	 * @return true nếu lớn hơn hoặc bằng, false nếu nhỏ hơn
+	 */
+	public static boolean checkMinLength(int minLength, String key) {
+		if (key.length() < minLength) {
 			return false;
 		}
 		return true;
@@ -501,7 +506,7 @@ public class Common {
 		// Nếu không nhập
 		if (!checkPressTxt(fullName)) {
 			errName = MessageErrorProperties.getData("ER001_FULLNAME");
-		} else if (!check255Chars(fullName)) {// Nếu quá 255 kí tự
+		} else if (!checkMaxLength(getlengthString("maxLengthName"), fullName)) {// Nếu quá 255 kí tự
 			errName = MessageErrorProperties.getData("ER006_FULLNAME");
 		}
 		return errName;
@@ -517,7 +522,7 @@ public class Common {
 	public static String validateFullnameKana(String fullnameKana) {
 		String errKana = "";
 		// Nếu vượt quá 255 kí tự
-		if (!check255Chars(fullnameKana)) {
+		if (!checkMaxLength(getlengthString("maxLengthName"), fullnameKana)) {
 			errKana = MessageErrorProperties.getData("ER006_FULLNAME_KANA");
 		} else if (!fullnameKana.isEmpty() && !checkKana(fullnameKana)) {// Nếu không có kí tự kana
 			errKana = MessageErrorProperties.getData("ER009");
@@ -559,7 +564,7 @@ public class Common {
 			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
 			boolean validFormat = pattern.matcher(email).matches();
 			boolean validEmail = new TblUserLogicImpl().existEmail(email);
-			if (!check255Chars(email)) {// Nếu quá 255 kí tự
+			if (!checkMaxLength(getlengthString("maxLengthEmail"), email)) {// Nếu quá 255 kí tự
 				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
 			} else if (!validFormat) {// Nếu sai định dạng
 				errEmail = MessageErrorProperties.getData("ER005_EMAIL");
@@ -579,12 +584,12 @@ public class Common {
 	 */
 	public static String validateTel(String tel) {
 		String errTel = "";
-		if (tel.length() < 1) {// Khong nhap
+		if (!checkPressTxt(tel)) {// Khong nhap
 			errTel = MessageErrorProperties.getData("ER001_TEL");
 		} else {
 			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTel"));
 			boolean validFormat = pattern.matcher(tel).matches();
-			if (tel.length() > getMaxLength()) {//
+			if (!checkMaxLength(getlengthString("maxLengthTel"), tel)) {//
 				errTel = MessageErrorProperties.getData("ER006_TEL");
 			} else if (!validFormat) {// định dạng xxxx-xxxx-xxxx
 				errTel = MessageErrorProperties.getData("ER005_TEL");
@@ -602,11 +607,12 @@ public class Common {
 	 */
 	public static String validatePass(String password) {
 		String errPass = "";
-		if (password.length() < 1) {// check khong nhap
+		if (!checkPressTxt(password)) {// check khong nhap
 			errPass = MessageErrorProperties.getData("ER001_PASS");
 		} else {
 			// check length
-			if (password.length() < getMinLength() || password.length() > getMaxLength()) {
+			if (!checkMinLength(getlengthString("minLengthPass"), password)
+					|| !checkMaxLength(getlengthString("maxLengthPass"), password)) {
 				errPass = MessageErrorProperties.getData("ER007_PASS");
 			} else if (!checkOneByteChar(password)) {// check co ki tu khac 1 byte
 				errPass = MessageErrorProperties.getData("ER008");
@@ -686,7 +692,7 @@ public class Common {
 		// trình độ japan được chọn
 		if (code_level != Constant.EMPTY_STRING) {
 			// nếu ko nhập
-			if (total == Constant.EMPTY_STRING) {
+			if (!checkPressTxt(totalStr)) {
 				errTotal = MessageErrorProperties.getData("ER001_TOTAL");
 			} else if (!checkHalfSizeTotal(totalStr)) {// nếu có kí tự khác halfsize
 				errTotal = MessageErrorProperties.getData("ER018");

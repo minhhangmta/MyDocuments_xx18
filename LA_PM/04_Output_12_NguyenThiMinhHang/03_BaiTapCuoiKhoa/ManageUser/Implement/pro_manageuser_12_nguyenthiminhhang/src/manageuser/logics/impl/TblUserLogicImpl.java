@@ -6,6 +6,7 @@ package manageuser.logics.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import manageuser.dao.impl.BaseDaoImpl;
@@ -134,13 +135,19 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean createUser(UserInfor userInfor) {
-		boolean check = true;
 		String fullNameKana = userInfor.getFullNameKana();
+		Date birthday = Common.toDate(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
+				userInfor.getDayBirthday());
+		Date startDate = Common.toDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
+				userInfor.getDayStartDate());
+		Date endDate = Common.toDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
+				userInfor.getDayEndDate());
+		boolean check = true;
 		// insert vao tbl_user
 		TblUser tblUser = new TblUser();
 		tblUser.setLoginName(userInfor.getLoginName());
 		tblUser.setEmail(userInfor.getEmail());
-		tblUser.setBirthday(userInfor.getBirthday());
+		tblUser.setBirthday(birthday);
 		tblUser.setFullName(userInfor.getFullName());
 		if (!fullNameKana.isEmpty()) {
 			tblUser.setFullNameKana(fullNameKana);
@@ -156,35 +163,50 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.setAutoCommit(false);
 			// get userId from TblUser
 			int userId = insertUser(tblUser);
-			if (userId == 0) {
-				return false;
+			if (userId == Constant.DEFAULT_INT) {
+				check = false;
 			}
 			// insert vao detail_japan (neu co)
 			String codeLevel = userInfor.getCodeLevel();
-			if (!codeLevel.isEmpty()) {
+			if (!codeLevel.isEmpty() && userId != Constant.DEFAULT_INT) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
 				detailUserJapan.setCodeLevel(codeLevel);
 				detailUserJapan.setUserId(userId);
-				detailUserJapan.setStartDate(userInfor.getStartDate());
-				detailUserJapan.setEndDate(userInfor.getEndDate());
+				detailUserJapan.setStartDate(startDate);
+				detailUserJapan.setEndDate(endDate);
 				detailUserJapan.setTotal(userInfor.getTotal());
 				check = insertDetailUserJapan(detailUserJapan);
+			}
+			if (!check) {
+				connection.rollback();
 			}
 			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
 		} finally {
 			baseDaoImpl.closeConnection();
 		}
-		if (check) {
-			return true;
-		}
-		return false;
+		return check;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#getUserById(int)
+	 */
+	@Override
+	public UserInfor getUserById(int userId) {
+		return userDaoImpl.getUserById(userId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#existUserById(int)
+	 */
+	@Override
+	public boolean existUserById(int userId) {
+		return userDaoImpl.existUserById(userId);
 	}
 
 }

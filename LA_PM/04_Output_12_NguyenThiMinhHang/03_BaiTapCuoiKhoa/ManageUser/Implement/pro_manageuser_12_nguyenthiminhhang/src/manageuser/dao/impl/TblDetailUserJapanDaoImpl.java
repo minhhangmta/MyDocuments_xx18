@@ -42,8 +42,8 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) {
-		StringBuilder query = new StringBuilder();
 		boolean check = false;
+		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO tbl_detail_user_japan ").append("(")
 				.append("user_id, code_level, start_date, end_date, total").append(")")
 				.append(" VALUES(?, ?, ?, ?, ? )");
@@ -59,8 +59,6 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 			check = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			closeConnection();
 		}
 		return check;
 	}

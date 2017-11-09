@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import manageuser.properties.MessageErrorProperties;
 import manageuser.properties.MessageProperties;
 import manageuser.utils.Constant;
@@ -28,15 +30,21 @@ public class SuccessController extends HttpServlet {
 	}
 
 	/**
-	 * @throws IOException 
-	 * @throws ServletException 
+	 * @throws IOException
+	 * @throws ServletException
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String type = request.getParameter("type");
+			HttpSession session = request.getSession();
 			if (Constant.INSERT_SUCCESS.equals(type)) {
+				String keySession = request.getParameter("keySession").toString();
+				request.setAttribute("keySession", keySession);
+				//xoa keySession
+				session.removeAttribute(keySession);
 				request.setAttribute("content", MessageProperties.getData("MSG001"));
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
@@ -45,9 +53,7 @@ public class SuccessController extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			}
-			// String keySession = request.getAttribute("keySession").toString();
-			// HttpSession session = request.getSession();
-			// session.removeAttribute(keySession);
+			
 		} catch (Exception e) {
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);

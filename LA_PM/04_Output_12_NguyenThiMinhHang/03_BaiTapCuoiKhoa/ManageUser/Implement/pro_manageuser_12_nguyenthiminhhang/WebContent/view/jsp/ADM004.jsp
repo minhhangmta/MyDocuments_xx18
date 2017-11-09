@@ -71,30 +71,33 @@
 								<th colspan="2"><a href="#" onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<table border="1" width="70%" id="japan_table" class="tbl_input"
-							cellpadding="4" cellspacing="0"
+						<div id="japan_table"
 							style="display: ${userInfor.codeLevel == '' ? 'none;' : 'block;'}">
-							<tr>
-								<td class="lbl_left">資格:</td>
-								<td align="left">${userInfor.nameLevel}</td>
-							</tr>
-							<tr>
-								<td class="lbl_left">資格交付日:</td>
-								<td align="left"><fmt:formatDate type="date"
-										pattern="<%=Constant.FORMAT_DATE%>"
-										value="${userInfor.startDate}" /></td>
-							</tr>
-							<tr>
-								<td class="lbl_left">失効日:</td>
-								<td align="left"><fmt:formatDate type="date"
-										pattern="<%=Constant.FORMAT_DATE%>"
-										value="${userInfor.endDate}" /></td>
-							</tr>
-							<tr>
-								<td class="lbl_left">点数:</td>
-								<td align="left">${userInfor.total}</td>
-							</tr>
-						</table>
+							<table border="1" width="70%" class="tbl_input" cellpadding="4"
+								cellspacing="0"
+								style="display: ${userInfor.codeLevel == '' ? 'none;' : 'block;'}">
+								<tr>
+									<td class="lbl_left">資格:</td>
+									<td align="left">${userInfor.nameLevel}</td>
+								</tr>
+								<tr>
+									<td class="lbl_left">資格交付日:</td>
+									<td align="left"><fmt:formatDate type="date"
+											pattern="<%=Constant.FORMAT_DATE%>"
+											value="${userInfor.startDate}" /></td>
+								</tr>
+								<tr>
+									<td class="lbl_left">失効日:</td>
+									<td align="left"><fmt:formatDate type="date"
+											pattern="<%=Constant.FORMAT_DATE%>"
+											value="${userInfor.endDate}" /></td>
+								</tr>
+								<tr>
+									<td class="lbl_left">点数:</td>
+									<td align="left">${userInfor.total}</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</td>
 			</tr>

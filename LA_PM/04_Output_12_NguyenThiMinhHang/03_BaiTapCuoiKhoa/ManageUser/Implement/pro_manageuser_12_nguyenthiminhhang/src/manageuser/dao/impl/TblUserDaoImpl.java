@@ -138,7 +138,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 			preparedStatement.setInt(index++, offset);
 			preparedStatement.setInt(index++, limit);
-			
+
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				UserInfor userInfor = new UserInfor();
@@ -304,10 +304,72 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		return userId;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#getUserById(int)
+	 */
+	@Override
+	public UserInfor getUserById(int userId) {
+		UserInfor userInfor = new UserInfor();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT us.login_name, us.full_name, us.email, us.tel, us.birthday, us.full_name_kana,")
+				.append(" gr.group_name, jp.name_level, dt.start_date, dt.end_date, dt.total")
+				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
+				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
+				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0")
+				.append(" AND us.user_id = ?").append(";");
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				userInfor.setLoginName(resultSet.getString("login_name"));
+				userInfor.setFullName(resultSet.getString("full_name"));
+				userInfor.setFullName(resultSet.getString("full_name_kana"));
+				userInfor.setEmail(resultSet.getString("email"));
+				userInfor.setTel(resultSet.getString("tel"));
+				userInfor.setBirthday(resultSet.getDate("birthday"));
+				userInfor.setGroupName(resultSet.getString("group_name"));
+				userInfor.setNameLevel(resultSet.getString("name_level"));
+				userInfor.setStartDate(resultSet.getDate("start_date"));
+				userInfor.setEndDate(resultSet.getDate("end_date"));
+				userInfor.setTotal(resultSet.getString("total"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			closeConnection();
 		}
-		return userId;
+		return userInfor;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#existUserById(int)
+	 */
+	public boolean existUserById(int userId) {
+		String query = "SELECT login_name FROM tbl_user WHERE user_id = ?";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			if (!resultSet.first()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return true;
 	}
 
 }

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -44,8 +45,8 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="username" value="${userInfor.loginName}" size="15"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="username" value="${fn:escapeXml(userInfor.loginName)}"
+									size="15" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -61,14 +62,15 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> 氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullName" value="${userInfor.fullName}" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="fullName" value="${fn:escapeXml(userInfor.fullName)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">カタカナ氏名:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="fullNameKana" value="${userInfor.fullNameKana}" size="30"
+									name="fullNameKana"
+									value="${fn:escapeXml(userInfor.fullNameKana)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -76,8 +78,10 @@
 								<td class="lbl_left"><font color="red">*</font> 生年月日:</td>
 								<td align="left"><select name="yearBirthday">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year}"
-												${year == userInfor.yearBirthday ? 'selected' : ''}>${year}</option>
+											<c:if test="${year <= userInfor.year}">
+												<option value="${year}"
+													${year == userInfor.yearBirthday ? 'selected' : ''}>${year}</option>
+											</c:if>
 										</c:forEach>
 								</select>年 <select name="monthBirthday">
 										<c:forEach items="${listMonth}" var="month">
@@ -94,29 +98,30 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> メールアドレス:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="email" value="${userInfor.email}" size="30"
+									name="email" value="${fn:escapeXml(userInfor.email)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font>電話番号:</td>
 								<td align="left"><input class="txBox" type="text"
-									name="tel" value="${userInfor.tel}" size="30"
+									name="tel" value="${fn:escapeXml(userInfor.tel)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="password" value="${userInfor.passwords}" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="password" value="${fn:escapeXml(userInfor.passwords)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="confirmPassword" value="${userInfor.confirmPassword}"
-									size="30" onfocus="this.style.borderColor='#0066ff';"
+									name="confirmPassword"
+									value="${fn:escapeXml(userInfor.passwords)}" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr>
@@ -139,8 +144,10 @@
 								<td class="lbl_left">資格交付日:</td>
 								<td align="left"><select name="yearStartDate">
 										<c:forEach items="${listYear}" var="year">
-											<option value="${year}"
-												${year == userInfor.yearStartDate ? 'selected' : ''}>${year}</option>
+											<c:if test="${year <= userInfor.year}">
+												<option value="${year}"
+													${year == userInfor.yearStartDate ? 'selected' : ''}>${year}</option>
+											</c:if>
 										</c:forEach>
 								</select>年 <select name="monthStartDate">
 										<c:forEach items="${listMonth}" var="month">
@@ -160,17 +167,7 @@
 										<c:forEach items="${listYear}" var="year">
 											<option value="${year}"
 												${year == userInfor.yearEndDate ? 'selected' : ''}>${year}</option>
-											<%-- <c:if test="${year == userInfor.year}">
-												<option value="${year+1}"
-													${year+1 != userInfor.yearEndDate ? 'selected' : ''}>${year+1}</option>
-											</c:if> --%>
 										</c:forEach>
-										<c:set var="yearPlus" value="${userInfor.year+1}"></c:set>
-										<option value="${yearPlus}"
-											${yearPlus == userInfor.yearEndDate ? 'selected' : ''}>${userInfor.year+1}</option>
-										<%-- <c:if test="${year == userInfor.yearEndDate}">
-										
-										</c:if> --%>
 
 								</select>年 <select name="monthEndDate">
 										<c:forEach items="${listMonth}" var="month">

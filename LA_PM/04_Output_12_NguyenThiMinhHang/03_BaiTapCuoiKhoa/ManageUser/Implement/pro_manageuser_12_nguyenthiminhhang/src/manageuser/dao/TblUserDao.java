@@ -107,4 +107,21 @@ public interface TblUserDao {
 	 */
 	public int insertUser(TblUser tblUser);
 
+	/**
+	 * Hàm get list userInfor theo id
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return UserInfor đối tượng UserInfor
+	 */
+	public UserInfor getUserById(int userId);
+
+	/**
+	 * Hàm check userid có tồn tại hay không
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return true nếu tồn tại, false nếu không
+	 */
+	public boolean existUserById(int userId);
 }

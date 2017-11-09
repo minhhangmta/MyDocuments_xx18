@@ -28,6 +28,7 @@ public class Constant {
 	public static final String ADD_USER_OK = "/addUserOK.do";
 	public static final String SUCCESS_SERVLET = "/success.do";
 	public static final String ERROR_SERVLET = "/error.do";
+	public static final String DETAIL_SERVLET = "/detailUser.do";
 	//
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";

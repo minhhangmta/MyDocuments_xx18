@@ -2,7 +2,6 @@ package manageuser.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -77,7 +76,6 @@ public class AddUserInputController extends HttpServlet {
 			ValidateUser validateUser = new ValidateUser();
 			// validate thông tin
 			List<String> lstError = validateUser.validateUserInfor(userInfor);
-
 			if (lstError.isEmpty()) {
 				String keySession = Common.createKeySession(userInfor.getEmail());
 				// Lưu userInfor vào session
@@ -97,6 +95,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
 			request.setAttribute("error", errorSystem);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
@@ -128,7 +127,6 @@ public class AddUserInputController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -158,13 +156,11 @@ public class AddUserInputController extends HttpServlet {
 		yearBirthday = yearStartDate = yearEndDate = dayBirthday = currentYear;
 		monthBirthday = monthStartDate = monthEndDate = currentMonth;
 		dayBirthday = dayStartDate = dayEndDate = currentMonth;
-		Date birthday, startDate, endDate;
 		String groupName, nameLevel;
 		// Khoi tao gia tri mac dinh
 		groupId = Constant.DEFAULT_INT;
 		codeLevel = Constant.EMPTY_STRING;
 		total = Constant.EMPTY_STRING;
-		birthday = startDate = endDate = null;
 		groupName = nameLevel = Constant.EMPTY_STRING;
 
 		// trường hợp từ ADM002 sang -> thêm mới
@@ -194,7 +190,6 @@ public class AddUserInputController extends HttpServlet {
 					.tryParseInt(Common.getRequestValue(request, "monthBirthday", String.valueOf(currentMonth)));
 			dayBirthday = Common
 					.tryParseInt(Common.getRequestValue(request, "dayBirthday", String.valueOf(currentDay)));
-			birthday = Common.toDate(yearBirthday, monthBirthday, dayBirthday);
 			// Start date
 			yearStartDate = Common
 					.tryParseInt(Common.getRequestValue(request, "yearStartDate", String.valueOf(currentYear)));
@@ -205,7 +200,7 @@ public class AddUserInputController extends HttpServlet {
 
 			// End date
 			yearEndDate = Common
-					.tryParseInt(Common.getRequestValue(request, "yearEndDate", String.valueOf(currentYear)));
+					.tryParseInt(Common.getRequestValue(request, "yearEndDate", String.valueOf(currentYear + 1)));
 			monthEndDate = Common
 					.tryParseInt(Common.getRequestValue(request, "monthEndDate", String.valueOf(currentMonth)));
 			dayEndDate = Common.tryParseInt(Common.getRequestValue(request, "dayEndDate", String.valueOf(currentDay)));
@@ -213,8 +208,6 @@ public class AddUserInputController extends HttpServlet {
 			nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
 
 			if (!codeLevel.isEmpty()) {
-				startDate = Common.toDate(yearStartDate, monthStartDate, dayStartDate);
-				endDate = Common.toDate(yearEndDate, monthEndDate, dayEndDate);
 				// total
 				total = Common.getRequestValue(request, "total", Constant.EMPTY_STRING);
 			}
@@ -236,17 +229,14 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setYearBirthday(yearBirthday);
 			userInfor.setMonthBirthday(monthBirthday);
 			userInfor.setDayBirthday(dayBirthday);
-			userInfor.setBirthday(birthday);
 			// start date
 			userInfor.setYearStartDate(yearStartDate);
 			userInfor.setMonthStartDate(monthStartDate);
 			userInfor.setDayStartDate(dayStartDate);
-			userInfor.setStartDate(startDate);
 			// end date
 			userInfor.setYearEndDate(yearEndDate);
 			userInfor.setMonthEndDate(monthEndDate);
 			userInfor.setDayEndDate(dayEndDate);
-			userInfor.setEndDate(endDate);
 
 		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
 			HttpSession session = request.getSession();

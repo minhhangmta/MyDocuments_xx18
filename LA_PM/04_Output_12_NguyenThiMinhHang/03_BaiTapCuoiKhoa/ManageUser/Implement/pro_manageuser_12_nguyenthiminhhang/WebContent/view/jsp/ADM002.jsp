@@ -108,7 +108,8 @@
 
 				<c:forEach items="${listUser}" var="user">
 					<tr>
-						<td align="right"><a href="${path}/<%=Constant.ADM005%>">${user.userId}</a></td>
+						<td align="right"><a
+							href="${path}<%=Constant.DETAIL_SERVLET%>?id=${user.userId}">${user.userId}</a></td>
 						<td>${user.fullName}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="<%=Constant.FORMAT_DATE%>" value="${user.birthday}" /></td>
@@ -165,8 +166,7 @@
 						</c:otherwise>
 					</c:choose>
 					<!-- End fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
-				</c:forEach> <c:if
-					test="${listPaging.get(listPaging.size()-1) < totalPage}">
+				</c:forEach> <c:if test="${listPaging.get(listPaging.size()-1) < totalPage}">
 					<a
 						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
 						&gt;&gt; </a>
