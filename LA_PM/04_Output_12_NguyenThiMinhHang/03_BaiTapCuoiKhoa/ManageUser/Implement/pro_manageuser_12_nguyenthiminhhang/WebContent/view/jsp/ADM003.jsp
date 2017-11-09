@@ -129,7 +129,8 @@
 									onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<table id="japan_table" style="display: none;">
+						<table id="japan_table"
+							style="display: ${empty userInfor.codeLevel ? 'none;' : 'block;'}">
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="codeLevel">

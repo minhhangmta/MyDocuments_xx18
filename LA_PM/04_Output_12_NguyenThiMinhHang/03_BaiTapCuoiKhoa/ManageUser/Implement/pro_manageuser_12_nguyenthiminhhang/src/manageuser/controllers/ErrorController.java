@@ -9,23 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import manageuser.entities.UserInfor;
-import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.MessageErrorProperties;
-import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class DetailUserController
+ * Servlet implementation class ErrorController
  */
-@WebServlet("/detailUser.do")
-public class DetailUserController extends HttpServlet {
+@WebServlet("/error.do")
+public class ErrorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DetailUserController() {
+	public ErrorController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,23 +33,13 @@ public class DetailUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher requestDispatcher;
 		try {
-			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-			int userId = Common.tryParseInt(request.getParameter("id"));
-			// neu user ko ton tai
-			if (!tblUserLogicImpl.existUserById(userId)) {
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			} else {
-				UserInfor userInfor = tblUserLogicImpl.getUserById(userId);
-				request.setAttribute("userInfor", userInfor);
-				requestDispatcher = request.getRequestDispatcher(Constant.ADM005);
-			}
+			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
+			request.setAttribute("error", errorSystem);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
-			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+			e.printStackTrace();
 		}
 	}
 

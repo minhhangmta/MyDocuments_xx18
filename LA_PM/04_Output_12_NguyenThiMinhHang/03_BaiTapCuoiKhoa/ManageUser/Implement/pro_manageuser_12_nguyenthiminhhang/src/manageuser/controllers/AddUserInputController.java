@@ -17,7 +17,6 @@ import manageuser.entities.MstJapan;
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.MstJapanLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
@@ -56,10 +55,7 @@ public class AddUserInputController extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 
@@ -95,11 +91,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 
@@ -190,6 +182,7 @@ public class AddUserInputController extends HttpServlet {
 					.tryParseInt(Common.getRequestValue(request, "monthBirthday", String.valueOf(currentMonth)));
 			dayBirthday = Common
 					.tryParseInt(Common.getRequestValue(request, "dayBirthday", String.valueOf(currentDay)));
+			// De ngoai dieu kien xet codelevel vi phai get de hien thi mac dinh
 			// Start date
 			yearStartDate = Common
 					.tryParseInt(Common.getRequestValue(request, "yearStartDate", String.valueOf(currentYear)));

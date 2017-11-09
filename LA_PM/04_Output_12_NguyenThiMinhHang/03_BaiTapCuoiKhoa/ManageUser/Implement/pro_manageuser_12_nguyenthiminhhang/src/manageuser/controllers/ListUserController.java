@@ -20,7 +20,6 @@ import manageuser.entities.MstGroup;
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.properties.MessageProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
@@ -185,10 +184,7 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM002);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 }

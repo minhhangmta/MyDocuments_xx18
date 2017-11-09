@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
@@ -47,13 +46,14 @@ public class AddUserConfirmController extends HttpServlet {
 			session.setAttribute("userInfor", userInfor);
 			request.setAttribute("keySession", keySesion);
 			// Forward đến ADM004
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM004);
-			requestDispatcher.forward(request, response);
+			if (userInfor != null) {
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM004);
+				requestDispatcher.forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+			}
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 
@@ -71,6 +71,7 @@ public class AddUserConfirmController extends HttpServlet {
 			HttpSession session = req.getSession();
 			String keySession = req.getParameter("keySession");
 			UserInfor userInfor = (UserInfor) session.getAttribute(keySession);
+
 			// validate thông tin
 			List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 			if (tblUserLogicImpl.createUser(userInfor) && listError.isEmpty()) {
@@ -81,12 +82,8 @@ public class AddUserConfirmController extends HttpServlet {
 						+ "&type=" + Constant.INSERT_FAIL);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			req.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
 		}
-		
+
 	}
 }

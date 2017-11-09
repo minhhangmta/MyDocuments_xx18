@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
@@ -85,10 +84,7 @@ public class LoginController extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 }

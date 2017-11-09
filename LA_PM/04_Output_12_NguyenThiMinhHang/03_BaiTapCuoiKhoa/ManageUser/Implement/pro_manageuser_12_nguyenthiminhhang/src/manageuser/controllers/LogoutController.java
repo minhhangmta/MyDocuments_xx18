@@ -6,7 +6,6 @@ package manageuser.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,8 +44,7 @@ public class LogoutController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect(request.getContextPath() + Constant.LOGIN_SERVLET);
 		} catch (Exception e) {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 }

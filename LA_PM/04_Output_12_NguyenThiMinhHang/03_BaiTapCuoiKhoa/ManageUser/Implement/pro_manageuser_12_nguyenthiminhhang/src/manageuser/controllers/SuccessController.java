@@ -55,10 +55,7 @@ public class SuccessController extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(request, response);
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 }
