@@ -20,10 +20,9 @@
 
 	<!-- Begin vung input-->
 
-	<form
-		action="${path}<%=Constant.ADD_USER_VALIDATE%>${userInfor.userId > 0 ? '?tab=confirmEdit' : '?tab=confirmAdd'}"
-		method="post" name="inputform">
-		<input type="hidden" name="id" value="${userInfor.userId}">
+	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>" method="post"
+		name="inputform">
+		<input type="hidden" name="userId" value="${userId}">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<br>
@@ -50,7 +49,7 @@
 							<tr class="password_txt">
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="password" value="${fn:escapeXml(userInfor.passwords)}"
+									name="password" value="${fn:escapeXml(password)}"
 									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
@@ -58,7 +57,7 @@
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
 									name="confirmPassword"
-									value="${fn:escapeXml(userInfor.passwords)}" size="30"
+									value="${fn:escapeXml(confirmPassword)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>

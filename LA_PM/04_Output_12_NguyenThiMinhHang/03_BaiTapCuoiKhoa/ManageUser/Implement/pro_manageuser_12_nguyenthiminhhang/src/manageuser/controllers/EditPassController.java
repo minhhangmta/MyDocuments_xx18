@@ -1,6 +1,9 @@
 package manageuser.controllers;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
+import manageuser.validates.ValidateUser;
 
 /**
  * Servlet implementation class EditPassController
@@ -36,7 +40,9 @@ public class EditPassController extends HttpServlet {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			if (tblUserLogicImpl.existUserById(userId)) {
-				response.sendRedirect(request.getContextPath() + Constant.ADM007);
+				request.setAttribute("userId", userId);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
+				requestDispatcher.forward(request, response);
 			} else {
 				response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 			}
@@ -44,7 +50,6 @@ public class EditPassController extends HttpServlet {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -53,8 +58,40 @@ public class EditPassController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+			int userId = Common.tryParseInt(request.getParameter("userId"));
+			if (tblUserLogicImpl.existUserById(userId)) {
+				String password = request.getParameter("password");
+				String confirmPassword = request.getParameter("confirmPassword");
+				ValidateUser validateUser = new ValidateUser();
+				List<String> lstError = validateUser.validatePasswords(password, confirmPassword);
+				// Neu khong co loi
+				if (lstError.isEmpty()) {
+					String salt = Common.createSaltString();
+					if (tblUserLogicImpl.updatePass(password, salt, userId)) {
+						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
+								+ Constant.UPDATE_PASS_SUCCESS);
+					} else {
+						response.sendRedirect(
+								request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_PASS_FAIL);
+					}
+				} else {// Co loi
+					request.setAttribute("lstError", lstError);
+					request.setAttribute("password", password);
+					request.setAttribute("confirmPassword", confirmPassword);
+					// Forward đến ADM007
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
+					requestDispatcher.forward(request, response);
+				}
+			} else {
+				response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+		}
 	}
 
 }

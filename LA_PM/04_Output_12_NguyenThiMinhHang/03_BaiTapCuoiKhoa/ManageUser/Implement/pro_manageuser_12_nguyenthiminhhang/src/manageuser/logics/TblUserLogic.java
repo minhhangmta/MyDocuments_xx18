@@ -148,4 +148,17 @@ public interface TblUserLogic {
 	 * @throws SQLException
 	 */
 	public boolean updateUserInfor(UserInfor userInfor) throws SQLException;
+
+	/**
+	 * Hàm update password cho tblUser
+	 * 
+	 * @param passwords
+	 *            mật khẩu
+	 * @param salt
+	 *            chuỗi salt
+	 * @param userId
+	 *            mã user
+	 * @return true nếu update thành công, false nếu không thành công
+	 */
+	public boolean updatePass(String passwords, String salt, int userId);
 }

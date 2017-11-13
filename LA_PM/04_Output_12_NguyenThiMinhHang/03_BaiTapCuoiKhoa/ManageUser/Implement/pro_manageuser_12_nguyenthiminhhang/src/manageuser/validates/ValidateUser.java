@@ -91,7 +91,7 @@ public class ValidateUser {
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
-		//truong hop khac edit
+		// truong hop khac edit
 		if (userId <= 0) {
 			// username
 			errorMsg = Common.validateUsername(userInfor.getLoginName());
@@ -140,6 +140,31 @@ public class ValidateUser {
 					lstError.add(errorMsg);
 				}
 			}
+		}
+		return lstError;
+	}
+
+	/**
+	 * Hàm validate password
+	 * 
+	 * @param password
+	 *            mật khẩu
+	 * @param confirmPassword
+	 *            xác nhận mật khẩu
+	 * @return List<String> list thông báo lỗi
+	 */
+	public List<String> validatePasswords(String password, String confirmPassword) {
+		List<String> lstError = new ArrayList<>();
+		String errorMsg = "";
+		// password
+		errorMsg = Common.validatePass(password);
+		if (!errorMsg.isEmpty()) {
+			lstError.add(errorMsg);
+		}
+		// confirmPass
+		errorMsg = Common.validatePassConfirm(password, confirmPassword);
+		if (!errorMsg.isEmpty()) {
+			lstError.add(errorMsg);
 		}
 		return lstError;
 	}

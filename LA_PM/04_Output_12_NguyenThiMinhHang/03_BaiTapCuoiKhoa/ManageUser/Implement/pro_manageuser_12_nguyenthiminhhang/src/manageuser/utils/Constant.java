@@ -56,5 +56,7 @@ public class Constant {
 	public static final String INSERT_FAIL = "insertFail";
 	public static final String UPDATE_SUCCESS = "updateSuccess";
 	public static final String UPDATE_FAIL = "updateFail";
+	public static final String UPDATE_PASS_SUCCESS = "updatePassSuccess";
+	public static final String UPDATE_PASS_FAIL = "updatePassFail";
 
 }

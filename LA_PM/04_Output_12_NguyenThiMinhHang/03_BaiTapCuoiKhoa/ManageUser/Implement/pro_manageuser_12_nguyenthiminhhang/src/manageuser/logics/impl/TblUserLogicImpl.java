@@ -261,4 +261,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#updatePass(java.lang.String,
+	 * java.lang.String, int)
+	 */
+	@Override
+	public boolean updatePass(String passwords, String salt, int userId) {
+		passwords = Common.encodeSHA1(passwords, salt);
+		return userDaoImpl.updatePass(passwords, salt, userId);
+	}
+
 }

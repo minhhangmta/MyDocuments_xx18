@@ -408,4 +408,31 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		return true;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#updatePass(java.lang.String, java.lang.String,
+	 * int)
+	 */
+	@Override
+	public boolean updatePass(String passwords, String salt, int userId) {
+		String query = "UPDATE tbl_user SET passwords = ?, salt = ? WHERE user_id = ?";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			int index = 1;
+			preparedStatement.setString(index++, passwords);
+			preparedStatement.setString(index++, salt);
+			preparedStatement.setInt(index++, userId);
+			int row = preparedStatement.executeUpdate();
+			if (row == 0) {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return true;
+	}
 }

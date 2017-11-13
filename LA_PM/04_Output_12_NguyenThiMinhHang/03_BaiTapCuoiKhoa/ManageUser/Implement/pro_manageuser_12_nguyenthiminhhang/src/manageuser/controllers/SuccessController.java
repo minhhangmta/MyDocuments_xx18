@@ -40,20 +40,26 @@ public class SuccessController extends HttpServlet {
 		try {
 			String type = request.getParameter("type");
 			HttpSession session = request.getSession();
-			if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
-				String keySession = request.getParameter("keySession").toString();
-				request.setAttribute("keySession", keySession);
-				// xoa keySession
-				session.removeAttribute(keySession);
-				if (Constant.INSERT_SUCCESS.equals(type)) {
-					request.setAttribute("content", MessageProperties.getData("MSG001"));
-				} else if (Constant.UPDATE_SUCCESS.equals(type)) {
-					request.setAttribute("content", MessageProperties.getData("MSG002"));
-				}
+			if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)
+					|| Constant.UPDATE_PASS_FAIL.equals(type)) {
+				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
-			} else if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)) {
-				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
+			} else {
+				if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
+					String keySession = request.getParameter("keySession").toString();
+					request.setAttribute("keySession", keySession);
+					// xoa keySession
+					session.removeAttribute(keySession);
+					if (Constant.INSERT_SUCCESS.equals(type)) {
+						request.setAttribute("content", MessageProperties.getData("MSG001"));
+					} else if (Constant.UPDATE_SUCCESS.equals(type)) {
+						request.setAttribute("content", MessageProperties.getData("MSG002"));
+					}
+				}
+				if (Constant.UPDATE_PASS_SUCCESS.equals(type)) {
+					request.setAttribute("content", MessageProperties.getData("MSG002"));
+				}
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			}

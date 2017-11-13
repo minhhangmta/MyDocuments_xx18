@@ -137,4 +137,17 @@ public interface TblUserDao {
 	 * @throws SQLException
 	 */
 	public boolean updateUser(TblUser tblUser) throws SQLException;
+
+	/**
+	 * Hàm update password cho tblUser
+	 * 
+	 * @param passwords
+	 *            mật khẩu
+	 * @param salt
+	 *            chuỗi salt
+	 * @param userId
+	 *            mã user
+	 * @return true nếu update thành công, false nếu không thành công
+	 */
+	public boolean updatePass(String passwords, String salt, int userId);
 }
