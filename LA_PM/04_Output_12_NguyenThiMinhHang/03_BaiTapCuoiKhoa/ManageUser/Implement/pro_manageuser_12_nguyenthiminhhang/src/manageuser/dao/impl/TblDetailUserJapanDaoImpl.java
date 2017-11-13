@@ -5,7 +5,6 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +54,6 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
 		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
 		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
-		// System.out.println(preparedStatement.toString());
 		int row = preparedStatement.executeUpdate();
 		if (row == 0) {
 			return false;
@@ -105,6 +103,7 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
 		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
 		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
+		preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
 		int row = preparedStatement.executeUpdate();
 		if (row == 0) {
 			return false;
@@ -119,10 +118,9 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	 */
 	@Override
 	public boolean deleteDetailJapan(int userId) throws SQLException {
-		String query = "DELETE tbl_detail_user_japan WHERE user_id = ? ";
+		String query = "DELETE FROM tbl_detail_user_japan WHERE user_id = ? ";
 		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 		preparedStatement.setInt(1, userId);
-		System.out.println(preparedStatement.toString());
 		int row = preparedStatement.executeUpdate();
 		if (row == 0) {
 			return false;

@@ -40,20 +40,24 @@ public class SuccessController extends HttpServlet {
 		try {
 			String type = request.getParameter("type");
 			HttpSession session = request.getSession();
-			if (Constant.INSERT_SUCCESS.equals(type)) {
+			if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
 				String keySession = request.getParameter("keySession").toString();
 				request.setAttribute("keySession", keySession);
-				//xoa keySession
+				// xoa keySession
 				session.removeAttribute(keySession);
-				request.setAttribute("content", MessageProperties.getData("MSG001"));
+				if (Constant.INSERT_SUCCESS.equals(type)) {
+					request.setAttribute("content", MessageProperties.getData("MSG001"));
+				} else if (Constant.UPDATE_SUCCESS.equals(type)) {
+					request.setAttribute("content", MessageProperties.getData("MSG002"));
+				}
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
-			} else if (Constant.INSERT_FAIL.equals(type)) {
+			} else if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)) {
 				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 				requestDispatcher.forward(request, response);
 			}
-			
+
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

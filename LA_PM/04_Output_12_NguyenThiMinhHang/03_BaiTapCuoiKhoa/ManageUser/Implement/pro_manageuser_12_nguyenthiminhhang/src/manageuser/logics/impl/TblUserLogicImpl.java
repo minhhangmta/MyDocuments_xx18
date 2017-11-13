@@ -86,8 +86,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return false;
 	}
 
-	
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String, int)
 	 */
 	@Override
@@ -167,7 +168,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			}
 			// insert vao detail_japan (neu co)
 			String codeLevel = userInfor.getCodeLevel();
-			if (!codeLevel.isEmpty() && userId != Constant.DEFAULT_INT) {
+			if (codeLevel != null && userId > 0) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
 				detailUserJapan.setCodeLevel(codeLevel);
 				detailUserJapan.setUserId(userId);
@@ -242,7 +243,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
 				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
 				tblDetailUserJapan.setTotal(userInfor.getTotal());
-				System.out.println("codeLevel " + codeLevelNew);
 				if (!codeLevelOld.isEmpty()) {// Có -> có
 					detailJapanDaoImpl.updateDetailJapan(tblDetailUserJapan);
 				} else {// không -> có

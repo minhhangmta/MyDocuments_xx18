@@ -2,7 +2,6 @@ package manageuser.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -55,8 +54,6 @@ public class AddUserInputController extends HttpServlet {
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 				}
-				// // set tab cho request de jsp hidden pass...
-				// request.setAttribute("tab", tab);
 			}
 			// set dữ liệu
 			setDataLogicADM003(request, response);
@@ -84,22 +81,20 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			ValidateUser validateUser = new ValidateUser();
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-
-			UserInfor userInfor = setDefault(request, response);
-			int userId = userInfor.getUserId();
-			if (userId > 0) {
+			String tab = request.getParameter("tab");
+			if ("confirmEdit".equals(tab)) {
+				int userId = Common.tryParseInt(request.getParameter("id"));
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 				}
 			}
-			System.out.println(userInfor.getEmail());
+			UserInfor userInfor = setDefault(request, response);
 			List<String> lstError = validateUser.validateUserInfor(userInfor);
 			if (lstError.isEmpty()) {
 				String keySession = Common.createKeySession(userInfor.getEmail());
 				// Lưu userInfor vào session
 				HttpSession session = request.getSession();
 				session.setAttribute(keySession, userInfor);
-				// session.setAttribute("tab", tab);
 				// điều hướng đến ADM004
 				response.sendRedirect(
 						request.getContextPath() + Constant.ADD_USER_CONFIRM + "?keySession=" + keySession);
@@ -178,80 +173,6 @@ public class AddUserInputController extends HttpServlet {
 		codeLevel = Constant.EMPTY_STRING;
 		total = Constant.EMPTY_STRING;
 		groupName = nameLevel = Constant.EMPTY_STRING;
-		// trường hợp từ ADM002 sang -> thêm mới
-		// trường hợp xác nhận tại ADM003
-		if ("confirmAdd".equals(tab) || "confirmEdit".equals(tab)) {
-			// get from request or default
-			username = request.getParameter("username");
-			groupId = Common.tryParseInt(request.getParameter("groupId"));
-			groupName = new MstGroupLogicImpl().getGroupName(groupId);
-			fullName = request.getParameter("fullName");
-			fullNameKana = request.getParameter("fullNameKana");
-			email = request.getParameter("email");
-			password = request.getParameter("password");
-			confirmPassword = request.getParameter("confirmPassword");
-
-			tel = request.getParameter("tel");
-			codeLevel = request.getParameter("codeLevel");
-			nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
-			// Birthday
-			yearBirthday = Common.tryParseInt(request.getParameter("yearBirthday"));
-			monthBirthday = Common.tryParseInt(request.getParameter("monthBirthday"));
-			dayBirthday = Common.tryParseInt(request.getParameter("dayBirthday"));
-
-			// Start date
-			yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
-			monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
-			dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
-
-			// End date
-			yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
-			monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
-			dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
-
-			if (!codeLevel.isEmpty()) {
-				// total
-				total = request.getParameter("total");
-			}
-			if ("confirmEdit".equals(tab)) {
-//				userInfor.setUserId(userId);
-			}
-
-		}
-
-		// // set vào userInfor (set truoc username & pass)
-		userInfor.setLoginName(username);
-		userInfor.setPasswords(password);
-		userInfor.setConfirmPassword(confirmPassword);
-		// set vào userInfor (ko co loginName and pass)
-		userInfor.setGroupId(groupId);
-		userInfor.setGroupName(groupName);
-		userInfor.setFullName(fullName);
-		userInfor.setFullNameKana(fullNameKana);
-		userInfor.setEmail(email);
-		userInfor.setTel(tel);
-
-		// birthday
-		userInfor.setYearBirthday(yearBirthday);
-		userInfor.setMonthBirthday(monthBirthday);
-		userInfor.setDayBirthday(dayBirthday);
-		userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
-		// start date
-		userInfor.setYearStartDate(yearStartDate);
-		userInfor.setMonthStartDate(monthStartDate);
-		userInfor.setDayStartDate(dayStartDate);
-		// end date
-		userInfor.setYearEndDate(yearEndDate);
-		userInfor.setMonthEndDate(monthEndDate);
-		userInfor.setDayEndDate(dayEndDate);http://localhost:8080/manageuser/listUser.do?type=default
-		if (!codeLevel.isEmpty()) {
-			userInfor.setCodeLevel(codeLevel);
-			userInfor.setNameLevel(nameLevel);
-			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
-			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
-			userInfor.setTotal(total);
-		}
-
 		// truong hop edit
 		if ("edit".equals(tab)) {
 			int userId = Common.tryParseInt(request.getParameter("id").toString());
@@ -269,32 +190,98 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setYearBirthday(yearBirthday);
 			userInfor.setMonthBirthday(monthBirthday);
 			userInfor.setDayBirthday(dayBirthday);
-			userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
-			// Start date
-			list = Common.getEachElementFromDate(userInfor.getStartDate());
-			yearStartDate = Common.tryParseInt(list.get(0).toString());
-			monthStartDate = Common.tryParseInt(list.get(1).toString());
-			dayStartDate = Common.tryParseInt(list.get(2).toString());
-			userInfor.setYearStartDate(yearStartDate);
-			userInfor.setMonthStartDate(monthStartDate);
-			userInfor.setDayStartDate(dayStartDate);
-			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
-			// End date
-			list = Common.getEachElementFromDate(userInfor.getEndDate());
-			yearEndDate = Common.tryParseInt(list.get(0).toString());
-			monthEndDate = Common.tryParseInt(list.get(1).toString());
-			dayEndDate = Common.tryParseInt(list.get(2).toString());
-			userInfor.setYearEndDate(yearEndDate);
-			userInfor.setMonthEndDate(monthEndDate);
-			userInfor.setDayEndDate(dayEndDate);
-			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
+			if (userInfor.getCodeLevel() != null) {
+				// Start date
+				list = Common.getEachElementFromDate(userInfor.getStartDate());
+				yearStartDate = Common.tryParseInt(list.get(0).toString());
+				monthStartDate = Common.tryParseInt(list.get(1).toString());
+				dayStartDate = Common.tryParseInt(list.get(2).toString());
 
-		}
-		if ("back".equals(tab)) {// trường hợp back từ ADM004
+				// End date
+				list = Common.getEachElementFromDate(userInfor.getEndDate());
+				yearEndDate = Common.tryParseInt(list.get(0).toString());
+				monthEndDate = Common.tryParseInt(list.get(1).toString());
+				dayEndDate = Common.tryParseInt(list.get(2).toString());
+			}
+		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
 			String keySession = request.getParameter("keySession");
 			userInfor = (UserInfor) session.getAttribute(keySession);
+		} else {
+			// trường hợp xác nhận tại ADM003
+			if ("confirmAdd".equals(tab) || "confirmEdit".equals(tab)) {
+				// get from request or default
+				username = request.getParameter("username");
+				groupId = Common.tryParseInt(request.getParameter("groupId"));
+				groupName = new MstGroupLogicImpl().getGroupName(groupId);
+				fullName = request.getParameter("fullName");
+				fullNameKana = request.getParameter("fullNameKana");
+				email = request.getParameter("email");
+				password = request.getParameter("password");
+				confirmPassword = request.getParameter("confirmPassword");
+
+				tel = request.getParameter("tel");
+				codeLevel = request.getParameter("codeLevel");
+				nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
+				// Birthday
+				yearBirthday = Common.tryParseInt(request.getParameter("yearBirthday"));
+				monthBirthday = Common.tryParseInt(request.getParameter("monthBirthday"));
+				dayBirthday = Common.tryParseInt(request.getParameter("dayBirthday"));
+
+				// Start date
+				yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
+				monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
+				dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
+
+				// End date
+				yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
+				monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
+				dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
+
+				if (!codeLevel.isEmpty()) {
+					// total
+					total = request.getParameter("total");
+				}
+				if ("confirmEdit".equals(tab)) {
+					int userId = Common.tryParseInt(request.getParameter("id"));
+					userInfor.setUserId(userId);
+				}
+			}
+
+			userInfor.setLoginName(username);
+			userInfor.setPasswords(password);
+			userInfor.setConfirmPassword(confirmPassword);
+			userInfor.setGroupId(groupId);
+			userInfor.setGroupName(groupName);
+			userInfor.setFullName(fullName);
+			userInfor.setFullNameKana(fullNameKana);
+			userInfor.setEmail(email);
+			userInfor.setTel(tel);
+
+			// birthday
+			userInfor.setYearBirthday(yearBirthday);
+			userInfor.setMonthBirthday(monthBirthday);
+			userInfor.setDayBirthday(dayBirthday);
+			userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
+
+			if (!codeLevel.isEmpty()) {
+				userInfor.setCodeLevel(codeLevel);
+				userInfor.setNameLevel(nameLevel);
+				userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
+				userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
+				userInfor.setTotal(total);
+			}
 		}
-		// vi ca 3 truong hop deu can den year, month, day hien tai nen set cuoi cung
+
+		// vi cac truong hop deu can den year, month, day hien tai, start, end nen set
+		// cuoi cung
+		// start date
+		userInfor.setYearStartDate(yearStartDate);
+		userInfor.setMonthStartDate(monthStartDate);
+		userInfor.setDayStartDate(dayStartDate);
+		// end date
+		userInfor.setYearEndDate(yearEndDate);
+		userInfor.setMonthEndDate(monthEndDate);
+		userInfor.setDayEndDate(dayEndDate);
 		// set default date current
 		userInfor.setYear(currentYear);
 		userInfor.setMonth(currentMonth);

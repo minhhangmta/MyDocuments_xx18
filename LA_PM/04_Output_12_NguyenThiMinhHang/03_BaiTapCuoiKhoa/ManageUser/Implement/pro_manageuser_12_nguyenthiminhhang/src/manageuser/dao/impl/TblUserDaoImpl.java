@@ -5,7 +5,6 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -245,7 +244,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				preparedStatement.setInt(index++, userId);
 			}
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			System.out.println(preparedStatement.toString());
 			if (!resultSet.first()) {
 				return false;
 			}

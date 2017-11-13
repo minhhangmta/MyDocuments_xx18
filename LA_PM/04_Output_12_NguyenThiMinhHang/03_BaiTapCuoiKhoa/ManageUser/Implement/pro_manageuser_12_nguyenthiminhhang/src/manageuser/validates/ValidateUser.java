@@ -56,7 +56,6 @@ public class ValidateUser {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		int userId = userInfor.getUserId();
-		System.out.println(userId);
 		// group
 		errorMsg = Common.validateGroup(userInfor.getGroupId());
 		if (!errorMsg.isEmpty()) {
@@ -92,7 +91,8 @@ public class ValidateUser {
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
-		if (userId > 0) {
+		//truong hop khac edit
+		if (userId <= 0) {
 			// username
 			errorMsg = Common.validateUsername(userInfor.getLoginName());
 			if (!errorMsg.isEmpty()) {

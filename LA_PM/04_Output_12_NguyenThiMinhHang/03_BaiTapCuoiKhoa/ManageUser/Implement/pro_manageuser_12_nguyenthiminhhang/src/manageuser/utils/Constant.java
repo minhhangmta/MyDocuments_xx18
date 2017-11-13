@@ -17,6 +17,7 @@ public class Constant {
 	public static final String ADM004 = "view/jsp/ADM004.jsp";
 	public static final String ADM005 = "view/jsp/ADM005.jsp";
 	public static final String ADM006 = "view/jsp/ADM006.jsp";
+	public static final String ADM007 = "view/jsp/ADM007.jsp";
 	public static final String SYSTEM_ERROR = "view/jsp/System_Error.jsp";
 	// Controller
 	public static final String LISTUSER_SERVLET = "/listUser.do";
@@ -29,6 +30,7 @@ public class Constant {
 	public static final String SUCCESS_SERVLET = "/success.do";
 	public static final String ERROR_SERVLET = "/error.do";
 	public static final String DETAIL_SERVLET = "/detailUser.do";
+	public static final String EDIT_PASS_SERVLET = "/editPass.do";
 	//
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
@@ -52,5 +54,7 @@ public class Constant {
 	public static final String SALT_CHARS = "abcdefghijklmnopqrstuvwxyz";
 	public static final String INSERT_SUCCESS = "insertSuccess";
 	public static final String INSERT_FAIL = "insertFail";
+	public static final String UPDATE_SUCCESS = "updateSuccess";
+	public static final String UPDATE_FAIL = "updateFail";
 
 }
