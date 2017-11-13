@@ -90,12 +90,15 @@ public class Common {
 		totalRecord = new TblUserDaoImpl().getTotalUsers(0, "");
 		int totalPage = getTotalPage(totalRecord, limit);
 		if (currentPage <= totalPage) {
+			// phan doan trang
 			int thuong = currentPage / Common.getLimitPage();
+			// xet truong hop chia het
 			int du = currentPage % Common.getLimitPage();
+			// neu chia het thi phan doan phai giam 1
 			if (du == 0)
 				thuong--;
-			for (int i = 0; i < Common.getLimitPage(); i++) {
-				listPage.add(Common.getLimitPage() * thuong + 1 + i);
+			for (int i = 1; i <= Common.getLimitPage(); i++) {
+				listPage.add(Common.getLimitPage() * thuong + i);
 			}
 		}
 		return listPage;
@@ -254,7 +257,7 @@ public class Common {
 	 */
 	public static List<Integer> getListYear(int fromYear, int toYear) {
 		List<Integer> listYear = new ArrayList<>();
-		for (int year = fromYear; year <= toYear + 1; year++) {
+		for (int year = fromYear; year <= toYear; year++) {
 			listYear.add(year);
 		}
 		return listYear;
@@ -554,16 +557,18 @@ public class Common {
 	 * 
 	 * @param email
 	 *            email cần check
+	 * @param loginName
+	 *            tên đăng nhập
 	 * @return String chuỗi thông báo lỗi
 	 */
-	public static String validateEmail(String email) {
+	public static String validateEmail(String email, int userId) {
 		String errEmail = "";
 		if (!checkPressTxt(email)) {// Khong nhap
 			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
 		} else {
 			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
 			boolean validFormat = pattern.matcher(email).matches();
-			boolean validEmail = new TblUserLogicImpl().existEmail(email);
+			boolean validEmail = new TblUserLogicImpl().existEmail(email, userId);
 			if (!checkMaxLength(getlengthString("maxLengthEmail"), email)) {// Nếu quá 255 kí tự
 				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
 			} else if (!validFormat) {// Nếu sai định dạng
@@ -858,6 +863,23 @@ public class Common {
 			stringBuilder.append(c);
 		}
 		return stringBuilder.toString();
+	}
+
+	/**
+	 * Lấy từng ngày, tháng, năm từ Date
+	 * 
+	 * @param date
+	 *            ngày cần lấy
+	 * @return ArrayList<Integer> mảng 3 phần tử ngày, tháng, năm theo thứ tự
+	 */
+	public static ArrayList<Integer> getEachElementFromDate(Date date) {
+		ArrayList<Integer> list = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		list.add(cal.get(Calendar.YEAR));
+		list.add(cal.get(Calendar.MONTH) + 1);
+		list.add(cal.get(Calendar.DAY_OF_MONTH));
+		return list;
 	}
 
 }

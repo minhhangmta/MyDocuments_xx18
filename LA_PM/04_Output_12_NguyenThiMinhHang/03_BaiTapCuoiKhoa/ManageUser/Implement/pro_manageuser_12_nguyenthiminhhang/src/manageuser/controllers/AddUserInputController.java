@@ -2,6 +2,7 @@ package manageuser.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -17,6 +18,7 @@ import manageuser.entities.MstJapan;
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.MstJapanLogicImpl;
+import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
@@ -45,6 +47,17 @@ public class AddUserInputController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			String tab = request.getParameter("tab");
+			if ("edit".equals(tab)) {
+				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+				int userId = Common.tryParseInt(request.getParameter("id"));
+				// check exist user
+				if (!tblUserLogicImpl.existUserById(userId)) {
+					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+				}
+				// // set tab cho request de jsp hidden pass...
+				// request.setAttribute("tab", tab);
+			}
 			// set dữ liệu
 			setDataLogicADM003(request, response);
 			// set default
@@ -55,6 +68,7 @@ public class AddUserInputController extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
@@ -68,15 +82,24 @@ public class AddUserInputController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			UserInfor userInfor = setDefault(request, response);
 			ValidateUser validateUser = new ValidateUser();
-			// validate thông tin
+			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+
+			UserInfor userInfor = setDefault(request, response);
+			int userId = userInfor.getUserId();
+			if (userId > 0) {
+				if (!tblUserLogicImpl.existUserById(userId)) {
+					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+				}
+			}
+			System.out.println(userInfor.getEmail());
 			List<String> lstError = validateUser.validateUserInfor(userInfor);
 			if (lstError.isEmpty()) {
 				String keySession = Common.createKeySession(userInfor.getEmail());
 				// Lưu userInfor vào session
 				HttpSession session = request.getSession();
 				session.setAttribute(keySession, userInfor);
+				// session.setAttribute("tab", tab);
 				// điều hướng đến ADM004
 				response.sendRedirect(
 						request.getContextPath() + Constant.ADD_USER_CONFIRM + "?keySession=" + keySession);
@@ -89,8 +112,8 @@ public class AddUserInputController extends HttpServlet {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 				requestDispatcher.forward(request, response);
 			}
-
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
@@ -111,7 +134,7 @@ public class AddUserInputController extends HttpServlet {
 			List<MstJapan> listJapan = japanLogicImpl.getAllMstJapan();
 			request.setAttribute("listGroup", listGroup);
 			request.setAttribute("listJapan", listJapan);
-			request.setAttribute("listYear", Common.getListYear(Constant.START_YEAR, Common.getCurrentYear()));
+			request.setAttribute("listYear", Common.getListYear(Constant.START_YEAR, Common.getCurrentYear() + 1));
 			request.setAttribute("listDay", Common.getListDay());
 			request.setAttribute("listMonth", Common.getListMonth());
 
@@ -131,114 +154,151 @@ public class AddUserInputController extends HttpServlet {
 	 * @return UserInfor đối tượng UserInfor
 	 */
 	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		UserInfor userInfor = new UserInfor();
 		String tab = request.getParameter("tab");
+		// Khai bao bien
 		int currentYear, currentMonth, currentDay;
 		String username, fullName, fullNameKana, email, tel, password, confirmPassword, codeLevel, total;
-		username = fullName = fullNameKana = email = tel = password = confirmPassword = Constant.EMPTY_STRING;
 		int groupId;
-
-		// get date
+		int yearBirthday, monthBirthday, dayBirthday, yearStartDate, monthStartDate, dayStartDate, yearEndDate,
+				monthEndDate, dayEndDate;
+		String groupName, nameLevel;
+		// get date current
 		currentYear = Common.getCurrentYear();
 		currentMonth = Common.getCurrentMonth();
 		currentDay = Common.getCurrentDay();
-
-		int yearBirthday, monthBirthday, dayBirthday, yearStartDate, monthStartDate, dayStartDate, yearEndDate,
-				monthEndDate, dayEndDate;
-		yearBirthday = yearStartDate = yearEndDate = dayBirthday = currentYear;
-		monthBirthday = monthStartDate = monthEndDate = currentMonth;
-		dayBirthday = dayStartDate = dayEndDate = currentMonth;
-		String groupName, nameLevel;
 		// Khoi tao gia tri mac dinh
+		username = fullName = fullNameKana = email = tel = password = confirmPassword = Constant.EMPTY_STRING;
+		yearBirthday = yearStartDate = currentYear;
+		yearEndDate = currentYear + 1;
+		monthBirthday = monthStartDate = monthEndDate = currentMonth;
+		dayBirthday = dayStartDate = dayEndDate = currentDay;
 		groupId = Constant.DEFAULT_INT;
 		codeLevel = Constant.EMPTY_STRING;
 		total = Constant.EMPTY_STRING;
 		groupName = nameLevel = Constant.EMPTY_STRING;
-
 		// trường hợp từ ADM002 sang -> thêm mới
 		// trường hợp xác nhận tại ADM003
-		if ("add".equals(tab) || "confirm".equals(tab)) {
-			userInfor.setYear(currentYear);
-			userInfor.setMonth(currentMonth);
-			userInfor.setDay(currentDay);
-			// get request
-			username = Common.getRequestValue(request, "username", Constant.EMPTY_STRING);
-			groupId = Common
-					.tryParseInt(Common.getRequestValue(request, "groupId", String.valueOf(Constant.DEFAULT_INT)));
+		if ("confirmAdd".equals(tab) || "confirmEdit".equals(tab)) {
+			// get from request or default
+			username = request.getParameter("username");
+			groupId = Common.tryParseInt(request.getParameter("groupId"));
 			groupName = new MstGroupLogicImpl().getGroupName(groupId);
-			fullName = Common.getRequestValue(request, "fullName", Constant.EMPTY_STRING);
-			fullNameKana = Common.getRequestValue(request, "fullNameKana", Constant.EMPTY_STRING);
-			email = Common.getRequestValue(request, "email", Constant.EMPTY_STRING);
-			password = Common.getRequestValue(request, "password", Constant.EMPTY_STRING);
-			confirmPassword = Common.getRequestValue(request, "confirmPassword", Constant.EMPTY_STRING);
+			fullName = request.getParameter("fullName");
+			fullNameKana = request.getParameter("fullNameKana");
+			email = request.getParameter("email");
+			password = request.getParameter("password");
+			confirmPassword = request.getParameter("confirmPassword");
 
-			tel = Common.getRequestValue(request, "tel", Constant.EMPTY_STRING);
-
-			codeLevel = Common.getRequestValue(request, "codeLevel", String.valueOf(Constant.EMPTY_STRING));
+			tel = request.getParameter("tel");
+			codeLevel = request.getParameter("codeLevel");
+			nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
 			// Birthday
-			yearBirthday = Common
-					.tryParseInt(Common.getRequestValue(request, "yearBirthday", String.valueOf(currentYear)));
-			monthBirthday = Common
-					.tryParseInt(Common.getRequestValue(request, "monthBirthday", String.valueOf(currentMonth)));
-			dayBirthday = Common
-					.tryParseInt(Common.getRequestValue(request, "dayBirthday", String.valueOf(currentDay)));
-			// De ngoai dieu kien xet codelevel vi phai get de hien thi mac dinh
+			yearBirthday = Common.tryParseInt(request.getParameter("yearBirthday"));
+			monthBirthday = Common.tryParseInt(request.getParameter("monthBirthday"));
+			dayBirthday = Common.tryParseInt(request.getParameter("dayBirthday"));
+
 			// Start date
-			yearStartDate = Common
-					.tryParseInt(Common.getRequestValue(request, "yearStartDate", String.valueOf(currentYear)));
-			monthStartDate = Common
-					.tryParseInt(Common.getRequestValue(request, "monthStartDate", String.valueOf(currentMonth)));
-			dayStartDate = Common
-					.tryParseInt(Common.getRequestValue(request, "dayStartDate", String.valueOf(currentDay)));
+			yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
+			monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
+			dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
 
 			// End date
-			yearEndDate = Common
-					.tryParseInt(Common.getRequestValue(request, "yearEndDate", String.valueOf(currentYear + 1)));
-			monthEndDate = Common
-					.tryParseInt(Common.getRequestValue(request, "monthEndDate", String.valueOf(currentMonth)));
-			dayEndDate = Common.tryParseInt(Common.getRequestValue(request, "dayEndDate", String.valueOf(currentDay)));
-
-			nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
+			yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
+			monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
+			dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
 
 			if (!codeLevel.isEmpty()) {
 				// total
-				total = Common.getRequestValue(request, "total", Constant.EMPTY_STRING);
+				total = request.getParameter("total");
+			}
+			if ("confirmEdit".equals(tab)) {
+//				userInfor.setUserId(userId);
 			}
 
-			// set vào userInfor
-			userInfor.setLoginName(username);
-			userInfor.setGroupId(groupId);
-			userInfor.setGroupName(groupName);
-			userInfor.setFullName(fullName);
-			userInfor.setFullNameKana(fullNameKana);
-			userInfor.setPasswords(password);
-			userInfor.setConfirmPassword(confirmPassword);
-			userInfor.setEmail(email);
-			userInfor.setTel(tel);
+		}
+
+		// // set vào userInfor (set truoc username & pass)
+		userInfor.setLoginName(username);
+		userInfor.setPasswords(password);
+		userInfor.setConfirmPassword(confirmPassword);
+		// set vào userInfor (ko co loginName and pass)
+		userInfor.setGroupId(groupId);
+		userInfor.setGroupName(groupName);
+		userInfor.setFullName(fullName);
+		userInfor.setFullNameKana(fullNameKana);
+		userInfor.setEmail(email);
+		userInfor.setTel(tel);
+
+		// birthday
+		userInfor.setYearBirthday(yearBirthday);
+		userInfor.setMonthBirthday(monthBirthday);
+		userInfor.setDayBirthday(dayBirthday);
+		userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
+		// start date
+		userInfor.setYearStartDate(yearStartDate);
+		userInfor.setMonthStartDate(monthStartDate);
+		userInfor.setDayStartDate(dayStartDate);
+		// end date
+		userInfor.setYearEndDate(yearEndDate);
+		userInfor.setMonthEndDate(monthEndDate);
+		userInfor.setDayEndDate(dayEndDate);http://localhost:8080/manageuser/listUser.do?type=default
+		if (!codeLevel.isEmpty()) {
 			userInfor.setCodeLevel(codeLevel);
 			userInfor.setNameLevel(nameLevel);
+			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
+			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
 			userInfor.setTotal(total);
+		}
+
+		// truong hop edit
+		if ("edit".equals(tab)) {
+			int userId = Common.tryParseInt(request.getParameter("id").toString());
+			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+			userInfor = tblUserLogicImpl.getUserById(userId);
+			userInfor.setUserId(userId);
+			// list date
+			List<Integer> list;
 			// birthday
+			list = Common.getEachElementFromDate(userInfor.getBirthday());
+			// Birthday
+			yearBirthday = Common.tryParseInt(list.get(0).toString());
+			monthBirthday = Common.tryParseInt(list.get(1).toString());
+			dayBirthday = Common.tryParseInt(list.get(2).toString());
 			userInfor.setYearBirthday(yearBirthday);
 			userInfor.setMonthBirthday(monthBirthday);
 			userInfor.setDayBirthday(dayBirthday);
-			// start date
+			userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
+			// Start date
+			list = Common.getEachElementFromDate(userInfor.getStartDate());
+			yearStartDate = Common.tryParseInt(list.get(0).toString());
+			monthStartDate = Common.tryParseInt(list.get(1).toString());
+			dayStartDate = Common.tryParseInt(list.get(2).toString());
 			userInfor.setYearStartDate(yearStartDate);
 			userInfor.setMonthStartDate(monthStartDate);
 			userInfor.setDayStartDate(dayStartDate);
-			// end date
+			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
+			// End date
+			list = Common.getEachElementFromDate(userInfor.getEndDate());
+			yearEndDate = Common.tryParseInt(list.get(0).toString());
+			monthEndDate = Common.tryParseInt(list.get(1).toString());
+			dayEndDate = Common.tryParseInt(list.get(2).toString());
 			userInfor.setYearEndDate(yearEndDate);
 			userInfor.setMonthEndDate(monthEndDate);
 			userInfor.setDayEndDate(dayEndDate);
+			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
 
-		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
-			HttpSession session = request.getSession();
+		}
+		if ("back".equals(tab)) {// trường hợp back từ ADM004
 			String keySession = request.getParameter("keySession");
 			userInfor = (UserInfor) session.getAttribute(keySession);
 		}
-
-		// trường hợp sửa từ ADM005
-		// database
+		// vi ca 3 truong hop deu can den year, month, day hien tai nen set cuoi cung
+		// set default date current
+		userInfor.setYear(currentYear);
+		userInfor.setMonth(currentMonth);
+		userInfor.setDay(currentDay);
 
 		return userInfor;
 	}

@@ -4,6 +4,7 @@
  */
 package manageuser.logics;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.entities.TblDetailUserJapan;
@@ -76,9 +77,11 @@ public interface TblUserLogic {
 	 * 
 	 * @param email
 	 *            email
+	 * @param userId
+	 *            mã user
 	 * @return true nếu tồn tại, false nếu không tồn tại
 	 */
-	public boolean existEmail(String email);
+	public boolean existEmail(String email, int userId);
 
 	/**
 	 * Hàm kiểm tra codelevel có tồn tại trong DB không
@@ -104,8 +107,9 @@ public interface TblUserLogic {
 	 * @param tblDetailUserJapan
 	 *            Đối tượng chứa thông tin của TblDetailUserJapan
 	 * @return true nếu insert thành công, false nếu không
+	 * @throws SQLException
 	 */
-	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan);
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
 
 	/**
 	 * Insert data user vào bảng tbl_user và tbl_detail_user_japan
@@ -113,8 +117,9 @@ public interface TblUserLogic {
 	 * @param userInfor
 	 *            đối tượng UserInfor
 	 * @return true nếu insert thành công, false nếu không insert thành công
+	 * @throws SQLException
 	 */
-	public boolean createUser(UserInfor userInfor);
+	public boolean createUser(UserInfor userInfor) throws SQLException;
 
 	/**
 	 * Hàm get list userInfor theo id
@@ -124,7 +129,7 @@ public interface TblUserLogic {
 	 * @return UserInfor đối tượng UserInfor
 	 */
 	public UserInfor getUserById(int userId);
-	
+
 	/**
 	 * Hàm check userid có tồn tại hay không
 	 * 
@@ -133,4 +138,14 @@ public interface TblUserLogic {
 	 * @return true nếu tồn tại, false nếu không
 	 */
 	public boolean existUserById(int userId);
+
+	/**
+	 * Hàm update data user vào bảng tbl_user và tbl_detail_user_japan
+	 * 
+	 * @param userInfor
+	 *            đối tượng userInfor
+	 * @return true nếu update thành công, false nếu không
+	 * @throws SQLException
+	 */
+	public boolean updateUserInfor(UserInfor userInfor) throws SQLException;
 }

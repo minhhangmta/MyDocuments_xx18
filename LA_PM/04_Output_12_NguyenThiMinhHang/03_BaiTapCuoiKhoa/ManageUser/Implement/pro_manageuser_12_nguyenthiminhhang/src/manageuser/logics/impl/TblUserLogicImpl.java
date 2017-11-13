@@ -86,14 +86,13 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String)
+	
+	/* (non-Javadoc)
+	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String, int)
 	 */
 	@Override
-	public boolean existEmail(String email) {
-		return userDaoImpl.existEmail(email);
+	public boolean existEmail(String email, int userId) {
+		return userDaoImpl.existEmail(email, userId);
 	}
 
 	/*
@@ -124,7 +123,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * TblDetailUserJapan)
 	 */
 	@Override
-	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) {
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
 		return detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
 	}
 
@@ -134,15 +133,15 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#createUser(manageuser.entities.UserInfor)
 	 */
 	@Override
-	public boolean createUser(UserInfor userInfor) {
+	public boolean createUser(UserInfor userInfor) throws SQLException {
 		String fullNameKana = userInfor.getFullNameKana();
+		// toi uu lai
 		Date birthday = Common.toDate(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
 		Date startDate = Common.toDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 				userInfor.getDayStartDate());
 		Date endDate = Common.toDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 				userInfor.getDayEndDate());
-		boolean check = true;
 		// insert vao tbl_user
 		TblUser tblUser = new TblUser();
 		tblUser.setLoginName(userInfor.getLoginName());
@@ -164,7 +163,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// get userId from TblUser
 			int userId = insertUser(tblUser);
 			if (userId == Constant.DEFAULT_INT) {
-				check = false;
+				return false;
 			}
 			// insert vao detail_japan (neu co)
 			String codeLevel = userInfor.getCodeLevel();
@@ -175,18 +174,16 @@ public class TblUserLogicImpl implements TblUserLogic {
 				detailUserJapan.setStartDate(startDate);
 				detailUserJapan.setEndDate(endDate);
 				detailUserJapan.setTotal(userInfor.getTotal());
-				check = insertDetailUserJapan(detailUserJapan);
-			}
-			if (!check) {
-				connection.rollback();
+				insertDetailUserJapan(detailUserJapan);
 			}
 			connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			connection.rollback();
 		} finally {
 			baseDaoImpl.closeConnection();
 		}
-		return check;
+		return true;
 	}
 
 	/*
@@ -207,6 +204,61 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean existUserById(int userId) {
 		return userDaoImpl.existUserById(userId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * manageuser.logics.TblUserLogic#updateUserInfor(manageuser.entities.UserInfor)
+	 */
+	public boolean updateUserInfor(UserInfor userInfor) throws SQLException {
+		TblUser tblUser = new TblUser();
+		int userId = userInfor.getUserId();
+		String fullNameKana = userInfor.getFullNameKana();
+		if (fullNameKana.isEmpty()) {
+			fullNameKana = null;
+		}
+		tblUser.setUserId(userId);
+		tblUser.setFullName(userInfor.getFullName());
+		tblUser.setFullNameKana(fullNameKana);
+		tblUser.setEmail(userInfor.getEmail());
+		tblUser.setTel(userInfor.getTel());
+		tblUser.setBirthday(userInfor.getBirthday());
+		tblUser.setGroupId(userInfor.getGroupId());
+
+		String codeLevelNew = userInfor.getCodeLevel();
+		try {
+			connection.setAutoCommit(false);
+			userDaoImpl.updateUser(tblUser);
+			String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
+
+			// Từ DB ra thì xét null, từ textbox thì xét empty
+			// Trường hợp code level mới có giá trị
+			if (codeLevelNew != null) {
+				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
+				tblDetailUserJapan.setUserId(userId);
+				tblDetailUserJapan.setCodeLevel(codeLevelNew);
+				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
+				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
+				tblDetailUserJapan.setTotal(userInfor.getTotal());
+				System.out.println("codeLevel " + codeLevelNew);
+				if (!codeLevelOld.isEmpty()) {// Có -> có
+					detailJapanDaoImpl.updateDetailJapan(tblDetailUserJapan);
+				} else {// không -> có
+					detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
+				}
+			} else if (!codeLevelOld.isEmpty()) {// Trường hợp code level mới không có( có -> không)
+				detailJapanDaoImpl.deleteDetailJapan(userId);
+			}
+			connection.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			connection.rollback();
+		} finally {
+			baseDaoImpl.closeConnection();
+		}
+		return true;
 	}
 
 }

@@ -103,7 +103,8 @@
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
-					<td><input class="btn" type="submit" value="編集" /></td>
+					<td><input class="btn" type="button" value="編集"
+						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}'" /></td>
 					<td><input class="btn" type="button" value="削除" /></td>
 					<td><input class="btn" type="button" value="戻る"
 						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>

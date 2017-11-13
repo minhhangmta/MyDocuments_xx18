@@ -20,7 +20,7 @@
 
 	<!-- Begin vung input-->
 	<form
-		action="${path}<%=Constant.ADD_USER_OK%>?keySession=${keySession}"
+		action="${path}<%=Constant.ADD_USER_OK%>${tab == 'edit' ? '?tab=edit' : '?tab=add' }&keySession=${keySession}"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
@@ -72,10 +72,9 @@
 							</tr>
 						</table>
 						<div id="japan_table"
-							style="display: ${userInfor.codeLevel == '' ? 'none;' : 'block;'}">
+							style="display: ${empty userInfor.codeLevel ? 'none;' : 'block;'}">
 							<table border="1" width="70%" class="tbl_input" cellpadding="4"
-								cellspacing="0"
-								style="display: ${userInfor.codeLevel == '' ? 'none;' : 'block;'}">
+								cellspacing="0">
 								<tr>
 									<td class="lbl_left">資格:</td>
 									<td align="left">${userInfor.nameLevel}</td>
@@ -111,7 +110,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="OK" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}'" /></td>
+						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>${tab == 'edit' ? '?tab=edit':'?tab=back'}&keySession=${keySession}'" /></td>
 				</tr>
 			</table>
 		</div>
@@ -123,4 +122,6 @@
 	<c:import url="footer.jsp"></c:import>
 	<!-- End vung footer -->
 </body>
+
+
 </html>

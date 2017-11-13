@@ -5,6 +5,7 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -228,14 +229,23 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see manageuser.dao.TblUserDao#existEmail(java.lang.String)
+	 * @see manageuser.dao.TblUserDao#existEmail(java.lang.String, int)
 	 */
-	public boolean existEmail(String email) {
-		String query = "SELECT email FROM tbl_user WHERE email = ?";
+	public boolean existEmail(String email, int userId) {
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT email FROM tbl_user WHERE email = ?");
+		if (userId > 0) {
+			query.append(" AND user_id != ?");
+		}
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, email);
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			preparedStatement.setString(index++, email);
+			if (userId > 0) {
+				preparedStatement.setInt(index++, userId);
+			}
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			System.out.println(preparedStatement.toString());
 			if (!resultSet.first()) {
 				return false;
 			}
@@ -317,8 +327,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public UserInfor getUserById(int userId) {
 		UserInfor userInfor = new UserInfor();
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT us.login_name, us.full_name, us.email, us.tel, us.birthday, us.full_name_kana,")
-				.append(" gr.group_name, jp.name_level, dt.start_date, dt.end_date, dt.total")
+		query.append("SELECT us.login_name, us.full_name, us.email, us.tel, us.birthday, us.full_name_kana,").append(
+				" gr.group_name, gr.group_id, jp.name_level, jp.code_level, dt.start_date, dt.end_date, dt.total")
 				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
 				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
 				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0")
@@ -332,11 +342,13 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			while (resultSet.next()) {
 				userInfor.setLoginName(resultSet.getString("login_name"));
 				userInfor.setFullName(resultSet.getString("full_name"));
-				userInfor.setFullName(resultSet.getString("full_name_kana"));
+				userInfor.setFullNameKana(resultSet.getString("full_name_kana"));
 				userInfor.setEmail(resultSet.getString("email"));
 				userInfor.setTel(resultSet.getString("tel"));
 				userInfor.setBirthday(resultSet.getDate("birthday"));
 				userInfor.setGroupName(resultSet.getString("group_name"));
+				userInfor.setGroupId(resultSet.getInt("group_id"));
+				userInfor.setCodeLevel(resultSet.getString("code_level"));
 				userInfor.setNameLevel(resultSet.getString("name_level"));
 				userInfor.setStartDate(resultSet.getDate("start_date"));
 				userInfor.setEndDate(resultSet.getDate("end_date"));
@@ -372,4 +384,30 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#updateUser(manageuser.entities.TblUser)
+	 */
+	@Override
+	public boolean updateUser(TblUser tblUser) throws SQLException {
+		StringBuilder query = new StringBuilder();
+		query.append(
+				"UPDATE tbl_user SET group_id = ?, full_name = ?, full_name_kana = ?, email = ?, tel = ?, birthday =?")
+				.append(" WHERE user_id = ?").append(";");
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		int index = 1;
+		preparedStatement.setInt(index++, tblUser.getGroupId());
+		preparedStatement.setString(index++, tblUser.getFullName());
+		preparedStatement.setString(index++, tblUser.getFullNameKana());
+		preparedStatement.setString(index++, tblUser.getEmail());
+		preparedStatement.setString(index++, tblUser.getTel());
+		preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
+		preparedStatement.setInt(index++, tblUser.getUserId());
+		int row = preparedStatement.executeUpdate();
+		if (row == 0) {
+			return false;
+		}
+		return true;
+	}
 }

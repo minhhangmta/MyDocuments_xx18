@@ -5,7 +5,9 @@
 package manageuser.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import manageuser.dao.TblDetailUserJapanDao;
@@ -41,25 +43,90 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	 * entities.TblDetailUserJapan)
 	 */
 	@Override
-	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) {
-		boolean check = false;
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO tbl_detail_user_japan ").append("(")
 				.append("user_id, code_level, start_date, end_date, total").append(")")
 				.append(" VALUES(?, ?, ?, ?, ? )");
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		int index = 1;
+		preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
+		preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
+		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
+		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
+		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
+		// System.out.println(preparedStatement.toString());
+		int row = preparedStatement.executeUpdate();
+		if (row == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblDetailUserJapanDao#getCodeLevelById(int)
+	 */
+	@Override
+	public String getCodeLevelById(int userId) {
+		String codeLevel = "";
+		String query = "SELECT code_level FROM tbl_detail_user_japan WHERE user_id = ?";
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-			int index = 1;
-			preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
-			preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
-			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
-			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
-			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
-			preparedStatement.executeUpdate();
-			check = true;
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				codeLevel = resultSet.getString("code_level");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			closeConnection();
 		}
-		return check;
+		return codeLevel;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * manageuser.dao.TblDetailUserJapanDao#updateDetailJapan(manageuser.entities.
+	 * TblDetailUserJapan)
+	 */
+	@Override
+	public boolean updateDetailJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
+		StringBuilder query = new StringBuilder();
+		query.append("UPDATE tbl_detail_user_japan SET code_level = ?, start_date = ?, end_date = ?, total = ?")
+				.append(" WHERE user_id = ?");
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		int index = 1;
+		preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
+		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
+		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
+		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
+		int row = preparedStatement.executeUpdate();
+		if (row == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblDetailUserJapanDao#deleteDetailJapan(java.lang.String)
+	 */
+	@Override
+	public boolean deleteDetailJapan(int userId) throws SQLException {
+		String query = "DELETE tbl_detail_user_japan WHERE user_id = ? ";
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		preparedStatement.setInt(1, userId);
+		System.out.println(preparedStatement.toString());
+		int row = preparedStatement.executeUpdate();
+		if (row == 0) {
+			return false;
+		}
+		return true;
 	}
 }

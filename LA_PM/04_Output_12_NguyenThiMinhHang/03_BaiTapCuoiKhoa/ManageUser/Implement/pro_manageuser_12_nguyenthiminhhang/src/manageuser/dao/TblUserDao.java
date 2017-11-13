@@ -4,6 +4,7 @@
  */
 package manageuser.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.entities.TblUser;
@@ -85,9 +86,11 @@ public interface TblUserDao {
 	 * 
 	 * @param email
 	 *            email
+	 * @param userId
+	 *            mã user
 	 * @return true nếu tồn tại, false nếu không tồn tại
 	 */
-	public boolean existEmail(String email);
+	public boolean existEmail(String email, int userId);
 
 	/**
 	 * Hàm kiểm tra codelevel có tồn tại trong DB không
@@ -124,4 +127,14 @@ public interface TblUserDao {
 	 * @return true nếu tồn tại, false nếu không
 	 */
 	public boolean existUserById(int userId);
+
+	/**
+	 * Hàm update data vào bảng tbl_user
+	 * 
+	 * @param tblUser
+	 *            đối tượng tblUser
+	 * @return true nếu update thành công, false nếu không thành công
+	 * @throws SQLException
+	 */
+	public boolean updateUser(TblUser tblUser) throws SQLException;
 }

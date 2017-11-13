@@ -53,7 +53,7 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=add'" /></td>
+								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>'" /></td>
 						</tr>
 					</table>
 				</td>
@@ -109,7 +109,7 @@
 				<c:forEach items="${listUser}" var="user">
 					<tr>
 						<td align="right"><a
-							href="${path}<%=Constant.DETAIL_SERVLET%>?id=${user.userId}">${user.userId}</a></td>
+							href="${path}<%=Constant.DETAIL_SERVLET%>?tab=edit&id=${user.userId}">${user.userId}</a></td>
 						<td>${user.fullName}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="<%=Constant.FORMAT_DATE%>" value="${user.birthday}" /></td>

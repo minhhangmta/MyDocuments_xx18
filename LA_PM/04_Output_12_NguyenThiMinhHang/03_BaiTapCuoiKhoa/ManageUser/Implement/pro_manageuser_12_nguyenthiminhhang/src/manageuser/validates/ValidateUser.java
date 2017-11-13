@@ -55,11 +55,8 @@ public class ValidateUser {
 	public List<String> validateUserInfor(UserInfor userInfor) {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
-		// username
-		errorMsg = Common.validateUsername(userInfor.getLoginName());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		int userId = userInfor.getUserId();
+		System.out.println(userId);
 		// group
 		errorMsg = Common.validateGroup(userInfor.getGroupId());
 		if (!errorMsg.isEmpty()) {
@@ -71,9 +68,12 @@ public class ValidateUser {
 			lstError.add(errorMsg);
 		}
 		// fullnameKana
-		errorMsg = Common.validateFullnameKana(userInfor.getFullNameKana());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
+		String fullNameKana = userInfor.getFullNameKana();
+		if (fullNameKana != null) {
+			errorMsg = Common.validateFullnameKana(fullNameKana);
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
 		}
 		// birthday x
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
@@ -83,7 +83,7 @@ public class ValidateUser {
 		}
 		//
 		// email
-		errorMsg = Common.validateEmail(userInfor.getEmail());
+		errorMsg = Common.validateEmail(userInfor.getEmail(), userId);
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
@@ -92,43 +92,53 @@ public class ValidateUser {
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 		}
-		// password
-		errorMsg = Common.validatePass(userInfor.getPasswords());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
-		// confirmPass
-		errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
+		if (userId > 0) {
+			// username
+			errorMsg = Common.validateUsername(userInfor.getLoginName());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
+
+			// password
+			errorMsg = Common.validatePass(userInfor.getPasswords());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
+			// confirmPass
+			errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
 		}
 		String codeLevel = userInfor.getCodeLevel();
 		// codeLevel
-		errorMsg = Common.validateCodeLevel(codeLevel);
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
-		if (!codeLevel.isEmpty()) {
-			//
-			// // date of issue x
-			errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
-					userInfor.getDayStartDate());
+		if (codeLevel != null) {
+			errorMsg = Common.validateCodeLevel(codeLevel);
 			if (!errorMsg.isEmpty()) {
 				lstError.add(errorMsg);
 			}
-			//
-			// // expiration date x
-			errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
-					userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
-					userInfor.getDayEndDate());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
-			//
-			// total
-			errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
+			if (!codeLevel.isEmpty()) {
+				//
+				// // date of issue x
+				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
+						userInfor.getDayStartDate());
+				if (!errorMsg.isEmpty()) {
+					lstError.add(errorMsg);
+				}
+				//
+				// // expiration date x
+				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
+						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
+						userInfor.getDayEndDate());
+				if (!errorMsg.isEmpty()) {
+					lstError.add(errorMsg);
+				}
+				//
+				// total
+				errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
+				if (!errorMsg.isEmpty()) {
+					lstError.add(errorMsg);
+				}
 			}
 		}
 		return lstError;

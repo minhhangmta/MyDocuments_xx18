@@ -5,3 +5,7 @@ function hiddenTable() {
 		document.getElementById("japan_table").style.display = "block";
 	}
 }
+
+function hiddenPassTxt() {
+	document.getElementsByClassName("password_txt").style.display = "none";
+}

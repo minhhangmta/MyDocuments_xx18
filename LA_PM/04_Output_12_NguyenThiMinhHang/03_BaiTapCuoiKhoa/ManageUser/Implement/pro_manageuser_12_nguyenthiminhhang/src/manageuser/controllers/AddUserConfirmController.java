@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
+import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
@@ -71,17 +72,29 @@ public class AddUserConfirmController extends HttpServlet {
 			HttpSession session = req.getSession();
 			String keySession = req.getParameter("keySession");
 			UserInfor userInfor = (UserInfor) session.getAttribute(keySession);
-
+			int userId = userInfor.getUserId();
 			// validate thông tin
-			List<String> listError = new ValidateUser().validateUserInfor(userInfor);
-			if (tblUserLogicImpl.createUser(userInfor) && listError.isEmpty()) {
-				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-						+ "&type=" + Constant.INSERT_SUCCESS);
-			} else {
-				resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-						+ "&type=" + Constant.INSERT_FAIL);
+			//truong hop add
+			if (userId <= 0) {
+				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
+				if (tblUserLogicImpl.createUser(userInfor) && listError.isEmpty()) {
+					resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
+							+ "&type=" + Constant.INSERT_SUCCESS);
+				} else {
+					resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
+							+ "&type=" + Constant.INSERT_FAIL);
+				}
+			} else {//truong hop edit
+				int id = Common.tryParseInt(session.getAttribute("id").toString());
+				if (!tblUserLogicImpl.existUserById(id)) {
+					resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
+				} else {
+					tblUserLogicImpl.updateUserInfor(userInfor);
+					resp.getWriter().print("ok");
+				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
 		}
 

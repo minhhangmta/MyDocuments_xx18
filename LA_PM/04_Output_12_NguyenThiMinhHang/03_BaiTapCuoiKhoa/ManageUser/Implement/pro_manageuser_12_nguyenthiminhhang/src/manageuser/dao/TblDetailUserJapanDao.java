@@ -4,6 +4,8 @@
 */
 package manageuser.dao;
 
+import java.sql.SQLException;
+
 import manageuser.entities.TblDetailUserJapan;
 
 /**
@@ -18,6 +20,37 @@ public interface TblDetailUserJapanDao {
 	 * @param tblDetailUserJapan
 	 *            Đối tượng chứa thông tin của TblDetailUserJapan
 	 * @return true nếu insert thành công, false nếu không
+	 * @throws SQLException 
 	 */
-	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan);
+	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
+
+	/**
+	 * Hàm lấy code level từ user id
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return String mã code level
+	 */
+	public String getCodeLevelById(int userId);
+
+	/**
+	 * Hàm cập nhật detail japan
+	 * 
+	 * @param tblDetailUserJapan
+	 *            đối tượng TblDetailUserJapan
+	 * @return true nếu update thành công, false nếu không thành công
+	 * @throws SQLException 
+	 */
+	public boolean updateDetailJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException;
+
+	/**
+	 * Hàm xóa detail japan theo userId
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return true nếu xóa thành công, false nếu không thành công
+	 * @throws SQLException 
+	 */
+	public boolean deleteDetailJapan(int userId) throws SQLException;
+
 }

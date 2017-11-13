@@ -48,6 +48,7 @@ public class DetailUserController extends HttpServlet {
 			} else {
 				UserInfor userInfor = tblUserLogicImpl.getUserById(userId);
 				request.setAttribute("userInfor", userInfor);
+				request.setAttribute("userId", userId);
 				requestDispatcher = request.getRequestDispatcher(Constant.ADM005);
 			}
 			requestDispatcher.forward(request, response);
