@@ -112,7 +112,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#insertUser(manageuser.entities.TblUser)
 	 */
 	@Override
-	public int insertUser(TblUser tblUser) {
+	public int insertUser(TblUser tblUser) throws SQLException {
 		return userDaoImpl.insertUser(tblUser);
 	}
 
@@ -163,10 +163,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.setAutoCommit(false);
 			// get userId from TblUser
 			int userId = insertUser(tblUser);
-			if (userId == Constant.DEFAULT_INT) {
-				return false;
-			}
-			// insert vao detail_japan (neu co)
+			// get codelevel
 			String codeLevel = userInfor.getCodeLevel();
 			if (codeLevel != null && userId > 0) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
@@ -181,6 +178,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			connection.rollback();
+			return false;
 		} finally {
 			baseDaoImpl.closeConnection();
 		}
@@ -233,7 +231,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.setAutoCommit(false);
 			userDaoImpl.updateUser(tblUser);
 			String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
-
 			// Từ DB ra thì xét null, từ textbox thì xét empty
 			// Trường hợp code level mới có giá trị
 			if (codeLevelNew != null) {
@@ -255,6 +252,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			connection.rollback();
+			return false;
 		} finally {
 			baseDaoImpl.closeConnection();
 		}
@@ -290,6 +288,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			connection.rollback();
+			return false;
 		} finally {
 			baseDaoImpl.closeConnection();
 		}

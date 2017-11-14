@@ -98,8 +98,9 @@ public interface TblUserLogic {
 	 * @param tblUser
 	 *            tblUser Đối tượng chứa thông tin của user
 	 * @return true thành công, false nếu không thành công
+	 * @throws SQLException 
 	 */
-	public int insertUser(TblUser tblUser);
+	public int insertUser(TblUser tblUser) throws SQLException;
 
 	/**
 	 * Inser thông tin chi tiết của user vào bảng tbl_detail_user_japan

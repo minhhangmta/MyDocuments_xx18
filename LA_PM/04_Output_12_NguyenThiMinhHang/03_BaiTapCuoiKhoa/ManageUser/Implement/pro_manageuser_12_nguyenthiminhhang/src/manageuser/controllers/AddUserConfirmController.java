@@ -77,7 +77,7 @@ public class AddUserConfirmController extends HttpServlet {
 			// truong hop add
 			if (userId <= 0) {
 				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
-				if (tblUserLogicImpl.createUser(userInfor) && listError.isEmpty()) {
+				if (listError.isEmpty() && tblUserLogicImpl.createUser(userInfor)) {
 					resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
 							+ "&type=" + Constant.INSERT_SUCCESS);
 				} else {

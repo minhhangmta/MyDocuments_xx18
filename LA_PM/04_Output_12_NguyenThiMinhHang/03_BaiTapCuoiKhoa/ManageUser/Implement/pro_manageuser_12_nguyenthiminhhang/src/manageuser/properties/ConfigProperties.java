@@ -29,7 +29,6 @@ public class ConfigProperties {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		@SuppressWarnings("unchecked")
 		Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();
 		while (enumeration.hasMoreElements()) {

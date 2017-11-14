@@ -67,20 +67,14 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	 * @see manageuser.dao.TblDetailUserJapanDao#getCodeLevelById(int)
 	 */
 	@Override
-	public String getCodeLevelById(int userId) {
+	public String getCodeLevelById(int userId) throws SQLException {
 		String codeLevel = "";
 		String query = "SELECT code_level FROM tbl_detail_user_japan WHERE user_id = ?";
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, userId);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				codeLevel = resultSet.getString("code_level");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, userId);
+		ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			codeLevel = resultSet.getString("code_level");
 		}
 		return codeLevel;
 	}

@@ -284,34 +284,30 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#insertUser(manageuser.entities.TblUser)
 	 */
 	@Override
-	public int insertUser(TblUser tblUser) {
+	public int insertUser(TblUser tblUser) throws SQLException {
 		int userId = Constant.DEFAULT_INT;
 		StringBuilder query = new StringBuilder();
 		query.append("INSERT INTO tbl_user ").append("(group_id, login_name, passwords, full_name, full_name_kana, ")
 				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )")
 				.append(";");
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString(),
-					PreparedStatement.RETURN_GENERATED_KEYS);
-			int index = 1;
-			preparedStatement.setInt(index++, tblUser.getGroupId());
-			preparedStatement.setString(index++, tblUser.getLoginName());
-			preparedStatement.setString(index++, tblUser.getPasswords());
-			preparedStatement.setString(index++, tblUser.getFullName());
-			preparedStatement.setString(index++, tblUser.getFullNameKana());
-			preparedStatement.setString(index++, tblUser.getEmail());
-			preparedStatement.setString(index++, tblUser.getTel());
-			preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
-			preparedStatement.setString(index++, tblUser.getSalt());
-			preparedStatement.setInt(index++, tblUser.getRole());
-			preparedStatement.executeUpdate();
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString(),
+				PreparedStatement.RETURN_GENERATED_KEYS);
+		int index = 1;
+		preparedStatement.setInt(index++, tblUser.getGroupId());
+		preparedStatement.setString(index++, tblUser.getLoginName());
+		preparedStatement.setString(index++, tblUser.getPasswords());
+		preparedStatement.setString(index++, tblUser.getFullName());
+		preparedStatement.setString(index++, tblUser.getFullNameKana());
+		preparedStatement.setString(index++, tblUser.getEmail());
+		preparedStatement.setString(index++, tblUser.getTel());
+		preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
+		preparedStatement.setString(index++, tblUser.getSalt());
+		preparedStatement.setInt(index++, tblUser.getRole());
+		preparedStatement.executeUpdate();
 
-			ResultSet resultSet = preparedStatement.getGeneratedKeys();
-			if (resultSet.last()) {
-				userId = resultSet.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		ResultSet resultSet = preparedStatement.getGeneratedKeys();
+		if (resultSet.last()) {
+			userId = resultSet.getInt(1);
 		}
 		return userId;
 	}

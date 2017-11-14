@@ -44,6 +44,12 @@ public class SuccessController extends HttpServlet {
 			// Các trường hợp fail
 			if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)
 					|| Constant.UPDATE_PASS_FAIL.equals(type) || Constant.DELETE_FAIL.equals(type)) {
+				if (Constant.INSERT_FAIL.equals(type)) {
+					String keySession = request.getParameter("keySession").toString();
+					request.setAttribute("keySession", keySession);
+					// xoa keySession
+					session.removeAttribute(keySession);
+				}
 				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 			} else {// Các trường hợp success

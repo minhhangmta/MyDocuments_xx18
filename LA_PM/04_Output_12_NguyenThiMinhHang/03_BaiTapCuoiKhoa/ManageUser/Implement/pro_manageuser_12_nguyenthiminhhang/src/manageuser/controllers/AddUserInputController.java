@@ -89,9 +89,9 @@ public class AddUserInputController extends HttpServlet {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			String tab = request.getParameter("tab");
 			if ("confirmEdit".equals(tab)) {
+				//lay tu input hidden
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 					String errorSystem = MessageErrorProperties.getData("ER013");
 					request.setAttribute("error", errorSystem);
 					requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);

@@ -107,8 +107,9 @@ public interface TblUserDao {
 	 * @param tblUser
 	 *            tblUser Đối tượng chứa thông tin của user
 	 * @return int mã user vừa thêm
+	 * @throws SQLException 
 	 */
-	public int insertUser(TblUser tblUser);
+	public int insertUser(TblUser tblUser) throws SQLException;
 
 	/**
 	 * Hàm get list userInfor theo id
