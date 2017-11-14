@@ -13,7 +13,7 @@ import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class ErrorController
+ * Controller xử lý các logic của màn hình Error
  */
 @WebServlet("/error.do")
 public class ErrorController extends HttpServlet {

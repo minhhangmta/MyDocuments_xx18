@@ -16,7 +16,7 @@ import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
- * Servlet implementation class EditPassController
+ * Controller xử lý các logic của màn hình ADM007
  */
 @WebServlet("/editPass.do")
 public class EditPassController extends HttpServlet {

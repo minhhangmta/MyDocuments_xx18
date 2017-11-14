@@ -16,7 +16,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class DetailUserController
+ * Controller xử lý các logic của màn hình ADM005
  */
 @WebServlet("/detailUser.do")
 public class DetailUserController extends HttpServlet {
@@ -66,5 +66,4 @@ public class DetailUserController extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

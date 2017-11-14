@@ -15,7 +15,7 @@ import manageuser.properties.MessageProperties;
 import manageuser.utils.Constant;
 
 /**
- * Servlet implementation class SuccessController
+ * Controller xử lý các logic của màn hình ADM006
  */
 @WebServlet("/success.do")
 public class SuccessController extends HttpServlet {

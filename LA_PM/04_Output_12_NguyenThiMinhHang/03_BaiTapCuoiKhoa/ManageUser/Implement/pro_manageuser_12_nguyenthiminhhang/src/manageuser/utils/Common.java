@@ -227,26 +227,6 @@ public class Common {
 	}
 
 	/**
-	 * Hàm lấy giá trị từ request
-	 * 
-	 * @param request
-	 *            request
-	 * @param key
-	 *            key value
-	 * @param defaultValue
-	 *            value mặc định
-	 * @return String giá trị value
-	 */
-	public static String getRequestValue(HttpServletRequest request, String key, String defaultValue) {
-		Object value = request.getParameter(key);
-		if (value == null) {
-			return defaultValue;
-		} else {
-			return value.toString();
-		}
-	}
-
-	/**
 	 * Lấy danh sách các năm từ năm 1980 -> năm hiện tại + 1
 	 * 
 	 * @param fromYear
