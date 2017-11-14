@@ -47,7 +47,7 @@
 							<tr>
 								<td class="lbl_left"><font color="red">*</font> アカウント名:</td>
 								<td align="left"><input
-									${userInfor.userId > 0 ? 'disabled="disabled' : '' }
+									${userInfor.userId > 0 ? 'readonly="readonly"' : '' }
 									class="txBox" type="text" name="username"
 									value="${fn:escapeXml(userInfor.loginName)}" size="15"
 									onfocus="this.style.borderColor='#0066ff';"

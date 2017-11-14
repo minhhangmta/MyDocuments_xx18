@@ -20,9 +20,8 @@
 
 	<!-- Begin vung input-->
 
-	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>" method="post"
+	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}" method="post"
 		name="inputform">
-		<input type="hidden" name="userId" value="${userId}">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<br>
@@ -74,7 +73,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
+						onclick="javascript:window.location='${path}<%=Constant.DETAIL_SERVLET%>?id=${userId}'" /></td>
 				</tr>
 			</table>
 		</div>

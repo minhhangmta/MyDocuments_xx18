@@ -60,7 +60,8 @@ public class EditPassController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-			int userId = Common.tryParseInt(request.getParameter("userId"));
+			int userId = Common.tryParseInt(request.getParameter("id"));
+			request.setAttribute("userId", userId);
 			if (tblUserLogicImpl.existUserById(userId)) {
 				String password = request.getParameter("password");
 				String confirmPassword = request.getParameter("confirmPassword");
@@ -73,8 +74,8 @@ public class EditPassController extends HttpServlet {
 						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
 								+ Constant.UPDATE_PASS_SUCCESS);
 					} else {
-						response.sendRedirect(
-								request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_PASS_FAIL);
+						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
+								+ Constant.UPDATE_PASS_FAIL);
 					}
 				} else {// Co loi
 					request.setAttribute("lstError", lstError);
