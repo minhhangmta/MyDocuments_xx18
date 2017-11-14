@@ -150,4 +150,14 @@ public interface TblUserDao {
 	 * @return true nếu update thành công, false nếu không thành công
 	 */
 	public boolean updatePass(String passwords, String salt, int userId);
+
+	/**
+	 * Hàm delete user theo userId
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return true nếu delete thành công, false nếu không thành công
+	 * @throws SQLException 
+	 */
+	public boolean deleteUser(int userId) throws SQLException;
 }

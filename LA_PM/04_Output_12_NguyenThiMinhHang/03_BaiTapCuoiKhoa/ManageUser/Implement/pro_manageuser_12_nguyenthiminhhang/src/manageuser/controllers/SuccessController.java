@@ -38,14 +38,16 @@ public class SuccessController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			RequestDispatcher requestDispatcher;
 			String type = request.getParameter("type");
 			HttpSession session = request.getSession();
+			// Các trường hợp fail
 			if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)
-					|| Constant.UPDATE_PASS_FAIL.equals(type)) {
+					|| Constant.UPDATE_PASS_FAIL.equals(type) || Constant.DELETE_FAIL.equals(type)) {
 				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
-				requestDispatcher.forward(request, response);
-			} else {
+				requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
+			} else {// Các trường hợp success
+				// nếu insert hoặc update success có keySession
 				if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
 					String keySession = request.getParameter("keySession").toString();
 					request.setAttribute("keySession", keySession);
@@ -57,13 +59,16 @@ public class SuccessController extends HttpServlet {
 						request.setAttribute("content", MessageProperties.getData("MSG002"));
 					}
 				}
+				// nếu update pass hoặc delete không có keySession
 				if (Constant.UPDATE_PASS_SUCCESS.equals(type)) {
 					request.setAttribute("content", MessageProperties.getData("MSG002"));
 				}
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
-				requestDispatcher.forward(request, response);
+				if (Constant.DELETE_SUCCESS.equals(type)) {
+					request.setAttribute("content", MessageProperties.getData("MSG003"));
+				}
+				requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 			}
-
+			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

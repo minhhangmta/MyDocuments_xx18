@@ -1,3 +1,4 @@
+<%@page import="manageuser.properties.MessageProperties"%>
 <%@page import="manageuser.utils.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -103,14 +104,29 @@
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
+					<!-- button edit user -->
 					<td><input class="btn" type="button" value="編集"
 						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}'" /></td>
+					<!-- button edit user -->
+					<!-- button edit pass -->
 					<td><input class="btn" type="button" value="パスワードを編集"
 						onclick="javascript:window.location='${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}'" /></td>
+					<!-- button edit pass -->
+					<!-- set param cho function confirmDelete -->
+					<c:set var="deleteServletPath"
+						value="<%=Constant.DELETE_USER_SERVLET%>"></c:set>
+					<c:set var="url" value="${path}${deleteServletPath}?id=${userId}"></c:set>
+					<jsp:useBean id="messageJA"
+						class="manageuser.properties.MessageProperties" />
+					<!-- set param cho function confirmDelete -->
+					<!-- button delete user -->
 					<td><input class="btn" type="button" value="削除"
-						onclick="javascript:window.location='${path}<%=Constant.DELETE_USER_SERVLET%>?id=${userId}'" /></td>
+						onclick="confirmDelete('${userId}', '${messageJA.getData('MSG004')}', '${url}')" /></td>
+					<!-- button delete user -->
+					<!-- button back -->
 					<td><input class="btn" type="button" value="戻る"
 						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
+					<!-- button back -->
 				</tr>
 			</table>
 		</div>

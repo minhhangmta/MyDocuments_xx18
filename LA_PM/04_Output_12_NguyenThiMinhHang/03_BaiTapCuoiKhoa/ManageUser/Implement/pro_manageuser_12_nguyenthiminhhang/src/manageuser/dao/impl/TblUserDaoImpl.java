@@ -435,4 +435,21 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		return true;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#deleteUser(int)
+	 */
+	@Override
+	public boolean deleteUser(int userId) throws SQLException {
+		String query = "DELETE FROM tbl_user WHERE user_id = ? AND role = 0 ";
+		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		preparedStatement.setInt(1, userId);
+		int row = preparedStatement.executeUpdate();
+		if (row == 0) {
+			return false;
+		}
+		return true;
+	}
 }

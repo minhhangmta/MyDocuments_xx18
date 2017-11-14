@@ -273,4 +273,27 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return userDaoImpl.updatePass(passwords, salt, userId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#deleteUser(int)
+	 */
+	@Override
+	public boolean deleteUser(int userId) throws SQLException {
+		try {
+			connection.setAutoCommit(false);
+			// xoa detail japan
+			detailJapanDaoImpl.deleteDetailJapan(userId);
+			// xoa user
+			userDaoImpl.deleteUser(userId);
+			connection.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			connection.rollback();
+		} finally {
+			baseDaoImpl.closeConnection();
+		}
+		return true;
+	}
+
 }

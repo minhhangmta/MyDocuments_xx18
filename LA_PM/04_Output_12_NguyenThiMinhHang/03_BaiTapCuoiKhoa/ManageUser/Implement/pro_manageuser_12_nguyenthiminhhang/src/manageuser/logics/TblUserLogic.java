@@ -161,4 +161,14 @@ public interface TblUserLogic {
 	 * @return true nếu update thành công, false nếu không thành công
 	 */
 	public boolean updatePass(String passwords, String salt, int userId);
+
+	/**
+	 * Hàm xóa user
+	 * 
+	 * @param userId
+	 *            mã user
+	 * @return true nếu xóa thành công, false nếu không thành công
+	 * @throws SQLException 
+	 */
+	public boolean deleteUser(int userId) throws SQLException;
 }

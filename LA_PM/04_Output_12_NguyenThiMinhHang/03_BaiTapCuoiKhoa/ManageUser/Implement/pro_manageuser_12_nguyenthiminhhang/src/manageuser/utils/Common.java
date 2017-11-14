@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;

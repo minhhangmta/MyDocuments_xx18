@@ -46,8 +46,7 @@ public class LoginController extends HttpServlet {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);
 		} catch (Exception e) {
-			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
-			requestDispatcher.forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
 

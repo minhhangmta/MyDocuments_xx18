@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
+import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
@@ -84,9 +85,13 @@ public class AddUserConfirmController extends HttpServlet {
 							+ "&type=" + Constant.INSERT_FAIL);
 				}
 			} else {// truong hop edit
+				// Neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
-				} else {
+					String errorSystem = MessageErrorProperties.getData("ER013");
+					req.setAttribute("error", errorSystem);
+					RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
+					requestDispatcher.forward(req, resp);
+				} else {// user co ton tai
 					if (tblUserLogicImpl.updateUserInfor(userInfor)) {
 						resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
 								+ "&type=" + Constant.UPDATE_SUCCESS);

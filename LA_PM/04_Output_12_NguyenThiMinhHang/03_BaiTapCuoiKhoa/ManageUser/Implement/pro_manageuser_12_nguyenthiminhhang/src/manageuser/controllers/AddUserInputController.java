@@ -18,6 +18,7 @@ import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.MstJapanLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
+import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
@@ -46,13 +47,17 @@ public class AddUserInputController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			RequestDispatcher requestDispatcher;
 			String tab = request.getParameter("tab");
 			if ("edit".equals(tab)) {
 				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 				int userId = Common.tryParseInt(request.getParameter("id"));
-				// check exist user
+				// neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+					String errorSystem = MessageErrorProperties.getData("ER013");
+					request.setAttribute("error", errorSystem);
+					requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+					requestDispatcher.forward(request, response);
 				}
 			}
 			// set dữ liệu
@@ -62,7 +67,7 @@ public class AddUserInputController extends HttpServlet {
 			// set request
 			request.setAttribute("userInfor", userInfor);
 			// Forward đến ADM003
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
+			requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,6 +84,7 @@ public class AddUserInputController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			RequestDispatcher requestDispatcher;
 			ValidateUser validateUser = new ValidateUser();
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			String tab = request.getParameter("tab");
@@ -86,6 +92,10 @@ public class AddUserInputController extends HttpServlet {
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
+					String errorSystem = MessageErrorProperties.getData("ER013");
+					request.setAttribute("error", errorSystem);
+					requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+					requestDispatcher.forward(request, response);
 				}
 			}
 			UserInfor userInfor = setDefault(request, response);
@@ -104,7 +114,7 @@ public class AddUserInputController extends HttpServlet {
 				// set dữ liệu
 				setDataLogicADM003(request, response);
 				// Forward đến ADM003
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
+				requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {

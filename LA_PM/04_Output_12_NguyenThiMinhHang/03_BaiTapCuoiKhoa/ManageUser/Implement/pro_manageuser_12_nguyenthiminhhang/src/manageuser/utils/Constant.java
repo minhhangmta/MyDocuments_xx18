@@ -59,5 +59,7 @@ public class Constant {
 	public static final String UPDATE_FAIL = "updateFail";
 	public static final String UPDATE_PASS_SUCCESS = "updatePassSuccess";
 	public static final String UPDATE_PASS_FAIL = "updatePassFail";
+	public static final String DELETE_SUCCESS = "deleteSuccess";
+	public static final String DELETE_FAIL = "deleteFail";
 
 }
