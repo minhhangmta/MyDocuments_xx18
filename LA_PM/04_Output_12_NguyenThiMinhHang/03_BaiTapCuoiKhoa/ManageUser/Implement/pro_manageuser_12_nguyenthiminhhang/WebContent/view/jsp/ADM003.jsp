@@ -210,7 +210,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
+						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'"/></td>
 				</tr>
 			</table>
 		</div>

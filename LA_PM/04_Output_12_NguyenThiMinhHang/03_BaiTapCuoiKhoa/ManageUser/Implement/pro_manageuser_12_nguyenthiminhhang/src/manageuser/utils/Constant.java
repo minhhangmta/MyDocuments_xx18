@@ -31,6 +31,7 @@ public class Constant {
 	public static final String ERROR_SERVLET = "/error.do";
 	public static final String DETAIL_SERVLET = "/detailUser.do";
 	public static final String EDIT_PASS_SERVLET = "/editPass.do";
+	public static final String DELETE_USER_SERVLET = "/deleteUser.do";
 	//
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
