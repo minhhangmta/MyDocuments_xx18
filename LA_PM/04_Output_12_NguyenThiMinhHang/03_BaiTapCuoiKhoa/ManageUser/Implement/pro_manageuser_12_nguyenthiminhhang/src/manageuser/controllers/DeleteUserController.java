@@ -37,21 +37,21 @@ public class DeleteUserController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			int userId = Common.tryParseInt(request.getParameter("id"));
-			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-			if (tblUserLogicImpl.existUserById(userId)) {
-				if (tblUserLogicImpl.deleteUser(userId)) {
-					response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
-							+ Constant.DELETE_SUCCESS);
+				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+				if (tblUserLogicImpl.existUserById(userId)) {
+					if (tblUserLogicImpl.deleteUser(userId)) {
+						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
+								+ Constant.DELETE_SUCCESS);
+					} else {
+						response.sendRedirect(
+								request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_FAIL);
+					}
 				} else {
-					response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
-							+ Constant.DELETE_FAIL);
+					String errorSystem = MessageErrorProperties.getData("ER013");
+					request.setAttribute("error", errorSystem);
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+					requestDispatcher.forward(request, response);
 				}
-			} else {
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-				requestDispatcher.forward(request, response);
-			}
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

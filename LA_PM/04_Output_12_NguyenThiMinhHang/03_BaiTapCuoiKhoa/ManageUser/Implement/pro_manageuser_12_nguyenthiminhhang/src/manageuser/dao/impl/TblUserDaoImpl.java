@@ -362,10 +362,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existUserById(int)
 	 */
 	public boolean existUserById(int userId) {
-		String query = "SELECT login_name FROM tbl_user WHERE user_id = ?";
+		String query = "SELECT login_name FROM tbl_user WHERE user_id = ? AND role = ?";
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, userId);
+			int index = 1;
+			preparedStatement.setInt(index++, userId);
+			preparedStatement.setInt(index++, Constant.ROLE_USER);
 			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
 			if (!resultSet.first()) {
 				return false;

@@ -64,7 +64,6 @@ public class EditPassController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			RequestDispatcher requestDispatcher = null;
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			request.setAttribute("userId", userId);
@@ -86,18 +85,19 @@ public class EditPassController extends HttpServlet {
 					}
 				} else {// Co loi
 					request.setAttribute("lstError", lstError);
-					request.setAttribute("password", password);
-					request.setAttribute("confirmPassword", confirmPassword);
+//					request.setAttribute("password", password);
+//					request.setAttribute("confirmPassword", confirmPassword);
 					// Forward đến ADM007
-					requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
-
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
+					requestDispatcher.forward(request, response);
 				}
 			} else {// Neu user khong ton tai
 				String errorSystem = MessageErrorProperties.getData("ER013");
 				request.setAttribute("error", errorSystem);
-				requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+				requestDispatcher.forward(request, response);
 			}
-			requestDispatcher.forward(request, response);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);

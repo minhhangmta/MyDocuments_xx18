@@ -545,14 +545,16 @@ public class Common {
 		if (!checkPressTxt(email)) {// Khong nhap
 			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
 		} else {
-			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
-			boolean validFormat = pattern.matcher(email).matches();
-			boolean validEmail = new TblUserLogicImpl().existEmail(email, userId);
 			if (!checkMaxLength(getlengthString("maxLengthEmail"), email)) {// Nếu quá 255 kí tự
 				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
-			} else if (!validFormat) {// Nếu sai định dạng
+			}
+			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
+			boolean validFormat = pattern.matcher(email).matches();
+			if (!validFormat) {// Nếu sai định dạng
 				errEmail = MessageErrorProperties.getData("ER005_EMAIL");
-			} else if (validEmail) {// Nếu đã tồn tại email
+			}
+			boolean validEmail = new TblUserLogicImpl().existEmail(email, userId);
+			if (validEmail) {// Nếu đã tồn tại email
 				errEmail = MessageErrorProperties.getData("ER003_EMAIL");
 			}
 		}

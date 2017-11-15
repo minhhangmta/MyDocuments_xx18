@@ -127,7 +127,7 @@
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
 									name="confirmPassword"
-									value="${fn:escapeXml(userInfor.passwords)}" size="30"
+									value="${fn:escapeXml(userInfor.confirmPassword)}" size="30"
 									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
