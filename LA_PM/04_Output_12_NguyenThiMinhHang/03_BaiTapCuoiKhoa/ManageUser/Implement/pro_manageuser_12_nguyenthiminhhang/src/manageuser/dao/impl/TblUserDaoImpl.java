@@ -441,7 +441,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 */
 	@Override
 	public boolean deleteUser(int userId) throws SQLException {
-		String query = "DELETE FROM tbl_user WHERE user_id = ? AND role = 0 ";
+		String query = "DELETE FROM tbl_user WHERE user_id = ? ";
 		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 		preparedStatement.setInt(1, userId);
 		int row = preparedStatement.executeUpdate();
