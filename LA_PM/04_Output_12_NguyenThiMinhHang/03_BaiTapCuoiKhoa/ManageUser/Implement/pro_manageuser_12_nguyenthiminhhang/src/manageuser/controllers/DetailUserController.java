@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * DetailUserController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -17,6 +21,7 @@ import manageuser.utils.Constant;
 
 /**
  * Controller xử lý các logic của màn hình ADM005
+ * @author minhhang
  */
 @WebServlet("/detailUser.do")
 public class DetailUserController extends HttpServlet {

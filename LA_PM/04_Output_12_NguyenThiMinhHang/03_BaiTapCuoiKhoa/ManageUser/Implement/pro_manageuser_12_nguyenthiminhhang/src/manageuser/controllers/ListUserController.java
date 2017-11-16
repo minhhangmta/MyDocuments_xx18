@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017 Luvina
- * BaseDaoImpl.java Oct 23, 2017 minhhang
+ * ListUserController.java Oct 23, 2017 minhhang
  */
 package manageuser.controllers;
 
@@ -26,6 +26,7 @@ import manageuser.utils.Constant;
 
 /**
  * Controller xử lý cho màn hình danh sách user ADM002
+ * @author minhhang
  */
 @WebServlet("/listUser.do")
 public class ListUserController extends HttpServlet {

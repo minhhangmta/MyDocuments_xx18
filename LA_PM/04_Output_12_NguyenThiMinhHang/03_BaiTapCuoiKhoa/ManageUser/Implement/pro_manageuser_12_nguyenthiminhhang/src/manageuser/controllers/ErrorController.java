@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * ErrorController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -14,6 +18,7 @@ import manageuser.utils.Constant;
 
 /**
  * Controller xử lý các logic của màn hình Error
+ * @author minhhang
  */
 @WebServlet("/error.do")
 public class ErrorController extends HttpServlet {

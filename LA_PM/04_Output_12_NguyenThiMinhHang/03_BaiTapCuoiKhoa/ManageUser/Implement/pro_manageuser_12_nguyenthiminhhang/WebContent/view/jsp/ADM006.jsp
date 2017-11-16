@@ -29,7 +29,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center" colspan="2"><font color="red">${content}</font></td>
+				<td align="center" colspan="2"><font>${content}</font></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">

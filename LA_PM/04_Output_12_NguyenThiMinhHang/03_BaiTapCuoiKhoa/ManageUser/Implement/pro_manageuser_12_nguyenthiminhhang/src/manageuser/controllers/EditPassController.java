@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * EditPassController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -18,6 +22,7 @@ import manageuser.validates.ValidateUser;
 
 /**
  * Controller xử lý các logic của màn hình ADM007
+ * @author minhhang
  */
 @WebServlet("/editPass.do")
 public class EditPassController extends HttpServlet {

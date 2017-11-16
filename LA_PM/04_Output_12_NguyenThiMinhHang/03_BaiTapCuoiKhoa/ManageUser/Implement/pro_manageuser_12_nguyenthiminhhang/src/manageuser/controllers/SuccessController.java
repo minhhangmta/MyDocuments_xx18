@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * SuccessController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -45,17 +49,13 @@ public class SuccessController extends HttpServlet {
 				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 			} else {// Các trường hợp success
-				// nếu insert hoặc update success có keySession
-				if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
+				if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)
+						|| Constant.UPDATE_PASS_SUCCESS.equals(type)) {
 					if (Constant.INSERT_SUCCESS.equals(type)) {
 						request.setAttribute("content", MessageProperties.getData("MSG001"));
-					} else if (Constant.UPDATE_SUCCESS.equals(type)) {
+					} else {
 						request.setAttribute("content", MessageProperties.getData("MSG002"));
 					}
-				}
-				// nếu update pass hoặc delete không có keySession
-				if (Constant.UPDATE_PASS_SUCCESS.equals(type)) {
-					request.setAttribute("content", MessageProperties.getData("MSG002"));
 				}
 				if (Constant.DELETE_SUCCESS.equals(type)) {
 					request.setAttribute("content", MessageProperties.getData("MSG003"));

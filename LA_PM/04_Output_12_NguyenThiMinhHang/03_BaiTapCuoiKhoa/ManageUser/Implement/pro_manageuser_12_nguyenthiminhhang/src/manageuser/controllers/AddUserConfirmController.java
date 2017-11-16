@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * AddUserConfirmController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -19,6 +23,7 @@ import manageuser.validates.ValidateUser;
 
 /**
  * Controller xử lý các logic của màn hình ADM004
+ * @author minhhang
  */
 @WebServlet({ "/addUserConfirm.do", "/addUserOK.do" })
 public class AddUserConfirmController extends HttpServlet {

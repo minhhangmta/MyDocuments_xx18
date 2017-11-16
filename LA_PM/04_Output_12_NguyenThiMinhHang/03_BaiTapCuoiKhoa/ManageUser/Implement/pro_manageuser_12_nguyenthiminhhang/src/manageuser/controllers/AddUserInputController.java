@@ -1,3 +1,7 @@
+/**
+ * Copyright(C) 2017 Luvina
+ * AddUserInputController.java Oct 23, 2017 minhhang
+ */
 package manageuser.controllers;
 
 import java.io.IOException;
@@ -24,7 +28,10 @@ import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
+ * 
  * Controller xử lý các logic của màn hình ADM003
+ * 
+ * @author minhhang
  */
 @WebServlet({ "/addUserInput.do", "/addUserValidate.do" })
 public class AddUserInputController extends HttpServlet {

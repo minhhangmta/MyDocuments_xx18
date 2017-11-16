@@ -1,6 +1,6 @@
 /**
  * Copyright(C) 2017 Luvina
- * BaseDaoImpl.java Oct 23, 2017 minhhang
+ * LoginController.java Oct 23, 2017 minhhang
  */
 package manageuser.controllers;
 
