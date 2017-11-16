@@ -56,6 +56,13 @@ public class ValidateUser {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		int userId = userInfor.getUserId();
+		if (userId <= 0) {
+			// username
+			errorMsg = Common.validateUsername(userInfor.getLoginName());
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
+		}
 		// group
 		errorMsg = Common.validateGroup(userInfor.getGroupId());
 		if (!errorMsg.isEmpty()) {
@@ -74,7 +81,7 @@ public class ValidateUser {
 				lstError.add(errorMsg);
 			}
 		}
-		// birthday x
+		// birthday 
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
 		if (!errorMsg.isEmpty()) {
@@ -93,11 +100,6 @@ public class ValidateUser {
 		}
 		// truong hop khac edit
 		if (userId <= 0) {
-			// username
-			errorMsg = Common.validateUsername(userInfor.getLoginName());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
 
 			// password
 			errorMsg = Common.validatePass(userInfor.getPasswords());
@@ -119,14 +121,14 @@ public class ValidateUser {
 			}
 			if (!codeLevel.isEmpty()) {
 				//
-				// // date of issue x
+				// // date of issue 
 				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate());
 				if (!errorMsg.isEmpty()) {
 					lstError.add(errorMsg);
 				}
 				//
-				// // expiration date x
+				// // expiration date 
 				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());

@@ -109,6 +109,5 @@ public class AddUserConfirmController extends HttpServlet {
 			e.printStackTrace();
 			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
 		}
-
 	}
 }

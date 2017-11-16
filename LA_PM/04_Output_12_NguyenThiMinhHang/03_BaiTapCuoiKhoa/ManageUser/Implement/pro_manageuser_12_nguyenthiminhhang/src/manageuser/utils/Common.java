@@ -547,15 +547,17 @@ public class Common {
 		} else {
 			if (!checkMaxLength(getlengthString("maxLengthEmail"), email)) {// Nếu quá 255 kí tự
 				errEmail = MessageErrorProperties.getData("ER006_EMAIL");
-			}
-			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
-			boolean validFormat = pattern.matcher(email).matches();
-			if (!validFormat) {// Nếu sai định dạng
-				errEmail = MessageErrorProperties.getData("ER005_EMAIL");
-			}
-			boolean validEmail = new TblUserLogicImpl().existEmail(email, userId);
-			if (validEmail) {// Nếu đã tồn tại email
-				errEmail = MessageErrorProperties.getData("ER003_EMAIL");
+			} else {
+				Pattern pattern = Pattern.compile(ConfigProperties.getData("regexEmail"));
+				boolean validFormat = pattern.matcher(email).matches();
+				if (!validFormat) {// Nếu sai định dạng
+					errEmail = MessageErrorProperties.getData("ER005_EMAIL");
+				} else {
+					boolean validEmail = new TblUserLogicImpl().existEmail(email, userId);
+					if (validEmail) {// Nếu đã tồn tại email
+						errEmail = MessageErrorProperties.getData("ER003_EMAIL");
+					}
+				}
 			}
 		}
 		return errEmail;
@@ -573,12 +575,14 @@ public class Common {
 		if (!checkPressTxt(tel)) {// Khong nhap
 			errTel = MessageErrorProperties.getData("ER001_TEL");
 		} else {
-			Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTel"));
-			boolean validFormat = pattern.matcher(tel).matches();
-			if (!checkMaxLength(getlengthString("maxLengthTel"), tel)) {//
+			if (!checkMaxLength(getlengthString("maxLengthTel"), tel)) {// check max length
 				errTel = MessageErrorProperties.getData("ER006_TEL");
-			} else if (!validFormat) {// định dạng xxxx-xxxx-xxxx
-				errTel = MessageErrorProperties.getData("ER005_TEL");
+			} else {
+				Pattern pattern = Pattern.compile(ConfigProperties.getData("regexTel"));
+				boolean validFormat = pattern.matcher(tel).matches();
+				if (!validFormat) {// định dạng xxxx-xxxx-xxxx
+					errTel = MessageErrorProperties.getData("ER005_TEL");
+				}
 			}
 		}
 		return errTel;
@@ -776,9 +780,9 @@ public class Common {
 	public static String validateEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
 			int dayEnd) {
 		String endDate = convertToString(yearEnd, monthEnd, dayEnd);
-		if (!isDateValid(endDate)) {
+		if (!isDateValid(endDate)) {//định dạng
 			return MessageErrorProperties.getData("ER011_END_DATE");
-		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {
+		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {//so sánh với start date
 			return MessageErrorProperties.getData("ER012");
 		}
 		return "";

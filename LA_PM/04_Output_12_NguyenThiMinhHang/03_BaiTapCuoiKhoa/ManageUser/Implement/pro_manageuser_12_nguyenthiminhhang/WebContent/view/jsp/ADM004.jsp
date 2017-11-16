@@ -108,9 +108,9 @@
 			<table border="0" cellpadding="4" cellspacing="0" width="300px">
 				<tr>
 					<th width="200px" align="center">&nbsp;</th>
-					<td><input class="btn" type="submit" value="OK"/></td>
+					<td><input class="btn" type="submit" value="OK" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?keySession=${keySession}'" /></td>
+						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}'" /></td>
 				</tr>
 			</table>
 		</div>
