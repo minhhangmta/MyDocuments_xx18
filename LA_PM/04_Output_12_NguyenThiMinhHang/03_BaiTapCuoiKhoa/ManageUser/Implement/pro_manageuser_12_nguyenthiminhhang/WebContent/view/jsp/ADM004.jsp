@@ -72,7 +72,7 @@
 							</tr>
 						</table>
 						<div id="japan_table"
-							style="display: ${empty userInfor.codeLevel ? 'none;' : 'block;'}">
+							style="display: none;">
 							<table border="1" width="70%" class="tbl_input" cellpadding="4"
 								cellspacing="0">
 								<tr>
