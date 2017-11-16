@@ -89,7 +89,7 @@ public class AddUserInputController extends HttpServlet {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			String tab = request.getParameter("tab");
 			if ("confirmEdit".equals(tab)) {
-				//lay tu input hidden
+				// lay tu input hidden
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					String errorSystem = MessageErrorProperties.getData("ER013");
@@ -159,7 +159,6 @@ public class AddUserInputController extends HttpServlet {
 	 * @return UserInfor đối tượng UserInfor
 	 */
 	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
 		UserInfor userInfor = new UserInfor();
 		String tab = request.getParameter("tab");
 		// Khai bao bien
@@ -214,6 +213,7 @@ public class AddUserInputController extends HttpServlet {
 				dayEndDate = Common.tryParseInt(list.get(2).toString());
 			}
 		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
+			HttpSession session = request.getSession();
 			String keySession = request.getParameter("keySession");
 			userInfor = (UserInfor) session.getAttribute(keySession);
 		} else {
