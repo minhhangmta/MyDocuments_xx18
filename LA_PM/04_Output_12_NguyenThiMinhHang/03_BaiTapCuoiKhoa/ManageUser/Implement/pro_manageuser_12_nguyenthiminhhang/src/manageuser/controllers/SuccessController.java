@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import manageuser.properties.MessageErrorProperties;
 import manageuser.properties.MessageProperties;
@@ -40,25 +39,14 @@ public class SuccessController extends HttpServlet {
 		try {
 			RequestDispatcher requestDispatcher;
 			String type = request.getParameter("type");
-			HttpSession session = request.getSession();
 			// Các trường hợp fail
 			if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)
 					|| Constant.UPDATE_PASS_FAIL.equals(type) || Constant.DELETE_FAIL.equals(type)) {
-				if (Constant.INSERT_FAIL.equals(type)) {
-					String keySession = request.getParameter("keySession").toString();
-					request.setAttribute("keySession", keySession);
-					// xoa keySession
-					session.removeAttribute(keySession);
-				}
 				request.setAttribute("content", MessageErrorProperties.getData("ER015"));
 				requestDispatcher = request.getRequestDispatcher(Constant.ADM006);
 			} else {// Các trường hợp success
 				// nếu insert hoặc update success có keySession
 				if (Constant.INSERT_SUCCESS.equals(type) || Constant.UPDATE_SUCCESS.equals(type)) {
-					String keySession = request.getParameter("keySession").toString();
-					request.setAttribute("keySession", keySession);
-					// xoa keySession
-					session.removeAttribute(keySession);
 					if (Constant.INSERT_SUCCESS.equals(type)) {
 						request.setAttribute("content", MessageProperties.getData("MSG001"));
 					} else if (Constant.UPDATE_SUCCESS.equals(type)) {

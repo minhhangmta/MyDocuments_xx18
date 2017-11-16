@@ -78,11 +78,13 @@ public class AddUserConfirmController extends HttpServlet {
 			if (userId <= 0) {
 				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 				if (listError.isEmpty() && tblUserLogicImpl.createUser(userInfor)) {
-					resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-							+ "&type=" + Constant.INSERT_SUCCESS);
+					session.removeAttribute(keySession);
+					resp.sendRedirect(
+							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
 				} else {
-					resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-							+ "&type=" + Constant.INSERT_FAIL);
+					session.removeAttribute(keySession);
+					resp.sendRedirect(
+							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
 				}
 			} else {// truong hop edit
 				// Neu user khong ton tai
@@ -93,11 +95,13 @@ public class AddUserConfirmController extends HttpServlet {
 					requestDispatcher.forward(req, resp);
 				} else {// user co ton tai
 					if (tblUserLogicImpl.updateUserInfor(userInfor)) {
-						resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-								+ "&type=" + Constant.UPDATE_SUCCESS);
+						session.removeAttribute(keySession);
+						resp.sendRedirect(
+								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_SUCCESS);
 					} else {
-						resp.sendRedirect(req.getContextPath() + Constant.SUCCESS_SERVLET + "?keySession=" + keySession
-								+ "&type=" + Constant.UPDATE_FAIL);
+						session.removeAttribute(keySession);
+						resp.sendRedirect(
+								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_FAIL);
 					}
 				}
 			}
