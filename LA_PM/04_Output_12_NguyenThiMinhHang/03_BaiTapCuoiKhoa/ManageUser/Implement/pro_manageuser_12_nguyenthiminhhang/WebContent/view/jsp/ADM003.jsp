@@ -137,8 +137,7 @@
 									onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<table id="japan_table"
-							style="display: ${empty userInfor.codeLevel ? 'none;' : 'block;'}">
+						<table id="japan_table" style="display: none;">
 							<tr>
 								<td class="lbl_left">資格:</td>
 								<td align="left"><select name="codeLevel">
@@ -210,7 +209,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'"/></td>
+						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
 				</tr>
 			</table>
 		</div>

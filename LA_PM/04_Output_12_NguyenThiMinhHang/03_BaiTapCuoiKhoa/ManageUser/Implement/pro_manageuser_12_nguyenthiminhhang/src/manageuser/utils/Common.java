@@ -179,7 +179,7 @@ public class Common {
 		try {
 			return Integer.parseInt(text);
 		} catch (NumberFormatException e) {
-			return null;
+			return 0;
 		}
 	}
 
