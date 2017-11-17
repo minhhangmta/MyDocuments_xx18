@@ -81,7 +81,7 @@ public class ValidateUser {
 				lstError.add(errorMsg);
 			}
 		}
-		// birthday 
+		// birthday
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
 		if (!errorMsg.isEmpty()) {
@@ -105,11 +105,12 @@ public class ValidateUser {
 			errorMsg = Common.validatePass(userInfor.getPasswords());
 			if (!errorMsg.isEmpty()) {
 				lstError.add(errorMsg);
-			}
-			// confirmPass
-			errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
+			} else {//trường hợp password đúng thì mới check đến confirm
+				// confirmPass
+				errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
+				if (!errorMsg.isEmpty()) {
+					lstError.add(errorMsg);
+				}
 			}
 		}
 		String codeLevel = userInfor.getCodeLevel();
@@ -121,14 +122,14 @@ public class ValidateUser {
 			}
 			if (!codeLevel.isEmpty()) {
 				//
-				// // date of issue 
+				// // date of issue
 				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate());
 				if (!errorMsg.isEmpty()) {
 					lstError.add(errorMsg);
 				}
 				//
-				// // expiration date 
+				// // expiration date
 				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());
@@ -162,11 +163,12 @@ public class ValidateUser {
 		errorMsg = Common.validatePass(password);
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
-		}
-		// confirmPass
-		errorMsg = Common.validatePassConfirm(password, confirmPassword);
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
+		} else {// trường hợp password đúng thì mới check confirm
+			// confirmPass
+			errorMsg = Common.validatePassConfirm(password, confirmPassword);
+			if (!errorMsg.isEmpty()) {
+				lstError.add(errorMsg);
+			}
 		}
 		return lstError;
 	}
