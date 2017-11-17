@@ -18,6 +18,7 @@ import manageuser.utils.Constant;
 
 /**
  * Controller xử lý các logic của màn hình Error
+ * 
  * @author minhhang
  */
 @WebServlet("/error.do")
@@ -39,8 +40,14 @@ public class ErrorController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String errorSystem = MessageErrorProperties.getData("ERROR_SYSTEM");
-			request.setAttribute("error", errorSystem);
+			String error = request.getParameter("error");
+			String errorNotice;
+			if (Constant.NOT_FOUND.equals(error)) {
+				errorNotice = MessageErrorProperties.getData("ER013");
+			} else {
+				errorNotice = MessageErrorProperties.getData("ERROR_SYSTEM");
+			}
+			request.setAttribute("error", errorNotice);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {

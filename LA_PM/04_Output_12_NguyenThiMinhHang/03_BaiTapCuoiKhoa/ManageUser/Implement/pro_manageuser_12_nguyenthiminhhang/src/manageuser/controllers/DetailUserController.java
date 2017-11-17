@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
  * Controller xử lý các logic của màn hình ADM005
+ * 
  * @author minhhang
  */
 @WebServlet("/detailUser.do")
@@ -41,22 +41,20 @@ public class DetailUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher requestDispatcher;
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			// neu user ko ton tai
 			if (!tblUserLogicImpl.existUserById(userId)) {
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+				response.sendRedirect(
+						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 			} else {
 				UserInfor userInfor = tblUserLogicImpl.getUserById(userId);
 				request.setAttribute("userInfor", userInfor);
 				request.setAttribute("userId", userId);
-				requestDispatcher = request.getRequestDispatcher(Constant.ADM005);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM005);
+				requestDispatcher.forward(request, response);
 			}
-			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

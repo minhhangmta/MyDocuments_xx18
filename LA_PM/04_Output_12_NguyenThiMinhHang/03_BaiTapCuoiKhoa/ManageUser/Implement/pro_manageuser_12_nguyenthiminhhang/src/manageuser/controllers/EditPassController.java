@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
  * Controller xử lý các logic của màn hình ADM007
+ * 
  * @author minhhang
  */
 @WebServlet("/editPass.do")
@@ -43,19 +43,18 @@ public class EditPassController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			RequestDispatcher requestDispatcher;
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			// Neu user ton tai
 			if (tblUserLogicImpl.existUserById(userId)) {
 				request.setAttribute("userId", userId);
-				requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
+				requestDispatcher.forward(request, response);
 			} else {// neu khong ton tai
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
+				response.sendRedirect(
+						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 			}
-			requestDispatcher.forward(request, response);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
@@ -90,17 +89,13 @@ public class EditPassController extends HttpServlet {
 					}
 				} else {// Co loi
 					request.setAttribute("lstError", lstError);
-//					request.setAttribute("password", password);
-//					request.setAttribute("confirmPassword", confirmPassword);
 					// Forward đến ADM007
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
 					requestDispatcher.forward(request, response);
 				}
 			} else {// Neu user khong ton tai
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-				requestDispatcher.forward(request, response);
+				response.sendRedirect(
+						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 			}
 
 		} catch (Exception e) {

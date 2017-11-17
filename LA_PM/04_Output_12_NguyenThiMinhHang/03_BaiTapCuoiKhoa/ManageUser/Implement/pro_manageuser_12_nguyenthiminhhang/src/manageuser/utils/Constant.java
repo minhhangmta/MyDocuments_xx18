@@ -61,5 +61,6 @@ public class Constant {
 	public static final String UPDATE_PASS_FAIL = "updatePassFail";
 	public static final String DELETE_SUCCESS = "deleteSuccess";
 	public static final String DELETE_FAIL = "deleteFail";
+	public static final String NOT_FOUND = "notFound";
 
 }

@@ -7,7 +7,6 @@ package manageuser.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
@@ -45,19 +43,19 @@ public class DeleteUserController extends HttpServlet {
 		try {
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
+			// Neu user ton tai
 			if (tblUserLogicImpl.existUserById(userId)) {
+				// Delete User thanh cong
 				if (tblUserLogicImpl.deleteUser(userId)) {
 					response.sendRedirect(
 							request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_SUCCESS);
-				} else {
+				} else {// Delete khong thanh cong
 					response.sendRedirect(
 							request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_FAIL);
 				}
-			} else {
-				String errorSystem = MessageErrorProperties.getData("ER013");
-				request.setAttribute("error", errorSystem);
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.SYSTEM_ERROR);
-				requestDispatcher.forward(request, response);
+			} else {// User khong ton tai
+				response.sendRedirect(
+						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 			}
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);

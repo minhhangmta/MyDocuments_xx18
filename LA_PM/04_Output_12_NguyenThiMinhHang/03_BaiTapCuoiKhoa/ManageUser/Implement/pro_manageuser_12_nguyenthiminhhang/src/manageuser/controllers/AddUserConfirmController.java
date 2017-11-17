@@ -17,12 +17,12 @@ import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
-import manageuser.properties.MessageErrorProperties;
 import manageuser.utils.Constant;
 import manageuser.validates.ValidateUser;
 
 /**
  * Controller xử lý các logic của màn hình ADM004
+ * 
  * @author minhhang
  */
 @WebServlet({ "/addUserConfirm.do", "/addUserOK.do" })
@@ -78,33 +78,28 @@ public class AddUserConfirmController extends HttpServlet {
 			String keySession = req.getParameter("keySession");
 			UserInfor userInfor = (UserInfor) session.getAttribute(keySession);
 			int userId = userInfor.getUserId();
-			// validate thông tin
+			// Xoa session
+			session.removeAttribute(keySession);
 			// truong hop add
 			if (userId <= 0) {
 				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 				if (listError.isEmpty() && tblUserLogicImpl.createUser(userInfor)) {
-					session.removeAttribute(keySession);
+
 					resp.sendRedirect(
 							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
 				} else {
-					session.removeAttribute(keySession);
 					resp.sendRedirect(
 							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
 				}
 			} else {// truong hop edit
 				// Neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					String errorSystem = MessageErrorProperties.getData("ER013");
-					req.setAttribute("error", errorSystem);
-					RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.SYSTEM_ERROR);
-					requestDispatcher.forward(req, resp);
+					resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 				} else {// user co ton tai
 					if (tblUserLogicImpl.updateUserInfor(userInfor)) {
-						session.removeAttribute(keySession);
 						resp.sendRedirect(
 								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_SUCCESS);
 					} else {
-						session.removeAttribute(keySession);
 						resp.sendRedirect(
 								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_FAIL);
 					}
