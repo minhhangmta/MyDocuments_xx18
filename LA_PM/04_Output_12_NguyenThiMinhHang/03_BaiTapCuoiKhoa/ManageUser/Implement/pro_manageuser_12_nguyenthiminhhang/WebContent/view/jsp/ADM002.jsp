@@ -48,7 +48,7 @@
 									<option value="0">全て</option>
 									<c:forEach items="${listGroup}" var="group">
 										<option value="${group.groupId}"
-											${group.groupId == groupId ? 'selected' : ''}>${group.groupName}</option>
+											${group.groupId == groupId ? 'selected' : ''}>${fn:escapeXml(group.groupName)}</option>
 									</c:forEach>
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
@@ -110,13 +110,13 @@
 					<tr>
 						<td align="right"><a
 							href="${path}<%=Constant.DETAIL_SERVLET%>?tab=edit&id=${user.userId}">${user.userId}</a></td>
-						<td>${user.fullName}</td>
+						<td>${fn:escapeXml(user.fullName)}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="<%=Constant.FORMAT_DATE%>" value="${user.birthday}" /></td>
-						<td>${user.groupName}</td>
-						<td>${user.email}</td>
-						<td>${user.tel}</td>
-						<td>${user.nameLevel}</td>
+						<td>${fn:escapeXml(user.groupName)}</td>
+						<td>${fn:escapeXml(user.email)}</td>
+						<td>${fn:escapeXml(user.tel)}</td>
+						<td>${fn:escapeXml(user.nameLevel)}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="<%=Constant.FORMAT_DATE%>" value="${user.endDate}" /></td>
 						<td align="right">${user.total}</td>

@@ -60,7 +60,8 @@ public class AddUserInputController extends HttpServlet {
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				// neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+					response.sendRedirect(
+							request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 				}
 			}
 			// set dữ liệu
@@ -96,7 +97,9 @@ public class AddUserInputController extends HttpServlet {
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				// Neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+					response.sendRedirect(
+							request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+					return;// Trường hợp lỗi thì thoát khỏi hàm luôn
 				}
 			}
 			UserInfor userInfor = setDefault(request, response);

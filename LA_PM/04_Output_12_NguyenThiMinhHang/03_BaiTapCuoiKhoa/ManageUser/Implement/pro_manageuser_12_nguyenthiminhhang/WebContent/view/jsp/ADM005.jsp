@@ -4,6 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,19 +37,19 @@
 							cellspacing="0">
 							<tr>
 								<td class="lbl_left">アカウント名:</td>
-								<td align="left">${userInfor.loginName}</td>
+								<td align="left">${fn:escapeXml(userInfor.loginName)}</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">グループ:</td>
-								<td align="left">${userInfor.groupName}</td>
+								<td align="left">${fn:escapeXml(userInfor.groupName)}</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">氏名:</td>
-								<td align="left">${userInfor.fullName}</td>
+								<td align="left">${fn:escapeXml(userInfor.fullName)}</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">カタカナ氏名:</td>
-								<td align="left">${userInfor.fullNameKana}</td>
+								<td align="left">${fn:escapeXml(userInfor.fullNameKana)}</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">生年月日:</td>
@@ -58,23 +59,23 @@
 							</tr>
 							<tr>
 								<td class="lbl_left">メールアドレス:</td>
-								<td align="left">${userInfor.email}</td>
+								<td align="left">${fn:escapeXml(userInfor.email)}</td>
 							</tr>
 							<tr>
 								<td class="lbl_left">電話番号:</td>
-								<td align="left">${userInfor.tel}</td>
+								<td align="left">${fn:escapeXml(userInfor.tel)}</td>
 							</tr>
 							<tr>
 								<th colspan="2"><a href="#" onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
 						<div id="japan_table"
-							style="display: ${empty userInfor.codeLevel ? 'none;' : 'block;'}">
+							style="display: none;">
 							<table border="1" width="70%" class="tbl_input" cellpadding="4"
 								cellspacing="0">
 								<tr>
 									<td class="lbl_left">資格:</td>
-									<td align="left">${userInfor.nameLevel}</td>
+									<td align="left">${fn:escapeXml(userInfor.nameLevel)}</td>
 								</tr>
 								<tr>
 									<td class="lbl_left">資格交付日:</td>
@@ -90,7 +91,7 @@
 								</tr>
 								<tr>
 									<td class="lbl_left">点数:</td>
-									<td align="left">${userInfor.total}</td>
+									<td align="left">${fn:escapeXml(userInfor.total)}</td>
 								</tr>
 							</table>
 						</div>
@@ -109,7 +110,7 @@
 						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}'" /></td>
 					<!-- button edit user -->
 					<!-- button edit pass -->
-					<td><input class="btn" type="button" value="パスワードを編集"
+					<td><input class="btn_pass" type="button" value="ChangePass"
 						onclick="javascript:window.location='${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}'" /></td>
 					<!-- button edit pass -->
 					<!-- set param cho function confirmDelete -->

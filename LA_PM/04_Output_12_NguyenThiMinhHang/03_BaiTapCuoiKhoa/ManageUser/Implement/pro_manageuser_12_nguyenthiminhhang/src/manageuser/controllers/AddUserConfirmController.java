@@ -96,7 +96,8 @@ public class AddUserConfirmController extends HttpServlet {
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
 				} else {// user co ton tai
-					if (tblUserLogicImpl.updateUserInfor(userInfor)) {
+					List<String> listError = new ValidateUser().validateUserInfor(userInfor);
+					if (listError.isEmpty() && tblUserLogicImpl.updateUserInfor(userInfor)) {
 						resp.sendRedirect(
 								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_SUCCESS);
 					} else {
