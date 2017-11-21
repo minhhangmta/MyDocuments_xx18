@@ -780,9 +780,10 @@ public class Common {
 	public static String validateEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
 			int dayEnd) {
 		String endDate = convertToString(yearEnd, monthEnd, dayEnd);
-		if (!isDateValid(endDate)) {//định dạng
+		if (!isDateValid(endDate)) {// định dạng
 			return MessageErrorProperties.getData("ER011_END_DATE");
-		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {//so sánh với start date
+		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {// so sánh với
+																										// start date
 			return MessageErrorProperties.getData("ER012");
 		}
 		return "";

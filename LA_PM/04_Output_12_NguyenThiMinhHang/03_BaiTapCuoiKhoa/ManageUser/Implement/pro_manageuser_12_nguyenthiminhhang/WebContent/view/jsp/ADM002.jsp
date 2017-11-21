@@ -53,7 +53,9 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>'" /></td>
+								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>'" />
+								
+								</td>
 						</tr>
 					</table>
 				</td>
