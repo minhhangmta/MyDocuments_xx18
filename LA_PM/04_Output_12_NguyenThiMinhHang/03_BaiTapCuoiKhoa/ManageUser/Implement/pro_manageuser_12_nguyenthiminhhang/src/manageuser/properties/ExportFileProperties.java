@@ -1,6 +1,6 @@
 /**
 * Copyright(C) 2017 Luvina
-* ConfigProperties.java, Oct 29, 2017 minhhang
+* FileProperties.java, Nov 21, 2017 minhhang
 */
 package manageuser.properties;
 
@@ -11,24 +11,25 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- *  Lớp đọc các thông tin về các thông số config của hệ thống (độ dài chuỗi, số trang, kiểu format regex,...)
+ * Lớp đọc các thông tin liên quan đến file export của hệ thống
  * 
  * @author minhhang
  */
-public class ConfigProperties {
+public class ExportFileProperties {
 	private static Map<String, String> map = new HashMap<String, String>();
 
 	/**
-	 * read file config.properties
+	 * read file file_export.properties
 	 */
 	static {
 		Properties properties = new Properties();
 		try {
 			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-			properties.load(classLoader.getResourceAsStream("config.properties"));
+			properties.load(classLoader.getResourceAsStream("file_export.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		@SuppressWarnings("unchecked")
 		Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();
 		while (enumeration.hasMoreElements()) {

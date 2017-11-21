@@ -172,4 +172,15 @@ public interface TblUserLogic {
 	 * @throws SQLException 
 	 */
 	public boolean deleteUser(int userId) throws SQLException;
+	
+	/**
+	 * Hàm get listUser theo groupId và fullName
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @param fullName
+	 *            tên user
+	 * @return List<UserInfor> danh sách userInfor
+	 */
+	public List<UserInfor> getListUsers(int groupId, String fullName);
 }

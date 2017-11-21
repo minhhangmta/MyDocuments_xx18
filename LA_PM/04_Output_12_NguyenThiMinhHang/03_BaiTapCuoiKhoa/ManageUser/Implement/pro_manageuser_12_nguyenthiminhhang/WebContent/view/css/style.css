@@ -44,18 +44,17 @@
 	padding-top: 2px;
 }
 
-.btn_pass {
+.btn_pass, .btn_export {
 	font-size: 11px;
 	font-weight: normal;
 	background-image: url(../img/btn_wider_bg.gif);
 	background-repeat:no-repeat;
-	width: 70px;
+	width: 75px;
 	height: 18px;
 	border: 0px;
 	cursor: pointer;
 	padding-top: 2px;
 }
-
 
 .btn.btn_wider {
 	background-image: url(../img/btn_wider_bg.gif);

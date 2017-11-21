@@ -4,6 +4,8 @@
  */
 package manageuser.utils;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -20,13 +22,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.ConfigProperties;
+import manageuser.properties.ExportFileProperties;
 import manageuser.properties.MessageErrorProperties;
+import manageuser.properties.MessageProperties;
 
 /**
  * Lớp chứa các hàm common của dự án
@@ -218,6 +224,26 @@ public class Common {
 	 */
 	public static String getSessionValue(HttpSession session, String key, String defaultValue) {
 		Object value = session.getAttribute(key);
+		if (value == null) {
+			return defaultValue;
+		} else {
+			return value.toString();
+		}
+	}
+
+	/**
+	 * Hàm lấy giá trị từ request
+	 * 
+	 * @param request
+	 *            đối tượng HttpServletRequest
+	 * @param key
+	 *            từ khóa cần lấy giá trị từ request
+	 * @param defaultValue
+	 *            giá trị mặc định của key
+	 * @return String giá trị của key
+	 */
+	public static String getRequestValue(HttpServletRequest request, String key, String defaultValue) {
+		Object value = request.getParameter(key);
 		if (value == null) {
 			return defaultValue;
 		} else {
@@ -868,4 +894,86 @@ public class Common {
 		return list;
 	}
 
+	/**
+	 * Hàm lấy header từ file_export.properties theo key tương ứng
+	 * 
+	 * @param key
+	 *            tên loại header cần lấy
+	 * @return String giá trị key cần lấy
+	 */
+	public static String getHeader(String key) {
+		return ExportFileProperties.getData(key);
+	}
+
+	/**
+	 * Hàm generate dữ liệu sang kiểu String
+	 * 
+	 * @param object
+	 *            đối tượng cần generate
+	 * @return String chuỗi dữ liệu đã được generate
+	 */
+	public static String generateData(Object object) {
+		// UserID,LoginName,FullName,Birthday,GroupName,Email,Tel,NameLevel,EndDate,Total
+		StringBuilder result = new StringBuilder("");
+		if (object != null) {
+			List<UserInfor> list = (List<UserInfor>) object;
+			for (UserInfor userInfor : list) {
+				result.append("\n");
+				result.append(userInfor.getUserId());
+				result.append(",");
+				result.append(userInfor.getLoginName());
+				result.append(",");
+				result.append(userInfor.getFullName());
+				result.append(",");
+				result.append(Common.convertDateToString(userInfor.getBirthday()));
+				result.append(",");
+				result.append(userInfor.getGroupName());
+				result.append(",");
+				result.append(userInfor.getEmail());
+				result.append(",");
+				result.append(userInfor.getTel());
+				if (userInfor.getCodeLevel() != null) {
+					result.append(",");
+					result.append(userInfor.getNameLevel());
+					result.append(",");
+					result.append(Common.convertDateToString(userInfor.getEndDate()));
+					result.append(",");
+					result.append(userInfor.getTotal());
+				}
+			}
+		}
+		return result.toString();
+	}
+
+	/**
+	 * Hàm export ra file CSV
+	 * 
+	 * @param data
+	 *            dữ liệu cần export
+	 * @param fileName
+	 *            tên file export
+	 * @param header
+	 *            chuỗi header của file
+	 * @return true nếu export thành công, false nếu không thành công
+	 */
+	public static boolean exportCSVFile(String data, String fileName, String header) {
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter(fileName);
+			// Neu co du lieu
+			if (!data.isEmpty()) {
+				fileWriter.append(header);
+				fileWriter.append(data);
+			} else {// Neu khong co du lieu
+				fileWriter.append(MessageProperties.getData("MSG005"));
+			}
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }
