@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import manageuser.entities.UserInfor;
 import manageuser.logics.impl.TblUserLogicImpl;
@@ -36,10 +37,13 @@ public class ExportFileController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			HttpSession session = request.getSession();
 			String fileName = Constant.CSV_FILE_NAME;
-			String fullName = Common.getRequestValue(request, "fullName", Constant.EMPTY_STRING);
+			String fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
 			int groupId = Common
-					.tryParseInt(Common.getRequestValue(request, "groupId", String.valueOf(Constant.DEFAULT_INT)));
+					.tryParseInt(Common.getSessionValue(session, "groupId", Integer.toString(Constant.DEFAULT_INT)));
+
+			fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
 			//
 			response.setContentType("text/csv"); // application/csv
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -47,8 +51,6 @@ public class ExportFileController extends HttpServlet {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			List<UserInfor> listUser = tblUserLogicImpl.getListUsers(groupId, fullName);
 			// generate data
-			// String data = "1,ntmhuong,Nguyen Thi Mai Huong,8/7/1983,Group
-			// 1,ntmhuong@luvina.net,914326386,Level 5,16/8/2015,100";
 			String data = Common.generateData(listUser);
 			// get header
 			String header = Common.getHeader("headerCSV");

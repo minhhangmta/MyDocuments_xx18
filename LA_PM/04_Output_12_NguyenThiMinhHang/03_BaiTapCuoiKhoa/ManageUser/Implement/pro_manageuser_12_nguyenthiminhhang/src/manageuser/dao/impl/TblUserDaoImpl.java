@@ -461,7 +461,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		List<UserInfor> list = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.login_name, us.full_name, us.email, us.tel, us.birthday,")
-				.append(" gr.group_name, jp.name_level, dt.end_date, dt.total")
+				.append(" gr.group_name, gr.group_id, jp.code_level, jp.name_level, dt.end_date, dt.total")
 				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
 				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
 				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0");
@@ -492,6 +492,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				userInfor.setTel(resultSet.getString("tel"));
 				userInfor.setBirthday(resultSet.getDate("birthday"));
 				userInfor.setGroupName(resultSet.getString("group_name"));
+				userInfor.setGroupId(resultSet.getInt("group_id"));
+				userInfor.setCodeLevel(resultSet.getString("code_level"));
 				userInfor.setNameLevel(resultSet.getString("name_level"));
 				userInfor.setEndDate(resultSet.getDate("end_date"));
 				userInfor.setTotal(resultSet.getString("total"));
