@@ -43,7 +43,6 @@ public class ExportFileController extends HttpServlet {
 			int groupId = Common
 					.tryParseInt(Common.getSessionValue(session, "groupId", Integer.toString(Constant.DEFAULT_INT)));
 
-			fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
 			//
 			response.setContentType("text/csv"); // application/csv
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
