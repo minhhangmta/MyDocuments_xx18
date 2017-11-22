@@ -940,12 +940,12 @@ public class Common {
 	 *            dữ liệu cần export
 	 * @param header
 	 *            chuỗi header của file
-	 * 
+	 * @param fileName
+	 *            tên file cần lưu
 	 */
-	public static void exportCSVFile(HttpServletResponse response, String data, String header) {
-		String fileName = Constant.CSV_FILE_NAME;
+	public static void exportCSVFile(HttpServletResponse response, String data, String header, String fileName) {
 		response.setContentType("text/csv");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 		try {
 			PrintWriter printWriter = response.getWriter();
 			// Neu co du lieu

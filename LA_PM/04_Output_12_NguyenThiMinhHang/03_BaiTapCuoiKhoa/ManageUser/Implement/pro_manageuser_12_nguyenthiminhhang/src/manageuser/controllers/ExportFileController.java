@@ -42,6 +42,7 @@ public class ExportFileController extends HttpServlet {
 			int groupId = Common
 					.tryParseInt(Common.getSessionValue(session, "groupId", Integer.toString(Constant.DEFAULT_INT)));
 			String download = request.getParameter("download");
+			String fileName = Constant.CSV_FILE_NAME;
 			// get list user
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			List<UserInfor> listUser = tblUserLogicImpl.getListUsers(groupId, fullName);
@@ -50,7 +51,7 @@ public class ExportFileController extends HttpServlet {
 			// get header
 			String header = Common.getHeader("headerCSV");
 			// export
-			Common.exportCSVFile(response, data, header);
+			Common.exportCSVFile(response, data, header, fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
