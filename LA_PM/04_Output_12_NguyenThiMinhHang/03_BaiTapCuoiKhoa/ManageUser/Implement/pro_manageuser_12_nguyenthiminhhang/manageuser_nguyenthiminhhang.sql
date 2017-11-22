@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+﻿-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: manageuser_nguyenthiminhhang
+-- Host: localhost    Database: manageuser_nguyenthiminhhang 
 -- ------------------------------------------------------
 -- Server version	5.7.18-log
 
