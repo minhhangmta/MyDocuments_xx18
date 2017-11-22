@@ -4,9 +4,7 @@
  */
 package manageuser.utils;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -29,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
-import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.ConfigProperties;
@@ -385,8 +382,12 @@ public class Common {
 	 * @return String chuỗi yyyy/MM/dd
 	 */
 	public static String convertDateToString(Date date) {
-		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
-		return df.format(date);
+		String dt = "";
+		if (date != null) {
+			DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
+			dt = df.format(date);
+		}
+		return dt;
 	}
 
 	/**
@@ -913,35 +914,17 @@ public class Common {
 	 * 
 	 * @param list
 	 *            đối tượng list cần generate
+	 * @param download
+	 *            đối tượng download
 	 * @return String chuỗi dữ liệu đã được generate
+	 * 
 	 */
-	public static String generateData(List<?> list) {
-		// UserID,LoginName,FullName,Birthday,GroupName,Email,Tel,NameLevel,EndDate,Total
+	public static String generateData(List<?> list, String download) {
 		StringBuilder result = new StringBuilder("");
 		if (list != null) {
-			List<UserInfor> listUser =  (List<UserInfor>) list;
-			for (UserInfor userInfor : listUser) {
-				result.append("\n");
-				result.append(userInfor.getUserId());
-				result.append(",");
-				result.append(userInfor.getLoginName());
-				result.append(",");
-				result.append(userInfor.getFullName());
-				result.append(",");
-				result.append(Common.convertDateToString(userInfor.getBirthday()));
-				result.append(",");
-				result.append(userInfor.getGroupName());
-				result.append(",");
-				result.append(userInfor.getEmail());
-				result.append(",");
-				result.append(userInfor.getTel());
-				if (userInfor.getCodeLevel() != null) {
-					result.append(",");
-					result.append(userInfor.getNameLevel());
-					result.append(",");
-					result.append(Common.convertDateToString(userInfor.getEndDate()));
-					result.append(",");
-					result.append(userInfor.getTotal());
+			if ("userInfor".equals(download)) {
+				for (Object userInfor : list) {
+					result.append(userInfor.toString());
 				}
 			}
 		}
@@ -960,6 +943,9 @@ public class Common {
 	 * 
 	 */
 	public static void exportCSVFile(HttpServletResponse response, String data, String header) {
+		String fileName = Constant.CSV_FILE_NAME;
+		response.setContentType("text/csv");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		try {
 			PrintWriter printWriter = response.getWriter();
 			// Neu co du lieu

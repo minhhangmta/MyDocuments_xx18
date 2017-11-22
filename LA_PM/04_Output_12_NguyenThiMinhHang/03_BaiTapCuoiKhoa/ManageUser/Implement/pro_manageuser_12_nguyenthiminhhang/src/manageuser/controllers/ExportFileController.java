@@ -38,18 +38,15 @@ public class ExportFileController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
-			String fileName = Constant.CSV_FILE_NAME;
 			String fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);
 			int groupId = Common
 					.tryParseInt(Common.getSessionValue(session, "groupId", Integer.toString(Constant.DEFAULT_INT)));
-
-			response.setContentType("text/csv");
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+			String download = request.getParameter("download");
 			// get list user
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			List<UserInfor> listUser = tblUserLogicImpl.getListUsers(groupId, fullName);
 			// generate data
-			String data = Common.generateData(listUser);
+			String data = Common.generateData(listUser, download);
 			// get header
 			String header = Common.getHeader("headerCSV");
 			// export

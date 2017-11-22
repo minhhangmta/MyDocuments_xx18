@@ -4,11 +4,10 @@
  */
 package manageuser.entities;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import manageuser.utils.Common;
+import manageuser.utils.Constant;
 
 /**
  * Lớp đối tượng UserInfor
@@ -479,29 +478,29 @@ public class UserInfor {
 	 */
 	@Override
 	public String toString() {
+		// UserID,LoginName,FullName,Birthday,GroupName,Email,Tel,NameLevel,EndDate,Total
 		StringBuilder result = new StringBuilder("");
-		UserInfor userInfor = new UserInfor();
 		result.append("\n");
-		result.append(userInfor.getUserId());
-		result.append(",");
-		result.append(userInfor.getLoginName());
-		result.append(",");
-		result.append(userInfor.getFullName());
-		result.append(",");
-		result.append(Common.convertDateToString(userInfor.getBirthday()));
-		result.append(",");
-		result.append(userInfor.getGroupName());
-		result.append(",");
-		result.append(userInfor.getEmail());
-		result.append(",");
-		result.append(userInfor.getTel());
-		if (userInfor.getCodeLevel() != null) {
-			result.append(",");
-			result.append(userInfor.getNameLevel());
-			result.append(",");
-			result.append(Common.convertDateToString(userInfor.getEndDate()));
-			result.append(",");
-			result.append(userInfor.getTotal());
+		result.append(userId);
+		result.append(Constant.COMMA_CHAR);
+		result.append(loginName);
+		result.append(Constant.COMMA_CHAR);
+		result.append(fullName);
+		result.append(Constant.COMMA_CHAR);
+		result.append(birthday);
+		result.append(Constant.COMMA_CHAR);
+		result.append(groupName);
+		result.append(Constant.COMMA_CHAR);
+		result.append(email);
+		result.append(Constant.COMMA_CHAR);
+		result.append(tel);
+		if (codeLevel != null) {
+			result.append(Constant.COMMA_CHAR);
+			result.append(nameLevel);
+			result.append(Constant.COMMA_CHAR);
+			result.append(Common.convertDateToString(endDate));
+			result.append(Constant.COMMA_CHAR);
+			result.append(total);
 		}
 		return result.toString();
 	}
