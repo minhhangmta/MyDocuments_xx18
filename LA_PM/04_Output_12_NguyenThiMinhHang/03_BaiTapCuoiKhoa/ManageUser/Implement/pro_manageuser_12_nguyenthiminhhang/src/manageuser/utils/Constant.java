@@ -32,6 +32,8 @@ public class Constant {
 	public static final String DETAIL_SERVLET = "/detailUser.do";
 	public static final String EDIT_PASS_SERVLET = "/editPass.do";
 	public static final String DELETE_USER_SERVLET = "/deleteUser.do";
+	public static final String EXPORT_FILE = "/export.do";
+	
 	//
 	public static final String FULL_NAME = "full_name";
 	public static final String CODE_LEVEL = "code_level";
@@ -52,6 +54,8 @@ public class Constant {
 	public static final int START_YEAR = 1980;
 	public static final String FORMAT_DATE = "yyyy/MM/dd";
 	public static final int ROLE_USER = 0;
+	public static final String CSV_FILE_NAME= "listUser.csv";
+	
 	public static final String SALT_CHARS = "abcdefghijklmnopqrstuvwxyz";
 	public static final String INSERT_SUCCESS = "insertSuccess";
 	public static final String INSERT_FAIL = "insertFail";

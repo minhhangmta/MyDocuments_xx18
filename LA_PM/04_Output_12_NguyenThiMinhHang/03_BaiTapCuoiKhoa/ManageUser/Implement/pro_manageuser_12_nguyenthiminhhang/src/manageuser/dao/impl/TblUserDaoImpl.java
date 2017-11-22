@@ -450,4 +450,59 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		return true;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.TblUserDao#getListUsers(int, java.lang.String)
+	 */
+	@Override
+	public List<UserInfor> getListUsers(int groupId, String fullName) {
+		List<UserInfor> list = new ArrayList<>();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT us.user_id, us.login_name, us.full_name, us.email, us.tel, us.birthday,")
+				.append(" gr.group_name, jp.code_level, jp.name_level, dt.end_date, dt.total")
+				.append(" FROM (tbl_user us INNER JOIN mst_group gr ON us.group_id = gr.group_id )")
+				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
+				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0");
+		if (groupId > 0) {
+			query.append(" AND us.group_id = ?");
+		}
+		if (!fullName.isEmpty()) {
+			query.append(" AND us.full_name LIKE ?");
+		}
+		query.append(";");
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			if (groupId > 0) {
+				preparedStatement.setInt(index++, groupId);
+			}
+			if (!fullName.isEmpty()) {
+				fullName = Common.standardString(fullName);
+				preparedStatement.setString(index++, "%" + fullName + "%");
+			}
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				UserInfor userInfor = new UserInfor();
+				userInfor.setUserId(resultSet.getInt("user_id"));
+				userInfor.setLoginName(resultSet.getString("login_name"));
+				userInfor.setFullName(resultSet.getString("full_name"));
+				userInfor.setEmail(resultSet.getString("email"));
+				userInfor.setTel(resultSet.getString("tel"));
+				userInfor.setBirthday(resultSet.getDate("birthday"));
+				userInfor.setGroupName(resultSet.getString("group_name"));
+				userInfor.setCodeLevel(resultSet.getString("code_level"));
+				userInfor.setNameLevel(resultSet.getString("name_level"));
+				userInfor.setEndDate(resultSet.getDate("end_date"));
+				userInfor.setTotal(resultSet.getString("total"));
+				list.add(userInfor);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection();
+		}
+		return list;
+	}
 }

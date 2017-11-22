@@ -73,6 +73,17 @@ public interface TblUserDao {
 	public int getTotalUsers(int groupId, String fullName);
 
 	/**
+	 * Hàm get listUser theo groupId và fullName
+	 * 
+	 * @param groupId
+	 *            mã nhóm
+	 * @param fullName
+	 *            tên user
+	 * @return List<UserInfor> danh sách userInfor
+	 */
+	public List<UserInfor> getListUsers(int groupId, String fullName);
+
+	/**
 	 * hàm kiểm tra username có tồn tại trong db chưa
 	 * 
 	 * @param username
@@ -107,7 +118,7 @@ public interface TblUserDao {
 	 * @param tblUser
 	 *            tblUser Đối tượng chứa thông tin của user
 	 * @return int mã user vừa thêm
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public int insertUser(TblUser tblUser) throws SQLException;
 
@@ -158,7 +169,7 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu delete thành công, false nếu không thành công
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public boolean deleteUser(int userId) throws SQLException;
 }

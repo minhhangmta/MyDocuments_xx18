@@ -295,4 +295,14 @@ public class TblUserLogicImpl implements TblUserLogic {
 		return true;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.logics.TblUserLogic#getListUsers(int, java.lang.String)
+	 */
+	@Override
+	public List<UserInfor> getListUsers(int groupId, String fullName) {
+		return (userDaoImpl.getListUsers(groupId, fullName));
+	}
+
 }

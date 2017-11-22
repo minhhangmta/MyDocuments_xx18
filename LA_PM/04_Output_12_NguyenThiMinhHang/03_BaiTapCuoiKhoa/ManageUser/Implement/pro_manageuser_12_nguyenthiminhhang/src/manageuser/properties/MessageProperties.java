@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Đọc các thông tin về các câu thông báo, của hệ thống
+ * Lớp đọc các thông tin về các câu thông báo của hệ thống
  * 
  * @author minhhang
  */

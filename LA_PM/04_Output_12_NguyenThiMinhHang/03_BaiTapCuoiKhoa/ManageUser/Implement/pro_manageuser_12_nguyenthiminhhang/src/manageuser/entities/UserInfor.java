@@ -4,7 +4,11 @@
  */
 package manageuser.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import manageuser.utils.Common;
 
 /**
  * Lớp đối tượng UserInfor
@@ -466,6 +470,40 @@ public class UserInfor {
 	 */
 	public UserInfor() {
 		super();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder("");
+		UserInfor userInfor = new UserInfor();
+		result.append("\n");
+		result.append(userInfor.getUserId());
+		result.append(",");
+		result.append(userInfor.getLoginName());
+		result.append(",");
+		result.append(userInfor.getFullName());
+		result.append(",");
+		result.append(Common.convertDateToString(userInfor.getBirthday()));
+		result.append(",");
+		result.append(userInfor.getGroupName());
+		result.append(",");
+		result.append(userInfor.getEmail());
+		result.append(",");
+		result.append(userInfor.getTel());
+		if (userInfor.getCodeLevel() != null) {
+			result.append(",");
+			result.append(userInfor.getNameLevel());
+			result.append(",");
+			result.append(Common.convertDateToString(userInfor.getEndDate()));
+			result.append(",");
+			result.append(userInfor.getTotal());
+		}
+		return result.toString();
 	}
 
 }
