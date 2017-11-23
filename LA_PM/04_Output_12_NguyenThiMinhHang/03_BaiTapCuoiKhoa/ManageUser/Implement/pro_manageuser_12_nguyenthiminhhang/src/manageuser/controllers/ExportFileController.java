@@ -36,6 +36,7 @@ public class ExportFileController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// click button export từ adm002
 		try {
 			HttpSession session = request.getSession();
 			String fullName = Common.getSessionValue(session, "fullName", Constant.EMPTY_STRING);

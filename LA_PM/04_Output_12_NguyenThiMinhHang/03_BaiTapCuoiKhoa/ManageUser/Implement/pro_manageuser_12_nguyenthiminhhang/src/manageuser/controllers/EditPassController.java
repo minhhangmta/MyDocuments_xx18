@@ -42,6 +42,7 @@ public class EditPassController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// click change pass từ adm005
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
@@ -67,6 +68,7 @@ public class EditPassController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// click submit changePass từ adm007
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));

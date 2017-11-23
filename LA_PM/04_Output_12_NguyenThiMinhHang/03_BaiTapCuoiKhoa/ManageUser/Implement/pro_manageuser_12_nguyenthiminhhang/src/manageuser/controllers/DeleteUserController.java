@@ -40,6 +40,7 @@ public class DeleteUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// click delete từ adm005
 		try {
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
@@ -60,16 +61,6 @@ public class DeleteUserController extends HttpServlet {
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

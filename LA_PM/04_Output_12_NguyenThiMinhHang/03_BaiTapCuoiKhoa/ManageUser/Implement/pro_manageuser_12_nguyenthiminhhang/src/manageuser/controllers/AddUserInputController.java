@@ -212,10 +212,6 @@ public class AddUserInputController extends HttpServlet {
 				yearStartDate = Common.tryParseInt(list.get(0).toString());
 				monthStartDate = Common.tryParseInt(list.get(1).toString());
 				dayStartDate = Common.tryParseInt(list.get(2).toString());
-				// start date
-				userInfor.setYearStartDate(yearStartDate);
-				userInfor.setMonthStartDate(monthStartDate);
-				userInfor.setDayStartDate(dayStartDate);
 
 				// End date
 				list = Common.getEachElementFromDate(userInfor.getEndDate());
@@ -223,10 +219,6 @@ public class AddUserInputController extends HttpServlet {
 				monthEndDate = Common.tryParseInt(list.get(1).toString());
 				dayEndDate = Common.tryParseInt(list.get(2).toString());
 
-				// end date
-				userInfor.setYearEndDate(yearEndDate);
-				userInfor.setMonthEndDate(monthEndDate);
-				userInfor.setDayEndDate(dayEndDate);
 			}
 		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
 			HttpSession session = request.getSession();
@@ -254,19 +246,20 @@ public class AddUserInputController extends HttpServlet {
 				monthBirthday = Common.tryParseInt(request.getParameter("monthBirthday"));
 				dayBirthday = Common.tryParseInt(request.getParameter("dayBirthday"));
 
-				// Start date
-				yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
-				monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
-				dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
-
-				// End date
-				yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
-				monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
-				dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
-
 				if (!codeLevel.isEmpty()) {
+					// Start date
+					yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
+					monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
+					dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
+
+					// End date
+					yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
+					monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
+					dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
+
 					// total
 					total = request.getParameter("total");
+
 				}
 				if ("confirmEdit".equals(tab)) {
 					int userId = Common.tryParseInt(request.getParameter("id"));
@@ -290,13 +283,15 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setDayBirthday(dayBirthday);
 			userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
 
-			// if (!codeLevel.isEmpty()) {
-			userInfor.setCodeLevel(codeLevel);
-			userInfor.setNameLevel(nameLevel);
-			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
-			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
-			userInfor.setTotal(total);
-			// }
+			if (!codeLevel.isEmpty()) {
+				userInfor.setCodeLevel(codeLevel);
+				userInfor.setNameLevel(nameLevel);
+				userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
+				userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
+				userInfor.setTotal(total);
+			}
+		}
+		if (!"back".equals(tab)) {
 			// start date
 			userInfor.setYearStartDate(yearStartDate);
 			userInfor.setMonthStartDate(monthStartDate);
@@ -314,5 +309,4 @@ public class AddUserInputController extends HttpServlet {
 
 		return userInfor;
 	}
-
 }

@@ -50,7 +50,7 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Send redirect từ login tới 
+		// Send redirect từ login
 		doPost(request, response);
 	}
 
@@ -63,7 +63,7 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Sau khi submit form search
+		// Sau khi login va Sau khi submit form search
 		try {
 			HttpSession session = request.getSession();
 			// Khởi tạo
