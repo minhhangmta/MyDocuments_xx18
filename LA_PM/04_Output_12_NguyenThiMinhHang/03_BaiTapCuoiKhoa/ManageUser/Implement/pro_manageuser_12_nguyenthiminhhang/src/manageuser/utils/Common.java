@@ -54,9 +54,13 @@ public class Common {
 		String sha1 = null;
 		MessageDigest digest;
 		try {
+			// lấy thuật toán mã hóa SHA1
 			digest = MessageDigest.getInstance("SHA1");
+			// update thuật toán với input là mảng byte
 			digest.update(input.getBytes());
+			// mã hóa thành đối tượng BigInteger với kiểu hexa
 			BigInteger bigInteger = new BigInteger(1, digest.digest());
+			// chuyển về kiểu string
 			sha1 = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -368,7 +372,6 @@ public class Common {
 		try {
 			dt = (Date) df.parse(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return dt;
@@ -658,7 +661,6 @@ public class Common {
 					return false;
 				}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -958,7 +960,6 @@ public class Common {
 			printWriter.flush();
 			printWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

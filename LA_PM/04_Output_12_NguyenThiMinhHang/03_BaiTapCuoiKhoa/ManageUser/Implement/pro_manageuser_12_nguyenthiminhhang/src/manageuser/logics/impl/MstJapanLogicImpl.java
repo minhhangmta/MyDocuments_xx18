@@ -29,7 +29,8 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 */
 	@Override
 	public List<MstJapan> getAllMstJapan() throws SQLException {
-		return mstJapanDaoImpl.getAllMstJapan();
+		List<MstJapan> result = mstJapanDaoImpl.getAllMstJapan();
+		return result;
 	}
 
 	/*
@@ -39,7 +40,8 @@ public class MstJapanLogicImpl implements MstJapanLogic {
 	 */
 	@Override
 	public String getNameLevel(String codeLevel) {
-		return mstJapanDaoImpl.getNameLevel(codeLevel);
+		String result = mstJapanDaoImpl.getNameLevel(codeLevel);
+		return result;
 	}
 
 }

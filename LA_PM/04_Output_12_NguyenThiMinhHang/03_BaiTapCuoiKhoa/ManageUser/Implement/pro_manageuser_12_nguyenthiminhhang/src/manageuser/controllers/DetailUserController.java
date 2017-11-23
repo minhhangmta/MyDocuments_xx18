@@ -32,7 +32,6 @@ public class DetailUserController extends HttpServlet {
 	 */
 	public DetailUserController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

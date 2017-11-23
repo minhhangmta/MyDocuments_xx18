@@ -36,13 +36,15 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		query.append(";");
 		try {
 			Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				MstGroup mstGroup = new MstGroup();
-				mstGroup.setGroupId(resultSet.getInt("group_id"));
-				mstGroup.setGroupName(resultSet.getString("group_name"));
-				listGroup.add(mstGroup);
+			if (connection != null) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					MstGroup mstGroup = new MstGroup();
+					mstGroup.setGroupId(resultSet.getInt("group_id"));
+					mstGroup.setGroupName(resultSet.getString("group_name"));
+					listGroup.add(mstGroup);
+				}
 			}
 		} finally {
 			closeConnection();
@@ -61,14 +63,15 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		String groupName = "";
 		try {
 			Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, groupId);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				groupName = resultSet.getString("group_name");
+			if (connection != null) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, groupId);
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					groupName = resultSet.getString("group_name");
+				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
@@ -86,14 +89,15 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
 		try {
 			Connection connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, groupId);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			if (!resultSet.first()) {
-				return false;
+			if (connection != null) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, groupId);
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				if (!resultSet.first()) {
+					return false;
+				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();

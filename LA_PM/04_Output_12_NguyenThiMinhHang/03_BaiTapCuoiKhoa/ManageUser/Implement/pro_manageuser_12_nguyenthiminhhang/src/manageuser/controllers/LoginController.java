@@ -30,7 +30,6 @@ public class LoginController extends HttpServlet {
 	 */
 	public LoginController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/*
@@ -42,7 +41,7 @@ public class LoginController extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Trường hợp đi qua filter hoặc logout
+		// Trường hợp từ filter sang
 		try {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);

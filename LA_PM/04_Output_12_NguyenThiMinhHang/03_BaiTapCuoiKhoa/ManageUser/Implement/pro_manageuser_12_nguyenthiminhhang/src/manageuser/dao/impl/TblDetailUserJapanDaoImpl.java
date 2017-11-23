@@ -47,16 +47,18 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		query.append("INSERT INTO tbl_detail_user_japan ").append("(")
 				.append("user_id, code_level, start_date, end_date, total").append(")")
 				.append(" VALUES(?, ?, ?, ?, ? )");
-		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-		int index = 1;
-		preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
-		preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
-		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
-		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
-		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
-		int row = preparedStatement.executeUpdate();
-		if (row == 0) {
-			return false;
+		if (connection != null) {
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
+			preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
+			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
+			int row = preparedStatement.executeUpdate();
+			if (row == 0) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -70,11 +72,13 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	public String getCodeLevelById(int userId) throws SQLException {
 		String codeLevel = "";
 		String query = "SELECT code_level FROM tbl_detail_user_japan WHERE user_id = ?";
-		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setInt(1, userId);
-		ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			codeLevel = resultSet.getString("code_level");
+		if (connection != null) {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, userId);
+			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				codeLevel = resultSet.getString("code_level");
+			}
 		}
 		return codeLevel;
 	}
@@ -91,16 +95,18 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 		StringBuilder query = new StringBuilder();
 		query.append("UPDATE tbl_detail_user_japan SET code_level = ?, start_date = ?, end_date = ?, total = ?")
 				.append(" WHERE user_id = ?");
-		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-		int index = 1;
-		preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
-		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
-		preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
-		preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
-		preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
-		int row = preparedStatement.executeUpdate();
-		if (row == 0) {
-			return false;
+		if (connection != null) {
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			int index = 1;
+			preparedStatement.setString(index++, tblDetailUserJapan.getCodeLevel());
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getStartDate()));
+			preparedStatement.setString(index++, Common.convertDateToString(tblDetailUserJapan.getEndDate()));
+			preparedStatement.setInt(index++, Common.tryParseInt(tblDetailUserJapan.getTotal()));
+			preparedStatement.setInt(index++, tblDetailUserJapan.getUserId());
+			int row = preparedStatement.executeUpdate();
+			if (row == 0) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -113,11 +119,13 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	@Override
 	public boolean deleteDetailJapan(int userId) throws SQLException {
 		String query = "DELETE FROM tbl_detail_user_japan WHERE user_id = ? ";
-		PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-		preparedStatement.setInt(1, userId);
-		int row = preparedStatement.executeUpdate();
-		if (row == 0) {
-			return false;
+		if (connection != null) {
+			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+			preparedStatement.setInt(1, userId);
+			int row = preparedStatement.executeUpdate();
+			if (row == 0) {
+				return false;
+			}
 		}
 		return true;
 	}

@@ -34,7 +34,6 @@ public class AddUserConfirmController extends HttpServlet {
 	 */
 	public AddUserConfirmController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

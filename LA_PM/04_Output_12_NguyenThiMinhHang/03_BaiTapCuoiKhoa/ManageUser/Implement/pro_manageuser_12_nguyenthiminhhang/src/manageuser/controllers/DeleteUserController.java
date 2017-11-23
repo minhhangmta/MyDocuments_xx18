@@ -31,7 +31,6 @@ public class DeleteUserController extends HttpServlet {
 	 */
 	public DeleteUserController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

@@ -33,7 +33,6 @@ public class EditPassController extends HttpServlet {
 	 */
 	public EditPassController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

@@ -29,7 +29,6 @@ public class SuccessController extends HttpServlet {
 	 */
 	public SuccessController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

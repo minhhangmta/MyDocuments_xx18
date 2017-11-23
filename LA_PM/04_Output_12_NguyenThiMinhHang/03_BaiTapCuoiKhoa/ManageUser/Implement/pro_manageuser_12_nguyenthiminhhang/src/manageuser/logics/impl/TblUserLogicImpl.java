@@ -59,8 +59,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		return (userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName, sortByCodeLevel,
-				sortByEndDate));
+		List<UserInfor> list = userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
+				sortByCodeLevel, sortByEndDate);
+		return list;
 	}
 
 	/*
@@ -70,7 +71,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(int groupId, String fullName) {
-		return userDaoImpl.getTotalUsers(groupId, fullName);
+		int result = userDaoImpl.getTotalUsers(groupId, fullName);
+		return result;
 	}
 
 	/*
@@ -80,10 +82,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUsername(String username) {
-		if (userDaoImpl.existUsername(username)) {
-			return true;
-		} // ngược lại
-		return false;
+		boolean result = userDaoImpl.existUsername(username);
+		return result;
 	}
 
 	/*
@@ -93,7 +93,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existEmail(String email, int userId) {
-		return userDaoImpl.existEmail(email, userId);
+		boolean result = userDaoImpl.existEmail(email, userId);
+		return result;
 	}
 
 	/*
@@ -103,7 +104,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existCodeLevel(String codeLevel) {
-		return userDaoImpl.existCodeLevel(codeLevel);
+		boolean result = userDaoImpl.existCodeLevel(codeLevel);
+		return result;
 	}
 
 	/*
@@ -113,7 +115,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int insertUser(TblUser tblUser) throws SQLException {
-		return userDaoImpl.insertUser(tblUser);
+		int result = userDaoImpl.insertUser(tblUser);
+		return result;
 	}
 
 	/*
@@ -125,7 +128,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
-		return detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
+		boolean result = detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
+		return result;
 	}
 
 	/*
@@ -192,7 +196,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public UserInfor getUserById(int userId) {
-		return userDaoImpl.getUserById(userId);
+		UserInfor result = userDaoImpl.getUserById(userId);
+		return result;
 	}
 
 	/*
@@ -202,7 +207,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUserById(int userId) {
-		return userDaoImpl.existUserById(userId);
+		boolean result = userDaoImpl.existUserById(userId);
+		return result;
 	}
 
 	/*
@@ -268,7 +274,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean updatePass(String passwords, String salt, int userId) {
 		passwords = Common.encodeSHA1(passwords, salt);
-		return userDaoImpl.updatePass(passwords, salt, userId);
+		boolean result = userDaoImpl.updatePass(passwords, salt, userId);
+		return result;
 	}
 
 	/*
@@ -302,7 +309,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int groupId, String fullName) {
-		return (userDaoImpl.getListUsers(groupId, fullName));
+		List<UserInfor> result = userDaoImpl.getListUsers(groupId, fullName);
+		return result;
 	}
 
 }

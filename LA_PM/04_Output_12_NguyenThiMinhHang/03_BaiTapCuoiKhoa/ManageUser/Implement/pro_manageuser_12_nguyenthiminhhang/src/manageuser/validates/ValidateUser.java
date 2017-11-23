@@ -100,12 +100,11 @@ public class ValidateUser {
 		}
 		// truong hop khac edit
 		if (userId <= 0) {
-
 			// password
 			errorMsg = Common.validatePass(userInfor.getPasswords());
 			if (!errorMsg.isEmpty()) {
 				lstError.add(errorMsg);
-			} else {//trường hợp password đúng thì mới check đến confirm
+			} else {// trường hợp password đúng thì mới check đến confirm
 				// confirmPass
 				errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
 				if (!errorMsg.isEmpty()) {
@@ -121,15 +120,13 @@ public class ValidateUser {
 				lstError.add(errorMsg);
 			}
 			if (!codeLevel.isEmpty()) {
-				//
-				// // date of issue
+				// date of issue
 				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate());
 				if (!errorMsg.isEmpty()) {
 					lstError.add(errorMsg);
 				}
-				//
-				// // expiration date
+				// expiration date
 				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());

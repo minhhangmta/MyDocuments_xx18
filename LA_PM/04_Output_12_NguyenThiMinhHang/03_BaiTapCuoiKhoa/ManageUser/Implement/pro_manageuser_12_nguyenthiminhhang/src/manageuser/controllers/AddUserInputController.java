@@ -41,7 +41,6 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	public AddUserInputController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -150,7 +149,6 @@ public class AddUserInputController extends HttpServlet {
 			request.setAttribute("listMonth", Common.getListMonth());
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -168,12 +166,30 @@ public class AddUserInputController extends HttpServlet {
 		UserInfor userInfor = new UserInfor();
 		String tab = request.getParameter("tab");
 		// Khai bao bien
-		int currentYear, currentMonth, currentDay;
-		String username, fullName, fullNameKana, email, tel, password, confirmPassword, codeLevel, total;
+		int currentYear;
+		int currentMonth;
+		int currentDay;
+		String username;
+		String fullName;
+		String fullNameKana;
+		String email;
+		String tel;
+		String password;
+		String confirmPassword;
+		String codeLevel;
+		String total;
 		int groupId;
-		int yearBirthday, monthBirthday, dayBirthday, yearStartDate, monthStartDate, dayStartDate, yearEndDate,
-				monthEndDate, dayEndDate;
-		String groupName, nameLevel;
+		int yearBirthday;
+		int monthBirthday;
+		int dayBirthday;
+		int yearStartDate;
+		int monthStartDate;
+		int dayStartDate;
+		int yearEndDate;
+		int monthEndDate;
+		int dayEndDate;
+		String groupName;
+		String nameLevel;
 		// get date current
 		currentYear = Common.getCurrentYear();
 		currentMonth = Common.getCurrentMonth();

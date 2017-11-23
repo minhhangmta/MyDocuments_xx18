@@ -25,7 +25,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public List<MstGroup> getAllGroups() throws SQLException {
-		return new MstGroupDaoImpl().getAllGroups();
+		List<MstGroup> result = new MstGroupDaoImpl().getAllGroups();
+		return result;
 	}
 
 	/*
@@ -35,7 +36,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public String getGroupName(int groupId) {
-		return new MstGroupDaoImpl().getGroupName(groupId);
+		String result = new MstGroupDaoImpl().getGroupName(groupId);
+		return result;
 	}
 
 	/*
@@ -45,7 +47,8 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public boolean existGroup(int groupId) {
-		return new MstGroupDaoImpl().existGroup(groupId);
+		boolean result = new MstGroupDaoImpl().existGroup(groupId);
+		return result;
 	}
 
 }

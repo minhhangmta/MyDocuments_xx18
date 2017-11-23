@@ -38,7 +38,6 @@ public class ListUserController extends HttpServlet {
 	 */
 	public ListUserController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/*
@@ -50,7 +49,7 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Send redirect từ login
+		// sau khi sort, paging
 		doPost(request, response);
 	}
 
@@ -71,8 +70,19 @@ public class ListUserController extends HttpServlet {
 			MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 			List<UserInfor> listUser = new ArrayList<>();
 			List<Integer> listPaging = new ArrayList<>();
-			String fullName, sortType, sortByName, sortByCodeLevel, sortByEndDate;
-			int groupId, offset, totalPage, nextPage, previousPage, totalRecord, currentPage, limit;
+			String fullName;
+			String sortType;
+			String sortByName;
+			String sortByCodeLevel;
+			String sortByEndDate;
+			int groupId;
+			int offset;
+			int totalPage;
+			int nextPage;
+			int previousPage;
+			int totalRecord;
+			int currentPage;
+			int limit;
 			// get type from jsp
 			String type = request.getParameter("type");
 			// set session cho type
@@ -142,6 +152,9 @@ public class ListUserController extends HttpServlet {
 				} else if ("paging".equals(type)) {
 					// paging
 					currentPage = Common.tryParseInt(request.getParameter("page"));
+					if (currentPage <= 0) {
+						currentPage = Constant.DEFAULT_CURRENT_PAGE;
+					}
 				}
 			}
 			// set session cho cac gia tri

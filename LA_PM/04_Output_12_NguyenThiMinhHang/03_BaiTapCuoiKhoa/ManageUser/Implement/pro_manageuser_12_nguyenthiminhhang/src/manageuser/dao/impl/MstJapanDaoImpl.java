@@ -47,13 +47,15 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		query.append("SELECT * FROM mst_japan");
 		query.append(";");
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				MstJapan mstJapan = new MstJapan();
-				mstJapan.setCodeLevel(resultSet.getString("code_level"));
-				mstJapan.setNameLevel(resultSet.getString("name_level"));
-				listJapan.add(mstJapan);
+			if (connection != null) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					MstJapan mstJapan = new MstJapan();
+					mstJapan.setCodeLevel(resultSet.getString("code_level"));
+					mstJapan.setNameLevel(resultSet.getString("name_level"));
+					listJapan.add(mstJapan);
+				}
 			}
 		} finally {
 			closeConnection();
@@ -71,19 +73,20 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
 		String nameLevel = "";
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, codeLevel);
-			ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				nameLevel = resultSet.getString("name_level");
+			if (connection != null) {
+				PreparedStatement preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, codeLevel);
+				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
+				while (resultSet.next()) {
+					nameLevel = resultSet.getString("name_level");
+				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeConnection();
 		}
 		return nameLevel;
 	}
-	
+
 }
