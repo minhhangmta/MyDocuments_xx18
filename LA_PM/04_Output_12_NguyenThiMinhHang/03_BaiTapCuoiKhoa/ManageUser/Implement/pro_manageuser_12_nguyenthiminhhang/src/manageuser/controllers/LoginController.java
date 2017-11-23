@@ -42,6 +42,7 @@ public class LoginController extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// Trường hợp đi qua filter hoặc logout
 		try {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);
@@ -57,7 +58,9 @@ public class LoginController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// trường hợp submit form login
 		try {
 			// Lấy username và password từ jsp
 			String username = request.getParameter("username");

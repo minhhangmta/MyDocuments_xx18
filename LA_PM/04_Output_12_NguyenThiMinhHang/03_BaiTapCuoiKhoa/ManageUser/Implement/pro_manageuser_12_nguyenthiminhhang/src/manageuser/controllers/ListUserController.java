@@ -26,6 +26,7 @@ import manageuser.utils.Constant;
 
 /**
  * Controller xử lý cho màn hình danh sách user ADM002
+ * 
  * @author minhhang
  */
 @WebServlet("/listUser.do")
@@ -47,7 +48,9 @@ public class ListUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Send redirect từ login tới 
 		doPost(request, response);
 	}
 
@@ -58,7 +61,9 @@ public class ListUserController extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// Sau khi submit form search
 		try {
 			HttpSession session = request.getSession();
 			// Khởi tạo

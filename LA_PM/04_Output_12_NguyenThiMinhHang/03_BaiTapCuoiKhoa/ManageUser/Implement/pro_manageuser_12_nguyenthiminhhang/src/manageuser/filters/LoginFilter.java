@@ -36,12 +36,15 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 	}
 
-	/* (non-Javadoc)
-	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
+	 * javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		//Start fix bug ID 49 – NguyenThiMinhHang 2017/11/1
+		// Start fix bug ID 49 – NguyenThiMinhHang 2017/11/1
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
@@ -53,11 +56,10 @@ public class LoginFilter implements Filter {
 			if (Common.checkLogin(session)) {
 				chain.doFilter(req, res);
 			} else {
-				RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
-				requestDispatcher.forward(req, res);
+				res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
 			}
 		}
-		//End fix bug ID 49 – NguyenThiMinhHang 2017/11/1
+		// End fix bug ID 49 – NguyenThiMinhHang 2017/11/1
 	}
 
 	/**

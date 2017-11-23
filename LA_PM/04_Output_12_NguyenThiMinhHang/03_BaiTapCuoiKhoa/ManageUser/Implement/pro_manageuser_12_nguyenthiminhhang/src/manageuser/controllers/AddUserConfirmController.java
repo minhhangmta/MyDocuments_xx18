@@ -45,6 +45,7 @@ public class AddUserConfirmController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// click submit adm003
 		try {
 			HttpSession session = request.getSession();
 			String keySesion = request.getParameter("keySession");
@@ -72,6 +73,7 @@ public class AddUserConfirmController extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// click ok từ adm004
 		try {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			HttpSession session = req.getSession();
@@ -84,7 +86,6 @@ public class AddUserConfirmController extends HttpServlet {
 			if (userId <= 0) {
 				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 				if (listError.isEmpty() && tblUserLogicImpl.createUser(userInfor)) {
-
 					resp.sendRedirect(
 							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
 				} else {

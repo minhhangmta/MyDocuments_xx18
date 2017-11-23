@@ -52,6 +52,7 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Khi click btn add từ adm002 hoặc edit từ adm005
 		try {
 			RequestDispatcher requestDispatcher;
 			String tab = request.getParameter("tab");
@@ -87,11 +88,12 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Khi submit từ adm003 (add/edit)
 		try {
-			RequestDispatcher requestDispatcher;
 			ValidateUser validateUser = new ValidateUser();
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			String tab = request.getParameter("tab");
+			// Trường hợp submit của edit
 			if ("confirmEdit".equals(tab)) {
 				// lay tu input hidden
 				int userId = Common.tryParseInt(request.getParameter("id"));
@@ -99,7 +101,7 @@ public class AddUserInputController extends HttpServlet {
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(
 							request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
-					return;// Trường hợp lỗi thì thoát khỏi hàm luôn
+					return;// send redirect rồi thoát khỏi hàm luôn
 				}
 			}
 			UserInfor userInfor = setDefault(request, response);
@@ -118,7 +120,7 @@ public class AddUserInputController extends HttpServlet {
 				// set dữ liệu
 				setDataLogicADM003(request, response);
 				// Forward đến ADM003
-				requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM003);
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
@@ -176,6 +178,7 @@ public class AddUserInputController extends HttpServlet {
 		currentYear = Common.getCurrentYear();
 		currentMonth = Common.getCurrentMonth();
 		currentDay = Common.getCurrentDay();
+
 		// Khoi tao gia tri mac dinh
 		username = fullName = fullNameKana = email = tel = password = confirmPassword = Constant.EMPTY_STRING;
 		yearBirthday = yearStartDate = currentYear;
@@ -209,12 +212,21 @@ public class AddUserInputController extends HttpServlet {
 				yearStartDate = Common.tryParseInt(list.get(0).toString());
 				monthStartDate = Common.tryParseInt(list.get(1).toString());
 				dayStartDate = Common.tryParseInt(list.get(2).toString());
+				// start date
+				userInfor.setYearStartDate(yearStartDate);
+				userInfor.setMonthStartDate(monthStartDate);
+				userInfor.setDayStartDate(dayStartDate);
 
 				// End date
 				list = Common.getEachElementFromDate(userInfor.getEndDate());
 				yearEndDate = Common.tryParseInt(list.get(0).toString());
 				monthEndDate = Common.tryParseInt(list.get(1).toString());
 				dayEndDate = Common.tryParseInt(list.get(2).toString());
+
+				// end date
+				userInfor.setYearEndDate(yearEndDate);
+				userInfor.setMonthEndDate(monthEndDate);
+				userInfor.setDayEndDate(dayEndDate);
 			}
 		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
 			HttpSession session = request.getSession();
@@ -278,25 +290,23 @@ public class AddUserInputController extends HttpServlet {
 			userInfor.setDayBirthday(dayBirthday);
 			userInfor.setBirthday(Common.toDate(yearBirthday, monthBirthday, dayBirthday));
 
-			if (!codeLevel.isEmpty()) {
-				userInfor.setCodeLevel(codeLevel);
-				userInfor.setNameLevel(nameLevel);
-				userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
-				userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
-				userInfor.setTotal(total);
-			}
+			// if (!codeLevel.isEmpty()) {
+			userInfor.setCodeLevel(codeLevel);
+			userInfor.setNameLevel(nameLevel);
+			userInfor.setStartDate(Common.toDate(yearStartDate, monthStartDate, dayStartDate));
+			userInfor.setEndDate(Common.toDate(yearEndDate, monthEndDate, dayEndDate));
+			userInfor.setTotal(total);
+			// }
+			// start date
+			userInfor.setYearStartDate(yearStartDate);
+			userInfor.setMonthStartDate(monthStartDate);
+			userInfor.setDayStartDate(dayStartDate);
+			// end date
+			userInfor.setYearEndDate(yearEndDate);
+			userInfor.setMonthEndDate(monthEndDate);
+			userInfor.setDayEndDate(dayEndDate);
 		}
 
-		// vi cac truong hop deu can den year, month, day hien tai, start, end nen set
-		// cuoi cung
-		// start date
-		userInfor.setYearStartDate(yearStartDate);
-		userInfor.setMonthStartDate(monthStartDate);
-		userInfor.setDayStartDate(dayStartDate);
-		// end date
-		userInfor.setYearEndDate(yearEndDate);
-		userInfor.setMonthEndDate(monthEndDate);
-		userInfor.setDayEndDate(dayEndDate);
 		// set default date current
 		userInfor.setYear(currentYear);
 		userInfor.setMonth(currentMonth);
