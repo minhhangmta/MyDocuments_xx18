@@ -16,7 +16,7 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Filter xử lý lọc các controller tính năng login
+ * Filter xử lý lọc các controller thông qua login
  */
 @WebFilter(urlPatterns = { "*.do" })
 public class LoginFilter implements Filter {
@@ -47,6 +47,7 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 
 		String path = req.getServletPath();
+		//
 		if (path.contains("login.do") || path.contains("logout.do")) {
 			if (path.contains("login.do") && Common.checkLogin(session)) {
 				res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);

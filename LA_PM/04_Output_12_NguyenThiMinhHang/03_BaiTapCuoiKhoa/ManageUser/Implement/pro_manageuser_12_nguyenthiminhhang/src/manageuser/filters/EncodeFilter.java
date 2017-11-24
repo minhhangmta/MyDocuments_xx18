@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import manageuser.utils.Constant;
 
 /**
- * Filter xử lý lọc các controller tính năng encode
+ * Filter xử lý lọc các controller thông qua encoding
  */
 @WebFilter(urlPatterns = { "*.do" })
 public class EncodeFilter implements Filter {

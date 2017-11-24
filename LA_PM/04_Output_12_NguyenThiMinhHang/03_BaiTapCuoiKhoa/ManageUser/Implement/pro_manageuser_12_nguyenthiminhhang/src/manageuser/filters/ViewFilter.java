@@ -41,9 +41,12 @@ public class ViewFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
+		String path = req.getServletPath();
 
 		if (Common.checkLogin(session)) {
 			res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
+		} else if (path.contains("ADM001.jsp")) {// Chưa login và là jsp ADM001
+			res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
 		}
 	}
 
