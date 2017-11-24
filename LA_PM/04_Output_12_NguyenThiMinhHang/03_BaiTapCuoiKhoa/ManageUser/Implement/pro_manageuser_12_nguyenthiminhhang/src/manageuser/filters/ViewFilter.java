@@ -16,15 +16,15 @@ import manageuser.utils.Common;
 import manageuser.utils.Constant;
 
 /**
- * Filter xử lý lọc các controller tính năng login
+ * Filter xử lý lọc các jsp
  */
-@WebFilter(urlPatterns = { "*.do" })
-public class LoginFilter implements Filter {
+@WebFilter(urlPatterns = { "*.jsp" })
+public class ViewFilter implements Filter {
 
 	/**
 	 * Default constructor.
 	 */
-	public LoginFilter() {
+	public ViewFilter() {
 	}
 
 	/**
@@ -33,34 +33,19 @@ public class LoginFilter implements Filter {
 	public void destroy() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
-	 * javax.servlet.ServletResponse, javax.servlet.FilterChain)
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// Start fix bug ID 49 – NguyenThiMinhHang 2017/11/1
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 
 		String path = req.getServletPath();
-		if (path.contains("login.do") || path.contains("logout.do")) {
-			if (path.contains("login.do") && Common.checkLogin(session)) {
-				res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
-			} else {
-				chain.doFilter(req, res);
-			}
-		} else {
-			if (Common.checkLogin(session)) {
-				chain.doFilter(req, res);
-			} else {
-				res.sendRedirect(req.getContextPath());
-			}
+		if (Common.checkLogin(session)) {
+			res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
 		}
-		// End fix bug ID 49 – NguyenThiMinhHang 2017/11/1
 	}
 
 	/**

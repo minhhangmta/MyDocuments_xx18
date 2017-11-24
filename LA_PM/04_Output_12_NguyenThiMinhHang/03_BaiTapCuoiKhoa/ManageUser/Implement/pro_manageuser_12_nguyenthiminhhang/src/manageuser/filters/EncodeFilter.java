@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import manageuser.utils.Constant;
 
 /**
- * Servlet Filter implementation class EncodeFilter
+ * Filter xử lý lọc các controller tính năng encode
  */
 @WebFilter(urlPatterns = { "*.do" })
 public class EncodeFilter implements Filter {
@@ -34,9 +34,9 @@ public class EncodeFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		//encode cho request
+		// encode cho request
 		request.setCharacterEncoding(Constant.CHARSET);
-		//endcode cho response
+		// endcode cho response
 		response.setCharacterEncoding(Constant.CHARSET);
 		chain.doFilter(request, response);
 	}
