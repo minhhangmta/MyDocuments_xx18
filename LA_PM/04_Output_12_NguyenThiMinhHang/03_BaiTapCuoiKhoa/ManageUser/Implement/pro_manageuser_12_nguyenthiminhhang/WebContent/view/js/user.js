@@ -15,3 +15,7 @@ function confirmDelete(userId, message, url) {
 		window.location = url;
 	}
 }
+//Hàm tạo sự kiện cho các button cần chuyển hướng tới url khác
+function sendToAnotherController(path) {
+	window.location = path;
+}

@@ -62,6 +62,7 @@ public class AddUserInputController extends HttpServlet {
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(
 							request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+					return;
 				}
 			}
 			// set dữ liệu
@@ -100,13 +101,13 @@ public class AddUserInputController extends HttpServlet {
 				if (!tblUserLogicImpl.existUserById(userId)) {
 					response.sendRedirect(
 							request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
-					return;// send redirect rồi thoát khỏi hàm luôn
+					return;
 				}
 			}
 			UserInfor userInfor = setDefault(request, response);
 			List<String> lstError = validateUser.validateUserInfor(userInfor);
 			if (lstError.isEmpty()) {
-				String keySession = Common.createKeySession(userInfor.getEmail());
+				String keySession = Common.createKeySession();
 				// Lưu userInfor vào session
 				HttpSession session = request.getSession();
 				session.setAttribute(keySession, userInfor);
@@ -132,9 +133,9 @@ public class AddUserInputController extends HttpServlet {
 	 * Thực hiện set giá trị cho các hạng mục selectbox ở màn hình ADM003
 	 * 
 	 * @param request
-	 *            yêu cầu
+	 *            đối tượng HttpServletRequest
 	 * @param response
-	 *            phản hồi
+	 *            đối tượng HttpServletResponse
 	 */
 	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) {
 		MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
@@ -157,9 +158,9 @@ public class AddUserInputController extends HttpServlet {
 	 * Set giá trị default cho màn hình ADM003
 	 * 
 	 * @param request
-	 *            yêu cầu
+	 *            đối tượng HttpServletRequest
 	 * @param response
-	 *            phản hồi
+	 *            đối tượng HttpServletResponse
 	 * @return UserInfor đối tượng UserInfor
 	 */
 	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {

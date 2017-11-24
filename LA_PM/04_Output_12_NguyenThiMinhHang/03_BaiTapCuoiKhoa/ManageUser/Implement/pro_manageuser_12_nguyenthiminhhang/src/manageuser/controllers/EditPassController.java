@@ -72,6 +72,7 @@ public class EditPassController extends HttpServlet {
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			request.setAttribute("userId", userId);
+			String url = "";
 			// Neu user ton tai
 			if (tblUserLogicImpl.existUserById(userId)) {
 				String password = request.getParameter("password");
@@ -82,23 +83,21 @@ public class EditPassController extends HttpServlet {
 				if (lstError.isEmpty()) {
 					String salt = Common.createSaltString();
 					if (tblUserLogicImpl.updatePass(password, salt, userId)) {
-						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
-								+ Constant.UPDATE_PASS_SUCCESS);
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_PASS_SUCCESS;
 					} else {
-						response.sendRedirect(request.getContextPath() + Constant.SUCCESS_SERVLET + "?type="
-								+ Constant.UPDATE_PASS_FAIL);
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_PASS_FAIL;
 					}
 				} else {// Co loi
 					request.setAttribute("lstError", lstError);
 					// Forward đến ADM007
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM007);
 					requestDispatcher.forward(request, response);
+					return;
 				}
 			} else {// Neu user khong ton tai
-				response.sendRedirect(
-						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+				url = Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND;
 			}
-
+			response.sendRedirect(request.getContextPath() + url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);

@@ -17,8 +17,9 @@ import manageuser.properties.DatabaseProperties;
  * @author minhhang
  */
 public class BaseDaoImpl implements BaseDao {
-	private Connection connection;
-
+	protected Connection connection;
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

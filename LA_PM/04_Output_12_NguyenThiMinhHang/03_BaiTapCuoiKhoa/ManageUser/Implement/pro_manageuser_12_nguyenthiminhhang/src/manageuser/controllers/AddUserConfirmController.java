@@ -74,6 +74,7 @@ public class AddUserConfirmController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// click ok từ adm004
 		try {
+			String url = "";
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			HttpSession session = req.getSession();
 			String keySession = req.getParameter("keySession");
@@ -85,27 +86,24 @@ public class AddUserConfirmController extends HttpServlet {
 			if (userId <= 0) {
 				List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 				if (listError.isEmpty() && tblUserLogicImpl.createUser(userInfor)) {
-					resp.sendRedirect(
-							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS);
+					url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS;
 				} else {
-					resp.sendRedirect(
-							req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL);
+					url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL;
 				}
 			} else {// truong hop edit
 				// Neu user khong ton tai
 				if (!tblUserLogicImpl.existUserById(userId)) {
-					resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+					url = Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND;
 				} else {// user co ton tai
 					List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 					if (listError.isEmpty() && tblUserLogicImpl.updateUserInfor(userInfor)) {
-						resp.sendRedirect(
-								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_SUCCESS);
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS;
 					} else {
-						resp.sendRedirect(
-								req.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_FAIL);
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL;
 					}
 				}
 			}
+			resp.sendRedirect(req.getContextPath() + url);
 		} catch (Exception e) {
 			e.printStackTrace();
 			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);

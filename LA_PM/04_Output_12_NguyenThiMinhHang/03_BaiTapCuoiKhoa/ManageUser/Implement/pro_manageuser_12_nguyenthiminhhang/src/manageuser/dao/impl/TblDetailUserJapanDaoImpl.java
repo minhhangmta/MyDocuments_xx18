@@ -19,13 +19,11 @@ import manageuser.utils.Common;
  * @author minhhang
  */
 public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailUserJapanDao {
-	public Connection connection = getConnection();
 
 	/**
 	 * 
 	 */
 	public TblDetailUserJapanDaoImpl() {
-
 	}
 
 	/**
@@ -72,6 +70,7 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	public String getCodeLevelById(int userId) throws SQLException {
 		String codeLevel = "";
 		String query = "SELECT code_level FROM tbl_detail_user_japan WHERE user_id = ?";
+		Connection connection = getConnection();
 		if (connection != null) {
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, userId);

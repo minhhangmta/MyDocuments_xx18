@@ -53,9 +53,9 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>'" />
+								onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>')" />
 								<input class="btn_export" type="button" value="輸出のcsv"
-								onclick="javascript:window.location='${path}<%=Constant.EXPORT_FILE%>?download=userInfor'" />
+								onclick="sendToAnotherController('${path}<%=Constant.EXPORT_FILE%>?download=userInfor')" />
 							</td>
 						</tr>
 					</table>

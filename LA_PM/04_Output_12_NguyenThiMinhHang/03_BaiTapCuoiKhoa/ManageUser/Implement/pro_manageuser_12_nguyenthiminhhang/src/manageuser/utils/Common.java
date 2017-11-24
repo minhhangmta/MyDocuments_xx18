@@ -58,9 +58,9 @@ public class Common {
 			digest = MessageDigest.getInstance("SHA1");
 			// update thuật toán với input là mảng byte
 			digest.update(input.getBytes());
-			// mã hóa thành đối tượng BigInteger với kiểu hexa
+			// mã hóa data và đưa về đối tượng BigInteger
 			BigInteger bigInteger = new BigInteger(1, digest.digest());
-			// chuyển về kiểu string
+			// chuyển về kiểu string hexa
 			sha1 = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -99,15 +99,15 @@ public class Common {
 		totalRecord = new TblUserDaoImpl().getTotalUsers(0, "");
 		int totalPage = getTotalPage(totalRecord, limit);
 		if (currentPage <= totalPage) {
-			// phan doan trang
-			int thuong = currentPage / Common.getLimitPage();
+			// phan doan trang (0-...)
+			int phanDoan = currentPage / Common.getLimitPage();
 			// xet truong hop chia het
 			int du = currentPage % Common.getLimitPage();
 			// neu chia het thi phan doan phai giam 1
 			if (du == 0)
-				thuong--;
+				phanDoan--;
 			for (int i = 1; i <= Common.getLimitPage(); i++) {
-				listPage.add(Common.getLimitPage() * thuong + i);
+				listPage.add(phanDoan * Common.getLimitPage() + i);
 			}
 		}
 		return listPage;
@@ -123,6 +123,7 @@ public class Common {
 	public static String standardString(String key) {
 		key = key.replace("%", "\\%");
 		key = key.replace("_", "\\_");
+		key = key.replace("\\", "\\\\");
 		return key.trim();
 	}
 
@@ -858,12 +859,11 @@ public class Common {
 	/**
 	 * Hàm tạo key cho session
 	 * 
-	 * @param email
-	 *            chuỗi email
 	 * @return String key của session
 	 */
-	public static String createKeySession(String email) {
-		return encodeSHA1("", email).substring(0, 10);
+	public static String createKeySession() {
+		String salt = createSaltString();
+		return encodeSHA1("", salt).substring(0, 10);
 	}
 
 	/**
@@ -962,5 +962,22 @@ public class Common {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Hàm check error message có lỗi hay không lỗi để add lỗi vào list
+	 * 
+	 * @param lstError
+	 *            list thông báo lỗi
+	 * @param errorMsg
+	 *            thông báo lỗi
+	 * @return true nếu không lỗi, false nếu lỗi và add lỗi luôn
+	 */
+	public static boolean checkErrorString(List<String> lstError, String errorMsg) {
+		if (!errorMsg.isEmpty()) {
+			lstError.add(errorMsg);
+			return true;
+		}
+		return false;
 	}
 }

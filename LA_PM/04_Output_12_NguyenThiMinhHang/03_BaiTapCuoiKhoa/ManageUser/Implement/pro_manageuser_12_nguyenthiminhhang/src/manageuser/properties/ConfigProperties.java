@@ -4,7 +4,10 @@
 */
 package manageuser.properties;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +27,9 @@ public class ConfigProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-			properties.load(classLoader.getResourceAsStream("config.properties"));
+			InputStream inputStream = MessageErrorProperties.class.getClassLoader().getResourceAsStream("config.properties");
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+			properties.load(bufferedReader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -23,7 +23,6 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
-	public Connection connection = getConnection();
 
 	/**
 	 * @param connection
@@ -48,6 +47,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		String salt = "";
 		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
@@ -73,6 +73,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existLogin(String username, String password) {
 		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -132,6 +133,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		query.append(" LIMIT ?,?");
 		query.append(";");
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -186,6 +188,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(";");
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -219,6 +222,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existUsername(String username) {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
@@ -247,6 +251,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(" AND user_id != ?");
 		}
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -276,6 +281,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existCodeLevel(String codeLevel) {
 		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);
@@ -345,6 +351,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				.append(" AND us.user_id = ?").append(";");
 
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				preparedStatement.setInt(1, userId);
@@ -382,6 +389,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean existUserById(int userId) {
 		String query = "SELECT login_name FROM tbl_user WHERE user_id = ? AND role = ?";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -440,6 +448,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public boolean updatePass(String passwords, String salt, int userId) {
 		String query = "UPDATE tbl_user SET passwords = ?, salt = ? WHERE user_id = ?";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -500,6 +509,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(";");
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;

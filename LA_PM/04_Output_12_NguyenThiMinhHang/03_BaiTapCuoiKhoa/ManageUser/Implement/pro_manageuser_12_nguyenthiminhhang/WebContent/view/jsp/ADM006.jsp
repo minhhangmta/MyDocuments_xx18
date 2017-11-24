@@ -39,7 +39,7 @@
 			<tr>
 				<td align="center" colspan="2"><input class="btn" type="submit"
 					value="OK"
-					onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
+					onclick="sendToAnotherController('${path}<%=Constant.LISTUSER_SERVLET%>')" /></td>
 			</tr>
 		</table>
 	</form>

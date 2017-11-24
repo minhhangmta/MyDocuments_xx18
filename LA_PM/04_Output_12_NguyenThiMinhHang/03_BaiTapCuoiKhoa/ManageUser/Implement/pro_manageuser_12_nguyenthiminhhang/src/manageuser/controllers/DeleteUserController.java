@@ -41,22 +41,21 @@ public class DeleteUserController extends HttpServlet {
 			throws ServletException, IOException {
 		// click delete từ adm005
 		try {
+			String url = "";
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			// Neu user ton tai
 			if (tblUserLogicImpl.existUserById(userId)) {
 				// Delete User thanh cong
 				if (tblUserLogicImpl.deleteUser(userId)) {
-					response.sendRedirect(
-							request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_SUCCESS);
+					url = Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_SUCCESS;
 				} else {// Delete khong thanh cong
-					response.sendRedirect(
-							request.getContextPath() + Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_FAIL);
+					url = Constant.SUCCESS_SERVLET + "?type=" + Constant.DELETE_FAIL;
 				}
 			} else {// User khong ton tai
-				response.sendRedirect(
-						request.getContextPath() + Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND);
+				url = Constant.ERROR_SERVLET + "?error=" + Constant.NOT_FOUND;
 			}
+			response.sendRedirect(request.getContextPath() + url);
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

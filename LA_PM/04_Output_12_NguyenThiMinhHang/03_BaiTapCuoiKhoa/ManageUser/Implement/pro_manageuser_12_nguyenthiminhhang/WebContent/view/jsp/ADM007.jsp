@@ -20,8 +20,8 @@
 
 	<!-- Begin vung input-->
 
-	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}" method="post"
-		name="inputform">
+	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}"
+		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
 			<br>
@@ -48,16 +48,15 @@
 							<tr class="password_txt">
 								<td class="lbl_left"><font color="red">*</font> パスワード:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="password" value="${fn:escapeXml(password)}"
-									size="30" onfocus="this.style.borderColor='#0066ff';"
+									name="password" value="${fn:escapeXml(password)}" size="30"
+									onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 							<tr class="password_txt">
 								<td class="lbl_left">パスワード（確認）:</td>
 								<td align="left"><input class="txBox" type="password"
-									name="confirmPassword"
-									value="${fn:escapeXml(confirmPassword)}" size="30"
-									onfocus="this.style.borderColor='#0066ff';"
+									name="confirmPassword" value="${fn:escapeXml(confirmPassword)}"
+									size="30" onfocus="this.style.borderColor='#0066ff';"
 									onblur="this.style.borderColor='#aaaaaa';" /></td>
 							</tr>
 						</table>
@@ -73,7 +72,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.DETAIL_SERVLET%>?id=${userId}'" /></td>
+						onclick="sendToAnotherController('${path}<%=Constant.DETAIL_SERVLET%>?id=${userId}')" /></td>
 				</tr>
 			</table>
 		</div>

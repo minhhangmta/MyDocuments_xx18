@@ -27,8 +27,6 @@ public class DatabaseProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-//			ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//			properties.load(classLoader.getResourceAsStream("database.properties"));
 			InputStream inputStream = MessageErrorProperties.class.getClassLoader().getResourceAsStream("database.properties");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			properties.load(bufferedReader);
@@ -36,7 +34,6 @@ public class DatabaseProperties {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		
 		@SuppressWarnings("unchecked")
 		Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();

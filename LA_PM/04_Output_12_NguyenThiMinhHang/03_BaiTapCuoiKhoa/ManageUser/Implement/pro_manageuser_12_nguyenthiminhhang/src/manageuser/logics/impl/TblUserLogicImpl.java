@@ -25,10 +25,6 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserLogicImpl implements TblUserLogic {
-	BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
-	Connection connection = baseDaoImpl.getConnection();
-	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-	private TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 
 	/*
 	 * (non-Javadoc)
@@ -38,6 +34,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existLogin(String username, String password) {
+		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();
 		// Lấy salt từ DB
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
@@ -59,8 +56,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		List<UserInfor> list = userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
-				sortByCodeLevel, sortByEndDate);
+		List<UserInfor> list = new TblUserDaoImpl().getListUsers(offset, limit, groupId, fullName, sortType,
+				sortByFullName, sortByCodeLevel, sortByEndDate);
 		return list;
 	}
 
@@ -71,7 +68,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(int groupId, String fullName) {
-		int result = userDaoImpl.getTotalUsers(groupId, fullName);
+		int result = new TblUserDaoImpl().getTotalUsers(groupId, fullName);
 		return result;
 	}
 
@@ -82,7 +79,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUsername(String username) {
-		boolean result = userDaoImpl.existUsername(username);
+		boolean result = new TblUserDaoImpl().existUsername(username);
 		return result;
 	}
 
@@ -93,7 +90,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existEmail(String email, int userId) {
-		boolean result = userDaoImpl.existEmail(email, userId);
+		boolean result = new TblUserDaoImpl().existEmail(email, userId);
 		return result;
 	}
 
@@ -104,7 +101,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existCodeLevel(String codeLevel) {
-		boolean result = userDaoImpl.existCodeLevel(codeLevel);
+		boolean result = new TblUserDaoImpl().existCodeLevel(codeLevel);
 		return result;
 	}
 
@@ -115,7 +112,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int insertUser(TblUser tblUser) throws SQLException {
-		int result = userDaoImpl.insertUser(tblUser);
+		int result = new TblUserDaoImpl().insertUser(tblUser);
 		return result;
 	}
 
@@ -128,7 +125,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
-		boolean result = detailJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
+		boolean result = new TblDetailUserJapanDaoImpl().insertDetailUserJapan(tblDetailUserJapan);
 		return result;
 	}
 
@@ -139,6 +136,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean createUser(UserInfor userInfor) throws SQLException {
+		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+		Connection connection = baseDaoImpl.getConnection();
+		TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
+		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
 		String fullNameKana = userInfor.getFullNameKana();
 		// toi uu lai
 		Date birthday = Common.toDate(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
@@ -166,7 +167,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		try {
 			connection.setAutoCommit(false);
 			// get userId from TblUser
-			int userId = insertUser(tblUser);
+			int userId = userDaoImpl.insertUser(tblUser);
 			// get codelevel
 			String codeLevel = userInfor.getCodeLevel();
 			if (codeLevel != null && userId > 0) {
@@ -176,7 +177,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 				detailUserJapan.setStartDate(startDate);
 				detailUserJapan.setEndDate(endDate);
 				detailUserJapan.setTotal(userInfor.getTotal());
-				insertDetailUserJapan(detailUserJapan);
+				detailUserJapanDaoImpl.insertDetailUserJapan(detailUserJapan);
 			}
 			connection.commit();
 		} catch (SQLException e) {
@@ -196,7 +197,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public UserInfor getUserById(int userId) {
-		UserInfor result = userDaoImpl.getUserById(userId);
+		UserInfor result = new TblUserDaoImpl().getUserById(userId);
 		return result;
 	}
 
@@ -207,7 +208,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUserById(int userId) {
-		boolean result = userDaoImpl.existUserById(userId);
+		boolean result = new TblUserDaoImpl().existUserById(userId);
 		return result;
 	}
 
@@ -218,6 +219,11 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * manageuser.logics.TblUserLogic#updateUserInfor(manageuser.entities.UserInfor)
 	 */
 	public boolean updateUserInfor(UserInfor userInfor) throws SQLException {
+		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+		Connection connection = baseDaoImpl.getConnection();
+		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
+
 		TblUser tblUser = new TblUser();
 		int userId = userInfor.getUserId();
 		String fullNameKana = userInfor.getFullNameKana();
@@ -274,7 +280,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean updatePass(String passwords, String salt, int userId) {
 		passwords = Common.encodeSHA1(passwords, salt);
-		boolean result = userDaoImpl.updatePass(passwords, salt, userId);
+		boolean result = new TblUserDaoImpl().updatePass(passwords, salt, userId);
 		return result;
 	}
 
@@ -285,6 +291,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean deleteUser(int userId) throws SQLException {
+		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+		Connection connection = baseDaoImpl.getConnection();
+		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 		try {
 			connection.setAutoCommit(false);
 			// xoa detail japan
@@ -309,7 +319,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int groupId, String fullName) {
-		List<UserInfor> result = userDaoImpl.getListUsers(groupId, fullName);
+		List<UserInfor> result = new TblUserDaoImpl().getListUsers(groupId, fullName);
 		return result;
 	}
 

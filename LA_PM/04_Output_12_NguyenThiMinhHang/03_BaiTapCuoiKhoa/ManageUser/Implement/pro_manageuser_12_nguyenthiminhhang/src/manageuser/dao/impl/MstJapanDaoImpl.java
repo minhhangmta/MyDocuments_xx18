@@ -20,7 +20,6 @@ import manageuser.entities.MstJapan;
  * @author minhhang
  */
 public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
-	public Connection connection = getConnection();
 
 	/**
 	 * 
@@ -47,6 +46,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		query.append("SELECT * FROM mst_japan");
 		query.append(";");
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -73,6 +73,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
 		String nameLevel = "";
 		try {
+			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);

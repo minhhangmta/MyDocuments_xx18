@@ -72,8 +72,7 @@
 								<th colspan="2"><a href="#" onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<div id="japan_table"
-							style="display: none;">
+						<div id="japan_table" style="display: none;">
 							<table border="1" width="70%" class="tbl_input" cellpadding="4"
 								cellspacing="0">
 								<tr>
@@ -111,7 +110,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="OK" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}'" /></td>
+						onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}')" /></td>
 				</tr>
 			</table>
 		</div>

@@ -59,86 +59,62 @@ public class ValidateUser {
 		if (userId <= 0) {
 			// username
 			errorMsg = Common.validateUsername(userInfor.getLoginName());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
+			// add lỗi nếu có
+			Common.checkErrorString(lstError, errorMsg);
 		}
 		// group
 		errorMsg = Common.validateGroup(userInfor.getGroupId());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		Common.checkErrorString(lstError, errorMsg);
 		// fullname
 		errorMsg = Common.validateFullname(userInfor.getFullName());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		Common.checkErrorString(lstError, errorMsg);
 		// fullnameKana
 		String fullNameKana = userInfor.getFullNameKana();
 		if (fullNameKana != null) {
 			errorMsg = Common.validateFullnameKana(fullNameKana);
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
+			Common.checkErrorString(lstError, errorMsg);
 		}
 		// birthday
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		Common.checkErrorString(lstError, errorMsg);
 		//
 		// email
 		errorMsg = Common.validateEmail(userInfor.getEmail(), userId);
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		Common.checkErrorString(lstError, errorMsg);
 		// tel
 		errorMsg = Common.validateTel(userInfor.getTel());
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		}
+		Common.checkErrorString(lstError, errorMsg);
 		// truong hop khac edit
 		if (userId <= 0) {
 			// password
 			errorMsg = Common.validatePass(userInfor.getPasswords());
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			} else {// trường hợp password đúng thì mới check đến confirm
+			// trường hợp password đúng thì mới check đến confirm
+			if (!Common.checkErrorString(lstError, errorMsg)) {
 				// confirmPass
 				errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
-				if (!errorMsg.isEmpty()) {
-					lstError.add(errorMsg);
-				}
+				Common.checkErrorString(lstError, errorMsg);
 			}
 		}
 		String codeLevel = userInfor.getCodeLevel();
 		// codeLevel
 		if (codeLevel != null) {
 			errorMsg = Common.validateCodeLevel(codeLevel);
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
+			Common.checkErrorString(lstError, errorMsg);
 			if (!codeLevel.isEmpty()) {
 				// date of issue
 				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate());
-				if (!errorMsg.isEmpty()) {
-					lstError.add(errorMsg);
-				}
+				Common.checkErrorString(lstError, errorMsg);
 				// expiration date
 				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());
-				if (!errorMsg.isEmpty()) {
-					lstError.add(errorMsg);
-				}
+				Common.checkErrorString(lstError, errorMsg);
 				//
 				// total
 				errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
-				if (!errorMsg.isEmpty()) {
-					lstError.add(errorMsg);
-				}
+				Common.checkErrorString(lstError, errorMsg);
 			}
 		}
 		return lstError;
@@ -158,14 +134,11 @@ public class ValidateUser {
 		String errorMsg = "";
 		// password
 		errorMsg = Common.validatePass(password);
-		if (!errorMsg.isEmpty()) {
-			lstError.add(errorMsg);
-		} else {// trường hợp password đúng thì mới check confirm
+		// trường hợp password đúng thì mới check confirm
+		if (!Common.checkErrorString(lstError, errorMsg)) {
 			// confirmPass
 			errorMsg = Common.validatePassConfirm(password, confirmPassword);
-			if (!errorMsg.isEmpty()) {
-				lstError.add(errorMsg);
-			}
+			Common.checkErrorString(lstError, errorMsg);
 		}
 		return lstError;
 	}

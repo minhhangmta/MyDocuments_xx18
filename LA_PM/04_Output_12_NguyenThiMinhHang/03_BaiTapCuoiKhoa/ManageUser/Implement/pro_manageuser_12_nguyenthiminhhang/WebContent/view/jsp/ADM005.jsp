@@ -69,8 +69,7 @@
 								<th colspan="2"><a href="#" onClick="hiddenTable()">日本語能力</a></th>
 							</tr>
 						</table>
-						<div id="japan_table"
-							style="display: none;">
+						<div id="japan_table" style="display: none;">
 							<table border="1" width="70%" class="tbl_input" cellpadding="4"
 								cellspacing="0">
 								<tr>
@@ -107,11 +106,11 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<!-- button edit user -->
 					<td><input class="btn" type="button" value="編集"
-						onclick="javascript:window.location='${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}'" /></td>
+						onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}')" /></td>
 					<!-- button edit user -->
 					<!-- button edit pass -->
 					<td><input class="btn_pass" type="button" value="ChangePass"
-						onclick="javascript:window.location='${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}'" /></td>
+						onclick="sendToAnotherController('${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}')" /></td>
 					<!-- button edit pass -->
 					<!-- set param cho function confirmDelete -->
 					<c:set var="deleteServletPath"
@@ -126,7 +125,7 @@
 					<!-- button delete user -->
 					<!-- button back -->
 					<td><input class="btn" type="button" value="戻る"
-						onclick="javascript:window.location='${path}<%=Constant.LISTUSER_SERVLET%>'" /></td>
+						onclick="sendToAnotherController('${path}<%=Constant.LISTUSER_SERVLET%>')" /></td>
 					<!-- button back -->
 				</tr>
 			</table>

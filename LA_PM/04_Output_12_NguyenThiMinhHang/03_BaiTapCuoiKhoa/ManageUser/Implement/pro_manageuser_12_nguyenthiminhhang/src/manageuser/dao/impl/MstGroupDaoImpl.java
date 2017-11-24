@@ -21,6 +21,12 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
+	/*
+	 *  
+	*/
+	public MstGroupDaoImpl() {
+
+	}
 
 	/*
 	 * (non-Javadoc)
