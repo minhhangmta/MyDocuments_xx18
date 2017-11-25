@@ -58,7 +58,7 @@ public class LoginFilter implements Filter {
 			if (Common.checkLogin(session)) {
 				chain.doFilter(req, res);
 			} else {
-				res.sendRedirect(req.getContextPath());
+				res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
 			}
 		}
 		// End fix bug ID 49 – NguyenThiMinhHang 2017/11/1
