@@ -80,7 +80,6 @@ public class ValidateUser {
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
 		Common.checkErrorString(lstError, errorMsg);
-		//
 		// email
 		errorMsg = Common.validateEmail(userInfor.getEmail(), userId);
 		Common.checkErrorString(lstError, errorMsg);
@@ -113,7 +112,6 @@ public class ValidateUser {
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());
 				Common.checkErrorString(lstError, errorMsg);
-				//
 				// total
 				errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
 				Common.checkErrorString(lstError, errorMsg);

@@ -698,10 +698,11 @@ public class Common {
 	 * @return String chuỗi thông báo lỗi
 	 */
 	public static String validatePassConfirm(String password, String passConfirm) {
+		String errMsg = "";
 		if (!password.equals(passConfirm)) {
-			return MessageErrorProperties.getData("ER017");
+			errMsg = MessageErrorProperties.getData("ER017");
 		}
-		return "";
+		return errMsg;
 	}
 
 	/**
@@ -712,12 +713,13 @@ public class Common {
 	 * @return String chuỗi thông báo lỗi
 	 */
 	public static String validateCodeLevel(String codeLevel) {
+		String errMsg = "";
 		boolean valid = new TblUserLogicImpl().existCodeLevel(codeLevel);
 		// Nếu không tồn tại
 		if (codeLevel != Constant.EMPTY_STRING && !valid) {
-			return MessageErrorProperties.getData("ER004_LEVEL");
+			errMsg = MessageErrorProperties.getData("ER004_LEVEL");
 		}
-		return "";
+		return errMsg;
 	}
 
 	/**
@@ -787,11 +789,12 @@ public class Common {
 	 * @return String chuỗi thông báo lỗi
 	 */
 	public static String validateBirthday(int year, int month, int day) {
+		String errorMsg = "";
 		String date = convertToString(year, month, day);
 		if (!isDateValid(date)) {
-			return MessageErrorProperties.getData("ER011_BIRTHDAY");
+			errorMsg = MessageErrorProperties.getData("ER011_BIRTHDAY");
 		}
-		return "";
+		return errorMsg;
 	}
 
 	/**
@@ -806,11 +809,12 @@ public class Common {
 	 * @return String chuỗi thông báo lỗi
 	 */
 	public static String validateStartDate(int year, int month, int day) {
+		String errMsg = "";
 		String date = convertToString(year, month, day);
 		if (!isDateValid(date)) {
-			return MessageErrorProperties.getData("ER011_START_DATE");
+			errMsg = MessageErrorProperties.getData("ER011_START_DATE");
 		}
-		return "";
+		return errMsg;
 	}
 
 	/**
@@ -832,14 +836,15 @@ public class Common {
 	 */
 	public static String validateEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
 			int dayEnd) {
+		String errMsg = "";
 		String endDate = convertToString(yearEnd, monthEnd, dayEnd);
-		if (!isDateValid(endDate)) {// định dạng
-			return MessageErrorProperties.getData("ER011_END_DATE");
-		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {// so sánh với
-																										// start date
-			return MessageErrorProperties.getData("ER012");
+		if (!isDateValid(endDate)) {// sai định dạng
+			errMsg = MessageErrorProperties.getData("ER011_END_DATE");
+			// so sánh end
+		} else if (!compareStartEndDate(yearStart, monthStart, dayStart, yearEnd, monthEnd, dayEnd)) {
+			errMsg = MessageErrorProperties.getData("ER012");
 		}
-		return "";
+		return errMsg;
 	}
 
 	/**
@@ -862,15 +867,17 @@ public class Common {
 	public static boolean compareStartEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
 			int dayEnd) {
 		boolean check = true;
+		// nếu năm = nhau
 		if (yearStart == yearEnd) {
+			// nếu tháng start lớn hơn
 			if (monthStart > monthEnd) {
 				check = false;
-			} else if (monthStart == monthEnd) {
-				if (dayStart >= dayEnd) {
+			} else if (monthStart == monthEnd) {// nếu tháng bằng nhau
+				if (dayStart >= dayEnd) {// nếu ngày start lớn hơn =
 					check = false;
 				}
 			}
-		} else if (yearStart > yearEnd) {
+		} else if (yearStart > yearEnd) {// năm start lớn hơn
 			check = false;
 		}
 		return check;
