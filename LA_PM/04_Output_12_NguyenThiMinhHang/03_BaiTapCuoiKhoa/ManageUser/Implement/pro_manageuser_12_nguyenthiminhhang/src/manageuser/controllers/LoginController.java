@@ -67,7 +67,7 @@ public class LoginController extends HttpServlet {
 			// Khởi tạo lớp ValidateUser
 			ValidateUser validateUser = new ValidateUser();
 			ArrayList<String> errMassages = validateUser.validateLogin(username, password);
-			// nếu validateLogin trả về null/không có lỗi
+			// nếu validateLogin không có lỗi
 			if (errMassages.isEmpty()) {
 				// Lưu username vào session
 				HttpSession session = request.getSession();
@@ -79,9 +79,8 @@ public class LoginController extends HttpServlet {
 				request.setAttribute("errMassages", errMassages);
 				// lưu username vừa nhập vào request
 				request.setAttribute("username", username);
-				// getRequestDispatcher tới view
+				// foward tới view ADM001
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
-				// foward tới requestDispatcher đó
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {

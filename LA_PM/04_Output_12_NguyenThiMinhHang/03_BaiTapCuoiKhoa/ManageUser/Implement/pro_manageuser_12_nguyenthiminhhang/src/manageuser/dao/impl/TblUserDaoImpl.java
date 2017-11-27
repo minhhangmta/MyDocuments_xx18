@@ -140,7 +140,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				if (groupId > 0) {
 					preparedStatement.setInt(index++, groupId);
 				}
-				fullName = Common.standardString(fullName);
 				preparedStatement.setString(index++, "%" + fullName + "%");
 
 				preparedStatement.setInt(index++, offset);
@@ -196,7 +195,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					preparedStatement.setInt(index++, groupId);
 				}
 				if (!fullName.isEmpty()) {
-					fullName = Common.standardString(fullName);
 					preparedStatement.setString(index++, "%" + fullName + "%");
 				}
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -517,7 +515,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					preparedStatement.setInt(index++, groupId);
 				}
 				if (!fullName.isEmpty()) {
-					fullName = Common.standardString(fullName);
 					preparedStatement.setString(index++, "%" + fullName + "%");
 				}
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();

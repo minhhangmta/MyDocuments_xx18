@@ -99,22 +99,26 @@ public class Common {
 		totalRecord = new TblUserDaoImpl().getTotalUsers(0, "");
 		int totalPage = getTotalPage(totalRecord, limit);
 		if (currentPage <= totalPage) {
-			// phan doan trang (0-...)
+			// phan doan trang (0-1-2...)
 			int phanDoan = currentPage / Common.getLimitPage();
-			// xet truong hop chia het
+			// tính số dư phân đoạn trang
 			int du = currentPage % Common.getLimitPage();
 			// neu chia het thi phan doan phai giam 1
-			if (du == 0)
+			if (du == 0) {
 				phanDoan--;
+			}
 			for (int i = 1; i <= Common.getLimitPage(); i++) {
-				listPage.add(phanDoan * Common.getLimitPage() + i);
+				// tính trang thuộc phân đoạn hiện tại
+				int page = phanDoan * Common.getLimitPage() + i;
+				// add list
+				listPage.add(page);
 			}
 		}
 		return listPage;
 	}
 
 	/**
-	 * Hàm chuẩn hóa chuỗi có kí tự đặc biệt "%" "_" để đưa vào query
+	 * Hàm chuẩn hóa chuỗi có kí tự wildcard để đưa vào query
 	 * 
 	 * @param key
 	 *            tên cần chuẩn hóa

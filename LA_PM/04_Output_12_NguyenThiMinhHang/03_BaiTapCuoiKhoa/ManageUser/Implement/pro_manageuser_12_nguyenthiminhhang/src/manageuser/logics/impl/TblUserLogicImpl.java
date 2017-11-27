@@ -39,10 +39,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
 		password = Common.encodeSHA1(password, salt);
-		// Nếu user tồn tại trong DB
+		// Nếu user là admin tồn tại trong DB
 		if (userDaoImpl.existLogin(username, password)) {
 			return true;
-		} // ngược lại
+		} 
 		return false;
 	}
 

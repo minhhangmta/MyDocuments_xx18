@@ -30,14 +30,16 @@ public class ValidateUser {
 	public ArrayList<String> validateLogin(String username, String password) {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		ArrayList<String> errMassages = new ArrayList<>();
-		if ("".equals(username) && "".equals(password)) {
+		// Không nhập username và pass
+		if (!Common.checkPressTxt(username) && !Common.checkPressTxt(password)) {
 			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
 			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
-		} else if ("".equals(username)) {
+		} else if (!Common.checkPressTxt(username)) {// không nhập username
 			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
-		} else if ("".equals(password)) {
+		} else if (!Common.checkPressTxt(password)) {// không nhập pass
 			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
 		} else {
+			// không tồn tại trong DB
 			if (!logicImpl.existLogin(username, password)) {
 				errMassages.add(MessageErrorProperties.getData("ER016"));
 			}

@@ -90,7 +90,7 @@ public class ListUserController extends HttpServlet {
 			type = Common.getSessionValue(session, "type", Constant.EMPTY_STRING);
 			// set data group cho man hinh
 			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
-			// Lan dau vao man hinh va khi click link top
+			// khi click link top
 			if ("default".equals(type)) {
 				fullName = sortType = Constant.EMPTY_STRING;
 				groupId = Constant.DEFAULT_INT;
@@ -154,6 +154,7 @@ public class ListUserController extends HttpServlet {
 			session.setAttribute("groupId", groupId);
 			session.setAttribute("currentPage", currentPage);
 
+			fullName = Common.standardString(fullName);
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(groupId, fullName);
 			// Nếu có bản ghi
