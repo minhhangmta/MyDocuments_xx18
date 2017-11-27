@@ -21,7 +21,7 @@ import manageuser.validates.ValidateUser;
 /**
  * Controller xử lý cho màn hình login
  */
-@WebServlet("/login.do")
+@WebServlet(urlPatterns = "/login.do")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -47,17 +47,19 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 
 		String path = req.getServletPath();
-		//
+		// Nếu là trang login.do hoặc logout.do
 		if (path.contains("login.do") || path.contains("logout.do")) {
+			// Nếu là trang login.do và đã đăng nhập
 			if (path.contains("login.do") && Common.checkLogin(session)) {
 				res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
-			} else {
+			} else {// Chưa đăng nhập
 				chain.doFilter(req, res);
 			}
-		} else {
+		} else {// Các trang .do khác
+			// đã đăng nhập
 			if (Common.checkLogin(session)) {
 				chain.doFilter(req, res);
-			} else {
+			} else {// chưa đăng nhập
 				res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
 			}
 		}

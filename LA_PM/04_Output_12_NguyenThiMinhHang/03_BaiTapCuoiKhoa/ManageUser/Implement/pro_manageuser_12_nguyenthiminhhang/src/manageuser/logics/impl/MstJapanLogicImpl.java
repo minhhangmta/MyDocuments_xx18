@@ -4,11 +4,9 @@
  */
 package manageuser.logics.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import manageuser.dao.impl.BaseDaoImpl;
 import manageuser.dao.impl.MstJapanDaoImpl;
 import manageuser.entities.MstJapan;
 import manageuser.logics.MstJapanLogic;
@@ -19,8 +17,7 @@ import manageuser.logics.MstJapanLogic;
  * @author minhhang
  */
 public class MstJapanLogicImpl implements MstJapanLogic {
-	Connection connection = new BaseDaoImpl().getConnection();
-	private MstJapanDaoImpl mstJapanDaoImpl = new MstJapanDaoImpl(connection);
+	private MstJapanDaoImpl mstJapanDaoImpl = new MstJapanDaoImpl();
 
 	/*
 	 * (non-Javadoc)

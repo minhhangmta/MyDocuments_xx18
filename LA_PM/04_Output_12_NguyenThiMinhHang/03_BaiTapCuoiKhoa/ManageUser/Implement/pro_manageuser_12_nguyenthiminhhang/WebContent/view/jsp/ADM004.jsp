@@ -122,6 +122,4 @@
 	<c:import url="footer.jsp"></c:import>
 	<!-- End vung footer -->
 </body>
-
-
 </html>

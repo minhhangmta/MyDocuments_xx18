@@ -6,6 +6,7 @@ package manageuser.controllers;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ import manageuser.utils.Constant;
 /**
  * Controller xử lý cho chức năng logout
  */
-@WebServlet("/logout.do")
+@WebServlet(urlPatterns = "/logout.do")
 public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +38,12 @@ public class LogoutController extends HttpServlet {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException{
+			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
 			session.invalidate();
-			response.sendRedirect(request.getContextPath() + Constant.LOGIN_SERVLET);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
+			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}

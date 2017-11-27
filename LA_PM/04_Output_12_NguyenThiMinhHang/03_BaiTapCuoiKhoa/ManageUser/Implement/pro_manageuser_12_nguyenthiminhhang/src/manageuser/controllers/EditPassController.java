@@ -24,7 +24,7 @@ import manageuser.validates.ValidateUser;
  * 
  * @author minhhang
  */
-@WebServlet("/editPass.do")
+@WebServlet(urlPatterns = "/editPass.do")
 public class EditPassController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

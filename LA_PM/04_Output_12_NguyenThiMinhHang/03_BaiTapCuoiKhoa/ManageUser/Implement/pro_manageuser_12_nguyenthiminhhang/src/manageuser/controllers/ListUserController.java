@@ -29,7 +29,7 @@ import manageuser.utils.Constant;
  * 
  * @author minhhang
  */
-@WebServlet("/listUser.do")
+@WebServlet(urlPatterns = "/listUser.do")
 public class ListUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -124,15 +124,17 @@ public class ListUserController extends HttpServlet {
 					// sort
 					sortType = request.getParameter("typeSort");
 					currentPage = Constant.DEFAULT_CURRENT_PAGE;
+					// get sort tu url
+					String sort = request.getParameter("sort");
 					switch (sortType) {
 					case Constant.FULL_NAME:
-						sortByName = Common.changeSortType(sortByName);
+						sortByName = Common.getCorrectSort(sortByName, sort);
 						break;
 					case Constant.CODE_LEVEL:
-						sortByCodeLevel = Common.changeSortType(sortByCodeLevel);
+						sortByCodeLevel = Common.getCorrectSort(sortByCodeLevel, sort);
 						break;
 					case Constant.END_DATE:
-						sortByEndDate = Common.changeSortType(sortByEndDate);
+						sortByEndDate = Common.getCorrectSort(sortByEndDate, sort);
 						break;
 					default:
 						break;
@@ -154,7 +156,7 @@ public class ListUserController extends HttpServlet {
 			session.setAttribute("groupId", groupId);
 			session.setAttribute("currentPage", currentPage);
 
-			fullName = Common.standardString(fullName);
+			fullName = Common.replaceWildCard(fullName);
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(groupId, fullName);
 			// Nếu có bản ghi

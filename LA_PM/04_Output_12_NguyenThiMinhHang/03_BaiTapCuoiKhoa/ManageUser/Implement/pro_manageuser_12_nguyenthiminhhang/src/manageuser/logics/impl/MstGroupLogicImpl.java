@@ -17,6 +17,7 @@ import manageuser.logics.MstGroupLogic;
  * @author minhhang
  */
 public class MstGroupLogicImpl implements MstGroupLogic {
+	private MstGroupDaoImpl mstGroupDaoImpl = new MstGroupDaoImpl();
 
 	/*
 	 * (non-Javadoc)
@@ -25,7 +26,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public List<MstGroup> getAllGroups() throws SQLException {
-		List<MstGroup> result = new MstGroupDaoImpl().getAllGroups();
+		List<MstGroup> result = mstGroupDaoImpl.getAllGroups();
 		return result;
 	}
 
@@ -36,7 +37,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public String getGroupName(int groupId) {
-		String result = new MstGroupDaoImpl().getGroupName(groupId);
+		String result = mstGroupDaoImpl.getGroupName(groupId);
 		return result;
 	}
 
@@ -47,7 +48,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 */
 	@Override
 	public boolean existGroup(int groupId) {
-		boolean result = new MstGroupDaoImpl().existGroup(groupId);
+		boolean result = mstGroupDaoImpl.existGroup(groupId);
 		return result;
 	}
 

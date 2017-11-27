@@ -124,10 +124,10 @@ public class Common {
 	 *            tên cần chuẩn hóa
 	 * @return String chuỗi đã được chuẩn hóa
 	 */
-	public static String standardString(String key) {
+	public static String replaceWildCard(String key) {
+		key = key.replace("\\", "\\\\");
 		key = key.replace("%", "\\%");
 		key = key.replace("_", "\\_");
-		key = key.replace("\\", "\\\\");
 		return key.trim();
 	}
 
@@ -1006,5 +1006,21 @@ public class Common {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Hàm lấy giá trị đúng của sort từ view
+	 * 
+	 * @param currentSort
+	 *            giá trị sort hiện tại
+	 * @param urlSort
+	 *            giá trị sort lấy từ url
+	 * @return String giá trị sort sau khi lọc
+	 */
+	public static String getCorrectSort(String currentSort, String urlSort) {
+		if ("ASC".equals(urlSort) || "DESC".equals(urlSort)) {
+			return urlSort;
+		}
+		return currentSort;
 	}
 }

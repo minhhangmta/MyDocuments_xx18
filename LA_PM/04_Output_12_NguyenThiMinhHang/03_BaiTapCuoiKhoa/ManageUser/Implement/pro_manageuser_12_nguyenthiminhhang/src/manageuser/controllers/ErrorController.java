@@ -21,7 +21,7 @@ import manageuser.utils.Constant;
  * 
  * @author minhhang
  */
-@WebServlet("/error.do")
+@WebServlet(urlPatterns = "/error.do")
 public class ErrorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

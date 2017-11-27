@@ -22,7 +22,7 @@ import manageuser.utils.Constant;
  *
  * @author minhhang
  */
-@WebServlet("/deleteUser.do")
+@WebServlet(urlPatterns = "/deleteUser.do")
 public class DeleteUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -25,7 +25,7 @@ import manageuser.validates.ValidateUser;
  * 
  * @author minhhang
  */
-@WebServlet({ "/addUserConfirm.do", "/addUserOK.do" })
+@WebServlet(urlPatterns = { "/addUserConfirm.do", "/addUserOK.do" })
 public class AddUserConfirmController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -97,9 +97,9 @@ public class AddUserConfirmController extends HttpServlet {
 				} else {// user co ton tai
 					List<String> listError = new ValidateUser().validateUserInfor(userInfor);
 					if (listError.isEmpty() && tblUserLogicImpl.updateUserInfor(userInfor)) {
-						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_SUCCESS;
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_SUCCESS;
 					} else {
-						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.INSERT_FAIL;
+						url = Constant.SUCCESS_SERVLET + "?type=" + Constant.UPDATE_FAIL;
 					}
 				}
 			}

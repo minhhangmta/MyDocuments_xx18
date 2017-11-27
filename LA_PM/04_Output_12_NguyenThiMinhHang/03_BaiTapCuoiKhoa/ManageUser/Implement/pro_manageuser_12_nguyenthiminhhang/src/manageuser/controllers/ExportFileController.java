@@ -18,7 +18,7 @@ import manageuser.utils.Constant;
 /**
  * Controller xử lý cho chức năng export file
  */
-@WebServlet("/export.do")
+@WebServlet(urlPatterns = "/export.do")
 public class ExportFileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -32,7 +32,7 @@ import manageuser.validates.ValidateUser;
  * 
  * @author minhhang
  */
-@WebServlet({ "/addUserInput.do", "/addUserValidate.do" })
+@WebServlet(urlPatterns = { "/addUserInput.do", "/addUserValidate.do" })
 public class AddUserInputController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -106,6 +106,7 @@ public class AddUserInputController extends HttpServlet {
 			}
 			UserInfor userInfor = setDefault(request, response);
 			List<String> lstError = validateUser.validateUserInfor(userInfor);
+			// Nếu validate thành công
 			if (lstError.isEmpty()) {
 				String keySession = Common.createKeySession();
 				// Lưu userInfor vào session

@@ -77,13 +77,13 @@
 				<tr class="tr2">
 					<th align="center" width="20px">ID</th>
 					<th align="left">氏名 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name">
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name&sort=${sortByName=='ASC' ? 'DESC' : 'ASC'}">
 							<!-- Start fix bug ID 47 – NguyenThiMinhHang 2017/11/1 --> <c:if
 								test="${sortByName == 'ASC'}">
-									▲▽
-									</c:if> <c:if test="${sortByName == 'DESC'}">
+									▲▽ 
+							</c:if> <c:if test="${sortByName == 'DESC'}">
 									△▼
-									</c:if>
+							</c:if>
 					</a>
 					</th>
 					<th align="left">生年月日</th>
@@ -91,7 +91,7 @@
 					<th align="left">メールアドレス</th>
 					<th align="left" width="100px">電話番号</th>
 					<th align="left">日本語能力 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level"><c:if
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level&sort=${sortByCodeLevel=='ASC' ? 'DESC' : 'ASC'}"><c:if
 								test="${sortByCodeLevel == 'ASC'}">
 									▲▽
 									</c:if> <c:if test="${sortByCodeLevel == 'DESC'}">
@@ -99,7 +99,7 @@
 									</c:if></a>
 					</th>
 					<th align="left">失効日 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date"><c:if
+						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date&sort=${sortByEndDate=='ASC' ? 'DESC' : 'ASC'}"><c:if
 								test="${sortByEndDate == 'ASC'}">
 									▲▽
 									</c:if> <c:if test="${sortByEndDate == 'DESC'}">

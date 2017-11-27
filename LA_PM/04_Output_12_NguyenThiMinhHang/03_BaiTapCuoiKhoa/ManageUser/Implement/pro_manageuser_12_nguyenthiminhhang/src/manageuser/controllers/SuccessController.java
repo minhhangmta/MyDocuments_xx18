@@ -20,7 +20,7 @@ import manageuser.utils.Constant;
 /**
  * Controller xử lý các logic của màn hình ADM006
  */
-@WebServlet("/success.do")
+@WebServlet(urlPatterns = "/success.do")
 public class SuccessController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

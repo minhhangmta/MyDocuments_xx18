@@ -25,6 +25,8 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserLogicImpl implements TblUserLogic {
+	private TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();
+	private TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl();
 
 	/*
 	 * (non-Javadoc)
@@ -34,7 +36,6 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existLogin(String username, String password) {
-		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl();
 		// Lấy salt từ DB
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
@@ -42,7 +43,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		// Nếu user là admin tồn tại trong DB
 		if (userDaoImpl.existLogin(username, password)) {
 			return true;
-		} 
+		}
 		return false;
 	}
 
@@ -56,8 +57,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
 			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
-		List<UserInfor> list = new TblUserDaoImpl().getListUsers(offset, limit, groupId, fullName, sortType,
-				sortByFullName, sortByCodeLevel, sortByEndDate);
+		List<UserInfor> list = userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
+				sortByCodeLevel, sortByEndDate);
 		return list;
 	}
 
@@ -68,7 +69,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int getTotalUsers(int groupId, String fullName) {
-		int result = new TblUserDaoImpl().getTotalUsers(groupId, fullName);
+		int result = userDaoImpl.getTotalUsers(groupId, fullName);
 		return result;
 	}
 
@@ -79,7 +80,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUsername(String username) {
-		boolean result = new TblUserDaoImpl().existUsername(username);
+		boolean result = userDaoImpl.existUsername(username);
 		return result;
 	}
 
@@ -90,7 +91,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existEmail(String email, int userId) {
-		boolean result = new TblUserDaoImpl().existEmail(email, userId);
+		boolean result = userDaoImpl.existEmail(email, userId);
 		return result;
 	}
 
@@ -101,7 +102,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existCodeLevel(String codeLevel) {
-		boolean result = new TblUserDaoImpl().existCodeLevel(codeLevel);
+		boolean result = userDaoImpl.existCodeLevel(codeLevel);
 		return result;
 	}
 
@@ -112,7 +113,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public int insertUser(TblUser tblUser) throws SQLException {
-		int result = new TblUserDaoImpl().insertUser(tblUser);
+		int result = userDaoImpl.insertUser(tblUser);
 		return result;
 	}
 
@@ -125,7 +126,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean insertDetailUserJapan(TblDetailUserJapan tblDetailUserJapan) throws SQLException {
-		boolean result = new TblDetailUserJapanDaoImpl().insertDetailUserJapan(tblDetailUserJapan);
+		boolean result = detailUserJapanDaoImpl.insertDetailUserJapan(tblDetailUserJapan);
 		return result;
 	}
 
@@ -141,7 +142,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
 		String fullNameKana = userInfor.getFullNameKana();
-		// toi uu lai
+		//
 		Date birthday = Common.toDate(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
 		Date startDate = Common.toDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
@@ -197,7 +198,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public UserInfor getUserById(int userId) {
-		UserInfor result = new TblUserDaoImpl().getUserById(userId);
+		UserInfor result = userDaoImpl.getUserById(userId);
 		return result;
 	}
 
@@ -208,7 +209,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public boolean existUserById(int userId) {
-		boolean result = new TblUserDaoImpl().existUserById(userId);
+		boolean result = userDaoImpl.existUserById(userId);
 		return result;
 	}
 
@@ -280,7 +281,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	@Override
 	public boolean updatePass(String passwords, String salt, int userId) {
 		passwords = Common.encodeSHA1(passwords, salt);
-		boolean result = new TblUserDaoImpl().updatePass(passwords, salt, userId);
+		boolean result = userDaoImpl.updatePass(passwords, salt, userId);
 		return result;
 	}
 
@@ -319,7 +320,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int groupId, String fullName) {
-		List<UserInfor> result = new TblUserDaoImpl().getListUsers(groupId, fullName);
+		List<UserInfor> result = userDaoImpl.getListUsers(groupId, fullName);
 		return result;
 	}
 

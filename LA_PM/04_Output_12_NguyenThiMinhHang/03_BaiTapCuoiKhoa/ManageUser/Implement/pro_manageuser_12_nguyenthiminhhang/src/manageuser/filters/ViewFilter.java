@@ -41,10 +41,10 @@ public class ViewFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-
+		// Đã login
 		if (Common.checkLogin(session)) {
 			res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
-		} else  {// Chưa login
+		} else {// Chưa login
 			res.sendRedirect(req.getContextPath() + Constant.LOGIN_SERVLET);
 		}
 	}

@@ -23,7 +23,7 @@ import manageuser.utils.Constant;
  * 
  * @author minhhang
  */
-@WebServlet("/detailUser.do")
+@WebServlet(urlPatterns = "/detailUser.do")
 public class DetailUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
