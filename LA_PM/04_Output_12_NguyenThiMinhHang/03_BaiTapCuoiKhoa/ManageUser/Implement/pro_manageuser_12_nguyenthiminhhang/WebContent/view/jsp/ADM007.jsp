@@ -22,10 +22,9 @@
 
 	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}"
 		method="post" name="inputform">
+		<br></br> 
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
-			<br>
-			<br>
 			<tr>
 				<th align="left">
 					<div style="padding-left: 100px;">パスワード情報の編集</div>

@@ -126,25 +126,13 @@ public class ListUserController extends HttpServlet {
 					currentPage = Constant.DEFAULT_CURRENT_PAGE;
 					switch (sortType) {
 					case Constant.FULL_NAME:
-						if (sortByName.equals(Constant.DECREASE)) {
-							sortByName = Constant.ASCENDING;
-						} else if (sortByName.equals(Constant.ASCENDING)) {
-							sortByName = Constant.DECREASE;
-						}
+						sortByName = Common.changeSortType(sortByName);
 						break;
 					case Constant.CODE_LEVEL:
-						if (sortByCodeLevel.equals(Constant.DECREASE)) {
-							sortByCodeLevel = Constant.ASCENDING;
-						} else if (sortByCodeLevel.equals(Constant.ASCENDING)) {
-							sortByCodeLevel = Constant.DECREASE;
-						}
+						sortByCodeLevel = Common.changeSortType(sortByCodeLevel);
 						break;
 					case Constant.END_DATE:
-						if (sortByEndDate.equals(Constant.DECREASE)) {
-							sortByEndDate = Constant.ASCENDING;
-						} else if (sortByEndDate.equals(Constant.ASCENDING)) {
-							sortByEndDate = Constant.DECREASE;
-						}
+						sortByEndDate = Common.changeSortType(sortByEndDate);
 						break;
 					default:
 						break;
@@ -168,6 +156,7 @@ public class ListUserController extends HttpServlet {
 
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(groupId, fullName);
+			// Nếu có bản ghi
 			if (totalRecord != 0) {
 				// Lay ban ghi
 				limit = Common.getLimit();
@@ -193,7 +182,7 @@ public class ListUserController extends HttpServlet {
 						sortByCodeLevel, sortByEndDate);
 				request.setAttribute("listUser", listUser);
 				request.setAttribute("listGroup", listGroup);
-			} else {
+			} else {// Nếu không có bản ghi nào
 				String msg005 = MessageProperties.getData("MSG005");
 				request.setAttribute("totalRecord", totalRecord);
 				request.setAttribute("msg005", msg005);

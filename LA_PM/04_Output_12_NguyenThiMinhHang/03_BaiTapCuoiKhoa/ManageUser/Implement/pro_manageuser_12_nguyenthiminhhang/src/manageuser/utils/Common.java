@@ -195,6 +195,22 @@ public class Common {
 	}
 
 	/**
+	 * Hàm thay đổi kiểu sort
+	 * 
+	 * @param sortType
+	 *            giá trị kiểu sort ban đầu
+	 * @return String giá trị kiểu sort sau khi đổi
+	 */
+	public static String changeSortType(String sortType) {
+		if (sortType.equals(Constant.DECREASE)) {
+			sortType = Constant.ASCENDING;
+		} else if (sortType.equals(Constant.ASCENDING)) {
+			sortType = Constant.DECREASE;
+		}
+		return sortType;
+	}
+
+	/**
 	 * Lấy vị trí trang hiện tại ở phân đoạn tiếp theo
 	 * 
 	 * @param list

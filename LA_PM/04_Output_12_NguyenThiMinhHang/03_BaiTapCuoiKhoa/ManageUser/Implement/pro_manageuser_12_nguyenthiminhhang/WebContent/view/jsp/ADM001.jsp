@@ -4,17 +4,18 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="${pageContext.request.contextPath}/view/css/style.css"
 	rel="stylesheet" type="text/css" />
 <title>ユーザ管理</title>
 </head>
-<body align="center">
-	<form
-		action="${pageContext.request.contextPath}<%=Constant.LOGIN_SERVLET%>"
-		method="post">
-		<center>
+<body>
+	<center>
+		<form
+			action="${pageContext.request.contextPath}<%=Constant.LOGIN_SERVLET%>"
+			method="post">
 			<table class="tbl_input" cellpadding="4" cellspacing="0"
 				width="400px">
 				<tr>
@@ -50,5 +51,7 @@
 						value="ログイン" /></td>
 				</tr>
 			</table>
-		</center>
-	</form>
+		</form>
+	</center>
+</body>
+</html>
