@@ -23,12 +23,13 @@ import manageuser.utils.Constant;
  * @author minhhang
  */
 public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
+	private Connection conn;
 
 	/**
 	 * @param connection
 	 */
 	public TblUserDaoImpl(Connection connection) {
-		this.connection = connection;
+		this.conn = connection;
 	}
 
 	/**
@@ -46,8 +47,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	public String getSalt(String username) {
 		String salt = "";
 		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
@@ -59,7 +60,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return salt;
 	}
@@ -72,24 +73,24 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public boolean existLogin(String username, String password) {
 		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
 				preparedStatement.setString(index++, username);
 				preparedStatement.setString(index++, password);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -132,8 +133,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(" LIMIT ?,?");
 		query.append(";");
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -163,7 +164,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return listUserInfor;
 	}
@@ -186,8 +187,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(" AND us.full_name LIKE ?");
 		}
 		query.append(";");
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -206,7 +207,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return total;
 	}
@@ -219,22 +220,22 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public boolean existUsername(String username) {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -248,8 +249,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		if (userId > 0) {
 			query.append(" AND user_id != ?");
 		}
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -265,7 +266,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return true;
 	}
@@ -278,22 +279,22 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public boolean existCodeLevel(String codeLevel) {
 		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -308,8 +309,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		query.append("INSERT INTO tbl_user ").append("(group_id, login_name, passwords, full_name, full_name_kana, ")
 				.append("email, tel, birthday, salt, role) ").append("VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )")
 				.append(";");
-		if (connection != null) {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString(),
+		if (conn != null) {
+			PreparedStatement preparedStatement = conn.prepareStatement(query.toString(),
 					PreparedStatement.RETURN_GENERATED_KEYS);
 			int index = 1;
 			preparedStatement.setInt(index++, tblUser.getGroupId());
@@ -347,14 +348,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
 				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0")
 				.append(" AND us.user_id = ?").append(";");
-
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				preparedStatement.setInt(1, userId);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-
 				while (resultSet.next()) {
 					userInfor.setLoginName(resultSet.getString("login_name"));
 					userInfor.setFullName(resultSet.getString("full_name"));
@@ -374,7 +373,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return userInfor;
 	}
@@ -386,24 +385,24 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 */
 	public boolean existUserById(int userId) {
 		String query = "SELECT login_name FROM tbl_user WHERE user_id = ? AND role = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
 				preparedStatement.setInt(index++, userId);
 				preparedStatement.setInt(index++, Constant.ROLE_USER);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -417,8 +416,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		query.append(
 				"UPDATE tbl_user SET group_id = ?, full_name = ?, full_name_kana = ?, email = ?, tel = ?, birthday =?")
 				.append(" WHERE user_id = ?").append(";");
-		if (connection != null) {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		if (conn != null) {
+			PreparedStatement preparedStatement = conn.prepareStatement(query.toString());
 			int index = 1;
 			preparedStatement.setInt(index++, tblUser.getGroupId());
 			preparedStatement.setString(index++, tblUser.getFullName());
@@ -428,11 +427,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			preparedStatement.setString(index++, Common.convertDateToString(tblUser.getBirthday()));
 			preparedStatement.setInt(index++, tblUser.getUserId());
 			int row = preparedStatement.executeUpdate();
-			if (row == 0) {
-				return false;
+			if (row > 0) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 
 	}
 
@@ -445,8 +444,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public boolean updatePass(String passwords, String salt, int userId) {
 		String query = "UPDATE tbl_user SET passwords = ?, salt = ? WHERE user_id = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -454,16 +453,16 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				preparedStatement.setString(index++, salt);
 				preparedStatement.setInt(index++, userId);
 				int row = preparedStatement.executeUpdate();
-				if (row == 0) {
-					return false;
+				if (row > 0) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -474,15 +473,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	@Override
 	public boolean deleteUser(int userId) throws SQLException {
 		String query = "DELETE FROM tbl_user WHERE user_id = ? ";
-		if (connection != null) {
-			PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+		if (conn != null) {
+			PreparedStatement preparedStatement = conn.prepareStatement(query.toString());
 			preparedStatement.setInt(1, userId);
 			int row = preparedStatement.executeUpdate();
-			if (row == 0) {
-				return false;
+			if (row > 0) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -506,8 +505,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(" AND us.full_name LIKE ?");
 		}
 		query.append(";");
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -537,7 +536,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return list;
 	}

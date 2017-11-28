@@ -40,8 +40,8 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		query.append("SELECT * FROM mst_group");
 		query.append(" ORDER BY").append(" group_name ").append(Constant.ASCENDING);
 		query.append(";");
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -53,7 +53,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 				}
 			}
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return listGroup;
 	}
@@ -67,8 +67,8 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	public String getGroupName(int groupId) {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
 		String groupName = "";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, groupId);
@@ -80,7 +80,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return groupName;
 	}
@@ -93,22 +93,22 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	@Override
 	public boolean existGroup(int groupId) {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, groupId);
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 }

@@ -17,9 +17,8 @@ import manageuser.properties.DatabaseProperties;
  * @author minhhang
  */
 public class BaseDaoImpl implements BaseDao {
-	protected Connection connection;
-	
-	
+	// protected Connection connection;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -27,6 +26,7 @@ public class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public Connection getConnection() {
+		Connection connection = null;
 		String url, user, pass, driver;
 		try {
 			// lấy danh sách property từ file vào
@@ -48,9 +48,11 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#closeConnection()
 	 */
 	@Override
-	public void closeConnection() {
+	public void closeConnection(Connection conn) {
 		try {
-			connection.close();
+			if (conn != null) {
+				conn.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

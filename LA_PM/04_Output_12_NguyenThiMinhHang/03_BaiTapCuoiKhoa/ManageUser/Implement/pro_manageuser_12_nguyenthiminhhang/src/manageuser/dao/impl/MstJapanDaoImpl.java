@@ -27,13 +27,6 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	public MstJapanDaoImpl() {
 	}
 
-	/**
-	 * @param connection
-	 */
-	public MstJapanDaoImpl(Connection connection) {
-		this.connection = connection;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -45,8 +38,8 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM mst_japan");
 		query.append(";");
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -58,7 +51,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 				}
 			}
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return listJapan;
 	}
@@ -72,8 +65,8 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	public String getNameLevel(String codeLevel) {
 		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
 		String nameLevel = "";
+		Connection connection = getConnection();
 		try {
-			Connection connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);
@@ -85,7 +78,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection();
+			closeConnection(connection);
 		}
 		return nameLevel;
 	}

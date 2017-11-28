@@ -21,6 +21,8 @@ public interface BaseDao {
 
 	/**
 	 * Hàm đóng kết nối với DB
+	 * 
+	 * @param conn kết nối cần đóng
 	 */
-	public void closeConnection();
+	public void closeConnection(Connection conn);
 }

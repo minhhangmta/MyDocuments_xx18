@@ -187,7 +187,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.rollback();
 			return false;
 		} finally {
-			baseDaoImpl.closeConnection();
+			baseDaoImpl.closeConnection(connection);
 		}
 		return true;
 	}
@@ -268,7 +268,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.rollback();
 			return false;
 		} finally {
-			baseDaoImpl.closeConnection();
+			baseDaoImpl.closeConnection(connection);
 		}
 		return true;
 	}
@@ -309,7 +309,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			connection.rollback();
 			return false;
 		} finally {
-			baseDaoImpl.closeConnection();
+			baseDaoImpl.closeConnection(connection);
 		}
 		return true;
 	}
