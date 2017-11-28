@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblUser;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.ConfigProperties;
@@ -1023,4 +1024,5 @@ public class Common {
 		}
 		return currentSort;
 	}
+
 }

@@ -20,8 +20,7 @@
 	<!-- End vung header -->
 
 	<!-- Begin vung input-->
-	<form
-		action="${path}<%=Constant.ADD_USER_OK%>?keySession=${keySession}"
+	<form action="${path}${Constant.ADD_USER_OK}?keySession=${keySession}"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
 			cellspacing="0">
@@ -57,7 +56,7 @@
 							<tr>
 								<td class="lbl_left">生年月日:</td>
 								<td align="left"><fmt:formatDate type="date"
-										pattern="<%=Constant.FORMAT_DATE%>"
+										pattern="${Constant.FORMAT_DATE}"
 										value="${userInfor.birthday}" /></td>
 							</tr>
 							<tr>
@@ -82,13 +81,13 @@
 								<tr>
 									<td class="lbl_left">資格交付日:</td>
 									<td align="left"><fmt:formatDate type="date"
-											pattern="<%=Constant.FORMAT_DATE%>"
+											pattern="${Constant.FORMAT_DATE}"
 											value="${userInfor.startDate}" /></td>
 								</tr>
 								<tr>
 									<td class="lbl_left">失効日:</td>
 									<td align="left"><fmt:formatDate type="date"
-											pattern="<%=Constant.FORMAT_DATE%>"
+											pattern="${Constant.FORMAT_DATE}"
 											value="${userInfor.endDate}" /></td>
 								</tr>
 								<tr>
@@ -110,7 +109,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="OK" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>?tab=back&keySession=${keySession}')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.ADD_USER_INPUT}?tab=back&keySession=${keySession}')" /></td>
 				</tr>
 			</table>
 		</div>

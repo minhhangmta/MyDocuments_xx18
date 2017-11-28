@@ -20,7 +20,7 @@
 
 	<!-- Begin vung input-->
 
-	<form action="${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}"
+	<form action="${path}${Constant.EDIT_PASS_SERVLET}?id=${userId}"
 		method="post" name="inputform">
 		<br></br> 
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
@@ -71,7 +71,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="sendToAnotherController('${path}<%=Constant.DETAIL_SERVLET%>?id=${userId}')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.DETAIL_SERVLET}?id=${userId}')" /></td>
 				</tr>
 			</table>
 		</div>

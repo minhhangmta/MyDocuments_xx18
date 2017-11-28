@@ -19,7 +19,7 @@
 
 	<!-- Begin vung input-->
 	<form
-		action="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>"
+		action="${pageContext.request.contextPath}${Constant.LISTUSER_SERVLET}"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="80%" cellpadding="0"
 			cellspacing="0">

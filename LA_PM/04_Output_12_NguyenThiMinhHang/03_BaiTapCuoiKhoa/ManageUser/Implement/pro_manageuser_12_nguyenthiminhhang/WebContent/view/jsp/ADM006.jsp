@@ -19,7 +19,7 @@
 
 	<!-- Begin vung input-->
 	<form
-		action="${pageContext.request.contextPath}<%=Constant.LISTUSER_SERVLET%>"
+		action="${pageContext.request.contextPath}${Constant.LISTUSER_SERVLET}"
 		method="post" name="inputform">
 		<table class="tbl_input" border="0" width="80%" cellpadding="0"
 			cellspacing="0">
@@ -29,7 +29,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center" colspan="2"><font>${content}</font></td>
+				<td align="center" colspan="2"><c:choose>
+						<c:when test="${type == 'updateFail' || type == 'insertFail' }">
+							<font color="red">${content}</font>
+						</c:when>
+						<c:otherwise>
+							<font>${content}</font>
+						</c:otherwise>
+					</c:choose></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
@@ -39,7 +46,7 @@
 			<tr>
 				<td align="center" colspan="2"><input class="btn" type="submit"
 					value="OK"
-					onclick="sendToAnotherController('${path}<%=Constant.LISTUSER_SERVLET%>')" /></td>
+					onclick="sendToAnotherController('${path}${Constant.LISTUSER_SERVLET}')" /></td>
 			</tr>
 		</table>
 	</form>

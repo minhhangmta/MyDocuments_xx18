@@ -14,7 +14,7 @@
 <body>
 	<center>
 		<form
-			action="${pageContext.request.contextPath}<%=Constant.LOGIN_SERVLET%>"
+			action="${pageContext.request.contextPath}${Constant.LOGIN_SERVLET}"
 			method="post">
 			<table class="tbl_input" cellpadding="4" cellspacing="0"
 				width="400px">

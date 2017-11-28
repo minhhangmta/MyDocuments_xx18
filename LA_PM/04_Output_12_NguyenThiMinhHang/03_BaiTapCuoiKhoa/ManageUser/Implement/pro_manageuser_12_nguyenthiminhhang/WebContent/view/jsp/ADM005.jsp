@@ -54,7 +54,7 @@
 							<tr>
 								<td class="lbl_left">生年月日:</td>
 								<td align="left"><fmt:formatDate type="date"
-										pattern="<%=Constant.FORMAT_DATE%>"
+										pattern="${Constant.FORMAT_DATE}"
 										value="${userInfor.birthday}" /></td>
 							</tr>
 							<tr>
@@ -79,13 +79,13 @@
 								<tr>
 									<td class="lbl_left">資格交付日:</td>
 									<td align="left"><fmt:formatDate type="date"
-											pattern="<%=Constant.FORMAT_DATE%>"
+											pattern="${Constant.FORMAT_DATE}"
 											value="${userInfor.startDate}" /></td>
 								</tr>
 								<tr>
 									<td class="lbl_left">失効日:</td>
 									<td align="left"><fmt:formatDate type="date"
-											pattern="<%=Constant.FORMAT_DATE%>"
+											pattern="${Constant.FORMAT_DATE}"
 											value="${userInfor.endDate}" /></td>
 								</tr>
 								<tr>
@@ -106,15 +106,15 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<!-- button edit user -->
 					<td><input class="btn" type="button" value="編集"
-						onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>?tab=edit&id=${userId}')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.ADD_USER_INPUT}?tab=edit&id=${userId}')" /></td>
 					<!-- button edit user -->
 					<!-- button edit pass -->
 					<td><input class="btn_pass" type="button" value="ChangePass"
-						onclick="sendToAnotherController('${path}<%=Constant.EDIT_PASS_SERVLET%>?id=${userId}')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.EDIT_PASS_SERVLET}?id=${userId}')" /></td>
 					<!-- button edit pass -->
 					<!-- set param cho function confirmDelete -->
 					<c:set var="deleteServletPath"
-						value="<%=Constant.DELETE_USER_SERVLET%>"></c:set>
+						value="${Constant.DELETE_USER_SERVLET}"></c:set>
 					<c:set var="url" value="${path}${deleteServletPath}?id=${userId}"></c:set>
 					<jsp:useBean id="messageJA"
 						class="manageuser.properties.MessageProperties" />
@@ -125,7 +125,7 @@
 					<!-- button delete user -->
 					<!-- button back -->
 					<td><input class="btn" type="button" value="戻る"
-						onclick="sendToAnotherController('${path}<%=Constant.LISTUSER_SERVLET%>')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.LISTUSER_SERVLET}')" /></td>
 					<!-- button back -->
 				</tr>
 			</table>

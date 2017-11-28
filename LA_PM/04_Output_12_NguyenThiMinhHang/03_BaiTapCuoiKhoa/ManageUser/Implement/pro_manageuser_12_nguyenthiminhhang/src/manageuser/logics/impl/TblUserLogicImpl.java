@@ -171,6 +171,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 			int userId = userDaoImpl.insertUser(tblUser);
 			// get codelevel
 			String codeLevel = userInfor.getCodeLevel();
+			//user id tồn tại và có code level
 			if (codeLevel != null && userId > 0) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
 				detailUserJapan.setCodeLevel(codeLevel);
@@ -240,10 +241,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setGroupId(userInfor.getGroupId());
 
 		String codeLevelNew = userInfor.getCodeLevel();
+		String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
 		try {
 			connection.setAutoCommit(false);
 			userDaoImpl.updateUser(tblUser);
-			String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
 			// Từ DB ra thì xét null, từ textbox thì xét empty
 			// Trường hợp code level mới có giá trị
 			if (codeLevelNew != null) {

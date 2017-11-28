@@ -42,6 +42,8 @@ public class SuccessController extends HttpServlet {
 		try {
 			RequestDispatcher requestDispatcher;
 			String type = request.getParameter("type");
+			// set type cho request để ADM006 xử lý
+			request.setAttribute("type", type);
 			// Các trường hợp fail
 			if (Constant.INSERT_FAIL.equals(type) || Constant.UPDATE_FAIL.equals(type)
 					|| Constant.UPDATE_PASS_FAIL.equals(type) || Constant.DELETE_FAIL.equals(type)) {

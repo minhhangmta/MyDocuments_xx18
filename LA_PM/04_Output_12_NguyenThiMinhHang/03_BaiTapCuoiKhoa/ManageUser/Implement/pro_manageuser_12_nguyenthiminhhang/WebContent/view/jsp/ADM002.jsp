@@ -21,7 +21,7 @@
 
 	<!-- Begin vung dieu kien tim kiem -->
 	<c:set var="path" value="${pageContext.request.contextPath}"></c:set>
-	<form action="${path}<%=Constant.LISTUSER_SERVLET%>" method="post"
+	<form action="${path}${Constant.LISTUSER_SERVLET}" method="post"
 		name="mainform">
 		<table class="tbl_input" border="0" width="90%" cellpadding="0"
 			cellspacing="0">
@@ -53,9 +53,9 @@
 							</select></td>
 							<td align="left"><input class="btn" type="submit" value="検索" />
 								<input class="btn" type="button" value="新規追加"
-								onclick="sendToAnotherController('${path}<%=Constant.ADD_USER_INPUT%>')" />
+								onclick="sendToAnotherController('${path}${Constant.ADD_USER_INPUT}')" />
 								<input class="btn_export" type="button" value="輸出のcsv"
-								onclick="sendToAnotherController('${path}<%=Constant.EXPORT_FILE%>?download=userInfor')" />
+								onclick="sendToAnotherController('${path}${Constant.EXPORT_FILE}?download=userInfor')" />
 							</td>
 						</tr>
 					</table>
@@ -77,7 +77,7 @@
 				<tr class="tr2">
 					<th align="center" width="20px">ID</th>
 					<th align="left">氏名 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=full_name&sort=${sortByName=='ASC' ? 'DESC' : 'ASC'}">
+						href="${path}${Constant.LISTUSER_SERVLET}?type=sort&typeSort=full_name&sort=${sortByName=='ASC' ? 'DESC' : 'ASC'}">
 							<!-- Start fix bug ID 47 – NguyenThiMinhHang 2017/11/1 --> <c:if
 								test="${sortByName == 'ASC'}">
 									▲▽ 
@@ -91,7 +91,7 @@
 					<th align="left">メールアドレス</th>
 					<th align="left" width="100px">電話番号</th>
 					<th align="left">日本語能力 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=code_level&sort=${sortByCodeLevel=='ASC' ? 'DESC' : 'ASC'}"><c:if
+						href="${path}${Constant.LISTUSER_SERVLET}?type=sort&typeSort=code_level&sort=${sortByCodeLevel=='ASC' ? 'DESC' : 'ASC'}"><c:if
 								test="${sortByCodeLevel == 'ASC'}">
 									▲▽
 									</c:if> <c:if test="${sortByCodeLevel == 'DESC'}">
@@ -99,7 +99,7 @@
 									</c:if></a>
 					</th>
 					<th align="left">失効日 <a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=sort&typeSort=end_date&sort=${sortByEndDate=='ASC' ? 'DESC' : 'ASC'}"><c:if
+						href="${path}${Constant.LISTUSER_SERVLET}?type=sort&typeSort=end_date&sort=${sortByEndDate=='ASC' ? 'DESC' : 'ASC'}"><c:if
 								test="${sortByEndDate == 'ASC'}">
 									▲▽
 									</c:if> <c:if test="${sortByEndDate == 'DESC'}">
@@ -112,16 +112,16 @@
 				<c:forEach items="${listUser}" var="user">
 					<tr>
 						<td align="right"><a
-							href="${path}<%=Constant.DETAIL_SERVLET%>?tab=edit&id=${user.userId}">${user.userId}</a></td>
+							href="${path}${Constant.DETAIL_SERVLET}?tab=edit&id=${user.userId}">${user.userId}</a></td>
 						<td>${fn:escapeXml(user.fullName)}</td>
 						<td align="center"><fmt:formatDate type="date"
-								pattern="<%=Constant.FORMAT_DATE%>" value="${user.birthday}" /></td>
+								pattern="${Constant.FORMAT_DATE}" value="${user.birthday}" /></td>
 						<td>${fn:escapeXml(user.groupName)}</td>
 						<td>${fn:escapeXml(user.email)}</td>
 						<td>${fn:escapeXml(user.tel)}</td>
 						<td>${fn:escapeXml(user.nameLevel)}</td>
 						<td align="center"><fmt:formatDate type="date"
-								pattern="<%=Constant.FORMAT_DATE%>" value="${user.endDate}" /></td>
+								pattern="${Constant.FORMAT_DATE}" value="${user.endDate}" /></td>
 						<td align="right">${user.total}</td>
 					</tr>
 				</c:forEach>
@@ -137,7 +137,7 @@
 			<td class="lbl_paging"><c:if
 					test="${currentPage > listPaging.size()}">
 					<a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${previousPage}">
+						href="${path}${Constant.LISTUSER_SERVLET}?type=paging&page=${previousPage}">
 						&lt;&lt; </a>&nbsp;
 				</c:if> <c:forEach items="${listPaging}" var="page">
 					<!-- Start fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
@@ -155,12 +155,12 @@
 									<c:when
 										test="${listPaging.indexOf(page)==listPaging.size()-1 || page == totalPage }">
 										<a
-											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+											href="${path}${Constant.LISTUSER_SERVLET}?type=paging&page=${page}">${page}
 										</a>&nbsp;
 									</c:when>
 									<c:otherwise>
 										<a
-											href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${page}">${page}
+											href="${path}${Constant.LISTUSER_SERVLET}?type=paging&page=${page}">${page}
 										</a>|
 								</c:otherwise>
 								</c:choose>
@@ -171,7 +171,7 @@
 					<!-- End fix bug ID 48 – NguyenThiMinhHang 2017/11/1 -->
 				</c:forEach> <c:if test="${listPaging.get(listPaging.size()-1) < totalPage}">
 					<a
-						href="${path}<%=Constant.LISTUSER_SERVLET%>?type=paging&page=${nextPage}">
+						href="${path}${Constant.LISTUSER_SERVLET}?type=paging&page=${nextPage}">
 						&gt;&gt; </a>
 				</c:if></td>
 		</tr>

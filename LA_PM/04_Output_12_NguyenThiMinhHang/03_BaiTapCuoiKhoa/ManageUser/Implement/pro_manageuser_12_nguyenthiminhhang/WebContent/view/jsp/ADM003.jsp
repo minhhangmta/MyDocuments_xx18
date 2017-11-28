@@ -20,7 +20,7 @@
 
 	<!-- Begin vung input-->
 	<form
-		action="${path}<%=Constant.ADD_USER_VALIDATE%>${userInfor.userId > 0 ? '?tab=confirmEdit' : '?tab=confirmAdd'}"
+		action="${path}${Constant.ADD_USER_VALIDATE}${userInfor.userId > 0 ? '?tab=confirmEdit' : '?tab=confirmAdd'}"
 		method="post" name="inputform">
 		<input type="hidden" name="id" value="${userInfor.userId}">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"
@@ -209,7 +209,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<td><input class="btn" type="submit" value="確認" /></td>
 					<td><input class="btn" type="button" value="戻る"
-						onclick="sendToAnotherController('${path}<%=Constant.LISTUSER_SERVLET%>')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.LISTUSER_SERVLET}')" /></td>
 				</tr>
 			</table>
 		</div>

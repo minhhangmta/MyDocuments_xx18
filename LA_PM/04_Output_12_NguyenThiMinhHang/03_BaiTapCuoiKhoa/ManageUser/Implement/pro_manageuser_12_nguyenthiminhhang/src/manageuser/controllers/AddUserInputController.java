@@ -255,7 +255,6 @@ public class AddUserInputController extends HttpServlet {
 				email = request.getParameter("email");
 				password = request.getParameter("password");
 				confirmPassword = request.getParameter("confirmPassword");
-
 				tel = request.getParameter("tel");
 				codeLevel = request.getParameter("codeLevel");
 				nameLevel = new MstJapanLogicImpl().getNameLevel(codeLevel);
@@ -269,15 +268,12 @@ public class AddUserInputController extends HttpServlet {
 					yearStartDate = Common.tryParseInt(request.getParameter("yearStartDate"));
 					monthStartDate = Common.tryParseInt(request.getParameter("monthStartDate"));
 					dayStartDate = Common.tryParseInt(request.getParameter("dayStartDate"));
-
 					// End date
 					yearEndDate = Common.tryParseInt(request.getParameter("yearEndDate"));
 					monthEndDate = Common.tryParseInt(request.getParameter("monthEndDate"));
 					dayEndDate = Common.tryParseInt(request.getParameter("dayEndDate"));
-
 					// total
 					total = request.getParameter("total");
-
 				}
 				if ("confirmEdit".equals(tab)) {
 					int userId = Common.tryParseInt(request.getParameter("id"));
