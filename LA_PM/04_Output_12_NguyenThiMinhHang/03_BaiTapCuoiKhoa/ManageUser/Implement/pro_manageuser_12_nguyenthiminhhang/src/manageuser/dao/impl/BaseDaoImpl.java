@@ -84,7 +84,6 @@ public class BaseDaoImpl implements BaseDao {
 			try {
 				conn.commit();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -101,7 +100,6 @@ public class BaseDaoImpl implements BaseDao {
 			try {
 				conn.setAutoCommit(false);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

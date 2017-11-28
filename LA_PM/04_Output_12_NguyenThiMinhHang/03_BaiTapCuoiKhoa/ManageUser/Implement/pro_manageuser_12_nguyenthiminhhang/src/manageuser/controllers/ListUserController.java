@@ -49,7 +49,7 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// sau khi sort, paging
+		// sau khi sort, paging, back
 		doPost(request, response);
 	}
 
