@@ -166,12 +166,12 @@ public class TblUserLogicImpl implements TblUserLogic {
 		tblUser.setTel(userInfor.getTel());
 		tblUser.setRole(Constant.ROLE_USER);
 		try {
-			connection.setAutoCommit(false);
+			baseDaoImpl.setAutoCommitFalse(connection);
 			// get userId from TblUser
 			int userId = userDaoImpl.insertUser(tblUser);
 			// get codelevel
 			String codeLevel = userInfor.getCodeLevel();
-			//user id tồn tại và có code level
+			// user id tồn tại và có code level
 			if (codeLevel != null && userId > 0) {
 				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
 				detailUserJapan.setCodeLevel(codeLevel);
@@ -181,10 +181,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 				detailUserJapan.setTotal(userInfor.getTotal());
 				detailUserJapanDaoImpl.insertDetailUserJapan(detailUserJapan);
 			}
-			connection.commit();
+			baseDaoImpl.commitConnection(connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			connection.rollback();
+			baseDaoImpl.rollBack(connection);
 			return false;
 		} finally {
 			baseDaoImpl.closeConnection(connection);
@@ -243,7 +243,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 		String codeLevelNew = userInfor.getCodeLevel();
 		String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
 		try {
-			connection.setAutoCommit(false);
+			baseDaoImpl.setAutoCommitFalse(connection);
 			userDaoImpl.updateUser(tblUser);
 			// Từ DB ra thì xét null, từ textbox thì xét empty
 			// Trường hợp code level mới có giá trị
@@ -262,10 +262,10 @@ public class TblUserLogicImpl implements TblUserLogic {
 			} else if (!codeLevelOld.isEmpty()) {// Trường hợp code level mới không có( có -> không)
 				detailJapanDaoImpl.deleteDetailJapan(userId);
 			}
-			connection.commit();
+			baseDaoImpl.commitConnection(connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			connection.rollback();
+			baseDaoImpl.rollBack(connection);
 			return false;
 		} finally {
 			baseDaoImpl.closeConnection(connection);
@@ -298,15 +298,15 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
 		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 		try {
-			connection.setAutoCommit(false);
+			baseDaoImpl.setAutoCommitFalse(connection);
 			// xoa detail japan
 			detailJapanDaoImpl.deleteDetailJapan(userId);
 			// xoa user
 			userDaoImpl.deleteUser(userId);
-			connection.commit();
+			baseDaoImpl.commitConnection(connection);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			connection.rollback();
+			baseDaoImpl.rollBack(connection);
 			return false;
 		} finally {
 			baseDaoImpl.closeConnection(connection);

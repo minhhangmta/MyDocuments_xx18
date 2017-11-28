@@ -22,7 +22,32 @@ public interface BaseDao {
 	/**
 	 * Hàm đóng kết nối với DB
 	 * 
-	 * @param conn kết nối cần đóng
+	 * @param conn
+	 *            connection cần đóng
 	 */
 	public void closeConnection(Connection conn);
+
+	/**
+	 * Hàm rollback
+	 * 
+	 * @param conn
+	 *            connection
+	 */
+	public void rollBack(Connection conn);
+
+	/**
+	 * Hàm commit
+	 * 
+	 * @param conn
+	 *            connection
+	 */
+	public void commitConnection(Connection conn);
+
+	/**
+	 * Hàm set auto commit to false
+	 * 
+	 * @param conn
+	 *            connection
+	 */
+	public void setAutoCommitFalse(Connection conn);
 }

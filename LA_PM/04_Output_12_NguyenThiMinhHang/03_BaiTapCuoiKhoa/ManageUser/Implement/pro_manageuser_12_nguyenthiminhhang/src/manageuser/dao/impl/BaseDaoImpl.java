@@ -49,12 +49,62 @@ public class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public void closeConnection(Connection conn) {
-		try {
-			if (conn != null) {
+		if (conn != null) {
+			try {
 				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.BaseDao#rollBack(java.sql.Connection)
+	 */
+	@Override
+	public void rollBack(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.BaseDao#commitConnection(java.sql.Connection)
+	 */
+	@Override
+	public void commitConnection(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.commit();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see manageuser.dao.BaseDao#setAutoCommitFalse(java.sql.Connection)
+	 */
+	@Override
+	public void setAutoCommitFalse(Connection conn) {
+		if (conn != null) {
+			try {
+				conn.setAutoCommit(false);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
