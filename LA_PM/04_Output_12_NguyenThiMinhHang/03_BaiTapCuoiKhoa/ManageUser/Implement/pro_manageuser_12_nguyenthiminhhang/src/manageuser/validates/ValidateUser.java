@@ -30,18 +30,18 @@ public class ValidateUser {
 	public ArrayList<String> validateLogin(String username, String password) {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		ArrayList<String> errMassages = new ArrayList<>();
-		// Không nhập username và pass
-		if (!Common.checkInputTxt(username) && !Common.checkInputTxt(password)) {
-			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
-			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
-		} else if (!Common.checkInputTxt(username)) {// không nhập username
-			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
-		} else if (!Common.checkInputTxt(password)) {// không nhập pass
-			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
-		} else {
+		// Nếu nhập username và pass
+		if (Common.checkInputTxt(username) && Common.checkInputTxt(password)) {
 			// không tồn tại trong DB
 			if (!logicImpl.existLogin(username, password)) {
 				errMassages.add(MessageErrorProperties.getData("ER016"));
+			}
+		} else {// nếu không nhập
+			if (!Common.checkInputTxt(username)) {// không nhập username
+				errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
+			}
+			if (!Common.checkInputTxt(password)) {// không nhập pass
+				errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
 			}
 		}
 		return errMassages;
