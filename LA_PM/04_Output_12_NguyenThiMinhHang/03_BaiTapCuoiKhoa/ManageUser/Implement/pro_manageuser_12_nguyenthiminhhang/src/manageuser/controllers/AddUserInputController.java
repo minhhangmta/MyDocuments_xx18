@@ -54,8 +54,8 @@ public class AddUserInputController extends HttpServlet {
 		// Khi click btn add từ adm002 hoặc edit từ adm005
 		try {
 			RequestDispatcher requestDispatcher;
-			String tab = request.getParameter("tab");
-			if ("edit".equals(tab)) {
+			String type = request.getParameter("type");
+			if ("edit".equals(type)) {
 				TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				// neu user khong ton tai
@@ -92,9 +92,9 @@ public class AddUserInputController extends HttpServlet {
 		try {
 			ValidateUser validateUser = new ValidateUser();
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
-			String tab = request.getParameter("tab");
+			String type = request.getParameter("type");
 			// Trường hợp submit của edit
-			if ("confirmEdit".equals(tab)) {
+			if ("confirmEdit".equals(type)) {
 				// lay tu input hidden
 				int userId = Common.tryParseInt(request.getParameter("id"));
 				// Neu user khong ton tai
@@ -166,7 +166,7 @@ public class AddUserInputController extends HttpServlet {
 	 */
 	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
 		UserInfor userInfor = new UserInfor();
-		String tab = request.getParameter("tab");
+		String type = request.getParameter("type");
 		// Khai bao bien
 		int currentYear;
 		int currentMonth;
@@ -208,7 +208,7 @@ public class AddUserInputController extends HttpServlet {
 		total = Constant.EMPTY_STRING;
 		groupName = nameLevel = Constant.EMPTY_STRING;
 		// truong hop edit
-		if ("edit".equals(tab)) {
+		if ("edit".equals(type)) {
 			int userId = Common.tryParseInt(request.getParameter("id"));
 			TblUserLogicImpl tblUserLogicImpl = new TblUserLogicImpl();
 			userInfor = tblUserLogicImpl.getUserById(userId);
@@ -238,14 +238,14 @@ public class AddUserInputController extends HttpServlet {
 				dayEndDate = Common.tryParseInt(list.get(2).toString());
 
 			}
-		} else if ("back".equals(tab)) {// trường hợp back từ ADM004
+		} else if ("back".equals(type)) {// trường hợp back từ ADM004
 			HttpSession session = request.getSession();
 			String keySession = request.getParameter("keySession");
 			userInfor = (UserInfor) session.getAttribute(keySession);
 			session.removeAttribute(keySession);
 		} else {
 			// trường hợp xác nhận tại ADM003
-			if ("confirmAdd".equals(tab) || "confirmEdit".equals(tab)) {
+			if ("confirmAdd".equals(type) || "confirmEdit".equals(type)) {
 				// get from request or default
 				username = request.getParameter("username");
 				groupId = Common.tryParseInt(request.getParameter("groupId"));
@@ -275,7 +275,7 @@ public class AddUserInputController extends HttpServlet {
 					// total
 					total = request.getParameter("total");
 				}
-				if ("confirmEdit".equals(tab)) {
+				if ("confirmEdit".equals(type)) {
 					int userId = Common.tryParseInt(request.getParameter("id"));
 					userInfor.setUserId(userId);
 				}
@@ -305,7 +305,7 @@ public class AddUserInputController extends HttpServlet {
 				userInfor.setTotal(total);
 			}
 		}
-		if (!"back".equals(tab)) {
+		if (!"back".equals(type)) {
 			// start date
 			userInfor.setYearStartDate(yearStartDate);
 			userInfor.setMonthStartDate(monthStartDate);

@@ -20,7 +20,7 @@
 
 	<!-- Begin vung input-->
 	<form
-		action="${path}${Constant.ADD_USER_VALIDATE}${userInfor.userId > 0 ? '?tab=confirmEdit' : '?tab=confirmAdd'}"
+		action="${path}${Constant.ADD_USER_VALIDATE}${userInfor.userId > 0 ? '?type=confirmEdit' : '?type=confirmAdd'}"
 		method="post" name="inputform">
 		<input type="hidden" name="id" value="${userInfor.userId}">
 		<table class="tbl_input" border="0" width="75%" cellpadding="0"

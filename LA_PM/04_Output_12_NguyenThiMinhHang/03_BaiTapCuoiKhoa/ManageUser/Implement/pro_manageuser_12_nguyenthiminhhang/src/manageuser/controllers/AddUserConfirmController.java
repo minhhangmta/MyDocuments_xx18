@@ -49,8 +49,9 @@ public class AddUserConfirmController extends HttpServlet {
 			HttpSession session = request.getSession();
 			String keySesion = request.getParameter("keySession");
 			UserInfor userInfor = (UserInfor) session.getAttribute(keySesion);
-			session.setAttribute("userInfor", userInfor);
 			request.setAttribute("keySession", keySesion);
+			//set cho view
+			request.setAttribute("userInfor", userInfor);
 			// Forward đến ADM004
 			if (userInfor != null) {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM004);

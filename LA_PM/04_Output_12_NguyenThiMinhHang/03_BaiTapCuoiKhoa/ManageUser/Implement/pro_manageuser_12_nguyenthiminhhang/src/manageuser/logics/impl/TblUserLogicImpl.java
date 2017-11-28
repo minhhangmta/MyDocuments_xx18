@@ -6,7 +6,6 @@ package manageuser.logics.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import manageuser.dao.impl.BaseDaoImpl;
@@ -17,7 +16,6 @@ import manageuser.entities.TblUser;
 import manageuser.entities.UserInfor;
 import manageuser.logics.TblUserLogic;
 import manageuser.utils.Common;
-import manageuser.utils.Constant;
 
 /**
  * Xử lý logic liên quan đến thông tin của user
@@ -141,30 +139,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 		Connection connection = baseDaoImpl.getConnection();
 		TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-		String fullNameKana = userInfor.getFullNameKana();
-		//
-		Date birthday = Common.toDate(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
-				userInfor.getDayBirthday());
-		Date startDate = Common.toDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
-				userInfor.getDayStartDate());
-		Date endDate = Common.toDate(userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
-				userInfor.getDayEndDate());
-		// insert vao tbl_user
-		TblUser tblUser = new TblUser();
-		tblUser.setLoginName(userInfor.getLoginName());
-		tblUser.setEmail(userInfor.getEmail());
-		tblUser.setBirthday(birthday);
-		tblUser.setFullName(userInfor.getFullName());
-		if (!fullNameKana.isEmpty()) {
-			tblUser.setFullNameKana(fullNameKana);
-		}
-		tblUser.setGroupId(userInfor.getGroupId());
-		// get salt from createSaltString()
-		tblUser.setSalt(Common.createSaltString());
-		// ma hoa password
-		tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
-		tblUser.setTel(userInfor.getTel());
-		tblUser.setRole(Constant.ROLE_USER);
+		// get tblUser
+		TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
 		try {
 			baseDaoImpl.setAutoCommitFalse(connection);
 			// get userId from TblUser
@@ -172,13 +148,9 @@ public class TblUserLogicImpl implements TblUserLogic {
 			// get codelevel
 			String codeLevel = userInfor.getCodeLevel();
 			// user id tồn tại và có code level
-			if (codeLevel != null && userId > 0) {
-				TblDetailUserJapan detailUserJapan = new TblDetailUserJapan();
-				detailUserJapan.setCodeLevel(codeLevel);
-				detailUserJapan.setUserId(userId);
-				detailUserJapan.setStartDate(startDate);
-				detailUserJapan.setEndDate(endDate);
-				detailUserJapan.setTotal(userInfor.getTotal());
+			if (!Common.isEmptyOrNull(codeLevel) && userId > 0) {
+				userInfor.setUserId(userId);
+				TblDetailUserJapan detailUserJapan = Common.getDetailUserJapanFromUserInfor(userInfor);
 				detailUserJapanDaoImpl.insertDetailUserJapan(detailUserJapan);
 			}
 			baseDaoImpl.commitConnection(connection);
@@ -226,34 +198,17 @@ public class TblUserLogicImpl implements TblUserLogic {
 		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
 		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 
-		TblUser tblUser = new TblUser();
 		int userId = userInfor.getUserId();
-		String fullNameKana = userInfor.getFullNameKana();
-		if (fullNameKana.isEmpty()) {
-			fullNameKana = null;
-		}
-		tblUser.setUserId(userId);
-		tblUser.setFullName(userInfor.getFullName());
-		tblUser.setFullNameKana(fullNameKana);
-		tblUser.setEmail(userInfor.getEmail());
-		tblUser.setTel(userInfor.getTel());
-		tblUser.setBirthday(userInfor.getBirthday());
-		tblUser.setGroupId(userInfor.getGroupId());
+		TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
 
 		String codeLevelNew = userInfor.getCodeLevel();
 		String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
 		try {
 			baseDaoImpl.setAutoCommitFalse(connection);
 			userDaoImpl.updateUser(tblUser);
-			// Từ DB ra thì xét null, từ textbox thì xét empty
 			// Trường hợp code level mới có giá trị
-			if (codeLevelNew != null) {
-				TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
-				tblDetailUserJapan.setUserId(userId);
-				tblDetailUserJapan.setCodeLevel(codeLevelNew);
-				tblDetailUserJapan.setStartDate(userInfor.getStartDate());
-				tblDetailUserJapan.setEndDate(userInfor.getEndDate());
-				tblDetailUserJapan.setTotal(userInfor.getTotal());
+			if (!Common.isEmptyOrNull(codeLevelNew)) {
+				TblDetailUserJapan tblDetailUserJapan = Common.getDetailUserJapanFromUserInfor(userInfor);
 				if (!codeLevelOld.isEmpty()) {// Có -> có
 					detailJapanDaoImpl.updateDetailJapan(tblDetailUserJapan);
 				} else {// không -> có

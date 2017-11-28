@@ -106,7 +106,7 @@
 					<th width="200px" align="center">&nbsp;</th>
 					<!-- button edit user -->
 					<td><input class="btn" type="button" value="編集"
-						onclick="sendToAnotherController('${path}${Constant.ADD_USER_INPUT}?tab=edit&id=${userId}')" /></td>
+						onclick="sendToAnotherController('${path}${Constant.ADD_USER_INPUT}?type=edit&id=${userId}')" /></td>
 					<!-- button edit user -->
 					<!-- button edit pass -->
 					<td><input class="btn_pass" type="button" value="ChangePass"

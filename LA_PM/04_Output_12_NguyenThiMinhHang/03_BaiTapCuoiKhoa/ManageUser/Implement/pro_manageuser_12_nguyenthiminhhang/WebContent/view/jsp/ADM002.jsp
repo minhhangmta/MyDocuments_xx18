@@ -112,7 +112,7 @@
 				<c:forEach items="${listUser}" var="user">
 					<tr>
 						<td align="right"><a
-							href="${path}${Constant.DETAIL_SERVLET}?tab=edit&id=${user.userId}">${user.userId}</a></td>
+							href="${path}${Constant.DETAIL_SERVLET}?type=edit&id=${user.userId}">${user.userId}</a></td>
 						<td>${fn:escapeXml(user.fullName)}</td>
 						<td align="center"><fmt:formatDate type="date"
 								pattern="${Constant.FORMAT_DATE}" value="${user.birthday}" /></td>

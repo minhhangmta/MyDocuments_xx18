@@ -47,10 +47,9 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 
 		String path = req.getServletPath();
-		// Nếu là trang login.do hoặc logout.do
-		if (path.contains("login.do") || path.contains("logout.do")) {
-			// Nếu là trang login.do và đã đăng nhập
-			if (path.contains("login.do") && Common.checkLogin(session)) {
+		// Nếu là trang login.do
+		if (path.contains("login.do")) {
+			if (Common.checkLogin(session)) {
 				res.sendRedirect(req.getContextPath() + Constant.LISTUSER_SERVLET);
 			} else {// Chưa đăng nhập
 				chain.doFilter(req, res);

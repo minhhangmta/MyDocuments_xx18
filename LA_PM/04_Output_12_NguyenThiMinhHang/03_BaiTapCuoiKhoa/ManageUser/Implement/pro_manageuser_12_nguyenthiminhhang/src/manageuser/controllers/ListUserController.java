@@ -160,7 +160,7 @@ public class ListUserController extends HttpServlet {
 			// get totalRecord
 			totalRecord = tblUserLogicImpl.getTotalUsers(groupId, fullName);
 			// Nếu có bản ghi
-			if (totalRecord != 0) {
+			if (totalRecord > 0) {
 				// Lay ban ghi
 				limit = Common.getLimit();
 				offset = Common.getOffset(currentPage, limit);

@@ -27,7 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import manageuser.dao.impl.TblUserDaoImpl;
+import manageuser.entities.TblDetailUserJapan;
 import manageuser.entities.TblUser;
+import manageuser.entities.UserInfor;
 import manageuser.logics.impl.MstGroupLogicImpl;
 import manageuser.logics.impl.TblUserLogicImpl;
 import manageuser.properties.ConfigProperties;
@@ -126,10 +128,26 @@ public class Common {
 	 * @return String chuỗi đã được chuẩn hóa
 	 */
 	public static String replaceWildCard(String key) {
-		key = key.replace("\\", "\\\\");
-		key = key.replace("%", "\\%");
-		key = key.replace("_", "\\_");
+		if (!isEmptyOrNull(key)) {
+			key = key.replace("\\", "\\\\");
+			key = key.replace("%", "\\%");
+			key = key.replace("_", "\\_");
+		}
 		return key.trim();
+	}
+
+	/**
+	 * Hàm kiểm tra xem một chuỗi có là null hoặc rỗng không
+	 * 
+	 * @param input
+	 *            chuỗi cần kiểm tra
+	 * @return true nếu null hoặc rỗng, false nếu không phải
+	 */
+	public static boolean isEmptyOrNull(String input) {
+		if (input == null || input.isEmpty()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -424,7 +442,7 @@ public class Common {
 	 */
 	public static String validateUsername(String username) {
 		String errUsername = "";
-		if (!checkPressTxt(username)) {// neu khong nhap
+		if (!checkInputTxt(username)) {// neu khong nhap
 			errUsername = MessageErrorProperties.getData("ER001_USERNAME");
 		} else {
 			Pattern pattern = Pattern.compile(getRegex());
@@ -492,7 +510,7 @@ public class Common {
 	 *            chuỗi cần check
 	 * @return true nếu nhập, false nếu không nhập
 	 */
-	public static boolean checkPressTxt(String key) {
+	public static boolean checkInputTxt(String key) {
 		if (key.length() < 1) {
 			return false;
 		}
@@ -541,7 +559,7 @@ public class Common {
 	public static String validateFullname(String fullName) {
 		String errName = "";
 		// Nếu không nhập
-		if (!checkPressTxt(fullName)) {
+		if (!checkInputTxt(fullName)) {
 			errName = MessageErrorProperties.getData("ER001_FULLNAME");
 		} else if (!checkMaxLength(getlengthString("maxLengthName"), fullName)) {// Nếu quá 255 kí tự
 			errName = MessageErrorProperties.getData("ER006_FULLNAME");
@@ -597,7 +615,7 @@ public class Common {
 	 */
 	public static String validateEmail(String email, int userId) {
 		String errEmail = "";
-		if (!checkPressTxt(email)) {// Khong nhap
+		if (!checkInputTxt(email)) {// Khong nhap
 			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
 		} else {
 			if (!checkMaxLength(getlengthString("maxLengthEmail"), email)) {// Nếu quá 255 kí tự
@@ -627,7 +645,7 @@ public class Common {
 	 */
 	public static String validateTel(String tel) {
 		String errTel = "";
-		if (!checkPressTxt(tel)) {// Khong nhap
+		if (!checkInputTxt(tel)) {// Khong nhap
 			errTel = MessageErrorProperties.getData("ER001_TEL");
 		} else {
 			if (!checkMaxLength(getlengthString("maxLengthTel"), tel)) {// check max length
@@ -652,7 +670,7 @@ public class Common {
 	 */
 	public static String validatePass(String password) {
 		String errPass = "";
-		if (!checkPressTxt(password)) {// check khong nhap
+		if (!checkInputTxt(password)) {// check khong nhap
 			errPass = MessageErrorProperties.getData("ER001_PASS");
 		} else {
 			// check length
@@ -728,17 +746,17 @@ public class Common {
 	 * 
 	 * @param total
 	 *            điểm
-	 * @param code_level
+	 * @param codeLevel
 	 *            mã trình độ
 	 * @return String chuỗi thông báo lỗi
 	 */
-	public static String validateTotal(String total, String code_level) {
+	public static String validateTotal(String total, String codeLevel) {
 		String errTotal = "";
 		String totalStr = String.valueOf(total);
 		// trình độ japan được chọn
-		if (code_level != Constant.EMPTY_STRING) {
+		if (codeLevel != Constant.EMPTY_STRING) {
 			// nếu ko nhập
-			if (!checkPressTxt(totalStr)) {
+			if (!checkInputTxt(totalStr)) {
 				errTotal = MessageErrorProperties.getData("ER001_TOTAL");
 			} else if (!checkHalfSizeTotal(totalStr)) {// nếu có kí tự khác halfsize
 				errTotal = MessageErrorProperties.getData("ER018");
@@ -993,15 +1011,15 @@ public class Common {
 	}
 
 	/**
-	 * Hàm check error message có lỗi hay không lỗi để add lỗi vào list
+	 * Hàm add chuỗi thông báo lỗi vào list error
 	 * 
 	 * @param lstError
 	 *            list thông báo lỗi
 	 * @param errorMsg
 	 *            thông báo lỗi
-	 * @return true nếu không lỗi, false nếu lỗi và add lỗi luôn
+	 * @return true nếu có lỗi để add, false nếu không có lỗi để add
 	 */
-	public static boolean checkErrorString(List<String> lstError, String errorMsg) {
+	public static boolean addErrorString(List<String> lstError, String errorMsg) {
 		if (!errorMsg.isEmpty()) {
 			lstError.add(errorMsg);
 			return true;
@@ -1025,4 +1043,55 @@ public class Common {
 		return currentSort;
 	}
 
+	/**
+	 * Hàm lấy giá trị TblUser từ UserInfor
+	 * 
+	 * @param userInfor
+	 *            đối tượng UserInfor
+	 * @return TblUser đối tượng TblUser
+	 */
+	public static TblUser getTblUserFromUserInfor(UserInfor userInfor) {
+		TblUser tblUser = new TblUser();
+		String fullNameKana = userInfor.getFullNameKana();
+		// fullnameKana lay tu textbox la rong
+		if (fullNameKana.isEmpty()) {
+			fullNameKana = null;
+		}
+		int userId = userInfor.getUserId();
+		// truong hop edit co userId
+		if (userId > 0) {
+			tblUser.setUserId(userId);
+		} else {// truong hop insert chua co userId
+			// get salt from createSaltString()
+			tblUser.setSalt(Common.createSaltString());
+			// ma hoa password
+			tblUser.setPasswords(Common.encodeSHA1(userInfor.getPasswords(), tblUser.getSalt()));
+			tblUser.setRole(Constant.ROLE_USER);
+		}
+		tblUser.setLoginName(userInfor.getLoginName());
+		tblUser.setFullName(userInfor.getFullName());
+		tblUser.setFullNameKana(fullNameKana);
+		tblUser.setEmail(userInfor.getEmail());
+		tblUser.setTel(userInfor.getTel());
+		tblUser.setBirthday(userInfor.getBirthday());
+		tblUser.setGroupId(userInfor.getGroupId());
+		return tblUser;
+	}
+
+	/**
+	 * Hàm lấy giá trị TblDetailUserJapan từ UserInfor
+	 * 
+	 * @param userInfor
+	 *            đối tượng UserInfor
+	 * @return TblDetailUserJapan đối tượng TblDetailUserJapan
+	 */
+	public static TblDetailUserJapan getDetailUserJapanFromUserInfor(UserInfor userInfor) {
+		TblDetailUserJapan tblDetailUserJapan = new TblDetailUserJapan();
+		tblDetailUserJapan.setUserId(userInfor.getUserId());
+		tblDetailUserJapan.setCodeLevel(userInfor.getCodeLevel());
+		tblDetailUserJapan.setStartDate(userInfor.getStartDate());
+		tblDetailUserJapan.setEndDate(userInfor.getEndDate());
+		tblDetailUserJapan.setTotal(userInfor.getTotal());
+		return tblDetailUserJapan;
+	}
 }

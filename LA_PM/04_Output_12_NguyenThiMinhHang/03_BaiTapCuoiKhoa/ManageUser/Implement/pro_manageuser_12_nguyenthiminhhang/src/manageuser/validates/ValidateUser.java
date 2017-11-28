@@ -31,12 +31,12 @@ public class ValidateUser {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		ArrayList<String> errMassages = new ArrayList<>();
 		// Không nhập username và pass
-		if (!Common.checkPressTxt(username) && !Common.checkPressTxt(password)) {
+		if (!Common.checkInputTxt(username) && !Common.checkInputTxt(password)) {
 			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
 			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
-		} else if (!Common.checkPressTxt(username)) {// không nhập username
+		} else if (!Common.checkInputTxt(username)) {// không nhập username
 			errMassages.add(MessageErrorProperties.getData("ER001_USERNAME"));
-		} else if (!Common.checkPressTxt(password)) {// không nhập pass
+		} else if (!Common.checkInputTxt(password)) {// không nhập pass
 			errMassages.add(MessageErrorProperties.getData("ER001_PASS"));
 		} else {
 			// không tồn tại trong DB
@@ -62,59 +62,59 @@ public class ValidateUser {
 			// username
 			errorMsg = Common.validateUsername(userInfor.getLoginName());
 			// add lỗi nếu có
-			Common.checkErrorString(lstError, errorMsg);
+			Common.addErrorString(lstError, errorMsg);
 		}
 		// group
 		errorMsg = Common.validateGroup(userInfor.getGroupId());
-		Common.checkErrorString(lstError, errorMsg);
+		Common.addErrorString(lstError, errorMsg);
 		// fullname
 		errorMsg = Common.validateFullname(userInfor.getFullName());
-		Common.checkErrorString(lstError, errorMsg);
+		Common.addErrorString(lstError, errorMsg);
 		// fullnameKana
 		String fullNameKana = userInfor.getFullNameKana();
 		if (fullNameKana != null) {
 			errorMsg = Common.validateFullnameKana(fullNameKana);
-			Common.checkErrorString(lstError, errorMsg);
+			Common.addErrorString(lstError, errorMsg);
 		}
 		// birthday
 		errorMsg = Common.validateBirthday(userInfor.getYearBirthday(), userInfor.getMonthBirthday(),
 				userInfor.getDayBirthday());
-		Common.checkErrorString(lstError, errorMsg);
+		Common.addErrorString(lstError, errorMsg);
 		// email
 		errorMsg = Common.validateEmail(userInfor.getEmail(), userId);
-		Common.checkErrorString(lstError, errorMsg);
+		Common.addErrorString(lstError, errorMsg);
 		// tel
 		errorMsg = Common.validateTel(userInfor.getTel());
-		Common.checkErrorString(lstError, errorMsg);
+		Common.addErrorString(lstError, errorMsg);
 		// truong hop khac edit
 		if (userId <= 0) {
 			// password
 			errorMsg = Common.validatePass(userInfor.getPasswords());
 			// trường hợp password đúng thì mới check đến confirm
-			if (!Common.checkErrorString(lstError, errorMsg)) {
+			if (!Common.addErrorString(lstError, errorMsg)) {
 				// confirmPass
 				errorMsg = Common.validatePassConfirm(userInfor.getPasswords(), userInfor.getConfirmPassword());
-				Common.checkErrorString(lstError, errorMsg);
+				Common.addErrorString(lstError, errorMsg);
 			}
 		}
 		String codeLevel = userInfor.getCodeLevel();
 		// codeLevel
 		if (codeLevel != null) {
 			errorMsg = Common.validateCodeLevel(codeLevel);
-			Common.checkErrorString(lstError, errorMsg);
+			Common.addErrorString(lstError, errorMsg);
 			if (!codeLevel.isEmpty()) {
 				// date of issue
 				errorMsg = Common.validateStartDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate());
-				Common.checkErrorString(lstError, errorMsg);
+				Common.addErrorString(lstError, errorMsg);
 				// expiration date
 				errorMsg = Common.validateEndDate(userInfor.getYearStartDate(), userInfor.getMonthStartDate(),
 						userInfor.getDayStartDate(), userInfor.getYearEndDate(), userInfor.getMonthEndDate(),
 						userInfor.getDayEndDate());
-				Common.checkErrorString(lstError, errorMsg);
+				Common.addErrorString(lstError, errorMsg);
 				// total
 				errorMsg = Common.validateTotal(userInfor.getTotal(), userInfor.getCodeLevel());
-				Common.checkErrorString(lstError, errorMsg);
+				Common.addErrorString(lstError, errorMsg);
 			}
 		}
 		return lstError;
@@ -135,10 +135,10 @@ public class ValidateUser {
 		// password
 		errorMsg = Common.validatePass(password);
 		// trường hợp password đúng thì mới check confirm
-		if (!Common.checkErrorString(lstError, errorMsg)) {
+		if (!Common.addErrorString(lstError, errorMsg)) {
 			// confirmPass
 			errorMsg = Common.validatePassConfirm(password, confirmPassword);
-			Common.checkErrorString(lstError, errorMsg);
+			Common.addErrorString(lstError, errorMsg);
 		}
 		return lstError;
 	}
