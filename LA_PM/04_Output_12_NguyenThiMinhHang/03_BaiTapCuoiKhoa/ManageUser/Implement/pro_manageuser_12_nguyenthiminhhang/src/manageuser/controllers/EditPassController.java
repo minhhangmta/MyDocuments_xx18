@@ -32,7 +32,6 @@ public class EditPassController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public EditPassController() {
-		super();
 	}
 
 	/**

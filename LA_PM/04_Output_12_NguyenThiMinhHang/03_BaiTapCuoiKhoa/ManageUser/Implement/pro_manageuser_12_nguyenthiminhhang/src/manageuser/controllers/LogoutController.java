@@ -27,7 +27,6 @@ public class LogoutController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public LogoutController() {
-		super();
 	}
 
 	/*
@@ -45,6 +44,7 @@ public class LogoutController extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

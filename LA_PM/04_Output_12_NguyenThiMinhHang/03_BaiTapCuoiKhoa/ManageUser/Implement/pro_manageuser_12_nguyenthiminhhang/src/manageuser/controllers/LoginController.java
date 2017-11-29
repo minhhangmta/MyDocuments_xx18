@@ -29,7 +29,6 @@ public class LoginController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public LoginController() {
-		super();
 	}
 
 	/*
@@ -46,6 +45,7 @@ public class LoginController extends HttpServlet {
 			RequestDispatcher requestDispatcher = req.getRequestDispatcher(Constant.ADM001);
 			requestDispatcher.forward(req, resp);
 		} catch (Exception e) {
+			e.printStackTrace();
 			resp.sendRedirect(req.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
@@ -84,6 +84,7 @@ public class LoginController extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

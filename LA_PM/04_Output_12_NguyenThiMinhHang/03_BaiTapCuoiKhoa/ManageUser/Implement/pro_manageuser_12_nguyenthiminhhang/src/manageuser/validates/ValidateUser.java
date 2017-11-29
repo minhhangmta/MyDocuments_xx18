@@ -4,6 +4,7 @@
  */
 package manageuser.validates;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,8 +131,9 @@ public class ValidateUser {
 	 * @param confirmPassword
 	 *            xác nhận mật khẩu
 	 * @return List<String> list thông báo lỗi
+	 * @throws UnsupportedEncodingException 
 	 */
-	public List<String> validatePasswords(String password, String confirmPassword) {
+	public List<String> validatePasswords(String password, String confirmPassword) throws UnsupportedEncodingException {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		// password

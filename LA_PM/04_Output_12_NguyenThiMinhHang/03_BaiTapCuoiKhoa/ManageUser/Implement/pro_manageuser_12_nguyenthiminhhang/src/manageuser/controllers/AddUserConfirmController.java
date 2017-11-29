@@ -33,7 +33,6 @@ public class AddUserConfirmController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public AddUserConfirmController() {
-		super();
 	}
 
 	/**
@@ -60,6 +59,7 @@ public class AddUserConfirmController extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}
