@@ -96,8 +96,9 @@ public class Common {
 	 *            trang hiện tại
 	 * @return List<Integer> Danh sách các trang cần hiển thị ở chuỗi paging theo
 	 *         trang hiện tại
+	 * @throws Exception 
 	 */
-	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) {
+	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) throws Exception {
 		List<Integer> listPage = new ArrayList<>();
 		totalRecord = new TblUserDaoImpl().getTotalUsers(0, "");
 		int totalPage = getTotalPage(totalRecord, limit);
@@ -439,8 +440,9 @@ public class Common {
 	 * @param username
 	 *            tên đăng nhập
 	 * @return String chuỗi thông báo lỗi
+	 * @throws Exception 
 	 */
-	public static String validateUsername(String username) {
+	public static String validateUsername(String username) throws Exception {
 		String errUsername = "";
 		if (!checkInputTxt(username)) {// neu khong nhap
 			errUsername = MessageErrorProperties.getData("ER001_USERNAME");
@@ -490,8 +492,9 @@ public class Common {
 	 * @param groupId
 	 *            mã nhóm
 	 * @return String chuỗi thông báo lỗi
+	 * @throws Exception 
 	 */
-	public static String validateGroup(int groupId) {
+	public static String validateGroup(int groupId) throws Exception {
 		String errGroup = "";
 		boolean valid = new MstGroupLogicImpl().existGroup(groupId);
 		// Chua chon nhom
@@ -612,8 +615,9 @@ public class Common {
 	 * @param loginName
 	 *            tên đăng nhập
 	 * @return String chuỗi thông báo lỗi
+	 * @throws Exception 
 	 */
-	public static String validateEmail(String email, int userId) {
+	public static String validateEmail(String email, int userId) throws Exception {
 		String errEmail = "";
 		if (!checkInputTxt(email)) {// Khong nhap
 			errEmail = MessageErrorProperties.getData("ER001_EMAIL");
@@ -730,8 +734,9 @@ public class Common {
 	 * @param codeLevel
 	 *            mã trình độ
 	 * @return String chuỗi thông báo lỗi
+	 * @throws Exception 
 	 */
-	public static String validateCodeLevel(String codeLevel) {
+	public static String validateCodeLevel(String codeLevel) throws Exception {
 		String errMsg = "";
 		boolean valid = new TblUserLogicImpl().existCodeLevel(codeLevel);
 		// Nếu không tồn tại

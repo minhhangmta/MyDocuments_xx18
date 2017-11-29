@@ -23,8 +23,9 @@ public interface TblUserDao {
 	 * @param username
 	 *            tên đăng nhập
 	 * @return salt chuỗi salt
+	 * @throws Exception 
 	 */
-	public String getSalt(String username);
+	public String getSalt(String username) throws Exception;
 
 	/**
 	 * Hàm kiểm tra user tồn tại trong DB không
@@ -34,8 +35,9 @@ public interface TblUserDao {
 	 * @param password
 	 *            mật khẩu
 	 * @return true nếu tồn tại, false nếu không tồn tại
+	 * @throws Exception 
 	 */
-	public boolean existLogin(String username, String password);
+	public boolean existLogin(String username, String password) throws Exception;
 
 	/**
 	 * Hàm lấy danh sách user
@@ -57,9 +59,10 @@ public interface TblUserDao {
 	 * @param sortByEndDate
 	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
 	 * @return List<UserInfor> danh sách user
+	 * @throws Exception 
 	 */
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception;
 
 	/**
 	 * Hàm lấy tổng số user
@@ -69,8 +72,9 @@ public interface TblUserDao {
 	 * @param fullName
 	 *            tên user
 	 * @return total tổng số records
+	 * @throws Exception 
 	 */
-	public int getTotalUsers(int groupId, String fullName);
+	public int getTotalUsers(int groupId, String fullName) throws Exception;
 
 	/**
 	 * Hàm get listUser theo groupId và fullName
@@ -80,8 +84,9 @@ public interface TblUserDao {
 	 * @param fullName
 	 *            tên user
 	 * @return List<UserInfor> danh sách userInfor
+	 * @throws Exception 
 	 */
-	public List<UserInfor> getListUsers(int groupId, String fullName);
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception;
 
 	/**
 	 * hàm kiểm tra username có tồn tại trong db chưa
@@ -89,8 +94,9 @@ public interface TblUserDao {
 	 * @param username
 	 *            tên đăng nhập cần check
 	 * @return true nếu tồn tại, false nếu chưa tồn tại
+	 * @throws Exception 
 	 */
-	public boolean existUsername(String username);
+	public boolean existUsername(String username) throws Exception;
 
 	/**
 	 * Hàm kiểm tra email có tồn tại trong DB không
@@ -100,8 +106,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không tồn tại
+	 * @throws Exception 
 	 */
-	public boolean existEmail(String email, int userId);
+	public boolean existEmail(String email, int userId) throws Exception;
 
 	/**
 	 * Hàm kiểm tra codelevel có tồn tại trong DB không
@@ -109,8 +116,9 @@ public interface TblUserDao {
 	 * @param codeLevel
 	 *            mã level
 	 * @return true nếu tồn tại, false nếu không
+	 * @throws Exception 
 	 */
-	public boolean existCodeLevel(String codeLevel);
+	public boolean existCodeLevel(String codeLevel) throws Exception;
 
 	/**
 	 * Thực hiện thêm mới 1 user vào DB
@@ -128,8 +136,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return UserInfor đối tượng UserInfor
+	 * @throws Exception 
 	 */
-	public UserInfor getUserById(int userId);
+	public UserInfor getUserById(int userId) throws Exception;
 
 	/**
 	 * Hàm check userid có tồn tại hay không
@@ -137,8 +146,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không
+	 * @throws Exception 
 	 */
-	public boolean existUserById(int userId);
+	public boolean existUserById(int userId) throws Exception;
 
 	/**
 	 * Hàm update data vào bảng tbl_user
@@ -160,8 +170,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu update thành công, false nếu không thành công
+	 * @throws Exception 
 	 */
-	public boolean updatePass(String passwords, String salt, int userId);
+	public boolean updatePass(String passwords, String salt, int userId) throws Exception;
 
 	/**
 	 * Hàm delete user theo userId

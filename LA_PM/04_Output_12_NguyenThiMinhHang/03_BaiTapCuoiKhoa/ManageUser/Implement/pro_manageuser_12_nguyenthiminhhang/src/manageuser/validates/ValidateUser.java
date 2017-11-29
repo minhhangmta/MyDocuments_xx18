@@ -26,8 +26,9 @@ public class ValidateUser {
 	 * @param password
 	 *            mật khẩu
 	 * @return ArrayList<String> chuỗi thông báo lỗi
+	 * @throws Exception
 	 */
-	public ArrayList<String> validateLogin(String username, String password) {
+	public ArrayList<String> validateLogin(String username, String password) throws Exception {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		ArrayList<String> errMassages = new ArrayList<>();
 		// Nếu nhập username và pass
@@ -53,8 +54,9 @@ public class ValidateUser {
 	 * @param userInfor
 	 *            Đối tượng user cần check
 	 * @return List<String> lstError Danh sách lỗi
+	 * @throws Exception 
 	 */
-	public List<String> validateUserInfor(UserInfor userInfor) {
+	public List<String> validateUserInfor(UserInfor userInfor) throws Exception {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		int userId = userInfor.getUserId();

@@ -5,6 +5,7 @@
 package manageuser.dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Lớp interface thao tác kết nối tới DB
@@ -16,38 +17,43 @@ public interface BaseDao {
 	 * Hàm mở kết nối với DB
 	 * 
 	 * @return Connection kết nối
+	 * @throws Exception
 	 */
-	public Connection getConnection();
+	public Connection getConnection() throws Exception;
 
 	/**
 	 * Hàm đóng kết nối với DB
 	 * 
 	 * @param conn
 	 *            connection cần đóng
+	 * @throws SQLException
 	 */
-	public void closeConnection(Connection conn);
+	public void closeConnection(Connection conn) throws SQLException;
 
 	/**
 	 * Hàm rollback
 	 * 
 	 * @param conn
 	 *            connection
+	 * @throws SQLException
 	 */
-	public void rollBack(Connection conn);
+	public void rollBack(Connection conn) throws SQLException;
 
 	/**
 	 * Hàm commit
 	 * 
 	 * @param conn
 	 *            connection
+	 * @throws SQLException
 	 */
-	public void commitConnection(Connection conn);
+	public void commitConnection(Connection conn) throws SQLException;
 
 	/**
 	 * Hàm set auto commit to false
 	 * 
 	 * @param conn
 	 *            connection
+	 * @throws SQLException
 	 */
-	public void setAutoCommitFalse(Connection conn);
+	public void setAutoCommitFalse(Connection conn) throws SQLException;
 }

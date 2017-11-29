@@ -4,7 +4,6 @@
  */
 package manageuser.logics;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.entities.MstJapan;
@@ -19,11 +18,9 @@ public interface MstJapanLogic {
 	 * Hàm lấy danh sách trình độ tiếng nhật
 	 * 
 	 * @return List<MstJapan> danh sách mstJapan
-	 * @throws SQLException
-	 *             ngoại lệ cho SQL
+	 * @throws Exception
 	 */
-	public List<MstJapan> getAllMstJapan() throws SQLException;
-	
+	public List<MstJapan> getAllMstJapan() throws Exception;
 
 	/**
 	 * Hàm lấy tên level từ code level
@@ -31,6 +28,7 @@ public interface MstJapanLogic {
 	 * @param codeLevel
 	 *            mã level
 	 * @return String tên level
+	 * @throws Exception 
 	 */
-	public String getNameLevel(String codeLevel);
+	public String getNameLevel(String codeLevel) throws Exception;
 }

@@ -137,8 +137,9 @@ public class AddUserInputController extends HttpServlet {
 	 *            đối tượng HttpServletRequest
 	 * @param response
 	 *            đối tượng HttpServletResponse
+	 * @throws Exception
 	 */
-	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) {
+	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 		MstJapanLogicImpl japanLogicImpl = new MstJapanLogicImpl();
 		try {
@@ -163,8 +164,9 @@ public class AddUserInputController extends HttpServlet {
 	 * @param response
 	 *            đối tượng HttpServletResponse
 	 * @return UserInfor đối tượng UserInfor
+	 * @throws Exception
 	 */
-	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
+	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UserInfor userInfor = new UserInfor();
 		String type = request.getParameter("type");
 		// Khai bao bien

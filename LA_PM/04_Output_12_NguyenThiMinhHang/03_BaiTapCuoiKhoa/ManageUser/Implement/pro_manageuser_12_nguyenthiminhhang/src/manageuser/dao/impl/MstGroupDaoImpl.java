@@ -34,7 +34,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() throws SQLException {
+	public List<MstGroup> getAllGroups() throws Exception {
 		List<MstGroup> listGroup = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM mst_group");
@@ -64,7 +64,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getGroupName(int)
 	 */
 	@Override
-	public String getGroupName(int groupId) {
+	public String getGroupName(int groupId) throws Exception {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
 		String groupName = "";
 		Connection connection = getConnection();
@@ -79,6 +79,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -91,7 +92,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#existGroup(int)
 	 */
 	@Override
-	public boolean existGroup(int groupId) {
+	public boolean existGroup(int groupId) throws Exception {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
 		Connection connection = getConnection();
 		try {
@@ -105,6 +106,7 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}

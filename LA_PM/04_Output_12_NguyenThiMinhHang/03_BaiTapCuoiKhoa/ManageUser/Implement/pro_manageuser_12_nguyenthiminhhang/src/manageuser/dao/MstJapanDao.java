@@ -21,8 +21,9 @@ public interface MstJapanDao {
 	 * @return List<MstJapan> danh sách mstJapan
 	 * @throws SQLException
 	 *             ngoại lệ cho SQL
+	 * @throws Exception 
 	 */
-	public List<MstJapan> getAllMstJapan() throws SQLException;
+	public List<MstJapan> getAllMstJapan() throws Exception;
 	
 
 
@@ -32,6 +33,7 @@ public interface MstJapanDao {
 	 * @param codeLevel
 	 *            mã level
 	 * @return String tên level
+	 * @throws Exception 
 	 */
-	public String getNameLevel(String codeLevel);
+	public String getNameLevel(String codeLevel) throws Exception;
 }

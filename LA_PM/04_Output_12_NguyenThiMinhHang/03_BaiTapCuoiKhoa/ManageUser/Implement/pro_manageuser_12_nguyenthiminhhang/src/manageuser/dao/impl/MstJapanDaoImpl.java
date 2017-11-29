@@ -33,7 +33,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	 * @see manageuser.dao.MstJapanDao#getAllMstJapan()
 	 */
 	@Override
-	public List<MstJapan> getAllMstJapan() throws SQLException {
+	public List<MstJapan> getAllMstJapan() throws Exception {
 		List<MstJapan> listJapan = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM mst_japan");
@@ -62,7 +62,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	 * @see manageuser.dao.MstJapanDao#getNameLevel(java.lang.String)
 	 */
 	@Override
-	public String getNameLevel(String codeLevel) {
+	public String getNameLevel(String codeLevel) throws Exception {
 		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
 		String nameLevel = "";
 		Connection connection = getConnection();
@@ -77,6 +77,7 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}
