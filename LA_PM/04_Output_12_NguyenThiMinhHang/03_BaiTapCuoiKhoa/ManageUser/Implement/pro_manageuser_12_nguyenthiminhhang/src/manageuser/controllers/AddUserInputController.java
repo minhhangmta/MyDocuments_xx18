@@ -5,7 +5,6 @@
 package manageuser.controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -40,7 +39,6 @@ public class AddUserInputController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public AddUserInputController() {
-		super();
 	}
 
 	/**
@@ -137,22 +135,18 @@ public class AddUserInputController extends HttpServlet {
 	 *            đối tượng HttpServletRequest
 	 * @param response
 	 *            đối tượng HttpServletResponse
+	 * @throws Exception
 	 */
-	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) {
+	private void setDataLogicADM003(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MstGroupLogicImpl groupLogicImpl = new MstGroupLogicImpl();
 		MstJapanLogicImpl japanLogicImpl = new MstJapanLogicImpl();
-		try {
-			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
-			List<MstJapan> listJapan = japanLogicImpl.getAllMstJapan();
-			request.setAttribute("listGroup", listGroup);
-			request.setAttribute("listJapan", listJapan);
-			request.setAttribute("listYear", Common.getListYear(Constant.START_YEAR, Common.getCurrentYear() + 1));
-			request.setAttribute("listDay", Common.getListDay());
-			request.setAttribute("listMonth", Common.getListMonth());
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
+		List<MstJapan> listJapan = japanLogicImpl.getAllMstJapan();
+		request.setAttribute("listGroup", listGroup);
+		request.setAttribute("listJapan", listJapan);
+		request.setAttribute("listYear", Common.getListYear(Constant.START_YEAR, Common.getCurrentYear() + 1));
+		request.setAttribute("listDay", Common.getListDay());
+		request.setAttribute("listMonth", Common.getListMonth());
 	}
 
 	/**
@@ -163,8 +157,9 @@ public class AddUserInputController extends HttpServlet {
 	 * @param response
 	 *            đối tượng HttpServletResponse
 	 * @return UserInfor đối tượng UserInfor
+	 * @throws Exception
 	 */
-	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) {
+	private UserInfor setDefault(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UserInfor userInfor = new UserInfor();
 		String type = request.getParameter("type");
 		// Khai bao bien

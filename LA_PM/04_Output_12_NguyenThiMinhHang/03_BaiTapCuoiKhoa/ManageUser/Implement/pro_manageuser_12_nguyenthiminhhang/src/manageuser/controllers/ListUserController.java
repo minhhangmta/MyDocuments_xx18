@@ -37,7 +37,6 @@ public class ListUserController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ListUserController() {
-		super();
 	}
 
 	/*
@@ -49,7 +48,7 @@ public class ListUserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// sau khi sort, paging, back
+		// sau khi sort, paging, back, top
 		doPost(request, response);
 	}
 
@@ -195,6 +194,7 @@ public class ListUserController extends HttpServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(Constant.ADM002);
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

@@ -31,7 +31,6 @@ public class DetailUserController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public DetailUserController() {
-		super();
 	}
 
 	/**
@@ -56,6 +55,7 @@ public class DetailUserController extends HttpServlet {
 				requestDispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

@@ -30,9 +30,9 @@ public interface TblDetailUserJapanDao {
 	 * @param userId
 	 *            mã user
 	 * @return String mã code level
-	 * @throws SQLException 
+	 * @throws Exception 
 	 */
-	public String getCodeLevelById(int userId) throws SQLException;
+	public String getCodeLevelById(int userId) throws Exception;
 
 	/**
 	 * Hàm cập nhật detail japan

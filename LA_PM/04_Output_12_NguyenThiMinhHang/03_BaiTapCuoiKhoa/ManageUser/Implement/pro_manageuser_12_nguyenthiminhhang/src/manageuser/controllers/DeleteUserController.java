@@ -30,7 +30,6 @@ public class DeleteUserController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public DeleteUserController() {
-		super();
 	}
 
 	/**
@@ -57,6 +56,7 @@ public class DeleteUserController extends HttpServlet {
 			}
 			response.sendRedirect(request.getContextPath() + url);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

@@ -24,7 +24,7 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#getConnection()
 	 */
 	@Override
-	public Connection getConnection() {
+	public Connection getConnection() throws Exception {
 		Connection connection = null;
 		String url, user, pass, driver;
 		try {
@@ -37,6 +37,7 @@ public class BaseDaoImpl implements BaseDao {
 			connection = DriverManager.getConnection(url, user, pass);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
+			throw e;
 		}
 		return connection;
 	}
@@ -47,12 +48,13 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#closeConnection()
 	 */
 	@Override
-	public void closeConnection(Connection conn) {
+	public void closeConnection(Connection conn) throws SQLException {
 		if (conn != null) {
 			try {
 				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}
@@ -63,12 +65,13 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#rollBack(java.sql.Connection)
 	 */
 	@Override
-	public void rollBack(Connection conn) {
+	public void rollBack(Connection conn) throws SQLException {
 		if (conn != null) {
 			try {
 				conn.rollback();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}
@@ -79,12 +82,13 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#commitConnection(java.sql.Connection)
 	 */
 	@Override
-	public void commitConnection(Connection conn) {
+	public void commitConnection(Connection conn) throws SQLException {
 		if (conn != null) {
 			try {
 				conn.commit();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}
@@ -95,12 +99,13 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#setAutoCommitFalse(java.sql.Connection)
 	 */
 	@Override
-	public void setAutoCommitFalse(Connection conn) {
+	public void setAutoCommitFalse(Connection conn) throws SQLException {
 		if (conn != null) {
 			try {
 				conn.setAutoCommit(false);
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw e;
 			}
 		}
 	}

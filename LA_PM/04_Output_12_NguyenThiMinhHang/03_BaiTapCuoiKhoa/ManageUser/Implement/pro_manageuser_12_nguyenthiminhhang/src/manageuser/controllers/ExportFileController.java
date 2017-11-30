@@ -26,7 +26,6 @@ public class ExportFileController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ExportFileController() {
-		super();
 	}
 
 	/**

@@ -4,6 +4,7 @@
  */
 package manageuser.validates;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class ValidateUser {
 	 * @param password
 	 *            mật khẩu
 	 * @return ArrayList<String> chuỗi thông báo lỗi
+	 * @throws Exception
 	 */
-	public ArrayList<String> validateLogin(String username, String password) {
+	public ArrayList<String> validateLogin(String username, String password) throws Exception {
 		TblUserLogicImpl logicImpl = new TblUserLogicImpl();
 		ArrayList<String> errMassages = new ArrayList<>();
 		// Nếu nhập username và pass
@@ -53,8 +55,9 @@ public class ValidateUser {
 	 * @param userInfor
 	 *            Đối tượng user cần check
 	 * @return List<String> lstError Danh sách lỗi
+	 * @throws Exception 
 	 */
-	public List<String> validateUserInfor(UserInfor userInfor) {
+	public List<String> validateUserInfor(UserInfor userInfor) throws Exception {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		int userId = userInfor.getUserId();
@@ -128,8 +131,9 @@ public class ValidateUser {
 	 * @param confirmPassword
 	 *            xác nhận mật khẩu
 	 * @return List<String> list thông báo lỗi
+	 * @throws UnsupportedEncodingException 
 	 */
-	public List<String> validatePasswords(String password, String confirmPassword) {
+	public List<String> validatePasswords(String password, String confirmPassword) throws UnsupportedEncodingException {
 		List<String> lstError = new ArrayList<>();
 		String errorMsg = "";
 		// password

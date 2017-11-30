@@ -28,7 +28,6 @@ public class SuccessController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public SuccessController() {
-		super();
 	}
 
 	/**
@@ -65,6 +64,7 @@ public class SuccessController extends HttpServlet {
 			}
 			requestDispatcher.forward(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.sendRedirect(request.getContextPath() + Constant.ERROR_SERVLET);
 		}
 	}

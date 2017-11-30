@@ -44,7 +44,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getSalt(java.lang.String)
 	 */
 	@Override
-	public String getSalt(String username) {
+	public String getSalt(String username) throws Exception {
 		String salt = "";
 		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
 		Connection connection = getConnection();
@@ -71,7 +71,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existLogin(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean existLogin(String username, String password) {
+	public boolean existLogin(String username, String password) throws Exception {
 		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
 		Connection connection = getConnection();
 		try {
@@ -101,7 +101,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) {
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception {
 		List<UserInfor> listUserInfor = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday,")
@@ -175,7 +175,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getTotalUsers(int, java.lang.String)
 	 */
 	@Override
-	public int getTotalUsers(int groupId, String fullName) {
+	public int getTotalUsers(int groupId, String fullName) throws Exception {
 		int total = 0;
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT COUNT(user_id) AS total FROM tbl_user us")
@@ -218,7 +218,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existUsername(java.lang.String)
 	 */
 	@Override
-	public boolean existUsername(String username) {
+	public boolean existUsername(String username) throws Exception {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
 		Connection connection = getConnection();
 		try {
@@ -243,7 +243,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * 
 	 * @see manageuser.dao.TblUserDao#existEmail(java.lang.String, int)
 	 */
-	public boolean existEmail(String email, int userId) {
+	public boolean existEmail(String email, int userId) throws Exception {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT email FROM tbl_user WHERE email = ?");
 		if (userId > 0) {
@@ -277,7 +277,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existCodeLevel(java.lang.String)
 	 */
 	@Override
-	public boolean existCodeLevel(String codeLevel) {
+	public boolean existCodeLevel(String codeLevel) throws Exception {
 		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
 		Connection connection = getConnection();
 		try {
@@ -339,7 +339,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getUserById(int)
 	 */
 	@Override
-	public UserInfor getUserById(int userId) {
+	public UserInfor getUserById(int userId) throws Exception {
 		UserInfor userInfor = new UserInfor();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.login_name, us.full_name, us.email, us.tel, us.birthday, us.full_name_kana,").append(
@@ -372,6 +372,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -383,7 +384,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * 
 	 * @see manageuser.dao.TblUserDao#existUserById(int)
 	 */
-	public boolean existUserById(int userId) {
+	public boolean existUserById(int userId) throws Exception {
 		String query = "SELECT login_name FROM tbl_user WHERE user_id = ? AND role = ?";
 		Connection connection = getConnection();
 		try {
@@ -399,6 +400,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -442,7 +444,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * int)
 	 */
 	@Override
-	public boolean updatePass(String passwords, String salt, int userId) {
+	public boolean updatePass(String passwords, String salt, int userId) throws Exception {
 		String query = "UPDATE tbl_user SET passwords = ?, salt = ? WHERE user_id = ?";
 		Connection connection = getConnection();
 		try {
@@ -459,6 +461,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -490,7 +493,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getListUsers(int, java.lang.String)
 	 */
 	@Override
-	public List<UserInfor> getListUsers(int groupId, String fullName) {
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception {
 		List<UserInfor> list = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.login_name, us.full_name, us.email, us.tel, us.birthday,")
@@ -535,6 +538,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection(connection);
 		}

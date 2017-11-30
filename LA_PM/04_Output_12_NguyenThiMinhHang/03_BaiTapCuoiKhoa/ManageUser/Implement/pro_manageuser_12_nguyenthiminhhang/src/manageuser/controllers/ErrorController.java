@@ -29,7 +29,6 @@ public class ErrorController extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ErrorController() {
-		super();
 	}
 
 	/**

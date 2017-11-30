@@ -25,8 +25,9 @@ public interface TblUserLogic {
 	 * @param password
 	 *            mật khẩu
 	 * @return true nếu tồn tại, false nếu không tồn tại
+	 * @throws Exception
 	 */
-	public boolean existLogin(String username, String password);
+	public boolean existLogin(String username, String password) throws Exception;
 
 	/**
 	 * Hàm lấy danh sách user
@@ -48,9 +49,10 @@ public interface TblUserLogic {
 	 * @param sortByEndDate
 	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
 	 * @return
+	 * @throws Exception
 	 */
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate);
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception;
 
 	/**
 	 * Hàm lấy tổng số user
@@ -60,8 +62,9 @@ public interface TblUserLogic {
 	 * @param fullName
 	 *            tên user
 	 * @return total tổng số records
+	 * @throws Exception
 	 */
-	public int getTotalUsers(int groupId, String fullName);
+	public int getTotalUsers(int groupId, String fullName) throws Exception;
 
 	/**
 	 * hàm kiểm tra username có tồn tại trong db chưa
@@ -69,8 +72,9 @@ public interface TblUserLogic {
 	 * @param username
 	 *            tên đăng nhập cần check
 	 * @return true nếu tồn tại, false nếu chưa tồn tại
+	 * @throws Exception
 	 */
-	public boolean existUsername(String username);
+	public boolean existUsername(String username) throws Exception;
 
 	/**
 	 * Hàm kiểm tra email có tồn tại trong DB không
@@ -80,8 +84,9 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không tồn tại
+	 * @throws Exception
 	 */
-	public boolean existEmail(String email, int userId);
+	public boolean existEmail(String email, int userId) throws Exception;
 
 	/**
 	 * Hàm kiểm tra codelevel có tồn tại trong DB không
@@ -89,8 +94,9 @@ public interface TblUserLogic {
 	 * @param codeLevel
 	 *            mã level
 	 * @return true nếu tồn tại, false nếu không
+	 * @throws Exception
 	 */
-	public boolean existCodeLevel(String codeLevel);
+	public boolean existCodeLevel(String codeLevel) throws Exception;
 
 	/**
 	 * Thực hiện thêm mới 1 user vào DB
@@ -98,7 +104,7 @@ public interface TblUserLogic {
 	 * @param tblUser
 	 *            tblUser Đối tượng chứa thông tin của user
 	 * @return true thành công, false nếu không thành công
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public int insertUser(TblUser tblUser) throws SQLException;
 
@@ -118,9 +124,9 @@ public interface TblUserLogic {
 	 * @param userInfor
 	 *            đối tượng UserInfor
 	 * @return true nếu insert thành công, false nếu không insert thành công
-	 * @throws SQLException
+	 * @throws Exception
 	 */
-	public boolean createUser(UserInfor userInfor) throws SQLException;
+	public boolean createUser(UserInfor userInfor) throws Exception;
 
 	/**
 	 * Hàm get list userInfor theo id
@@ -128,8 +134,9 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            mã user
 	 * @return UserInfor đối tượng UserInfor
+	 * @throws Exception
 	 */
-	public UserInfor getUserById(int userId);
+	public UserInfor getUserById(int userId) throws Exception;
 
 	/**
 	 * Hàm check userid có tồn tại hay không
@@ -137,8 +144,9 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không
+	 * @throws Exception
 	 */
-	public boolean existUserById(int userId);
+	public boolean existUserById(int userId) throws Exception;
 
 	/**
 	 * Hàm update data user vào bảng tbl_user và tbl_detail_user_japan
@@ -146,9 +154,9 @@ public interface TblUserLogic {
 	 * @param userInfor
 	 *            đối tượng userInfor
 	 * @return true nếu update thành công, false nếu không
-	 * @throws SQLException
+	 * @throws Exception
 	 */
-	public boolean updateUserInfor(UserInfor userInfor) throws SQLException;
+	public boolean updateUserInfor(UserInfor userInfor) throws Exception;
 
 	/**
 	 * Hàm update password cho tblUser
@@ -160,8 +168,9 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu update thành công, false nếu không thành công
+	 * @throws Exception
 	 */
-	public boolean updatePass(String passwords, String salt, int userId);
+	public boolean updatePass(String passwords, String salt, int userId) throws Exception;
 
 	/**
 	 * Hàm xóa user
@@ -169,10 +178,10 @@ public interface TblUserLogic {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu xóa thành công, false nếu không thành công
-	 * @throws SQLException 
+	 * @throws Exception
 	 */
-	public boolean deleteUser(int userId) throws SQLException;
-	
+	public boolean deleteUser(int userId) throws Exception;
+
 	/**
 	 * Hàm get listUser theo groupId và fullName
 	 * 
@@ -181,6 +190,7 @@ public interface TblUserLogic {
 	 * @param fullName
 	 *            tên user
 	 * @return List<UserInfor> danh sách userInfor
+	 * @throws Exception 
 	 */
-	public List<UserInfor> getListUsers(int groupId, String fullName);
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception;
 }
