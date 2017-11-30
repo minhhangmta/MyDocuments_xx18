@@ -23,9 +23,9 @@ public interface TblUserDao {
 	 * @param username
 	 *            tên đăng nhập
 	 * @return salt chuỗi salt
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public String getSalt(String username) throws Exception;
+	public String getSalt(String username) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm kiểm tra user tồn tại trong DB không
@@ -35,9 +35,9 @@ public interface TblUserDao {
 	 * @param password
 	 *            mật khẩu
 	 * @return true nếu tồn tại, false nếu không tồn tại
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean existLogin(String username, String password) throws Exception;
+	public boolean existLogin(String username, String password) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm lấy danh sách user
@@ -59,10 +59,10 @@ public interface TblUserDao {
 	 * @param sortByEndDate
 	 *            giá trị sắp xếp của cột Ngày kết hạn(ASC or DESC)
 	 * @return List<UserInfor> danh sách user
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception;
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm lấy tổng số user
@@ -72,9 +72,9 @@ public interface TblUserDao {
 	 * @param fullName
 	 *            tên user
 	 * @return total tổng số records
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public int getTotalUsers(int groupId, String fullName) throws Exception;
+	public int getTotalUsers(int groupId, String fullName) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm get listUser theo groupId và fullName
@@ -84,9 +84,9 @@ public interface TblUserDao {
 	 * @param fullName
 	 *            tên user
 	 * @return List<UserInfor> danh sách userInfor
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception;
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * hàm kiểm tra username có tồn tại trong db chưa
@@ -94,9 +94,9 @@ public interface TblUserDao {
 	 * @param username
 	 *            tên đăng nhập cần check
 	 * @return true nếu tồn tại, false nếu chưa tồn tại
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean existUsername(String username) throws Exception;
+	public boolean existUsername(String username) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm kiểm tra email có tồn tại trong DB không
@@ -106,9 +106,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không tồn tại
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean existEmail(String email, int userId) throws Exception;
+	public boolean existEmail(String email, int userId) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm kiểm tra codelevel có tồn tại trong DB không
@@ -116,9 +116,9 @@ public interface TblUserDao {
 	 * @param codeLevel
 	 *            mã level
 	 * @return true nếu tồn tại, false nếu không
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean existCodeLevel(String codeLevel) throws Exception;
+	public boolean existCodeLevel(String codeLevel) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Thực hiện thêm mới 1 user vào DB
@@ -136,9 +136,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return UserInfor đối tượng UserInfor
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public UserInfor getUserById(int userId) throws Exception;
+	public UserInfor getUserById(int userId) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm check userid có tồn tại hay không
@@ -146,9 +146,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu tồn tại, false nếu không
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean existUserById(int userId) throws Exception;
+	public boolean existUserById(int userId) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm update data vào bảng tbl_user
@@ -170,9 +170,9 @@ public interface TblUserDao {
 	 * @param userId
 	 *            mã user
 	 * @return true nếu update thành công, false nếu không thành công
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException 
 	 */
-	public boolean updatePass(String passwords, String salt, int userId) throws Exception;
+	public boolean updatePass(String passwords, String salt, int userId) throws  ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm delete user theo userId

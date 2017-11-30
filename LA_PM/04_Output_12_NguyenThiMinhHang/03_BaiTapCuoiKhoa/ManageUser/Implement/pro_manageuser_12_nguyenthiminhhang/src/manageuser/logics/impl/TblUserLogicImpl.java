@@ -4,6 +4,7 @@
  */
 package manageuser.logics.impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,7 +34,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * java.lang.String)
 	 */
 	@Override
-	public boolean existLogin(String username, String password) throws Exception {
+	public boolean existLogin(String username, String password)
+			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		// Lấy salt từ DB
 		String salt = userDaoImpl.getSalt(username);
 		// Mã hóa password = SHA-1
@@ -54,7 +56,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception {
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
+			throws ClassNotFoundException, SQLException {
 		List<UserInfor> list = userDaoImpl.getListUsers(offset, limit, groupId, fullName, sortType, sortByFullName,
 				sortByCodeLevel, sortByEndDate);
 		return list;
@@ -66,7 +69,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#getTotalUsers(int, java.lang.String)
 	 */
 	@Override
-	public int getTotalUsers(int groupId, String fullName) throws Exception {
+	public int getTotalUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException {
 		int result = userDaoImpl.getTotalUsers(groupId, fullName);
 		return result;
 	}
@@ -77,7 +80,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#existUsername(java.lang.String)
 	 */
 	@Override
-	public boolean existUsername(String username) throws Exception {
+	public boolean existUsername(String username) throws ClassNotFoundException, SQLException {
 		boolean result = userDaoImpl.existUsername(username);
 		return result;
 	}
@@ -88,7 +91,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#existEmail(java.lang.String, int)
 	 */
 	@Override
-	public boolean existEmail(String email, int userId) throws Exception {
+	public boolean existEmail(String email, int userId) throws ClassNotFoundException, SQLException {
 		boolean result = userDaoImpl.existEmail(email, userId);
 		return result;
 	}
@@ -99,7 +102,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#existCodeLevel(java.lang.String)
 	 */
 	@Override
-	public boolean existCodeLevel(String codeLevel) throws Exception {
+	public boolean existCodeLevel(String codeLevel) throws ClassNotFoundException, SQLException {
 		boolean result = userDaoImpl.existCodeLevel(codeLevel);
 		return result;
 	}
@@ -134,15 +137,18 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#createUser(manageuser.entities.UserInfor)
 	 */
 	@Override
-	public boolean createUser(UserInfor userInfor) throws Exception {
+	public boolean createUser(UserInfor userInfor)
+			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
-		Connection connection = baseDaoImpl.getConnection();
-		TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
-		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-		// get tblUser
-		TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
 		boolean check = false;
+		Connection connection = null;
 		try {
+			connection = baseDaoImpl.getConnection();
+			TblDetailUserJapanDaoImpl detailUserJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
+			TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+			// get tblUser
+			TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
+
 			baseDaoImpl.setAutoCommitFalse(connection);
 			// get userId from TblUser
 			int userId = userDaoImpl.insertUser(tblUser);
@@ -172,7 +178,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#getUserById(int)
 	 */
 	@Override
-	public UserInfor getUserById(int userId) throws Exception {
+	public UserInfor getUserById(int userId) throws ClassNotFoundException, SQLException {
 		UserInfor result = userDaoImpl.getUserById(userId);
 		return result;
 	}
@@ -183,7 +189,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#existUserById(int)
 	 */
 	@Override
-	public boolean existUserById(int userId) throws Exception {
+	public boolean existUserById(int userId) throws ClassNotFoundException, SQLException {
 		boolean result = userDaoImpl.existUserById(userId);
 		return result;
 	}
@@ -194,19 +200,22 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see
 	 * manageuser.logics.TblUserLogic#updateUserInfor(manageuser.entities.UserInfor)
 	 */
-	public boolean updateUserInfor(UserInfor userInfor) throws Exception {
-		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
-		Connection connection = baseDaoImpl.getConnection();
-		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
-
-		int userId = userInfor.getUserId();
-		TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
-
-		String codeLevelNew = userInfor.getCodeLevel();
-		String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
+	public boolean updateUserInfor(UserInfor userInfor)
+			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		boolean check = false;
+		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
+		Connection connection = null;
 		try {
+			connection = baseDaoImpl.getConnection();
+			TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+			TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
+
+			int userId = userInfor.getUserId();
+			TblUser tblUser = Common.getTblUserFromUserInfor(userInfor);
+
+			String codeLevelNew = userInfor.getCodeLevel();
+			String codeLevelOld = detailJapanDaoImpl.getCodeLevelById(userId);
+
 			baseDaoImpl.setAutoCommitFalse(connection);
 			userDaoImpl.updateUser(tblUser);
 			// Trường hợp code level mới có giá trị
@@ -239,7 +248,8 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * java.lang.String, int)
 	 */
 	@Override
-	public boolean updatePass(String passwords, String salt, int userId) throws Exception {
+	public boolean updatePass(String passwords, String salt, int userId)
+			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		passwords = Common.encodeSHA1(passwords, salt);
 		boolean result = userDaoImpl.updatePass(passwords, salt, userId);
 		return result;
@@ -251,13 +261,14 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#deleteUser(int)
 	 */
 	@Override
-	public boolean deleteUser(int userId) throws Exception {
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
 		BaseDaoImpl baseDaoImpl = new BaseDaoImpl();
-		Connection connection = baseDaoImpl.getConnection();
-		TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
-		TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 		boolean check = false;
+		Connection connection = null;
 		try {
+			connection = baseDaoImpl.getConnection();
+			TblUserDaoImpl userDaoImpl = new TblUserDaoImpl(connection);
+			TblDetailUserJapanDaoImpl detailJapanDaoImpl = new TblDetailUserJapanDaoImpl(connection);
 			baseDaoImpl.setAutoCommitFalse(connection);
 			// xoa detail japan
 			detailJapanDaoImpl.deleteDetailJapan(userId);
@@ -281,7 +292,7 @@ public class TblUserLogicImpl implements TblUserLogic {
 	 * @see manageuser.logics.TblUserLogic#getListUsers(int, java.lang.String)
 	 */
 	@Override
-	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception {
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws ClassNotFoundException, SQLException {
 		List<UserInfor> result = userDaoImpl.getListUsers(groupId, fullName);
 		return result;
 	}

@@ -24,21 +24,16 @@ public class BaseDaoImpl implements BaseDao {
 	 * @see manageuser.dao.BaseDao#getConnection()
 	 */
 	@Override
-	public Connection getConnection() throws Exception {
+	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		Connection connection = null;
 		String url, user, pass, driver;
-		try {
-			// lấy danh sách property từ file vào
-			url = DatabaseProperties.getData("url"); // lấy giá trị url trong file
-			user = DatabaseProperties.getData("user"); // lấy giá trị user trong file
-			pass = DatabaseProperties.getData("password"); // lấy giá trị password trong file
-			driver = DatabaseProperties.getData("driver"); // lấy giá trị driver
-			Class.forName(driver);
-			connection = DriverManager.getConnection(url, user, pass);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		// lấy danh sách property từ file vào
+		url = DatabaseProperties.getData("url"); // lấy giá trị url trong file
+		user = DatabaseProperties.getData("user"); // lấy giá trị user trong file
+		pass = DatabaseProperties.getData("password"); // lấy giá trị password trong file
+		driver = DatabaseProperties.getData("driver"); // lấy giá trị driver
+		Class.forName(driver);
+		connection = DriverManager.getConnection(url, user, pass);
 		return connection;
 	}
 
@@ -50,12 +45,7 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public void closeConnection(Connection conn) throws SQLException {
 		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			}
+			conn.close();
 		}
 	}
 
@@ -67,12 +57,7 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public void rollBack(Connection conn) throws SQLException {
 		if (conn != null) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			}
+			conn.rollback();
 		}
 	}
 
@@ -84,12 +69,7 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public void commitConnection(Connection conn) throws SQLException {
 		if (conn != null) {
-			try {
-				conn.commit();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			}
+			conn.commit();
 		}
 	}
 
@@ -101,12 +81,7 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public void setAutoCommitFalse(Connection conn) throws SQLException {
 		if (conn != null) {
-			try {
-				conn.setAutoCommit(false);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-			}
+			conn.setAutoCommit(false);
 		}
 	}
 }

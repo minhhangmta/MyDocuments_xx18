@@ -4,6 +4,7 @@
 */
 package manageuser.logics.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.dao.impl.MstGroupDaoImpl;
@@ -24,7 +25,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 * @see manageuser.logics.MstGroupLogic#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() throws Exception {
+	public List<MstGroup> getAllGroups() throws ClassNotFoundException, SQLException  {
 		List<MstGroup> result = mstGroupDaoImpl.getAllGroups();
 		return result;
 	}
@@ -35,7 +36,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 * @see manageuser.logics.MstGroupLogic#getGroupName(int)
 	 */
 	@Override
-	public String getGroupName(int groupId) throws Exception {
+	public String getGroupName(int groupId) throws ClassNotFoundException, SQLException  {
 		String result = mstGroupDaoImpl.getGroupName(groupId);
 		return result;
 	}
@@ -46,7 +47,7 @@ public class MstGroupLogicImpl implements MstGroupLogic {
 	 * @see manageuser.logics.MstGroupLogic#existGroup(int)
 	 */
 	@Override
-	public boolean existGroup(int groupId) throws Exception {
+	public boolean existGroup(int groupId) throws ClassNotFoundException, SQLException {
 		boolean result = mstGroupDaoImpl.existGroup(groupId);
 		return result;
 	}

@@ -21,11 +21,9 @@ public interface MstJapanDao {
 	 * @return List<MstJapan> danh sách mstJapan
 	 * @throws SQLException
 	 *             ngoại lệ cho SQL
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException
 	 */
-	public List<MstJapan> getAllMstJapan() throws Exception;
-	
-
+	public List<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm lấy tên level từ code level
@@ -33,7 +31,7 @@ public interface MstJapanDao {
 	 * @param codeLevel
 	 *            mã level
 	 * @return String tên level
-	 * @throws Exception 
+	 * @throws  ClassNotFoundException, SQLException
 	 */
-	public String getNameLevel(String codeLevel) throws Exception;
+	public String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException;
 }

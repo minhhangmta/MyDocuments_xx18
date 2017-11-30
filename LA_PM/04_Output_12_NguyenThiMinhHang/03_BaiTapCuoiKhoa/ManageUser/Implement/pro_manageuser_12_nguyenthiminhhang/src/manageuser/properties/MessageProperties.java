@@ -27,7 +27,7 @@ public class MessageProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-			InputStream inputStream = MessageErrorProperties.class.getClassLoader().getResourceAsStream("message_ja.properties");
+			InputStream inputStream = MessageProperties.class.getClassLoader().getResourceAsStream("message_ja.properties");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			properties.load(bufferedReader);
 		} catch (IOException e) {

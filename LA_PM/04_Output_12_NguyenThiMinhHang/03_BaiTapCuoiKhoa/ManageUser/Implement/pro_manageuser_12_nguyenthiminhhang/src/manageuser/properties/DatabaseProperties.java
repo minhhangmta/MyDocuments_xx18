@@ -27,7 +27,7 @@ public class DatabaseProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-			InputStream inputStream = MessageErrorProperties.class.getClassLoader().getResourceAsStream("database.properties");
+			InputStream inputStream = DatabaseProperties.class.getClassLoader().getResourceAsStream("database.properties");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			properties.load(bufferedReader);
 			

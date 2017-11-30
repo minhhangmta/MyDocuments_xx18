@@ -51,9 +51,8 @@ public class Common {
 	 * @param salt
 	 *            mã salt từ DB
 	 * @return String mật khẩu đã mã hóa
-	 * @throws NoSuchAlgorithmException 
 	 */
-	public static String encodeSHA1(String password, String salt) throws NoSuchAlgorithmException {
+	public static String encodeSHA1(String password, String salt) {
 		String input = password + salt;
 		String sha1 = null;
 		MessageDigest digest;
@@ -68,7 +67,6 @@ public class Common {
 			sha1 = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		return sha1;
 	}
@@ -98,7 +96,7 @@ public class Common {
 	 *            trang hiện tại
 	 * @return List<Integer> Danh sách các trang cần hiển thị ở chuỗi paging theo
 	 *         trang hiện tại
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static List<Integer> getListPaging(int totalRecord, int limit, int currentPage) throws Exception {
 		List<Integer> listPage = new ArrayList<>();
@@ -408,9 +406,8 @@ public class Common {
 	 * @param day
 	 *            ngày
 	 * @return Date năm tháng ngày
-	 * @throws ParseException 
 	 */
-	public static Date toDate(int year, int month, int day) throws ParseException {
+	public static Date toDate(int year, int month, int day) {
 		DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 		String date = convertToString(year, month, day);
 		Date dt = new Date();
@@ -418,7 +415,6 @@ public class Common {
 			dt = (Date) df.parse(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			throw e;
 		}
 		return dt;
 	}
@@ -445,7 +441,7 @@ public class Common {
 	 * @param username
 	 *            tên đăng nhập
 	 * @return String chuỗi thông báo lỗi
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String validateUsername(String username) throws Exception {
 		String errUsername = "";
@@ -497,13 +493,13 @@ public class Common {
 	 * @param groupId
 	 *            mã nhóm
 	 * @return String chuỗi thông báo lỗi
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String validateGroup(int groupId) throws Exception {
 		String errGroup = "";
 		boolean valid = new MstGroupLogicImpl().existGroup(groupId);
 		// Chua chon nhom
-		if (groupId < 0) {
+		if (groupId <= 0) {
 			errGroup = MessageErrorProperties.getData("ER002");
 		} else if (!valid) {// Nhom khong ton tai
 			errGroup = MessageErrorProperties.getData("ER004_GROUP");
@@ -620,7 +616,7 @@ public class Common {
 	 * @param loginName
 	 *            tên đăng nhập
 	 * @return String chuỗi thông báo lỗi
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String validateEmail(String email, int userId) throws Exception {
 		String errEmail = "";
@@ -676,9 +672,8 @@ public class Common {
 	 * @param password
 	 *            mật khẩu
 	 * @return String chuỗi thông báo lỗi
-	 * @throws UnsupportedEncodingException 
 	 */
-	public static String validatePass(String password) throws UnsupportedEncodingException {
+	public static String validatePass(String password) {
 		String errPass = "";
 		if (!checkInputTxt(password)) {// check khong nhap
 			errPass = MessageErrorProperties.getData("ER001_PASS");
@@ -700,9 +695,8 @@ public class Common {
 	 * @param str
 	 *            chuỗi cần check
 	 * @return true nếu cả chuỗi chứa kí tự 1 byte, false nếu khác
-	 * @throws UnsupportedEncodingException 
 	 */
-	public static boolean checkOneByteChar(String str) throws UnsupportedEncodingException {
+	public static boolean checkOneByteChar(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			// Lấy từng phần tử của str dạng string
 			String s = new StringBuilder().append("").append(str.charAt(i)).toString();
@@ -713,7 +707,6 @@ public class Common {
 				}
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-				throw e;
 			}
 		}
 		return true;
@@ -742,7 +735,7 @@ public class Common {
 	 * @param codeLevel
 	 *            mã trình độ
 	 * @return String chuỗi thông báo lỗi
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public static String validateCodeLevel(String codeLevel) throws Exception {
 		String errMsg = "";
@@ -797,20 +790,17 @@ public class Common {
 	 * @param date
 	 *            ngày cần check
 	 * @return true nếu hợp lệ, false nếu không
-	 * @throws ParseException 
 	 */
-	public static boolean isDateValid(String date) throws ParseException {
-		boolean check = false;
+	public static boolean isDateValid(String date) {
 		try {
 			DateFormat df = new SimpleDateFormat(Constant.FORMAT_DATE);
 			df.setLenient(false);
 			df.parse(date);
-			check = true;
+			return true;
 		} catch (ParseException e) {
 			e.printStackTrace();
-			throw e;
+			return false;
 		}
-		return check;
 	}
 
 	/**
@@ -823,9 +813,8 @@ public class Common {
 	 * @param day
 	 *            ngày
 	 * @return String chuỗi thông báo lỗi
-	 * @throws ParseException 
 	 */
-	public static String validateBirthday(int year, int month, int day) throws ParseException {
+	public static String validateBirthday(int year, int month, int day) {
 		String errorMsg = "";
 		String date = convertToString(year, month, day);
 		if (!isDateValid(date)) {
@@ -844,9 +833,8 @@ public class Common {
 	 * @param day
 	 *            ngày
 	 * @return String chuỗi thông báo lỗi
-	 * @throws ParseException 
 	 */
-	public static String validateStartDate(int year, int month, int day) throws ParseException {
+	public static String validateStartDate(int year, int month, int day) {
 		String errMsg = "";
 		String date = convertToString(year, month, day);
 		if (!isDateValid(date)) {
@@ -871,10 +859,9 @@ public class Common {
 	 * @param dayEnd
 	 *            ngày kết thúc
 	 * @return String chuỗi thông báo lỗi
-	 * @throws ParseException 
 	 */
 	public static String validateEndDate(int yearStart, int monthStart, int dayStart, int yearEnd, int monthEnd,
-			int dayEnd) throws ParseException {
+			int dayEnd) {
 		String errMsg = "";
 		String endDate = convertToString(yearEnd, monthEnd, dayEnd);
 		if (!isDateValid(endDate)) {// sai định dạng
@@ -926,9 +913,8 @@ public class Common {
 	 * Hàm tạo key cho session
 	 * 
 	 * @return String key của session
-	 * @throws NoSuchAlgorithmException 
 	 */
-	public static String createKeySession() throws NoSuchAlgorithmException {
+	public static String createKeySession() {
 		String salt = createSaltString();
 		return encodeSHA1("", salt).substring(0, 10);
 	}
@@ -1011,9 +997,10 @@ public class Common {
 	 *            chuỗi header của file
 	 * @param fileName
 	 *            tên file cần lưu
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public static void exportCSVFile(HttpServletResponse response, String data, String header, String fileName) throws IOException {
+	public static void exportCSVFile(HttpServletResponse response, String data, String header, String fileName)
+			throws IOException {
 		response.setContentType("text/csv");
 		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 		try {
@@ -1072,9 +1059,8 @@ public class Common {
 	 * @param userInfor
 	 *            đối tượng UserInfor
 	 * @return TblUser đối tượng TblUser
-	 * @throws NoSuchAlgorithmException 
 	 */
-	public static TblUser getTblUserFromUserInfor(UserInfor userInfor) throws NoSuchAlgorithmException {
+	public static TblUser getTblUserFromUserInfor(UserInfor userInfor) {
 		TblUser tblUser = new TblUser();
 		String fullNameKana = userInfor.getFullNameKana();
 		// fullnameKana lay tu textbox la rong

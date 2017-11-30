@@ -17,9 +17,10 @@ public interface BaseDao {
 	 * Hàm mở kết nối với DB
 	 * 
 	 * @return Connection kết nối
-	 * @throws Exception
+	 * @throws ClassNotFoundException,
+	 *             SQLException
 	 */
-	public Connection getConnection() throws Exception;
+	public Connection getConnection() throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm đóng kết nối với DB

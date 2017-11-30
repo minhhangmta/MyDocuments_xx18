@@ -68,7 +68,7 @@ public class TblDetailUserJapanDaoImpl extends BaseDaoImpl implements TblDetailU
 	 * @see manageuser.dao.TblDetailUserJapanDao#getCodeLevelById(int)
 	 */
 	@Override
-	public String getCodeLevelById(int userId) throws Exception {
+	public String getCodeLevelById(int userId) throws SQLException, ClassNotFoundException {
 		String codeLevel = "";
 		String query = "SELECT code_level FROM tbl_detail_user_japan WHERE user_id = ?";
 		Connection connection = getConnection();

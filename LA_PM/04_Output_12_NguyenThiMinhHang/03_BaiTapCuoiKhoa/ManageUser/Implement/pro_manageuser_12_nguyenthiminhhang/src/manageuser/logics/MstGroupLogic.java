@@ -4,6 +4,7 @@
 */
 package manageuser.logics;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import manageuser.entities.MstGroup;
@@ -18,19 +19,21 @@ public interface MstGroupLogic {
 	 * Hàm lấy danh sách group
 	 * 
 	 * @return List<MstGroup> danh sách group
-	 * @throws Exception 
+	 * @throws ClassNotFoundException,
+	 *             SQLException
 	 */
-	public List<MstGroup> getAllGroups() throws Exception;
-	
+	public List<MstGroup> getAllGroups() throws ClassNotFoundException, SQLException;
+
 	/**
 	 * Hàm kiểm tra group có tồn tại trong db không
 	 * 
 	 * @param groupId
 	 *            mã nhóm
 	 * @return true nếu tồn tại, false nếu không tồn tại
-	 * @throws Exception 
+	 * @throws ClassNotFoundException,
+	 *             SQLException
 	 */
-	public boolean existGroup(int groupId) throws Exception;
+	public boolean existGroup(int groupId) throws ClassNotFoundException, SQLException;
 
 	/**
 	 * Hàm lấy groupname từ group id
@@ -38,7 +41,8 @@ public interface MstGroupLogic {
 	 * @param groupId
 	 *            mã nhóm
 	 * @return String tên nhóm
-	 * @throws Exception 
+	 * @throws ClassNotFoundException,
+	 *             SQLException
 	 */
-	public String getGroupName(int groupId) throws Exception;
+	public String getGroupName(int groupId) throws ClassNotFoundException, SQLException;
 }

@@ -34,14 +34,15 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getAllGroups()
 	 */
 	@Override
-	public List<MstGroup> getAllGroups() throws Exception {
+	public List<MstGroup> getAllGroups() throws ClassNotFoundException, SQLException {
 		List<MstGroup> listGroup = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM mst_group");
 		query.append(" ORDER BY").append(" group_name ").append(Constant.ASCENDING);
 		query.append(";");
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -64,11 +65,12 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#getGroupName(int)
 	 */
 	@Override
-	public String getGroupName(int groupId) throws Exception {
+	public String getGroupName(int groupId) throws ClassNotFoundException, SQLException {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
 		String groupName = "";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, groupId);
@@ -77,9 +79,6 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 					groupName = resultSet.getString("group_name");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -92,10 +91,11 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 	 * @see manageuser.dao.MstGroupDao#existGroup(int)
 	 */
 	@Override
-	public boolean existGroup(int groupId) throws Exception {
+	public boolean existGroup(int groupId) throws ClassNotFoundException, SQLException {
 		String query = "SELECT group_name FROM mst_group WHERE group_id = ?";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setInt(1, groupId);
@@ -104,9 +104,6 @@ public class MstGroupDaoImpl extends BaseDaoImpl implements MstGroupDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}

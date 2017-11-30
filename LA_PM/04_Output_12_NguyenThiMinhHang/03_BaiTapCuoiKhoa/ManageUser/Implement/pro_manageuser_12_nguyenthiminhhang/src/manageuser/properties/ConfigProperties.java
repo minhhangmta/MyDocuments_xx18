@@ -27,7 +27,7 @@ public class ConfigProperties {
 	static {
 		Properties properties = new Properties();
 		try {
-			InputStream inputStream = MessageErrorProperties.class.getClassLoader().getResourceAsStream("config.properties");
+			InputStream inputStream = ConfigProperties.class.getClassLoader().getResourceAsStream("config.properties");
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 			properties.load(bufferedReader);
 		} catch (IOException e) {

@@ -44,11 +44,12 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getSalt(java.lang.String)
 	 */
 	@Override
-	public String getSalt(String username) throws Exception {
+	public String getSalt(String username) throws SQLException, ClassNotFoundException {
 		String salt = "";
 		String query = "SELECT salt FROM tbl_user WHERE login_name = ?";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
@@ -57,8 +58,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					salt = resultSet.getString("salt");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -71,10 +70,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existLogin(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean existLogin(String username, String password) throws Exception {
+	public boolean existLogin(String username, String password) throws SQLException, ClassNotFoundException {
 		String query = "SELECT * FROM tbl_user WHERE login_name = ? AND passwords = ? AND role = 1;";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -85,8 +85,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -101,7 +99,8 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 */
 	@Override
 	public List<UserInfor> getListUsers(int offset, int limit, int groupId, String fullName, String sortType,
-			String sortByFullName, String sortByCodeLevel, String sortByEndDate) throws Exception {
+			String sortByFullName, String sortByCodeLevel, String sortByEndDate)
+			throws SQLException, ClassNotFoundException {
 		List<UserInfor> listUserInfor = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.full_name, us.email, us.tel, us.birthday,")
@@ -133,8 +132,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 		}
 		query.append(" LIMIT ?,?");
 		query.append(";");
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -161,8 +161,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					listUserInfor.add(userInfor);
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -175,7 +173,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getTotalUsers(int, java.lang.String)
 	 */
 	@Override
-	public int getTotalUsers(int groupId, String fullName) throws Exception {
+	public int getTotalUsers(int groupId, String fullName) throws SQLException, ClassNotFoundException {
 		int total = 0;
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT COUNT(user_id) AS total FROM tbl_user us")
@@ -187,8 +185,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(" AND us.full_name LIKE ?");
 		}
 		query.append(";");
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -203,9 +202,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					total = resultSet.getInt("total");
 				}
 			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -218,10 +214,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existUsername(java.lang.String)
 	 */
 	@Override
-	public boolean existUsername(String username) throws Exception {
+	public boolean existUsername(String username) throws SQLException, ClassNotFoundException {
 		String query = "SELECT login_name FROM tbl_user WHERE login_name = ?";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, username);
@@ -230,8 +227,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -243,14 +238,15 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * 
 	 * @see manageuser.dao.TblUserDao#existEmail(java.lang.String, int)
 	 */
-	public boolean existEmail(String email, int userId) throws Exception {
+	public boolean existEmail(String email, int userId) throws SQLException, ClassNotFoundException {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT email FROM tbl_user WHERE email = ?");
 		if (userId > 0) {
 			query.append(" AND user_id != ?");
 		}
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -259,16 +255,14 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					preparedStatement.setInt(index++, userId);
 				}
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
-				if (!resultSet.first()) {
-					return false;
+				if (resultSet.first()) {
+					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
-		return true;
+		return false;
 	}
 
 	/*
@@ -277,10 +271,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#existCodeLevel(java.lang.String)
 	 */
 	@Override
-	public boolean existCodeLevel(String codeLevel) throws Exception {
+	public boolean existCodeLevel(String codeLevel) throws SQLException, ClassNotFoundException {
 		String query = "SELECT code_level FROM mst_japan WHERE code_level = ?";
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);
@@ -289,8 +284,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
@@ -339,7 +332,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getUserById(int)
 	 */
 	@Override
-	public UserInfor getUserById(int userId) throws Exception {
+	public UserInfor getUserById(int userId) throws SQLException, ClassNotFoundException {
 		UserInfor userInfor = new UserInfor();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.login_name, us.full_name, us.email, us.tel, us.birthday, us.full_name_kana,").append(
@@ -348,8 +341,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 				.append(" LEFT JOIN (tbl_detail_user_japan dt INNER JOIN mst_japan jp")
 				.append(" ON dt.code_level = jp.code_level)").append(" ON us.user_id = dt.user_id WHERE us.role = 0")
 				.append(" AND us.user_id = ?").append(";");
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				preparedStatement.setInt(1, userId);
@@ -370,9 +364,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					userInfor.setTotal(resultSet.getString("total"));
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -384,10 +375,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * 
 	 * @see manageuser.dao.TblUserDao#existUserById(int)
 	 */
-	public boolean existUserById(int userId) throws Exception {
+	public boolean existUserById(int userId) throws SQLException, ClassNotFoundException {
 		String query = "SELECT login_name FROM tbl_user WHERE user_id = ? AND role = ?";
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -398,9 +390,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -434,7 +423,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			}
 		}
 		return false;
-
 	}
 
 	/*
@@ -444,10 +432,11 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * int)
 	 */
 	@Override
-	public boolean updatePass(String passwords, String salt, int userId) throws Exception {
+	public boolean updatePass(String passwords, String salt, int userId) throws SQLException, ClassNotFoundException {
 		String query = "UPDATE tbl_user SET passwords = ?, salt = ? WHERE user_id = ?";
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				int index = 1;
@@ -459,9 +448,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}
@@ -493,7 +479,7 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 	 * @see manageuser.dao.TblUserDao#getListUsers(int, java.lang.String)
 	 */
 	@Override
-	public List<UserInfor> getListUsers(int groupId, String fullName) throws Exception {
+	public List<UserInfor> getListUsers(int groupId, String fullName) throws SQLException, ClassNotFoundException {
 		List<UserInfor> list = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT us.user_id, us.login_name, us.full_name, us.email, us.tel, us.birthday,")
@@ -508,8 +494,9 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 			query.append(" AND us.full_name LIKE ?");
 		}
 		query.append(";");
-		Connection connection = getConnection();
+		Connection connection = null; 
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				int index = 1;
@@ -536,9 +523,6 @@ public class TblUserDaoImpl extends BaseDaoImpl implements TblUserDao {
 					list.add(userInfor);
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}

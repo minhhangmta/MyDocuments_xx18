@@ -33,13 +33,14 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	 * @see manageuser.dao.MstJapanDao#getAllMstJapan()
 	 */
 	@Override
-	public List<MstJapan> getAllMstJapan() throws Exception {
+	public List<MstJapan> getAllMstJapan() throws ClassNotFoundException, SQLException {
 		List<MstJapan> listJapan = new ArrayList<>();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT * FROM mst_japan");
 		query.append(";");
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 				ResultSet resultSet = (ResultSet) preparedStatement.executeQuery();
@@ -62,11 +63,12 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 	 * @see manageuser.dao.MstJapanDao#getNameLevel(java.lang.String)
 	 */
 	@Override
-	public String getNameLevel(String codeLevel) throws Exception {
+	public String getNameLevel(String codeLevel) throws ClassNotFoundException, SQLException {
 		String query = "SELECT name_level FROM mst_japan WHERE code_level = ?";
 		String nameLevel = "";
-		Connection connection = getConnection();
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			if (connection != null) {
 				PreparedStatement preparedStatement = connection.prepareStatement(query);
 				preparedStatement.setString(1, codeLevel);
@@ -75,9 +77,6 @@ public class MstJapanDaoImpl extends BaseDaoImpl implements MstJapanDao {
 					nameLevel = resultSet.getString("name_level");
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw e;
 		} finally {
 			closeConnection(connection);
 		}
