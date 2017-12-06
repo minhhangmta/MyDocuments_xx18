@@ -84,13 +84,10 @@ public class ListUserController extends HttpServlet {
 			int limit;
 			// get type from jsp
 			String type = request.getParameter("type");
-			// set session cho type
-			session.setAttribute("type", type);
-			type = Common.getSessionValue(session, "type", Constant.EMPTY_STRING);
 			// set data group cho man hinh
 			List<MstGroup> listGroup = groupLogicImpl.getAllGroups();
 			// khi click link top
-			if ("default".equals(type)) {
+			if ("default" == type) {
 				fullName = sortType = Constant.EMPTY_STRING;
 				groupId = Constant.DEFAULT_INT;
 				currentPage = Constant.DEFAULT_CURRENT_PAGE;
